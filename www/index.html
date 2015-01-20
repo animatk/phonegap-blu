@@ -16,7 +16,7 @@
 		// app.initialize();
 		
 	function listar_dispositivos(){
-		bluetoothSerial.list(function(data){
+		bluetoothle.startScan(function(data){
 			display(JSON.stringify(data));
 		}, function(){
 			display('No se ha podido listar los dispositivos.');

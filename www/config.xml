@@ -19,7 +19,7 @@
 	
 	<access origin="*"/>
 	
-	<gap:plugin name="com.megster.cordova.bluetoothserial" version="0.3.3" />
+	<gap:plugin name="com.jkhax0r.bluetoothle" version="1.0.1" />
 	
 	<!-- Define app icon for each platform. -->
 	<!--icon src="icon.png" />
