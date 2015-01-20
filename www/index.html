@@ -3,7 +3,7 @@
 <head>
 	<title>Bluetooth Test</title>
 </head>
-<body>
+<body onload="init();">
 	<div class="app">
 		<div id="ui">
 			<button onclick="listar_dispositivos();">Listar Dispositivos</button>
@@ -24,7 +24,6 @@
 		});
 	}
 	
-	init();
 		
 	function listar_dispositivos(){
 		bluetoothle.startScan(function(data){
