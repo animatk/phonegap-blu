@@ -17,7 +17,7 @@
 		
 	function listar_dispositivos(){
 		bluetoothSerial.list(function(data){
-			display(JSON.stingify(data));
+			display(JSON.stringify(data));
 		}, function(){
 			display('No se ha podido listar los dispositivos.');
 		});
