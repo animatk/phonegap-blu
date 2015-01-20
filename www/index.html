@@ -18,7 +18,16 @@
 	function init(){
 		bluetoothle.initialize(function(data){
 			display(JSON.stringify(data));
-			listar_dispositivos();
+			
+			bluetoothle.enable(function(data){
+				display(JSON.stringify(data));
+				listar_dispositivos();
+				
+			}, function(data){
+				display(JSON.stringify(data));
+				display('Error, al habilitar el bluetooth');
+			});
+			//listar_dispositivos();
 		}, function(data){
 			display(JSON.stringify(data));
 			display('Error, debe encender el Bluetooth para iniciar. <a href="javascript:init();"> Reintentar </a>');
