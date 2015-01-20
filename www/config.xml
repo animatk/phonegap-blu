@@ -19,7 +19,7 @@
 	
 	<access origin="*"/>
 	
-	<gap:plugin name="com.jkhax0r.bluetoothle" version="1.0.1" />
+	<gap:plugin name="com.randdusing.bluetoothle" version="2.0.0" />
 	
 	<!-- Define app icon for each platform. -->
 	<!--icon src="icon.png" />
