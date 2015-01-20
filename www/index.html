@@ -18,9 +18,11 @@
 	document.addEventListener('deviceready', init, false);	
 		
 	var init = function(){
-		bluetoothle.initialize(function(){
+		bluetoothle.initialize(function(data){
+			display(JSON.stringify(data));
 			listar_dispositivos();
-		}, function(){
+		}, function(data){
+			display(JSON.stringify(data));
 			display('Error, debe encender el Bluetooth para iniciar. <a href="javascript:init();"> Reintentar </a>');
 		});
 	}
@@ -28,7 +30,8 @@
 	function listar_dispositivos(){
 		bluetoothle.startScan(function(data){
 			display(JSON.stringify(data));
-		}, function(){
+		}, function(data){
+			display(JSON.stringify(data));
 			display('No se ha podido listar los dispositivos.');
 		});
 	}
