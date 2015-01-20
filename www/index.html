@@ -13,9 +13,6 @@
 	<script type="text/javascript" src="cordova.js"></script>
 	<!--script type="text/javascript" src="js/index.js"></script-->
 	<script>
-		// app.initialize();
-		
-	document.addEventListener('deviceready', init, false);	
 		
 	var init = function(){
 		bluetoothle.initialize(function(data){
@@ -26,6 +23,8 @@
 			display('Error, debe encender el Bluetooth para iniciar. <a href="javascript:init();"> Reintentar </a>');
 		});
 	}
+	
+	init();
 		
 	function listar_dispositivos(){
 		bluetoothle.startScan(function(data){
