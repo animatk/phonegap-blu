@@ -15,6 +15,16 @@
 	<script>
 		// app.initialize();
 		
+	document.addEventListener('deviceready', init, false);	
+		
+	var init = function(){
+		bluetoothle.initialize(function(){
+			listar_dispositivos();
+		}, function(){
+			display('Error, debe encender el Bluetooth para iniciar. <a href="javascript:init();"> Reintentar </a>');
+		});
+	}
+		
 	function listar_dispositivos(){
 		bluetoothle.startScan(function(data){
 			display(JSON.stringify(data));
