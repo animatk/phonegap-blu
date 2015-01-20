@@ -6,14 +6,32 @@
 <body>
 	<div class="app">
 		<div id="ui">
-			<button id="connectButton">Connect</button>
+			<button id="listar_dispositivos();">Listar Dispositivos</button>
 		</div>
 	<div id="message">Hello.</div>
 	</div>
 	<script type="text/javascript" src="cordova.js"></script>
-	<script type="text/javascript" src="js/index.js"></script>
+	<!--script type="text/javascript" src="js/index.js"></script-->
 	<script>
-		app.initialize();
+		// app.initialize();
+		
+	function listar_dispositivos(){
+		bluetoothSerial.list(function(data){
+			display(JSON.stingify(data));
+		}, function(){
+			display('No se ha podido listar los dispositivos.');
+		});
+	}
+
+	function display(message){
+		var display = document.getElementById("message"), // the message div
+            lineBreak = document.createElement("br"),     // a line break
+            label = document.createTextNode(message);     // create the label
+
+        display.appendChild(lineBreak);          // add a line break
+        display.appendChild(label);              // add the message node
+	}
+		
 	</script>
 </body>
 </html>
