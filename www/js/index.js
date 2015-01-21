@@ -901,6 +901,11 @@ function read(address, serviceUuid, characteristicUuid)
 
 function readSuccess(obj)
 {
+	
+	if(obj.value != undefined){
+		obj.valor = atob(obj.value);	
+	}
+	
 	mensaje("Read Success : " + JSON.stringify(obj));
 	
 	if (obj.status == "read")
