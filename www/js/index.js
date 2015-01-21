@@ -903,7 +903,7 @@ function readSuccess(obj)
 {
 	
 	if(obj.value != undefined){
-		obj.valor = atob(obj.value);	
+		obj.ak_valor = bluetoothle.encodedStringToBytes(obj.value);	
 	}
 	
 	mensaje("Read Success : " + JSON.stringify(obj));
@@ -939,6 +939,10 @@ function subscribe(address, serviceUuid, characteristicUuid)
 
 function subscribeSuccess(obj)
 {	
+	if(obj.value != undefined){
+		obj.ak_valor = bluetoothle.encodedStringToBytes(obj.value);	
+	}
+
 	mensaje("Subscribe Success : " + JSON.stringify(obj));
 	
 	if (obj.status == "subscribedResult")
