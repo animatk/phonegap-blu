@@ -941,6 +941,7 @@ function subscribeSuccess(obj)
 {	
 	if(obj.value != undefined){
 		obj.ak_valor = bluetoothle.encodedStringToBytes(obj.value);	
+		$('#PPM').html(obj.ak_valor[1]);
 	}
 
 	mensaje("Subscribe Success : " + JSON.stringify(obj));
