@@ -14,7 +14,18 @@
     <script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
   </head>
   <body>
-	<div id="mensajes" style="height:78px; z-index: 99999; position: fixed; display: block; width: 100%; overflow: hidden; overflow-y: auto; top:0; left:0; color: #000; background: #fff; font-size: 8px; border-bottom: 1px solid #06f;"></div>
+	<style>
+		#mensajes p:even{
+			color: #333;
+		}
+		#mensajes p:even{
+			color: #666;
+		}
+		#mensajes p:first-child{
+			color: #fff;
+		}
+	</style>
+	<div id="mensajes" style="height:78px; z-index: 99999; position: fixed; display: block; width: 100%; overflow: hidden; overflow-y: auto; top:0; left:0; color: #666; background: #000; font-size: 8px; border-bottom: 1px solid #333;"></div>
     <div id="home" data-role="page">
       <div data-role="content">
 				<div style="height: 80px;"> &nbsp; </div>
