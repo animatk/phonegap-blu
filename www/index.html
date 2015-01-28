@@ -52,7 +52,7 @@
 				<h2>Ingresar</h2>
 				<div>&nbsp;</div>
 				<form onsubmit="return login(this); return false;">
-					<input name="correo" class="form-control required" placeholder="Correo Electrónico" />
+					<input name="correo" class="form-control required email" placeholder="Correo Electrónico" />
 					<input name="contrasena" type="password" class="form-control required" placeholder="Contraseña" />
 					<div class="row row2">
 						<div class="col">
@@ -73,66 +73,68 @@
 			<div class="container Main">
 				<h2>Nuevo usuario</h2>
 				<div>&nbsp;</div>
-				<select name="genero" class="form-control required" placeholder="Genero">
-					<option value=""> Genero </option>
-					<option value="M"> Masculino </option>
-					<option value="F"> Femenino </option>
-				</select>
-				<input name="nombre" class="form-control required" placeholder="Nombre" />
-				<p>Edad (dd-mm-aaaa):</p>
-				<div class="row row3">
-					<div class="col">
-						<select name="edad_day" class="form-control required" placeholder="Edad día">
-							<option value="">Día</option>
-						</select>
+				<form onsubmit="return register(this); return false;">
+					<select name="genero" class="form-control required" placeholder="Genero">
+						<option value=""> Genero </option>
+						<option value="M"> Masculino </option>
+						<option value="F"> Femenino </option>
+					</select>
+					<input name="nombre" class="form-control required" placeholder="Nombre" />
+					<p>Edad (dd-mm-aaaa):</p>
+					<div class="row row3">
+						<div class="col">
+							<select name="edad_day" class="form-control required" placeholder="Edad día">
+								<option value="">Día</option>
+							</select>
+						</div>
+						<div class="col">
+							<select name="edad_month" class="form-control required" placeholder="Edad mes">
+								<option value="">Mes</option>
+								<option value="01"> Enero </option>
+								<option value="02"> Febrero </option>
+								<option value="03"> Marzo </option>
+								<option value="04"> Abril </option>
+								<option value="05"> Mayo </option>
+								<option value="06"> Junio </option>
+								<option value="07"> Julio </option>
+								<option value="08"> Agosto </option>
+								<option value="09"> Septiembre </option>
+								<option value="10"> Octubre </option>
+								<option value="11"> Noviembre </option>
+								<option value="12"> Diciembre </option>
+							</select>
+						</div>
+						<div class="col">
+							<select name="edad_year" class="form-control required" placeholder="Edad año">
+								<option value="">Año</option>
+							</select>
+						</div>
 					</div>
-					<div class="col">
-						<select name="edad_month" class="form-control required" placeholder="Edad mes">
-							<option value="">Mes</option>
-							<option value="01"> Enero </option>
-							<option value="02"> Febrero </option>
-							<option value="03"> Marzo </option>
-							<option value="04"> Abril </option>
-							<option value="05"> Mayo </option>
-							<option value="06"> Junio </option>
-							<option value="07"> Julio </option>
-							<option value="08"> Agosto </option>
-							<option value="09"> Septiembre </option>
-							<option value="10"> Octubre </option>
-							<option value="11"> Noviembre </option>
-							<option value="12"> Diciembre </option>
-						</select>
+					<div class="row row2">
+						<div class="col">
+							<input name="estatura" class="form-control required estatura" maxlength="4" placeholder="Estatura" />
+						</div>
+						<div class="col">
+							<input name="peso" class="form-control required onlydot" maxlength="4" placeholder="Peso" />
+						</div>
 					</div>
-					<div class="col">
-						<select name="edad_year" class="form-control required" placeholder="Edad año">
-							<option value="">Año</option>
-						</select>
+					<input name="correo" class="form-control required email" placeholder="Correo Electrónico" />
+					<input name="contrasena" type="password" class="form-control required" placeholder="Contraseña" />
+					<div>&nbsp;</div>
+					<div>
+						<input name="recibir" type="checkbox" value="" onchange="var i=this; if(i.value==''){i.value='SI';}else{i.value='';}" placeholder="Recibir info vía email" />
+						Deseo recibir información vía correo electrónico
 					</div>
-				</div>
-				<div class="row row2">
-					<div class="col">
-						<input name="estatura" class="form-control required" placeholder="Estatura (1.73)" />
+					<div>&nbsp;</div>
+					<div>
+						<input name="terminos" type="checkbox" value="" onchange="var i=this; if(i.value==''){i.value='SI';}else{i.value='';}" class="required" placeholder="Terminos" />
+						Acepto terminos y condiciones
 					</div>
-					<div class="col">
-						<input name="peso" class="form-control required" placeholder="Peso (80.5)" />
+					<div>&nbsp;</div>
+					<div class="text-right">
+						<button class="btn btn-primary"> REGISTRARSE </button>
 					</div>
-				</div>
-				<input name="correo" class="form-control required" placeholder="Correo Electrónico" />
-				<input name="contrasena" type="password" class="form-control required" placeholder="Contraseña" />
-				<div>&nbsp;</div>
-				<div>
-					<input name="terminos" type="checkbox" class="required" placeholder="Terminos" />
-					Deseo recibir información vía correo electrónico
-				</div>
-				<div>&nbsp;</div>
-				<div>
-					<input name="terminos" type="checkbox" class="required" placeholder="Terminos" />
-					Acepto terminos y condiciones
-				</div>
-				<div>&nbsp;</div>
-				<div class="text-right">
-					<button class="btn btn-primary"> REGISTRARSE </button>
-				</div>
+				</form>
 			</div>
 		</section>
 		<section id="config" class="Page">

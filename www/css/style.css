@@ -308,6 +308,15 @@ header{
 	margin-bottom: 15px;
 }
 
+.form-control.error{
+	background: #F8D7CC;
+	border: 1px solid #D19393;
+}
+textarea.form-control{
+	min-height: 180px;
+	resize: vertical;
+}
+
 /* ak-tooltip */
 .ak-tooltip{
 	position: absolute;
