@@ -388,7 +388,7 @@ function login(form){
 		{ bt: '#BtnLogin'
 		, ajax: false
 		, func: function(data){
-			jsonp({
+			$.ajax({
 				url: SITE+'main/login'
 				,type: 'POST'
 				,data: data
