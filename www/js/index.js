@@ -523,6 +523,7 @@ function connectSuccess(obj)
 	
   if (obj.status == "connected")
   {
+	//CONECTADO
   	mensaje("Connected");
   }
   else if (obj.status == "connecting")
