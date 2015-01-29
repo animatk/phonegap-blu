@@ -2,10 +2,10 @@ var bluetoothle,
 alerts = {
 	error_inicio : 'El servicio bluetooth no se ha podido iniciar, intentelo mas tarde.'
 	, activar : 'Iniciar dispositivo bluetooth?'
-	, error_scan : 'Error al momento de mostrar los dispositivos disponibles.'
-	, error_stop_scan : 'Error al detener el scaneo de dispositivos.'
 	, disp_find : '.disp-find'
-	
+	, error_scan : 'Error al momento de mostrar los dispositivos disponibles.'
+	, error_conectar : 'No se pudo enlazar con el dispositivo, intentelo nuevamente'
+	, error_stop_scan : 'Error al detener el scaneo de dispositivos.'
 }
 
 function isInitialized()
@@ -139,19 +139,51 @@ function stopScanSuccess(obj)
   }
   else
   {
-	alert( alerts.error_stop_scan + ' code : stopScanSuccess' );
+//	alert( alerts.error_stop_scan + ' code : stopScanSuccess' );
   }
 }
 
 function stopScanError(obj)
 {
-	alert( alerts.error_stop_scan + ' code : stopScanError' );
+//	alert( alerts.error_stop_scan + ' code : stopScanError' );
 }
 
 function addDevice(address, name){
 	var padre = $( alerts.disp_find ),
-	li = $('li');
-	li.text(name);
-	li.attr('onclick', 'connect('+ address +');');
-	padre.prepend(li);
+	it = $('<div>');
+	it.text(name);
+	it.addClass('btn btn-default');
+	it.attr('onclick', 'addDisp('+name+', '+ address +');');
+	padre.prepend(it);
+}
+
+function connect(address)
+{
+  var paramsObj = {address:address};
+  bluetoothle.connect(connectSuccess, connectError, paramsObj);
+  return false;
+}
+
+function connectSuccess(obj)
+{
+
+  if (obj.status == "connected")
+  {
+	//CONECTADO
+	
+
+  }
+  else if (obj.status == "connecting")
+  {
+
+  }
+  else
+  {
+	 alert( alerts.error_conectar + ' code : connectSuccess' );
+  }
+}
+
+function connectError(obj)
+{
+  alert( alerts.error_conectar + ' code : connectError' );
 }

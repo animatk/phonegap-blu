@@ -559,10 +559,29 @@ function botonDispositivos(accion){
 		,fn: 'btnIzq({ text:\'Cancelar\', from:\'#config\', to:\'#inicio\', fx:\'toRight\', fn:"$(\'#btnMenu\').removeClass(\'oculto\');"});'
 	});	
 	
-	//
-	// if(){
-	// 	
-	// }
+	listarDispositivos();
+
+}
+
+function listarDispositivos(){
+	var dispositivos = new Array(),
+	output = "";
+	if(SES['dispositivos']){
+		dispositivos = JSON.parse( SES['dispositivos'] );
+	}
+	var tot = dispositivos.length;
+	if( tot > 0){
+		for(var i=0; i<tot; i++){
+			var obj = dispositivos[i];
+			output += '<div class="btn btn-default" onclick="connect('+obj.address+');"> '+obj.name+' </div>';
+		}
+			
+	}else{
+		
+		output += '<div class="ak-alert"> No hay dispositivos recordados </div>';
+	}
+	
+	$('.disp-list').html(output);
 }
 
 
@@ -588,6 +607,35 @@ function botonDispositivosCancel(){
 function botonDispositivosStop(){
 	//
 	stopScan();
+}
+
+function addDisp(name, address){
+	var dispositivos = new Array(),
+	insert = true;
+	if(SES['dispositivos']){
+		dispositivos = JSON.parse( SES['dispositivos'] );
+		var tot = dispositivos.length;
+		for(var i=0; i<tot; i++){
+			var obj = dispositivos[i];
+			if(obj.address == address){
+				insert = false;
+			}
+		}
+	}
+	//si la orden es insertarlo
+	if(insert){
+		dispositivos.push({name: name, address: address});
+	}
+	//crear o resetear la variable de sesion de dispositivos
+	SES['dispositivos'] = JSON.stringify(dispositivos);
+	//conectar al dispositivo
+	connect(address);
+	
+	$('#dispMain').removeClass('oculto');
+	$('#btn-accion-izq').removeClass('oculto');
+	$('#dispFind').addClass('oculto');
+	
+	listarDispositivos();
 }
 
 /*! end dispositivos HRM */
