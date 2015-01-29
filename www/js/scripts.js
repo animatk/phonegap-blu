@@ -322,6 +322,14 @@ function iniciar(){
 	if( SES['chain'] ){
 		if( SES['info_basica'] ){
 			ak_navigate('#inicio', '#config');
+			$('#btnMenu').addClass('oculto');
+			btnIzq({
+				text: 'Cancelar'	
+				,from: '#config'	
+				,to: '#inicio'	
+				,fx: 'toRight'	
+				,fn: '$(\'#btnMenu\').removeClass(\'oculto\')'
+			});
 		}else{
 			ak_navigate('#inicio', '#perfil');
 		}
@@ -353,42 +361,6 @@ function btnIzq(obj){
 	btmI.html(obj.text);
 	btmI.attr('onclick', "ak_navigate('"+obj.from+"', '"+obj.to+"' "+effect+"); $(this).addClass('oculto'); "+func );
 	btmI.removeClass('oculto');
-}
-
-function botonRegistrar(){
-	ak_navigate('#login','#registro'); 
-	btnIzq({
-		text: 'Volver'
-		,from: '#registro'
-		,to: '#login'
-		,fx: 'toRight'
-		,fn: 'btnIzq({ text:\'Cancelar\', from:\'#login\', to:\'#inicio\', fx:\'toRight\', fn:"$(\'#btnMenu\').removeClass(\'oculto\');"});'
-	});
-	
-	var dias = '<option value="">Día</option>';
-	for(var i=1; i<32; i++){
-		dias += '<option value="'+i+'">'+i+'</option>';
-	}
-	$('select[name=edad_day]').html(dias);
-	
-	var years = '<option value="">Año</option>';
-	var year = new Date().getFullYear();
-	for(var i=0; i<69; i++){
-		years += '<option value="'+(year-i)+'">'+(year-i)+'</option>';
-	}
-	$('select[name=edad_year]').html(years);
-
-}
-
-function botonRestore(){
-	ak_navigate('#login','#restore'); 
-	btnIzq({
-		text: 'Volver'
-		,from: '#restore'
-		,to: '#login'
-		,fx: 'toRight'
-		,fn: 'btnIzq({ text:\'Cancelar\', from:\'#login\', to:\'#inicio\', fx:\'toRight\', fn:"$(\'#btnMenu\').removeClass(\'oculto\');"});'
-	});	
 }
 
 function jsonp(url, callback) {
@@ -462,7 +434,32 @@ function login(form){
 	return false;
 }
 /*! end login */
+
 /*! register */
+function botonRegistrar(){
+	ak_navigate('#login','#registro'); 
+	btnIzq({
+		text: 'Volver'
+		,from: '#registro'
+		,to: '#login'
+		,fx: 'toRight'
+		,fn: 'btnIzq({ text:\'Cancelar\', from:\'#login\', to:\'#inicio\', fx:\'toRight\', fn:"$(\'#btnMenu\').removeClass(\'oculto\');"});'
+	});
+	
+	var dias = '<option value="">Día</option>';
+	for(var i=1; i<32; i++){
+		dias += '<option value="'+i+'">'+i+'</option>';
+	}
+	$('select[name=edad_day]').html(dias);
+	
+	var years = '<option value="">Año</option>';
+	var year = new Date().getFullYear();
+	for(var i=0; i<69; i++){
+		years += '<option value="'+(year-i)+'">'+(year-i)+'</option>';
+	}
+	$('select[name=edad_year]').html(years);
+}
+
 function register(form){
 	ak_validate( 
 		form, 
@@ -507,6 +504,17 @@ function register(form){
 }
 /*! end register */
 /*! restore */
+function botonRestore(){
+	ak_navigate('#login','#restore'); 
+	btnIzq({
+		text: 'Volver'
+		,from: '#restore'
+		,to: '#login'
+		,fx: 'toRight'
+		,fn: 'btnIzq({ text:\'Cancelar\', from:\'#login\', to:\'#inicio\', fx:\'toRight\', fn:"$(\'#btnMenu\').removeClass(\'oculto\');"});'
+	});	
+}
+
 function restore(form){
 	ak_validate( 
 		form, 
@@ -536,5 +544,53 @@ function restore(form){
 	return false;
 }
 /*! end restore */
+
+
+/*! dispositivos HRM  */
+
+function botonDispositivos(accion){
+	//navegacion
+	ak_navigate('#config','#dispositivos'); 
+	btnIzq({
+		text: 'Volver'
+		,from: '#dispositivos'
+		,to: '#config'
+		,fx: 'toRight'
+		,fn: 'btnIzq({ text:\'Cancelar\', from:\'#config\', to:\'#inicio\', fx:\'toRight\', fn:"$(\'#btnMenu\').removeClass(\'oculto\');"});'
+	});	
+	
+	//
+	// if(){
+	// 	
+	// }
+}
+
+
+function botonDispositivosFind(){
+	//
+	$('#dispMain').addClass('oculto');
+	$('#btn-accion-izq').addClass('oculto');
+	$('#dispFind').removeClass('oculto');
+	
+	isInitialized();
+	
+}
+
+function botonDispositivosCancel(){
+	//
+	$('#dispMain').removeClass('oculto');
+	$('#btn-accion-izq').removeClass('oculto');
+	$('#dispFind').addClass('oculto');
+	
+	stopScan();
+	
+}
+function botonDispositivosStop(){
+	//
+	stopScan();
+}
+
+/*! end dispositivos HRM */
+
 
 

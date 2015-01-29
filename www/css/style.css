@@ -377,8 +377,12 @@ textarea.form-control{
 
 /* config */
 .config-item{
+	color: #C2C2C2;
 	padding: 10px;
 	border-bottom: 2px groove rgba(210, 210, 210, 0.6);
+}
+.config-item.activo{
+	color: #333;
 }
 /* end config */
 
