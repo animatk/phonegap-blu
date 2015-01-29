@@ -319,7 +319,7 @@ function ak_showtip(ipt, msj){
 }
 
 function iniciar(){
-	if( SES['uid'] ){
+	if( SES['chain'] ){
 		if( SES['info_basica'] ){
 			ak_navigate('#inicio', '#config');
 		}else{
@@ -380,6 +380,17 @@ function botonRegistrar(){
 
 }
 
+function botonRestore(){
+	ak_navigate('#login','#restore'); 
+	btnIzq({
+		text: 'Volver'
+		,from: '#restore'
+		,to: '#login'
+		,fx: 'toRight'
+		,fn: 'btnIzq({ text:\'Cancelar\', from:\'#login\', to:\'#inicio\', fx:\'toRight\', fn:"$(\'#btnMenu\').removeClass(\'oculto\');"});'
+	});	
+}
+
 function jsonp(url, callback) {
 	var callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
 	window[callbackName] = function(data) {
@@ -407,7 +418,6 @@ function post(url, data, callback) {
 }
 
 /*! login */
-
 function login(form){
 	ak_validate( 
 		form, 
@@ -429,7 +439,7 @@ function login(form){
 						,birthdate : obj.birthdate
 					};
 					
-					SES['uid'] = obj.id;
+					SES['chain'] = obj.chain;
 					SES['perfil'] = JSON.stringify(udata);
 					SES['info_basica'] = true;
 					
@@ -451,49 +461,80 @@ function login(form){
 	});
 	return false;
 }
-
+/*! end login */
+/*! register */
 function register(form){
 	ak_validate( 
 		form, 
 		{ bt: '#BtnRegister'
-		, ajax: false
-		, func: function(data){
-			var cortina = $('#cortina');
-			post(SITE+'main/register', data, function(obj){
-				if(obj.success === false){
-					alert(obj.message);
-				}else{
-					
-					var udata = {
-						gender : data.genero
-						,name : data.nombre
-						,height : data.estatura
-						,weight : data.peso
-						,terms : data.terminos
-						,birthdate : data.edad_year+'-'+data.edad_month+'-'+data.edad_day
-					};
-					
-					SES['uid'] = obj.id;
-					SES['perfil'] = JSON.stringify(udata);
-					SES['info_basica'] = true;
-					
-					ak_navigate('#registro', '#config');
-					$('#btnMenu').addClass('oculto');
-					btnIzq({
-						text: 'Cancelar'	
-						,from: '#config'	
-						,to: '#inicio'	
-						,fx: 'toRight'	
-						,fn: '$(\'#btnMenu\').removeClass(\'oculto\')'
-					});
-				}
-				cortina.remove();
-			});
-			
-		}
-	});
+			, ajax: false
+			, func: function(data){
+				var cortina = $('#cortina');
+				post(SITE+'main/register', data, function(obj){
+					if(obj.success === false){
+						alert(obj.message);
+					}else{
+						//
+						var udata = {
+							gender : data.genero
+							,name : data.nombre
+							,height : data.estatura
+							,weight : data.peso
+							,terms : data.terminos
+							,birthdate : data.edad_year+'-'+data.edad_month+'-'+data.edad_day
+						};
+						
+						SES['chain'] = obj.chain;
+						SES['perfil'] = JSON.stringify(udata);
+						SES['info_basica'] = true;
+						
+						ak_navigate('#registro', '#config');
+						$('#btnMenu').addClass('oculto');
+						btnIzq({
+							text: 'Cancelar'	
+							,from: '#config'	
+							,to: '#inicio'	
+							,fx: 'toRight'	
+							,fn: '$(\'#btnMenu\').removeClass(\'oculto\')'
+						});
+					}
+					cortina.remove();
+				});
+				
+			}
+		});
 	return false;
 }
+/*! end register */
+/*! restore */
+function restore(form){
+	ak_validate( 
+		form, 
+		{ bt: '#BtnRestore'
+			, ajax: false
+			, func: function(data){
+				var cortina = $('#cortina');
+				post(SITE+'main/restore', data, function(obj){
+					if(obj.success === false){
+						alert(obj.message);
+					}else{
+						alert(obj.message);
+						ak_navigate('#restore', '#login', 'toRight');
+						$('#btnMenu').addClass('oculto');
+						btnIzq({
+							text: 'Cancelar'	
+							,from: '#login'	
+							,to: '#inicio'	
+							,fx: 'toRight'	
+							,fn: '$(\'#btnMenu\').removeClass(\'oculto\')'
+						});
+					}
+					cortina.remove();
+				});
+			}
+		});
+	return false;
+}
+/*! end restore */
 
 
-/*! end login */

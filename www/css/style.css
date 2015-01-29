@@ -374,3 +374,21 @@ textarea.form-control{
 	border: 1px solid #D1B693;
 }
 /* end ak-tooltip */
+
+/* config */
+.config-item{
+	padding: 10px;
+	border-bottom: 2px groove rgba(210, 210, 210, 0.6);
+}
+/* end config */
+
+/* icons */
+.icon{
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	margin-right: 8px;
+	background: #ccc;
+	vertical-align: bottom;
+}
+/* end icons */
