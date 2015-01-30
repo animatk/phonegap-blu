@@ -156,7 +156,7 @@ function stopScanError(obj)
 
 function addDevice(address, name){
 	var padre = $( alerts.disp_find ),
-	item = $( alerts.disp_find ' div[data-add='+address+']' );
+	item = $( alerts.disp_find+' div[data-add='+address+']' );
 	
 	if(item.length <= 0){
 		mensaje("Dispositivo: "+obj.address+' listado correctamente');
