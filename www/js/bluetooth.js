@@ -156,14 +156,14 @@ function stopScanError(obj)
 
 function addDevice(address, name){
 	var padre = $( alerts.disp_find ),
-	id = $( '#add-'+address );
+	item = $( alerts.disp_find ' div[data-add='+address+']' );
 	
-	if(id.length <= 0){
+	if(item.length <= 0){
 		mensaje("Dispositivo: "+obj.address+' listado correctamente');
 		var it = $('<div>');
 		it.text(name);
 		it.addClass('btn btn-default');
-		it.attr('id', 'add-'+address);
+		it.attr('data-add', address);
 		it.attr('onclick', 'addDisp('+name+', '+ address +');');
 		padre.prepend(it);
 	}
