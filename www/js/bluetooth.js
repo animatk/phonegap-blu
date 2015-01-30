@@ -1,4 +1,5 @@
 var bluetoothle,
+ADDRESS,
 alerts = {
 	error_inicio : 'El servicio bluetooth no se ha podido iniciar, intentelo mas tarde.'
 	, activar : 'Iniciar dispositivo bluetooth?'
@@ -6,6 +7,8 @@ alerts = {
 	, error_scan : 'Error al momento de mostrar los dispositivos disponibles.'
 	, error_conectar : 'No se pudo enlazar con el dispositivo, intentelo nuevamente'
 	, error_stop_scan : 'Error al detener el scaneo de dispositivos.'
+	, serviceUid : '180d'
+	, characterisUid : '2a37'
 }
 
 function isInitialized()
@@ -150,15 +153,22 @@ function stopScanError(obj)
 
 function addDevice(address, name){
 	var padre = $( alerts.disp_find ),
-	it = $('<div>');
-	it.text(name);
-	it.addClass('btn btn-default');
-	it.attr('onclick', 'addDisp('+name+', '+ address +');');
-	padre.prepend(it);
+	id = $( '#add-'+address );
+	
+	if(id.length ==  0 && name != undefined){
+		var it = $('<div>');
+		it.text(name);
+		it.addClass('btn btn-default');
+		it.attr('attr', 'add-'+address);
+		it.attr('onclick', 'addDisp('+name+', '+ address +');');
+		padre.prepend(it);
+	}
+	
 }
 
 function connect(address)
 {
+  ADDRESS = address;
   var paramsObj = {address:address};
   bluetoothle.connect(connectSuccess, connectError, paramsObj);
   return false;
@@ -170,12 +180,10 @@ function connectSuccess(obj)
   if (obj.status == "connected")
   {
 	//CONECTADO
-	
-
+	isDiscovered(obj.address);
   }
   else if (obj.status == "connecting")
   {
-
   }
   else
   {
@@ -186,4 +194,87 @@ function connectSuccess(obj)
 function connectError(obj)
 {
   alert( alerts.error_conectar + ' code : connectError' );
+}
+
+function isDiscovered(address)
+{
+	var paramsObj = {address:address};
+	bluetoothle.isDiscovered(isDiscoveredSuccess, paramsObj);
+	return false;
+}
+
+function isDiscoveredSuccess(obj)
+{	
+  if (obj.isDiscovered)
+  {
+    subscribe(obj.address, alerts.serviceUid, alerts.characterisUid );
+  }
+  else
+  {
+  	discover(obj.address);
+  }
+}
+
+
+function discover(address)
+{
+	var paramsObj = {address:address};
+	
+	bluetoothle.discover(discoverSuccess, discoverError, paramsObj);
+	
+	return false;
+}
+
+function discoverSuccess(obj)
+{
+	
+	if (obj.status == "discovered")
+	{
+		subscribe(obj.address, alerts.serviceUid, alerts.characterisUid );
+	}
+  else
+  {
+  	alert( alerts.error_conectar + ' code : discoverSuccess' );
+	
+  }
+}
+
+function discoverError(obj)
+{
+   alert( alerts.error_conectar + ' code : discoverError' );
+}
+
+function subscribe(address, serviceUuid, characteristicUuid)
+{
+	var paramsObj = {address:address, serviceUuid:serviceUuid, characteristicUuid:characteristicUuid};
+	
+	bluetoothle.subscribe(subscribeSuccess, subscribeError, paramsObj);
+	
+	return false;
+}
+
+function subscribeSuccess(obj)
+{	
+	if(obj.value != undefined){
+		obj.ak_valor = bluetoothle.encodedStringToBytes(obj.value);	
+		$('.PPM').html(obj.ak_valor[1]);
+	}
+
+	if (obj.status == "subscribedResult")
+	{
+		
+	}
+	else if (obj.status == "subscribed")
+	{
+		
+	}
+	else
+  {
+  	alert( alerts.error_conectar + ' code : subscribeSuccess' );
+  }
+}
+
+function subscribeError(obj)
+{
+  alert( alerts.error_conectar + ' code : subscribeError' );
 }
