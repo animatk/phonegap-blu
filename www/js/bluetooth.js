@@ -158,7 +158,7 @@ function addDevice(address, name){
 	var padre = $( alerts.disp_find ),
 	item = $( 'div[data-add="'+address+'"]' );
 	
-	mensaje("Cont Dispositivo: "+item.length );
+	mensaje("Nombre Dispositivo: "+name );
 	
 	if(item.length == 0){
 		
