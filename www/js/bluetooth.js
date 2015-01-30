@@ -160,8 +160,8 @@ function addDevice(address, name){
 	
 	mensaje("Cont Dispositivo: "+item.length );
 	
-	if(item.length <= 0){
-		mensaje("Dispositivo: "+obj.address+' listado correctamente');
+	if(item.length == 0){
+		
 		var it = $('<div>');
 		it.text(name);
 		it.css({
@@ -173,6 +173,8 @@ function addDevice(address, name){
 		it.attr('data-add', address);
 		it.attr('onclick', 'addDisp('+name+', '+ address +');');
 		padre.prepend(it);
+	
+		mensaje("Dispositivo: "+ address +' listado correctamente');
 	}
 	
 }
