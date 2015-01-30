@@ -155,7 +155,7 @@ function addDevice(address, name){
 	var padre = $( alerts.disp_find ),
 	id = $( '#add-'+address );
 	
-	if(id.length ==  0 && name != undefined){
+	if(id.length ==  0){
 		var it = $('<div>');
 		it.text(name);
 		it.addClass('btn btn-default');
@@ -168,7 +168,6 @@ function addDevice(address, name){
 
 function connect(address)
 {
-  ADDRESS = address;
   var paramsObj = {address:address};
   bluetoothle.connect(connectSuccess, connectError, paramsObj);
   return false;
