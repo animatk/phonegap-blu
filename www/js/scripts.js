@@ -573,7 +573,7 @@ function listarDispositivos(){
 	if( tot > 0){
 		for(var i=0; i<tot; i++){
 			var obj = dispositivos[i];
-			output += '<div class="btn btn-default" onclick="connect(\''+obj.address+'\', true );"> '+obj.name+' </div>';
+			output += '<div class="btn btn-default" onclick="isInitialized(); DEVICE='+obj.address+'; "> '+obj.name+' </div>';
 		}
 			
 	}else{
@@ -592,7 +592,6 @@ function botonDispositivosFind(){
 	$('#dispFind').removeClass('oculto');
 	
 	isInitialized();
-	
 }
 
 function botonDispositivosCancel(){

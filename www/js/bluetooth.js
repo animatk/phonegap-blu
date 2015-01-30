@@ -1,4 +1,5 @@
 var bluetoothle,
+DEVICE = 0,
 alerts = {
 	error_inicio : 'El servicio bluetooth no se ha podido iniciar, intentelo mas tarde.'
 	, activar : 'Iniciar dispositivo bluetooth?'
@@ -58,7 +59,11 @@ function isEnabledSuccess(obj)
 	
   if (obj.isEnabled)
   {
-    startScan();
+    if(DEVICE != 0){
+		connect( DEVICE );
+	}else{
+		startScan();
+	}
   }
   else
   {
@@ -179,14 +184,9 @@ function addDevice(address, name){
 	
 }
 
-function connect(address, init)
+function connect(address)
 {
   mensaje("se va a conectar al dispositivo: "+address);
-  
-  //si init = true
-  if(init){
-	mensaje("Esta iniciado: "+ bluetoothle.isInitialized() );
-  }
   
   var paramsObj = {address:address};
   bluetoothle.connect(connectSuccess, connectError, paramsObj);
