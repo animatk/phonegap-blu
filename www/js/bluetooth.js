@@ -35,6 +35,7 @@ function initializeSuccess(obj)
   if (obj.status == "enabled")
   {
   	isEnabled();
+	mensaje("inicializado correctamente. habilitara el dispositivo.");
   }
   else
   {
@@ -110,10 +111,11 @@ function startScanSuccess(obj)
   {
 
     addDevice(obj.address, obj.name);
+	mensaje("Se encontro el dispositivo: "+obj.address );
   }
   else if (obj.status == "scanStarted")
   {
-  //  mensaje("Scan Started");
+	mensaje("Escaneando");
   }
   else
   {
@@ -156,6 +158,8 @@ function addDevice(address, name){
 	id = $( '#add-'+address );
 	
 	if(id.length ==  0){
+		
+		mensaje("Dispositivo: "+obj.address+' listado correctamente');
 		var it = $('<div>');
 		it.text(name);
 		it.addClass('btn btn-default');
@@ -168,6 +172,8 @@ function addDevice(address, name){
 
 function connect(address)
 {
+  mensaje("se va a conectar al dispositivo: "+address);
+  
   var paramsObj = {address:address};
   bluetoothle.connect(connectSuccess, connectError, paramsObj);
   return false;
@@ -276,4 +282,8 @@ function subscribeSuccess(obj)
 function subscribeError(obj)
 {
   alert( alerts.error_conectar + ' code : subscribeError' );
+}
+
+function mensaje(msj){
+	$('#mensajes').prepend('<p>'+msj+'</p>');
 }
