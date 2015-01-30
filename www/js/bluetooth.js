@@ -160,21 +160,22 @@ function addDevice(address, name){
 	
 	mensaje("Nombre Dispositivo: "+name );
 	
-	if(item.length == 0){
-		
-		var it = $('<div>');
-		it.text(name);
-		it.css({
-			display: 'block'
-			,marginTop: 8 
+	if(name != undefined){
+		if(item.length == 0){
 			
-		});
-		it.addClass('btn btn-default');
-		it.attr('data-add', address);
-		it.attr('onclick', 'addDisp('+name+', '+ address +');');
-		padre.prepend(it);
-	
-		mensaje("Dispositivo: "+ address +' listado correctamente');
+			var it = $('<div>');
+			it.text(name);
+			it.css({
+				display: 'block'
+				,marginTop: 8 
+			});
+			it.addClass('btn btn-default');
+			it.attr('data-add', address);
+			it.attr('onclick', 'addDisp(\''+name+'\', \''+ address +'\');');
+			padre.prepend(it);
+		
+			mensaje("Dispositivo: "+ address +' listado correctamente');
+		}
 	}
 	
 }
