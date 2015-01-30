@@ -107,15 +107,16 @@ function startScan()
 
 function startScanSuccess(obj)
 {
+	mensaje("Escaneando");
+	
   if (obj.status == "scanResult")
   {
 
-    addDevice(obj.address, obj.name);
 	mensaje("Se encontro el dispositivo: "+obj.address );
+    addDevice(obj.address, obj.name);
   }
   else if (obj.status == "scanStarted")
   {
-	mensaje("Escaneando");
   }
   else
   {
@@ -157,13 +158,12 @@ function addDevice(address, name){
 	var padre = $( alerts.disp_find ),
 	id = $( '#add-'+address );
 	
-	if(id.length ==  0){
-		
+	if(id.length <= 0){
 		mensaje("Dispositivo: "+obj.address+' listado correctamente');
 		var it = $('<div>');
 		it.text(name);
 		it.addClass('btn btn-default');
-		it.attr('attr', 'add-'+address);
+		it.attr('id', 'add-'+address);
 		it.attr('onclick', 'addDisp('+name+', '+ address +');');
 		padre.prepend(it);
 	}
