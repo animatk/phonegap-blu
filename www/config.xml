@@ -14,15 +14,11 @@
 			Alejandro  St.
 	</author>
 	
-	<preference name="permissions" value="none"/>
+	<!--preference name="permissions" value="none"/-->
 	<!--feature name="http://api.phonegap.com/1.0/network"/-->
 	
 	<access origin="*"/>
 	
-	<feature name="Accelerometer">
-		<!--param name="ios-package" value="CDVAccelerometer" /-->
-		<param name="android-package" value="org.apache.cordova.devicemotion.AccelListener" />
-	</feature>
 	
 	<gap:plugin name="com.randdusing.bluetoothle" version="2.0.0" />
 	
