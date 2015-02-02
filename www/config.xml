@@ -19,6 +19,11 @@
 	
 	<access origin="*"/>
 	
+	<feature name="Accelerometer">
+		<param name="ios-package" value="CDVAccelerometer" />
+		<param name="android-package" value="org.apache.cordova.devicemotion.AccelListener" />
+	</feature>
+	
 	<gap:plugin name="com.randdusing.bluetoothle" version="2.0.0" />
 	
 	<!-- Define app icon for each platform. -->
