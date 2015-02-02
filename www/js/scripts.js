@@ -644,6 +644,7 @@ function addDisp(name, address){
 function principal(form){
 	ak_navigate( form ,'#principal');
 	initClock();
+	steps();
 }
 
 function initClock() {
@@ -697,10 +698,15 @@ function steps(acceleration){
 			  //error
 		  }, options);
 	  }else{
+		  
 			var x = acceleration.x
 			, y = acceleration.y
 			, z = acceleration.z
 			, aceleracion = sqrt(x * x + y * y + z * z);
+			
+			mensaje("--" );
+			mensaje("demonio aceleracion : X:"+x+' Y:'+ y +' Z:'+ z );
+			mensaje("Aceleracion :"+aceleracion );
 			
 			if(aceleracion >= 2){
 			   STEP = STEP+1;
