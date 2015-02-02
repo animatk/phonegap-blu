@@ -703,16 +703,15 @@ function stepsSuccess(acceleration){
 	var x = acceleration.x
 	, y = acceleration.y
 	, z = acceleration.z
-//	, aceleracion = sqrt(x * x + y * y + z * z);
+	, aceleracion = sqrt(x * x + y * y + z * z);
 
 	mensaje("demonio aceleracion : X:"+x+' Y:'+ y +' Z:'+ z );
 	mensaje("Aceleracion : "+ x );
 
-//	if(aceleracion >= 2){
-//	   STEP = STEP+1;
-//	}
-//	$('.PASOS').html(STEP);
-	$('.PASOS').html(x);
+	if(aceleracion >= 2){
+	   STEP = STEP+1;
+	}
+	$('.PASOS').html(STEP);
 }
 
 function stopsteps() {
