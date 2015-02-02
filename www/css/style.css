@@ -258,6 +258,16 @@ header{
 #menu{ z-index: 3; background: none; }
 /* end secciones */
 
+
+/* dispositivos */
+.disp-list .activo,
+.disp-find .activo{
+	color: #fff;
+	background: #92C59F;
+	border-color: #87B694;
+}
+/* end dispositivos */
+
 /* columnas */
 
 .row{

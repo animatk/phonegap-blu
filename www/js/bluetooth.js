@@ -160,7 +160,7 @@ function stopScanError(obj)
 
 function addDevice(address, name){
 	var padre = $( alerts.disp_find ),
-	item = $( 'div[data-add="'+address+'"]' );
+	item = $( alerts.disp_find +' div[data-add="'+address+'"]' );
 	
 	mensaje("Nombre Dispositivo: "+name );
 	
@@ -277,6 +277,7 @@ function subscribeSuccess(obj)
 	if(obj.value != undefined){
 		obj.ak_valor = bluetoothle.encodedStringToBytes(obj.value);	
 		$('.PPM').html(obj.ak_valor[1]);
+		addClassHRM();
 	}
 
 	if (obj.status == "subscribedResult")
@@ -289,15 +290,27 @@ function subscribeSuccess(obj)
 	}
 	else
   {
+	removeClassHRM();  
   	alert( alerts.error_conectar + ' code : subscribeSuccess' );
   }
 }
 
 function subscribeError(obj)
 {
-  alert( alerts.error_conectar + ' code : subscribeError' );
+	removeClassHRM();  
+	alert( alerts.error_conectar + ' code : subscribeError' );
 }
 
 function mensaje(msj){
 	$('#mensajes').prepend('<p>'+msj+'</p>');
+}
+
+function addClassHRM(){
+	if(DEVICE != 0){
+		$('#botonDisp').attr('data-add', DEVICE);
+		$('div[data-add="'+DEVICE+'"]').addClass('activo');
+	}
+}
+function removeClassHRM(){
+	$('div[data-add="'+DEVICE+'"]').removeClass('activo').attr('data-add', "");
 }

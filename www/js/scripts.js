@@ -573,11 +573,11 @@ function listarDispositivos(){
 	if( tot > 0){
 		for(var i=0; i<tot; i++){
 			var obj = dispositivos[i];
-			output += '<div class="btn btn-default" onclick="isInitialized(); DEVICE=\''+obj.address+'\'; "> '+obj.name+' </div>';
+			output += '<div data-add="'+obj.address+'" class="btn btn-default" onclick="isInitialized(); DEVICE=\''+obj.address+'\'; "> '+obj.name+' </div>';
 		}
 			
 	}else{
-		
+		//
 		output += '<div class="ak-alert"> No hay dispositivos recordados </div>';
 	}
 	
@@ -631,7 +631,8 @@ function addDisp(name, address){
 	//crear o resetear la variable de sesion de dispositivos
 	SES['dispositivos'] = JSON.stringify(dispositivos);
 	//conectar al dispositivo
-	connect(address);
+	isInitialized(); 
+	DEVICE=address;
 	
 	$('#dispMain').removeClass('oculto');
 	$('#btn-accion-izq').removeClass('oculto');
