@@ -169,11 +169,7 @@ function addDevice(address, name){
 			
 			var it = $('<div>');
 			it.text(name);
-			it.css({
-				display: 'block'
-				,marginTop: 8 
-			});
-			it.addClass('btn btn-default');
+			it.addClass('disp-item btn btn-default');
 			it.attr('data-add', address);
 			it.attr('onclick', 'addDisp(\''+name+'\', \''+ address +'\');');
 			padre.prepend(it);

@@ -260,6 +260,11 @@ header{
 
 
 /* dispositivos */
+.disp-list .disp-item,
+.disp-find .disp-item{
+	display: block;
+	margin-bottom: 10px;
+}
 .disp-list .activo,
 .disp-find .activo{
 	color: #fff;
@@ -267,6 +272,13 @@ header{
 	border-color: #87B694;
 }
 /* end dispositivos */
+/* principal */
+.ppal-clock{
+	text-align: center;
+	font-size: 60px;
+	padding-bottom: 10px;
+}
+/* end principal */
 
 /* columnas */
 

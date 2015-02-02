@@ -173,7 +173,7 @@
 				</div>
 				<div>&nbsp;</div>
 				<div class="text-center">
-					<span class="btn btn-primary"> EMPEZAR AHORA </span>
+					<span class="btn btn-primary" onclick="principal('#config');"> EMPEZAR AHORA </span>
 				</div>
 			</div>
 		</section>
@@ -196,7 +196,6 @@
 					</div>
 					<div>&nbsp;</div>
 					<div class="text-center">
-						<span class="btn btn-info" onclick="botonDispositivosStop();"> Detener busqueda </span>
 						<span class="btn btn-danger" onclick="botonDispositivosCancel();"> Cancelar </span>
 					</div>
 				</div>
@@ -209,8 +208,26 @@
 		</section>
 		<section id="principal" class="Page">
 			<div class="container Main">
-				Principal
-				<span class="PPM"></span>
+				<div>
+					<div class="ppal-clock" data-hours="0" data-minutes="0" data-seconds="0"> 00:00 </div>
+				</div>
+				<div class="row row2">
+					<div class="col">
+						<div> Pulso </div>
+						<div class="PPM"> 0 </div>
+					</div>
+					<div class="col">
+						<div> Pasos </div>
+						<div class="PASOS"> 0 </div>
+					</div>
+					<div class="col">
+						<div> Pulso </div>
+						<div class="PPM"></div>
+					</div>
+					<div class="col">
+						<div> Pasos </div>
+					</div>					
+				</div>
 			</div>
 		</section>
 		<section id="mapa" class="Page">
