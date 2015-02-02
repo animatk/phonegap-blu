@@ -14,13 +14,15 @@
 			Alejandro  St.
 	</author>
 	
-	<!--preference name="permissions" value="none"/-->
+	<preference name="permissions" value="none"/>
 	<!--feature name="http://api.phonegap.com/1.0/network"/-->
 	
 	<access origin="*"/>
 	
 	
 	<gap:plugin name="com.randdusing.bluetoothle" version="2.0.0" />
+	<gap:plugin name="org.apache.cordova.device-motion" />
+	<gap:plugin name="org.apache.cordova.device-orientation" />
 	
 	<!-- Define app icon for each platform. -->
 	<!--icon src="icon.png" />
