@@ -691,30 +691,26 @@ function checkTime(i) {
 }
 
 function steps(acceleration){
-	
-	  if(aceleracion == undefined){		  
-		  var options = { frequency: 3000 };
-		  StepID = navigator.accelerometer.watchAcceleration(steps, function(){
-			  //error
-		  }, options);
-	  }else{
+	mensaje("-pasos-" );
 		  
-			var x = acceleration.x
-			, y = acceleration.y
-			, z = acceleration.z
-			, aceleracion = sqrt(x * x + y * y + z * z);
-			
-			mensaje("--" );
-			mensaje("demonio aceleracion : X:"+x+' Y:'+ y +' Z:'+ z );
-			mensaje("Aceleracion :"+aceleracion );
-			
-			if(aceleracion >= 2){
-			   STEP = STEP+1;
-			}
-			
-			$('.PASOS').html(STEP);
-	  }
-	
+	var options = { frequency: 3000 };
+	StepID = navigator.accelerometer.watchAcceleration(stepsSuccess, function(){
+	  //error
+	}, options);
+}
+function stepsSuccess(acceleration){
+	var x = acceleration.x
+	, y = acceleration.y
+	, z = acceleration.z
+	, aceleracion = sqrt(x * x + y * y + z * z);
+
+	mensaje("demonio aceleracion : X:"+x+' Y:'+ y +' Z:'+ z );
+	mensaje("Aceleracion :"+aceleracion );
+
+	if(aceleracion >= 2){
+	   STEP = STEP+1;
+	}
+	$('.PASOS').html(STEP);
 }
 
 function stopsteps() {
