@@ -690,7 +690,7 @@ function checkTime(i) {
     return i;
 }
 
-function steps(acceleration){
+function steps(){
 	mensaje("-pasos-" );
 		  
 	var options = { frequency: 3000 };
@@ -699,18 +699,20 @@ function steps(acceleration){
 	}, options);
 }
 function stepsSuccess(acceleration){
+	mensaje("Aceleracion --" );
 	var x = acceleration.x
 	, y = acceleration.y
 	, z = acceleration.z
-	, aceleracion = sqrt(x * x + y * y + z * z);
+//	, aceleracion = sqrt(x * x + y * y + z * z);
 
 	mensaje("demonio aceleracion : X:"+x+' Y:'+ y +' Z:'+ z );
-	mensaje("Aceleracion :"+aceleracion );
+	mensaje("Aceleracion : "+ x );
 
-	if(aceleracion >= 2){
-	   STEP = STEP+1;
-	}
-	$('.PASOS').html(STEP);
+//	if(aceleracion >= 2){
+//	   STEP = STEP+1;
+//	}
+//	$('.PASOS').html(STEP);
+	$('.PASOS').html(x);
 }
 
 function stopsteps() {

@@ -21,8 +21,6 @@
 	
 	
 	<gap:plugin name="com.randdusing.bluetoothle" version="2.0.0" />
-	<gap:plugin name="org.apache.cordova.device-motion" />
-	<gap:plugin name="org.apache.cordova.device-orientation" />
 	
 	<!-- Define app icon for each platform. -->
 	<!--icon src="icon.png" />
