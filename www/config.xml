@@ -22,6 +22,7 @@
 	
 	<gap:plugin name="com.randdusing.bluetoothle" version="2.0.0" />
 	<gap:plugin name="org.apache.cordova.device-motion" version="0.2.10" />
+	<gap:plugin name="org.apache.cordova.geolocation" version="0.3.2" />
 	
 	<!-- Define app icon for each platform. -->
 	<!--icon src="icon.png" />
