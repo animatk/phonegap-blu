@@ -145,7 +145,6 @@ function stopScanSuccess(obj)
 
   if (obj.status == "scanStopped")
   {
-	
   }
   else
   {

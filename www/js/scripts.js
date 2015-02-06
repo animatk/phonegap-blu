@@ -702,16 +702,16 @@ function stepsSuccess(acceleration){
 	mensaje("Aceleracion --" );
 	var x = acceleration.x
 	, y = acceleration.y
-	, z = acceleration.z
-	, aceleracion = sqrt(x * x + y * y + z * z);
+	, z = acceleration.z;
+	//, aceleracion = sqrt(x * x + y * y + z * z);
 
 	mensaje("demonio aceleracion : X:"+x+' Y:'+ y +' Z:'+ z );
 	mensaje("Aceleracion : "+ x );
 
-	if(aceleracion >= 2){
-	   STEP = STEP+1;
-	}
-	$('.PASOS').html(STEP);
+//	if(aceleracion >= 2){
+//	   STEP = STEP+1;
+//	}
+//	$('.PASOS').html(STEP);
 }
 
 function stopsteps() {
