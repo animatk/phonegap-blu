@@ -703,11 +703,13 @@ function stepsSuccess(acceleration){
 	var x = acceleration.x
 	, y = acceleration.y
 	, z = acceleration.z
+	, sqrt = Math.sqrt(x*x +y*y +z*z);
 	, promedio = (x +y +z)/3;
 	
 
 	mensaje("Aceleracion : X:"+x+' Y:'+ y +' Z:'+ z );
 	mensaje("Promedio : "+ promedio );
+	mensaje("Promedio SQRT : "+ sqrt );
 
 //	if(aceleracion >= 2){
 //	   STEP = STEP+1;
