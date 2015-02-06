@@ -702,11 +702,12 @@ function stepsSuccess(acceleration){
 	mensaje("Aceleracion --" );
 	var x = acceleration.x
 	, y = acceleration.y
-	, z = acceleration.z;
-	//, aceleracion = sqrt(x * x + y * y + z * z);
+	, z = acceleration.z
+	, promedio = (x +y +z)/3;
+	
 
-	mensaje("demonio aceleracion : X:"+x+' Y:'+ y +' Z:'+ z );
-	mensaje("Aceleracion : "+ x );
+	mensaje("Aceleracion : X:"+x+' Y:'+ y +' Z:'+ z );
+	mensaje("Promedio : "+ promedio );
 
 //	if(aceleracion >= 2){
 //	   STEP = STEP+1;
