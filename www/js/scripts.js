@@ -703,7 +703,7 @@ function stepsSuccess(acceleration){
 	var x = acceleration.x
 	, y = acceleration.y
 	, z = acceleration.z
-	, sqrt = Math.sqrt(x*x +y*y +z*z);
+	, sqrt = Math.sqrt(x*x +y*y +z*z)
 	, promedio = (x +y +z)/3;
 	
 
