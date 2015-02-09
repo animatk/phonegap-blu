@@ -712,8 +712,13 @@ function stepsSuccess(acceleration){
 	mensaje("X : "+ x );
 	
 	if(ACCE != promedio){
+		//
+		if(promedio > (promedio + sensible) 
+			|| promedio < (promedio - sensible)){
+			STEP = STEP+1;
+		}
+		
 		ACCE = promedio;
-		STEP = STEP+1;
 	}
 	
 /*	if (promedio > (3 + sensible)) {
