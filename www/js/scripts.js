@@ -710,14 +710,14 @@ function steps(){
 
 function stepsSuccess(acceleration){
 	
-	mensaje("Aceleracion --" );
+//	mensaje("Aceleracion --" );
 	var x = acceleration.x
 	, sensible = parseInt($('#sensible').val())
 	, y = acceleration.y
 	, z = acceleration.z
 	, promedio = Math.round((x +y +z)/3);
 
-	mensaje("X : "+ x );
+//	mensaje("X : "+ x );
 	
 	if(ACCE != promedio && !PAUSED){
 		//
