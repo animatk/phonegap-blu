@@ -693,7 +693,7 @@ function checkTime(i) {
 function steps(){
 	mensaje("-pasos-" );
 		  
-	var options = { frequency: 1000 };
+	var options = { frequency: 500 };
 	StepID = navigator.accelerometer.watchAcceleration(stepsSuccess, function(){
 	  //error
 	}, options);
@@ -710,7 +710,7 @@ function stepsSuccess(acceleration){
 
 	mensaje("Promedio : "+ promedio );
 	
-	if (promedio > sensible) {
+	if (promedio > (3 + sensible)) {
 		STEP = STEP+1;
 	}
 	
