@@ -720,11 +720,7 @@ function stepsSuccess(acceleration){
 		
 		ACCE = promedio;
 	}
-	
-/*	if (promedio > (3 + sensible)) {
-		STEP = STEP+1;
-	}
-*/
+
 	
 	$('.PASOS').html(STEP);
 }
