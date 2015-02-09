@@ -647,6 +647,7 @@ function principal(form){
 	ak_navigate( form ,'#principal');
 	initClock();
 	steps();
+	geo();
 	
 	$('#BtnPausar').removeClass('oculto');
 	$('#BtnContinuar').addClass('oculto');
@@ -738,6 +739,25 @@ function stopsteps() {
 		navigator.accelerometer.clearWatch(StepID);
 		StepID = null;
 	}
+}
+
+function geo(){
+	var options = { timeout: 5000, enableHighAccuracy: true };
+    watchID = navigator.geolocation.watchPosition(geoSuccess, function(){
+	  //error
+	}, options);
+	
+}
+
+function geoSuccess(position){
+	mensaje('Latitude: '        + position.coords.latitude          + '<br/>' +
+          'Longitude: '         + position.coords.longitude         + '<br/>' +
+          'Altitude: '          + position.coords.altitude          + '<br/>' +
+          'Accuracy: '          + position.coords.accuracy          + '<br/>' +
+          'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '<br/>' +
+          'Heading: '           + position.coords.heading           + '<br/>' +
+          'Speed: '             + position.coords.speed             + '<br/>' +
+          'Timestamp: '         + position.timestamp                + '<br/>');
 }
 
 function pause(){
