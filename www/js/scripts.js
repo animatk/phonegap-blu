@@ -4,6 +4,7 @@ var SES = window.localStorage,
 	SECOND = 0,
 	STEP = 0, //pasos
 	ACCE = 0, //ACCELERATION
+	PAUSED = true, //ACCELERATION
 	StepID = null, //acelerometro id
 	SITE = 'https://irisdev.co/siluet_app/index.php/';
 
@@ -646,13 +647,18 @@ function principal(form){
 	ak_navigate( form ,'#principal');
 	initClock();
 	steps();
+	
+	$('#BtnPausar').removeClass('oculto');
+	$('#BtnContinuar').addClass('oculto');
+	PAUSED = false;
+	window.plugin.backgroundMode.enable();
 }
 
 function initClock() {
     var today=new Date(),
     SEGUNDO = today.getSeconds();
 	
-	if(SEGUNDO != SECOND){
+	if(SEGUNDO != SECOND && !PAUSED){
 		SECOND = SEGUNDO;		
 		var clock = $('.ppal-clock'),
 		h = parseInt( clock.attr('data-hours')), 
@@ -686,6 +692,7 @@ function initClock() {
 	}
     var t = setTimeout(function(){ initClock(); },1000);
 }
+
 function checkTime(i) {
     if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
     return i;
@@ -711,10 +718,10 @@ function stepsSuccess(acceleration){
 
 	mensaje("X : "+ x );
 	
-	if(ACCE != promedio){
+	if(ACCE != promedio && !PAUSED){
 		//
-		if(ACCE > (promedio + sensible) 
-			|| ACCE < (promedio - sensible)){
+		if(ACCE > (promedio + sensible)){ 
+		//	|| ACCE < (promedio - sensible)){
 			STEP = STEP+1;
 		}
 		
@@ -726,7 +733,6 @@ function stepsSuccess(acceleration){
 }
 
 
-
 function stopsteps() {
 	if (StepID) {
 		navigator.accelerometer.clearWatch(StepID);
@@ -734,6 +740,12 @@ function stopsteps() {
 	}
 }
 
-
+function pause(){
+	$('#BtnPausar').addClass('oculto');
+	$('#BtnContinuar').removeClass('oculto');
+	PAUSED = true;
+	window.plugin.backgroundMode.disabled();
+	
+}
 
 /*! end principal */
