@@ -742,11 +742,15 @@ function stopsteps() {
 }
 
 function geo(){
-	var options = { timeout: 5000, enableHighAccuracy: true };
-    watchID = navigator.geolocation.watchPosition(geoSuccess, function(error){
-	  mensaje("Geo Error : " + error.code + "<br/> Mensaje : " + error.message );
-	}, options);
 	
+//	var options = { timeout: 5000, enableHighAccuracy: true };
+	var options = { enableHighAccuracy: true };
+//  watchID = navigator.geolocation.watchPosition(geoSuccess, function(error){
+    watchID = navigator.geolocation.getCurrentPosition(geoSuccess, function(error){
+	  mensaje("Geo Error : " + error.code + "<br/> Mensaje : " + error.message );
+	  setTimeout(function(){ geo(); }, 5000);
+	}, options);
+
 }
 
 function geoSuccess(position){
@@ -758,6 +762,8 @@ function geoSuccess(position){
           'Heading: '           + position.coords.heading           + '<br/>' +
           'Speed: '             + position.coords.speed             + '<br/>' +
           'Timestamp: '         + position.timestamp                + '<br/>');
+		  
+	setTimeout(function(){ geo(); }, 5000);
 }
 
 function pause(){
