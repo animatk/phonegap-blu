@@ -743,8 +743,8 @@ function stopsteps() {
 
 function geo(){
 	var options = { timeout: 5000, enableHighAccuracy: true };
-    watchID = navigator.geolocation.watchPosition(geoSuccess, function(){
-	  //error
+    watchID = navigator.geolocation.watchPosition(geoSuccess, function(error){
+	  mensaje("Geo Error : " + error.code + "<br/> Mensaje : " + error.message );
 	}, options);
 	
 }
