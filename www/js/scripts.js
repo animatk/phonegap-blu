@@ -693,44 +693,30 @@ function checkTime(i) {
 function steps(){
 	mensaje("-pasos-" );
 		  
-	var options = { frequency: 3000 };
+	var options = { frequency: 1000 };
 	StepID = navigator.accelerometer.watchAcceleration(stepsSuccess, function(){
 	  //error
 	}, options);
 }
 
 function stepsSuccess(acceleration){
+	
 	mensaje("Aceleracion --" );
 	var x = acceleration.x
+	, sensible = parseInt($('#sensible').val())
 	, y = acceleration.y
 	, z = acceleration.z
-	, sqrt = Math.sqrt(x*x +y*y +z*z)
-	, promedio = (x +y +z)/3;
-	
-	mensaje("Aceleracion : X:"+x+' Y:'+ y +' Z:'+ z );
+	, promedio = Math.round((x +y +z)/3);
+
 	mensaje("Promedio : "+ promedio );
-	mensaje("Promedio SQRT : "+ sqrt );
 	
-	var accelx = Math.round(acceleration.x);
-	
-	mensaje("Aceleracion en x  : "+ accelx );
-	mensaje("Math abs en x  : "+ Math.abs(accelx) );
-	
-	if (Math.abs(accelx) > 1) {
+	if (promedio > sensible) {
 		STEP = STEP+1;
 	}
 	
 	$('.PASOS').html(STEP);
 }
 
-
-
- var element = document.getElementById('accelerometer');
-              var timestamp = acceleration.timestamp
-              //element.innerHTML = 'Acceleration X: ' + Math.abs(accelx) + '<br />' +
-              //'Acceleration Y: ' + acceleration.y + '<br />' +
-              //'Acceleration Z: ' + acceleration.z + '<br />' + 
-              //'Timestamp: '      + acceleration.timestamp + '<br />';
 
 
 function stopsteps() {
