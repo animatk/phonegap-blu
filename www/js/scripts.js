@@ -708,13 +708,13 @@ function stepsSuccess(acceleration){
 	, z = acceleration.z
 	, promedio = Math.round((x +y +z)/3);
 
-	mensaje("Promedio : "+ promedio );
+	mensaje("X : "+ x );
 	
 	if (promedio > (3 + sensible)) {
 		STEP = STEP+1;
 	}
 	
-	$('.PASOS').html(STEP);
+	//$('.PASOS').html(STEP);
 }
 
 
