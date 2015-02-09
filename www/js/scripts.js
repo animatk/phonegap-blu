@@ -698,6 +698,7 @@ function steps(){
 	  //error
 	}, options);
 }
+
 function stepsSuccess(acceleration){
 	mensaje("Aceleracion --" );
 	var x = acceleration.x
@@ -706,16 +707,31 @@ function stepsSuccess(acceleration){
 	, sqrt = Math.sqrt(x*x +y*y +z*z)
 	, promedio = (x +y +z)/3;
 	
-
 	mensaje("Aceleracion : X:"+x+' Y:'+ y +' Z:'+ z );
 	mensaje("Promedio : "+ promedio );
 	mensaje("Promedio SQRT : "+ sqrt );
-
-//	if(aceleracion >= 2){
-//	   STEP = STEP+1;
-//	}
-//	$('.PASOS').html(STEP);
+	
+	var accelx = Math.round(acceleration.x);
+	
+	mensaje("Aceleracion en x  : "+ accelx );
+	mensaje("Math abs en x  : "+ Math.abs(accelx) );
+	
+	if (Math.abs(accelx) > 1) {
+		STEP = STEP+1;
+	}
+	
+	$('.PASOS').html(STEP);
 }
+
+
+
+ var element = document.getElementById('accelerometer');
+              var timestamp = acceleration.timestamp
+              //element.innerHTML = 'Acceleration X: ' + Math.abs(accelx) + '<br />' +
+              //'Acceleration Y: ' + acceleration.y + '<br />' +
+              //'Acceleration Z: ' + acceleration.z + '<br />' + 
+              //'Timestamp: '      + acceleration.timestamp + '<br />';
+
 
 function stopsteps() {
 	if (StepID) {
