@@ -3,6 +3,7 @@ var Zepto=function(){function L(t){return null==t?String(t):j[S.call(t)]||"objec
 var SES = window.localStorage,
 	SECOND = 0,
 	STEP = 0, //pasos
+	ACCE = 0, //ACCELERATION
 	StepID = null, //acelerometro id
 	SITE = 'https://irisdev.co/siluet_app/index.php/';
 
@@ -710,11 +711,17 @@ function stepsSuccess(acceleration){
 
 	mensaje("X : "+ x );
 	
-	if (promedio > (3 + sensible)) {
+	if(ACCE != promedio){
+		ACCE = promedio;
 		STEP = STEP+1;
 	}
 	
-	//$('.PASOS').html(STEP);
+/*	if (promedio > (3 + sensible)) {
+		STEP = STEP+1;
+	}
+*/
+	
+	$('.PASOS').html(STEP);
 }
 
 
