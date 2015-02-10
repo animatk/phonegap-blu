@@ -645,53 +645,68 @@ function addDisp(name, address){
 /*! principal */
 function principal(form){
 	ak_navigate( form ,'#principal');
-	initClock();
-	steps();
-	geo();
+	
+	var actividad = [];
+	if(SES['actividad']){
+		actividad = JSON.parse(SES['actividad']);
+	}
+	
+	actividad.push({
+		ini : new Date()
+	});
+	
+	SES['actividad'] = JSON.stringify(actividad);
 	
 	$('#BtnPausar').removeClass('oculto');
 	$('#BtnContinuar').addClass('oculto');
 	PAUSED = false;
-	window.plugin.backgroundMode.enable();
+	
+	initClock();
+//	steps();
+//	geo();
+	
+//	window.plugin.backgroundMode.enable();
 }
 
-function initClock() {
-    var today=new Date(),
-    SEGUNDO = today.getSeconds();
+function initClock(obj) {
 	
-	if(SEGUNDO != SECOND && !PAUSED){
-		SECOND = SEGUNDO;		
-		var clock = $('.ppal-clock'),
-		h = parseInt( clock.attr('data-hours')), 
-		m = parseInt( clock.attr('data-minutes')), 
-		s = parseInt( clock.attr('data-seconds')); 
-		
-		if(s<59){
-			s=s+1;
-		}else{
-			s=0;
-			if(m<59){
-				m=m+1;
-			}else{
-				h=h+1;
-				m=0;	
-			}
-		}
-		
-		clock.attr('data-hours', h);
-		clock.attr('data-minutes', m);
-		clock.attr('data-seconds', s); 
-		var m = checkTime(m);
-		var s = checkTime(s);
-		
-		if( h > 0 ){
-			var h = checkTime(h);
-			$('.ppal-clock').html( h+":"+m+":"+s);
-		}else{
-			$('.ppal-clock').html( m+":"+s );
-		}	
+	if(PAUSED){
+		return false;
 	}
-    var t = setTimeout(function(){ initClock(); },1000);
+	
+	var actividad = [];
+	
+	if(obj != undefined){			
+		actividad = obj;
+	}else{
+		if(SES['actividad']){
+			actividad = JSON.parse(SES['actividad']);
+		}
+	}
+	
+	var actual = actividad[actividad.length-1];
+	var time_ini = new Date();
+	
+	if(actual.ini != undefined){
+		time_ini = actual.ini;
+	}
+	
+	var t1 = new Date(time_ini),
+    t2 = new Date(),
+    dif = t2-t1,
+    sec = dif/1000,
+    h = parseInt( sec / 3600 ) % 24,
+    m = checkTime(parseInt( sec / 60 ) % 60),
+    s = checkTime(parseInt( sec % 60 ));        
+    
+    if( h > 0 ){
+        var h = checkTime(h);
+        $('.ppal-clock').html( h+":"+m+":"+s);
+    }else{
+        $('.ppal-clock').html( m+":"+s );
+    } 
+   
+    var t = setTimeout(function(){ initClock(actividad); },1000);
 }
 
 function checkTime(i) {
@@ -767,10 +782,18 @@ function geoSuccess(position){
 }
 
 function pause(){
+	
+	if(SES['actividad']){
+		var actividad = JSON.parse(SES['actividad']);
+		actividad[actividad.length-1].end = new Date();
+		//
+		SES['actividad'] = JSON.stringify(actividad);
+	}
+	
 	$('#BtnPausar').addClass('oculto');
 	$('#BtnContinuar').removeClass('oculto');
 	PAUSED = true;
-	window.plugin.backgroundMode.disabled();
+//	window.plugin.backgroundMode.disabled();
 	
 }
 
