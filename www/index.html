@@ -205,34 +205,6 @@
 		<section id="perfil" class="Page">
 			<div class="container Main">
 				Perfil
-			</div>
-		</section>
-		<section id="principal" class="Page">
-			<div class="container Main">
-				<div>
-					<div class="ppal-clock"> 00:00 </div>
-				</div>
-				<div class="row row2">
-					<div class="col">
-						<div> Pulso </div>
-						<div class="PPM"> 0 </div>
-					</div>
-					<div class="col">
-						<div> Pasos </div>
-						<div class="PASOS"> 0 </div>
-					</div>
-					<div class="col">
-						<div> Pulso </div>
-						<div class="PPM"></div>
-					</div>
-					<div class="col">
-						<div> Pasos </div>
-					</div>					
-				</div>
-				<div>
-					<span id="BtnPausar" class="btn btn-info" onclick="pause();"> Pausar </span>
-					<span id="BtnContinuar" class="btn btn-success oculto" onclick="principal();"> Continuar </span>
-				</div>
 				<div>
 					<select id="sensible" class="form-control">
 						<option value="1"> 1 </option>
@@ -241,6 +213,38 @@
 						<option value="4"> 4 </option>
 						<option value="5"> 5 </option>
 					</select>
+				</div>
+			</div>
+		</section>
+		<section id="principal" class="Page">
+			<div class="container Main">
+				<div>
+					<div class="ppal-clock"> 00:00 </div>
+				</div>
+				<div class="row row2 ppal-deta">
+					<div class="col">
+						<div class="ppal-deta-tit"> Pulso </div>
+						<div class="ppal-deta-num PPM"> 0 </div>
+					</div>
+					<div class="col">
+						<div class="ppal-deta-tit"> Pasos </div>
+						<div class="ppal-deta-num PASOS"> 0 </div>
+					</div>
+					<div class="col">
+						<div class="ppal-deta-tit"> Distancia </div>
+						<div class="ppal-deta-num"> 0 </div>
+					</div>
+					<div class="col">
+						<div class="ppal-deta-tit"> Calorias </div>
+						<div class="ppal-deta-num"> 0 </div>
+					</div>					
+				</div>
+				<div>
+					<span id="BtnPausar" class="btn btn-info" onclick="pause();"> Pausar </span>
+					<span id="BtnContinuar" class="btn btn-success oculto" onclick="principal();"> Continuar </span>
+				</div>
+				<div id="map-canvas">
+					<!--google maps-->
 				</div>
 			</div>
 		</section>

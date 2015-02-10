@@ -6,6 +6,7 @@ var SES = window.localStorage,
 	ACCE = 0, //ACCELERATION
 	PAUSED = true, //ACCELERATION
 	StepID = null, //acelerometro id
+	MAP = null, //acelerometro id
 	SITE = 'https://irisdev.co/siluet_app/index.php/';
 
 function ak_buscalabel(form, ipt){
@@ -380,6 +381,15 @@ function jsonp(url, callback) {
 	document.body.appendChild(script);
 }
 
+function loadScript(url, callback) {
+	var script = document.createElement('script');
+	script.onload = function(){
+		callback();
+	};
+	script.src = url;
+	document.body.appendChild(script);
+}
+
 function post(url, data, callback) {
 	$.ajax({
 		url: url
@@ -590,16 +600,13 @@ function listarDispositivos(){
 
 
 function botonDispositivosFind(){
-	//
 	$('#dispMain').addClass('oculto');
 	$('#btn-accion-izq').addClass('oculto');
 	$('#dispFind').removeClass('oculto');
-	
 	isInitialized();
 }
 
 function botonDispositivosCancel(){
-	//
 	stopScan();
 	$('#dispMain').removeClass('oculto');
 	$('#btn-accion-izq').removeClass('oculto');
@@ -610,7 +617,6 @@ function botonDispositivosCancel(){
 function addDisp(name, address){
 	stopScan();
 	mensaje("Funcion addDisp llamada con: "+name+' y '+ address );
-	
 	var dispositivos = new Array(),
 	insert = true;
 	if(SES['dispositivos']){
@@ -632,11 +638,9 @@ function addDisp(name, address){
 	//conectar al dispositivo
 	isInitialized(); 
 	DEVICE=address;
-	
 	$('#dispMain').removeClass('oculto');
 	$('#btn-accion-izq').removeClass('oculto');
 	$('#dispFind').addClass('oculto');
-	
 	listarDispositivos();
 }
 
@@ -645,37 +649,35 @@ function addDisp(name, address){
 /*! principal */
 function principal(form){
 	ak_navigate( form ,'#principal');
-	
 	var actividad = [];
 	if(SES['actividad']){
 		actividad = JSON.parse(SES['actividad']);
 	}
-	
 	actividad.push({
 		ini : new Date()
 	});
-	
 	SES['actividad'] = JSON.stringify(actividad);
-	
 	$('#BtnPausar').removeClass('oculto');
 	$('#BtnContinuar').addClass('oculto');
 	PAUSED = false;
-	
 	initClock();
-//	steps();
-//	geo();
-	
-//	window.plugin.backgroundMode.enable();
+	steps();
+	geo();
+	window.plugin.backgroundMode.enable();
+	//
+	if(MAP == null){			
+		loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyAihfNS3dpn6vB16RXRREYAy9jXEf63yUE', function(){
+			map_init();
+		});
+	}
 }
 
-function initClock(obj) {
-	
+function initClock(obj, segundos) {
 	if(PAUSED){
 		return false;
 	}
-	
-	var actividad = [];
-	
+	var actividad = [],
+	segundos_mas = 0;
 	if(obj != undefined){			
 		actividad = obj;
 	}else{
@@ -683,30 +685,39 @@ function initClock(obj) {
 			actividad = JSON.parse(SES['actividad']);
 		}
 	}
-	
+	if(segundos != undefined){
+		segundos_mas = segundos;
+	}else{
+		var tot = actividad.length;
+		//
+		if(tot > 1){			
+			for(var a=0; a<tot-1; a++){
+				var act = actividad[a];
+				if(act.seg != undefined){
+					segundos_mas = segundos_mas + act.seg;
+				}
+			}
+		}
+	}
 	var actual = actividad[actividad.length-1];
 	var time_ini = new Date();
-	
 	if(actual.ini != undefined){
 		time_ini = actual.ini;
 	}
-	
 	var t1 = new Date(time_ini),
     t2 = new Date(),
     dif = t2-t1,
-    sec = dif/1000,
+    sec =  parseInt((dif/1000) + segundos_mas),
     h = parseInt( sec / 3600 ) % 24,
     m = checkTime(parseInt( sec / 60 ) % 60),
     s = checkTime(parseInt( sec % 60 ));        
-    
     if( h > 0 ){
         var h = checkTime(h);
         $('.ppal-clock').html( h+":"+m+":"+s);
     }else{
         $('.ppal-clock').html( m+":"+s );
     } 
-   
-    var t = setTimeout(function(){ initClock(actividad); },1000);
+    var t = setTimeout(function(){ initClock(actividad, segundos_mas); },1000);
 }
 
 function checkTime(i) {
@@ -715,8 +726,7 @@ function checkTime(i) {
 }
 
 function steps(){
-	mensaje("-pasos-" );
-		  
+//	mensaje("-pasos-" );
 	var options = { frequency: 500 };
 	StepID = navigator.accelerometer.watchAcceleration(stepsSuccess, function(){
 	  //error
@@ -724,27 +734,21 @@ function steps(){
 }
 
 function stepsSuccess(acceleration){
-	
 //	mensaje("Aceleracion --" );
 	var x = acceleration.x
 	, sensible = parseInt($('#sensible').val())
 	, y = acceleration.y
 	, z = acceleration.z
 	, promedio = Math.round((x +y +z)/3);
-
 //	mensaje("X : "+ x );
-	
 	if(ACCE != promedio && !PAUSED){
 		//
 		if(ACCE > (promedio + sensible)){ 
 		//	|| ACCE < (promedio - sensible)){
 			STEP = STEP+1;
 		}
-		
 		ACCE = promedio;
-	}
-
-	
+	}	
 	$('.PASOS').html(STEP);
 }
 
@@ -757,7 +761,6 @@ function stopsteps() {
 }
 
 function geo(){
-	
 //	var options = { timeout: 5000, enableHighAccuracy: true };
 	var options = { enableHighAccuracy: true };
 //  watchID = navigator.geolocation.watchPosition(geoSuccess, function(error){
@@ -765,7 +768,6 @@ function geo(){
 	  mensaje("Geo Error : " + error.code + "<br/> Mensaje : " + error.message );
 	  setTimeout(function(){ geo(); }, 5000);
 	}, options);
-
 }
 
 function geoSuccess(position){
@@ -777,24 +779,34 @@ function geoSuccess(position){
           'Heading: '           + position.coords.heading           + '<br/>' +
           'Speed: '             + position.coords.speed             + '<br/>' +
           'Timestamp: '         + position.timestamp                + '<br/>');
-		  
 	setTimeout(function(){ geo(); }, 5000);
 }
 
 function pause(){
-	
 	if(SES['actividad']){
-		var actividad = JSON.parse(SES['actividad']);
-		actividad[actividad.length-1].end = new Date();
+		var actividad = JSON.parse(SES['actividad']),
+		endDate = new Date(),
+		curIndex= actividad.length-1,
+		iniTime = new Date(actividad[curIndex].ini);
+		//
+		actividad[curIndex].end = endDate;
+		actividad[curIndex].seg = parseInt((endDate-iniTime)/1000);
 		//
 		SES['actividad'] = JSON.stringify(actividad);
 	}
-	
 	$('#BtnPausar').addClass('oculto');
 	$('#BtnContinuar').removeClass('oculto');
 	PAUSED = true;
-//	window.plugin.backgroundMode.disabled();
-	
+	window.plugin.backgroundMode.disabled();
 }
-
 /*! end principal */
+/*! map */
+function map_init(){
+	//
+	var mapOptions = {
+		center: { lat: -34.397, lng: 150.644},
+		zoom: 8
+	};
+	MAP = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+}
+/*! end map */

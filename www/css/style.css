@@ -278,6 +278,31 @@ header{
 	font-size: 60px;
 	padding-bottom: 10px;
 }
+
+.ppal-deta{
+	
+}
+.ppal-deta .col{
+	padding: 10px;
+}
+.ppal-deta-tit,
+.ppal-deta-num{
+	text-align: center;
+}
+.ppal-deta-tit{
+	color: #999;
+}
+.ppal-deta-num{
+	color: #000;
+	font-size: 38px;
+}
+
+#map-canvas{
+	width: 100%;
+	height: 180px;
+	background: #ccc;
+	margin: 10px 0 50px;
+}
 /* end principal */
 
 /* columnas */
