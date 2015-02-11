@@ -30,6 +30,7 @@ var SES = window.localStorage,
 	LON = 0, //mapa longitud
 	ICO = null, //icono mapa
 	MAPTIMEOUT = 5000, //tiemout mapa
+	MAPLINE, //linea de recorrido
 	ACCELTIMEOUT = 500, //tiemout mapa
 	CLOCKTIMEOUT = 1000, //tiemout clock
 	ACTIVITYTYPE = 1, //tipo de actividad
@@ -706,10 +707,10 @@ function principal(form){
 	$('#BtnDetener').addClass('oculto');
 	PAUSED = false;
 	initClock();
-//	steps();
+	steps();
 	geo();
 	trackActivity();
-//	window.plugin.backgroundMode.enable();
+	window.plugin.backgroundMode.enable();
 
 }
 function trackActivity(){
@@ -849,7 +850,9 @@ mensaje('Latitude: '        + position.coords.latitude          + '<br/>' +
 	LON = position.coords.longitude;
 	
 	if(MAP != null){
-		var latlng = new google.maps.LatLng( LAT, LON );
+		var latlng = new google.maps.LatLng( LAT, LON ),
+		path = MAPLINE.getPath();
+		path.push(latlng);
 		
 		if(ICO != null){
 			ICO.setPosition(latlng);
@@ -864,6 +867,7 @@ mensaje('Latitude: '        + position.coords.latitude          + '<br/>' +
 			  map: MAP
 			});
 		}
+		
 		MAP.setCenter(latlng);
 	}else{
 		loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyAihfNS3dpn6vB16RXRREYAy9jXEf63yUE&callback=map_init', function(){
@@ -890,7 +894,7 @@ function pause(){
 	$('#BtnDetener').removeClass('oculto');
 	$('#BtnContinuar').removeClass('oculto');
 	PAUSED = true;
-//	window.plugin.backgroundMode.disabled();
+	window.plugin.backgroundMode.disabled();
 }
 function stop(){
 	if(SES['actividad']){
@@ -914,8 +918,16 @@ function map_init(){
 		streetViewControl: false,
 		overviewMapControl: false,
 		center: { lat: LAT, lng: LON},
-		zoom: 18
+		zoom: 16
 	};
 	MAP = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+	
+	var polyOptions = {
+		strokeColor: '#000000',
+		strokeOpacity: 0.8,
+		strokeWeight: 1
+	};
+	MAPLINE = new google.maps.Polyline(polyOptions);
+	MAPLINE.setMap(MAP);
 }
 /*! end map */
