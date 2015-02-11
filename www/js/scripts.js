@@ -30,7 +30,7 @@ var SES = window.localStorage,
 	LON = 0, //mapa longitud
 	ICO = null, //icono mapa
 	MAPTIMEOUT = 5000, //tiemout mapa
-	MAPLINE, //linea de recorrido
+	MAPLINE = null, //linea de recorrido
 	ACCELTIMEOUT = 500, //tiemout mapa
 	CLOCKTIMEOUT = 1000, //tiemout clock
 	ACTIVITYTYPE = 1, //tipo de actividad
@@ -711,10 +711,8 @@ function principal(form){
 	geo();
 	trackActivity();
 	window.plugin.backgroundMode.enable();
-
 }
 function trackActivity(){
-	//
 	if(SES['actividad'] && !PAUSED){
 		var actividad = JSON.parse(SES['actividad']),
 		curIndex= actividad.length-1,
@@ -731,14 +729,11 @@ function trackActivity(){
 			ppm : PPM
 		});
 		actividad[curIndex] = actual;
-		console.log(actividad);
 		//
 		SES['actividad'] = JSON.stringify(actividad);
+		setTimeout(function(){ trackActivity(); }, ACTIVITYTIMEOUT);
 	}
-	//
-	setTimeout(function(){ trackActivity(); }, ACTIVITYTIMEOUT);
 }
-
 function initClock(obj, segundos) {
 	if(PAUSED){
 		return false;
@@ -830,7 +825,6 @@ function geo(){
 //  watchID = navigator.geolocation.watchPosition(geoSuccess, function(error){
     watchID = navigator.geolocation.getCurrentPosition(geoSuccess, function(error){
 	  mensaje("Geo Error : " + error.code + "<br/> Mensaje : " + error.message );
-	  setTimeout(function(){ geo(); }, MAPTIMEOUT);
 	}, options);
 }
 
@@ -845,14 +839,27 @@ mensaje('Latitude: '        + position.coords.latitude          + '<br/>' +
 	  'Speed: '             + position.coords.speed             + '<br/>' +
 	  'Timestamp: '         + position.timestamp                + '<br/>');
 */  
-
+	if(PAUSED){
+		return false;
+	}
 	LAT = position.coords.latitude;
 	LON = position.coords.longitude;
 	
 	if(MAP != null){
-		var latlng = new google.maps.LatLng( LAT, LON ),
-		path = MAPLINE.getPath();
-		path.push(latlng);
+		var latlng = new google.maps.LatLng( LAT, LON );
+		
+		if(MAPLINE != null){
+			var path = MAPLINE.getPath();
+			path.push(latlng);
+		}else{
+			var polyOptions = {
+				strokeColor: '#000000',
+				strokeOpacity: 0.8,
+				strokeWeight: 1
+			};
+			MAPLINE = new google.maps.Polyline(polyOptions);
+			MAPLINE.setMap(MAP);
+		}
 		
 		if(ICO != null){
 			ICO.setPosition(latlng);
@@ -901,6 +908,12 @@ function stop(){
 		mensaje(SES['actividad']);
 		SES.removeItem('actividad');
 	}
+	
+	if(MAPLINE != null){
+		MAPLINE.setMap(null);
+		MAPLINE = null;
+	}
+	
 	ak_navigate('#principal','#inicio');
 	$('#btn-accion-izq').addClass('oculto');
 	$('#btn-accion-der').addClass('oculto');
@@ -921,13 +934,5 @@ function map_init(){
 		zoom: 16
 	};
 	MAP = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-	
-	var polyOptions = {
-		strokeColor: '#000000',
-		strokeOpacity: 0.8,
-		strokeWeight: 1
-	};
-	MAPLINE = new google.maps.Polyline(polyOptions);
-	MAPLINE.setMap(MAP);
 }
 /*! end map */
