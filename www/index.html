@@ -158,10 +158,10 @@
 				<div class="row row2">
 					<p class="text-center"> Lugar de la actividad </p>
 					<div class="col text-center">
-						<span class="btn btn-primary">En Calle</span>
+						<span id="actividad-1" class="actType btn btn-default" onclick="tipoActividad(1);"> En Calle </span>
 					</div>
 					<div class="col text-center">
-						<span class="btn btn-info">En Casa</span>
+						<span id="actividad-2" class="actType btn btn-default" onclick="tipoActividad(2);"> En Casa </span>
 					</div>
 				</div>
 				<div>&nbsp;</div>
@@ -217,35 +217,44 @@
 			</div>
 		</section>
 		<section id="principal" class="Page">
-			<div class="container Main">
-				<div>
-					<div class="ppal-clock"> 00:00 </div>
-				</div>
-				<div class="row row2 ppal-deta">
-					<div class="col">
-						<div class="ppal-deta-tit"> Pulso </div>
-						<div class="ppal-deta-num PPM"> 0 </div>
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide">
+						<div class="container Main">
+							<div>
+								<div class="ppal-clock"> 00:00 </div>
+							</div>
+							<div class="row row2 ppal-deta">
+								<div class="col">
+									<div class="ppal-deta-tit"> Pulso </div>
+									<div class="ppal-deta-num PPM"> 0 </div>
+								</div>
+								<div class="col">
+									<div class="ppal-deta-tit"> Pasos </div>
+									<div class="ppal-deta-num PASOS"> 0 </div>
+								</div>
+								<div class="col">
+									<div class="ppal-deta-tit"> Distancia </div>
+									<div class="ppal-deta-num"> 0 </div>
+								</div>
+								<div class="col">
+									<div class="ppal-deta-tit"> Calorias </div>
+									<div class="ppal-deta-num"> 0 </div>
+								</div>					
+							</div>
+							<div>
+								<span id="BtnPausar" class="btn btn-info" onclick="pause();"> Pausar </span>
+								<span id="BtnContinuar" class="btn btn-success oculto" onclick="principal();"> Continuar </span>
+								<span id="BtnDetener" class="btn btn-danger oculto" onclick="stop();"> Detener </span>
+							</div>
+						</div>
 					</div>
-					<div class="col">
-						<div class="ppal-deta-tit"> Pasos </div>
-						<div class="ppal-deta-num PASOS"> 0 </div>
+					<div class="swiper-slide">
+						<div class="map-protection"></div>
+						<div id="map-canvas">
+							<!--google maps-->
+						</div>
 					</div>
-					<div class="col">
-						<div class="ppal-deta-tit"> Distancia </div>
-						<div class="ppal-deta-num"> 0 </div>
-					</div>
-					<div class="col">
-						<div class="ppal-deta-tit"> Calorias </div>
-						<div class="ppal-deta-num"> 0 </div>
-					</div>					
-				</div>
-				<div>
-					<span id="BtnPausar" class="btn btn-info" onclick="pause();"> Pausar </span>
-					<span id="BtnContinuar" class="btn btn-success oculto" onclick="principal();"> Continuar </span>
-					<span id="BtnDetener" class="btn btn-danger oculto" onclick="stop();"> Detener </span>
-				</div>
-				<div id="map-canvas">
-					<!--google maps-->
 				</div>
 			</div>
 		</section>
