@@ -271,7 +271,8 @@ function subscribeSuccess(obj)
 {	
 	if(obj.value != undefined){
 		obj.ak_valor = bluetoothle.encodedStringToBytes(obj.value);	
-		$('.PPM').html(obj.ak_valor[1]);
+		PPM = obj.ak_valor[1];
+		$('.PPM').html(PPM);
 		addClassHRM();
 	}
 

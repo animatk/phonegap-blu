@@ -5,8 +5,16 @@ var SES = window.localStorage,
 	STEP = 0, //pasos
 	ACCE = 0, //ACCELERATION
 	PAUSED = true, //ACCELERATION
+	PPM = 0, //ACCELERATION
 	StepID = null, //acelerometro id
-	MAP = null, //acelerometro id
+	MAP = null, //mapa google
+	LAT = 0, //mapa latitud
+	LON = 0, //mapa longitud
+	ICO = null, //icono mapa
+	MAPTIMEOUT = 5000, //tiemout mapa
+	ACCELTIMEOUT = 500, //tiemout mapa
+	CLOCKTIMEOUT = 1000, //tiemout clock
+	ACTIVITYTIMEOUT = 1000*8, //tiemout tomar datos
 	SITE = 'https://irisdev.co/siluet_app/index.php/';
 
 function ak_buscalabel(form, ipt){
@@ -381,13 +389,23 @@ function jsonp(url, callback) {
 	document.body.appendChild(script);
 }
 
-function loadScript(url, callback) {
-	var script = document.createElement('script');
-	script.onload = function(){
-		callback();
-	};
-	script.src = url;
-	document.body.appendChild(script);
+function loadScript(url, func) {
+    var sc = document.createElement("script");
+    sc.type = "text/javascript";
+    if (sc.readyState != undefined) {
+        sc.onreadystatechange = function () {
+            if (sc.readyState == "loaded" || sc.readyState == "complete") {
+                sc.onreadystatechange = null;
+                func();
+            }
+        };
+    }else{ 
+        sc.onload = function () {
+            func();
+        };
+    }
+    sc.src = url;
+    document.getElementsByTagName("head")[0].appendChild(sc);
 }
 
 function post(url, data, callback) {
@@ -510,10 +528,7 @@ function register(form){
 						});
 					}
 					cortina.remove();
-				});
-				
-			}
-		});
+				});}});
 	return false;
 }
 /*! end register */
@@ -552,9 +567,7 @@ function restore(form){
 						});
 					}
 					cortina.remove();
-				});
-			}
-		});
+				});}});
 	return false;
 }
 /*! end restore */
@@ -574,7 +587,6 @@ function botonDispositivos(accion){
 	});	
 	
 	listarDispositivos();
-
 }
 
 function listarDispositivos(){
@@ -614,7 +626,8 @@ function botonDispositivosCancel(){
 }
 
 
-function addDisp(name, address){
+function addDisp(name, address)
+{
 	stopScan();
 	mensaje("Funcion addDisp llamada con: "+name+' y '+ address );
 	var dispositivos = new Array(),
@@ -626,9 +639,7 @@ function addDisp(name, address){
 			var obj = dispositivos[i];
 			if(obj.address == address){
 				insert = false;
-			}
-		}
-	}
+			}}}
 	//si la orden es insertarlo
 	if(insert){
 		dispositivos.push({name: name, address: address});
@@ -659,17 +670,38 @@ function principal(form){
 	SES['actividad'] = JSON.stringify(actividad);
 	$('#BtnPausar').removeClass('oculto');
 	$('#BtnContinuar').addClass('oculto');
+	$('#BtnDetener').addClass('oculto');
 	PAUSED = false;
 	initClock();
 	steps();
 	geo();
+	trackActivity();
 	window.plugin.backgroundMode.enable();
+}
+function trackActivity(){
 	//
-	if(MAP == null){			
-		loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyAihfNS3dpn6vB16RXRREYAy9jXEf63yUE', function(){
-			map_init();
+	if(SES['actividad'] && !PAUSED){
+		var actividad = JSON.parse(SES['actividad']),
+		curIndex= actividad.length-1,
+		actual = actividad[curIndex];
+		//
+		if(actual.data == undefined){
+			actual.data = [];
+		}
+		actual.data.push({
+			time: new Date(),
+			lat : LAT,
+			lon : LON,
+			ste : STEP,
+			ppm : PPM
 		});
+		actividad[curIndex] = actual;
+		console.log(actividad);
+		//
+		SES['actividad'] = JSON.stringify(actividad);
 	}
+	//
+	setTimeout(function(){ trackActivity(); }, ACTIVITYTIMEOUT);
 }
 
 function initClock(obj, segundos) {
@@ -695,10 +727,7 @@ function initClock(obj, segundos) {
 				var act = actividad[a];
 				if(act.seg != undefined){
 					segundos_mas = segundos_mas + act.seg;
-				}
-			}
-		}
-	}
+				}}}}
 	var actual = actividad[actividad.length-1];
 	var time_ini = new Date();
 	if(actual.ini != undefined){
@@ -717,7 +746,7 @@ function initClock(obj, segundos) {
     }else{
         $('.ppal-clock').html( m+":"+s );
     } 
-    var t = setTimeout(function(){ initClock(actividad, segundos_mas); },1000);
+    var t = setTimeout(function(){ initClock(actividad, segundos_mas); }, CLOCKTIMEOUT);
 }
 
 function checkTime(i) {
@@ -727,20 +756,20 @@ function checkTime(i) {
 
 function steps(){
 //	mensaje("-pasos-" );
-	var options = { frequency: 500 };
+	var options = { frequency: ACCELTIMEOUT };
 	StepID = navigator.accelerometer.watchAcceleration(stepsSuccess, function(){
 	  //error
 	}, options);
 }
 
 function stepsSuccess(acceleration){
-//	mensaje("Aceleracion --" );
+	//
 	var x = acceleration.x
 	, sensible = parseInt($('#sensible').val())
 	, y = acceleration.y
 	, z = acceleration.z
 	, promedio = Math.round((x +y +z)/3);
-//	mensaje("X : "+ x );
+	//
 	if(ACCE != promedio && !PAUSED){
 		//
 		if(ACCE > (promedio + sensible)){ 
@@ -766,20 +795,49 @@ function geo(){
 //  watchID = navigator.geolocation.watchPosition(geoSuccess, function(error){
     watchID = navigator.geolocation.getCurrentPosition(geoSuccess, function(error){
 	  mensaje("Geo Error : " + error.code + "<br/> Mensaje : " + error.message );
-	  setTimeout(function(){ geo(); }, 5000);
+	  setTimeout(function(){ geo(); }, MAPTIMEOUT);
 	}, options);
 }
 
 function geoSuccess(position){
-	mensaje('Latitude: '        + position.coords.latitude          + '<br/>' +
-          'Longitude: '         + position.coords.longitude         + '<br/>' +
-          'Altitude: '          + position.coords.altitude          + '<br/>' +
-          'Accuracy: '          + position.coords.accuracy          + '<br/>' +
-          'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '<br/>' +
-          'Heading: '           + position.coords.heading           + '<br/>' +
-          'Speed: '             + position.coords.speed             + '<br/>' +
-          'Timestamp: '         + position.timestamp                + '<br/>');
-	setTimeout(function(){ geo(); }, 5000);
+/*	
+mensaje('Latitude: '        + position.coords.latitude          + '<br/>' +
+	  'Longitude: '         + position.coords.longitude         + '<br/>' +
+	  'Altitude: '          + position.coords.altitude          + '<br/>' +
+	  'Accuracy: '          + position.coords.accuracy          + '<br/>' +
+	  'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '<br/>' +
+	  'Heading: '           + position.coords.heading           + '<br/>' +
+	  'Speed: '             + position.coords.speed             + '<br/>' +
+	  'Timestamp: '         + position.timestamp                + '<br/>');
+*/  
+
+	LAT = position.coords.latitude;
+	LON = position.coords.longitude;
+	
+	if(MAP != null){
+		var latlng = new google.maps.LatLng( LAT, LON );
+		
+		if(ICO != null){
+			ICO.setPosition(latlng);
+		}else{
+			ICO = new google.maps.Marker({
+			  position: latlng,
+			  icon: {
+				path: google.maps.SymbolPath.CIRCLE,
+				scale: 6,
+				strokeColor: '#06f'
+			  },
+			  map: MAP
+			});
+		}
+		MAP.setCenter(latlng);
+	}else{
+		loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyAihfNS3dpn6vB16RXRREYAy9jXEf63yUE&callback=map_init', function(){
+		//	
+		});
+	}
+	//
+	setTimeout(function(){ geo(); }, MAPTIMEOUT);
 }
 
 function pause(){
@@ -795,17 +853,34 @@ function pause(){
 		SES['actividad'] = JSON.stringify(actividad);
 	}
 	$('#BtnPausar').addClass('oculto');
+	$('#BtnDetener').removeClass('oculto');
 	$('#BtnContinuar').removeClass('oculto');
 	PAUSED = true;
 	window.plugin.backgroundMode.disabled();
 }
+function stop(){
+	if(SES['actividad']){
+		mensaje(SES['actividad']);
+		SES.removeItem('actividad');
+	}
+	ak_navigate('#principal','#inicio'); 
+	$('#btn-accion-izq').addClass('oculto');
+	$('#btn-accion-der').addClass('oculto');
+	$('#btnMenu').removeClass('oculto');	
+}
+
 /*! end principal */
 /*! map */
 function map_init(){
-	//
 	var mapOptions = {
-		center: { lat: -34.397, lng: 150.644},
-		zoom: 8
+		panControl: false,
+		zoomControl: false,
+		mapTypeControl: false,
+		scaleControl: false,
+		streetViewControl: false,
+		overviewMapControl: false,
+		center: { lat: LAT, lng: LON},
+		zoom: 18
 	};
 	MAP = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 }
