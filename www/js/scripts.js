@@ -35,6 +35,7 @@ var SES = window.localStorage,
 	CLOCKTIMEOUT = 1000, //tiemout clock
 	ACTIVITYTYPE = 1, //tipo de actividad
 	ACTIVITYTIMEOUT = 1000*10, //tiemout tomar datos
+	bgGeo = window.plugins.backgroundGeoLocation, //plugir background mode.
 	SITE = 'https://irisdev.co/siluet_app/index.php/';
 
 function ak_buscalabel(form, ipt){
@@ -710,7 +711,6 @@ function principal(form){
 	steps();
 	geo();
 	trackActivity();
-	window.plugin.backgroundMode.enable();
 }
 function trackActivity(){
 	if(SES['actividad'] && !PAUSED){
@@ -734,6 +734,19 @@ function trackActivity(){
 		setTimeout(function(){ trackActivity(); }, ACTIVITYTIMEOUT);
 	}
 }
+function Dist(lat1, lon1, lat2, lon2)
+{
+  rad = function(x) {return x*Math.PI/180;}
+  var R     = 6378.137; //Radio de la tierra en km
+  var dLat  = rad( lat2 - lat1 );
+  var dLong = rad( lon2 - lon1 );
+  var a = Math.sin(dLat/2) * Math.sin(dLat/2) + 
+      Math.cos(rad(lat1)) * Math.cos(rad(lat2)) * Math.sin(dLong/2) * Math.sin(dLong/2);
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  var d = R * c;
+  return d.toFixed(3);//Retorna tres decimales
+}
+
 function initClock(obj, segundos) {
 	if(PAUSED){
 		return false;
@@ -784,6 +797,7 @@ function checkTime(i) {
     return i;
 }
 
+
 function steps(){
 //	mensaje("-pasos-" );
 	var options = { frequency: ACCELTIMEOUT };
@@ -820,30 +834,38 @@ function stopsteps() {
 }
 
 function geo(){
-//	var options = { timeout: 5000, enableHighAccuracy: true };
+//	var options = { timeout: MAPTIMEOUT, enableHighAccuracy: true };
 	var options = { enableHighAccuracy: true };
-//  watchID = navigator.geolocation.watchPosition(geoSuccess, function(error){
+//	watchID = navigator.geolocation.watchPosition(geoSuccess, function(error){
     watchID = navigator.geolocation.getCurrentPosition(geoSuccess, function(error){
 	  mensaje("Geo Error : " + error.code + "<br/> Mensaje : " + error.message );
 	}, options);
+
+	bgGeo.configure(geoSuccess, function(error) {
+        mensaje('BackgroundGeoLocation error');
+    }, {
+        desiredAccuracy: 10,
+        stationaryRadius: 20,
+        distanceFilter: 30,
+        notificationTitle: 'La aplicación se esta ejecutando.', 
+		notificationText: 'ENABLED', 
+		activityType: 'AutomotiveNavigation',
+        debug: true, 
+		stopOnTerminate: false 
+	});
+	
+    bgGeo.start();
 }
 
 function geoSuccess(position){
-/*	
-mensaje('Latitude: '        + position.coords.latitude          + '<br/>' +
-	  'Longitude: '         + position.coords.longitude         + '<br/>' +
-	  'Altitude: '          + position.coords.altitude          + '<br/>' +
-	  'Accuracy: '          + position.coords.accuracy          + '<br/>' +
-	  'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '<br/>' +
-	  'Heading: '           + position.coords.heading           + '<br/>' +
-	  'Speed: '             + position.coords.speed             + '<br/>' +
-	  'Timestamp: '         + position.timestamp                + '<br/>');
-*/  
+	
 	if(PAUSED){
 		return false;
 	}
-	LAT = position.coords.latitude;
-	LON = position.coords.longitude;
+	//LAT = position.coords.latitude;
+	//LON = position.coords.longitude;
+	LAT = position.latitude;
+	LON = position.longitude;
 	
 	if(MAP != null){
 		var latlng = new google.maps.LatLng( LAT, LON );
@@ -882,7 +904,7 @@ mensaje('Latitude: '        + position.coords.latitude          + '<br/>' +
 		});
 	}
 	//
-	setTimeout(function(){ geo(); }, MAPTIMEOUT);
+//	setTimeout(function(){ geo(); }, MAPTIMEOUT);
 }
 
 function pause(){
@@ -901,7 +923,6 @@ function pause(){
 	$('#BtnDetener').removeClass('oculto');
 	$('#BtnContinuar').removeClass('oculto');
 	PAUSED = true;
-	window.plugin.backgroundMode.disabled();
 }
 function stop(){
 	if(SES['actividad']){
@@ -909,6 +930,9 @@ function stop(){
 		SES.removeItem('actividad');
 	}
 	
+	bgGeo.stop();
+	STEP = 0;
+	PPM = 0;
 	if(MAPLINE != null){
 		MAPLINE.setMap(null);
 		MAPLINE = null;
