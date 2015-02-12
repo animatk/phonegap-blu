@@ -845,13 +845,13 @@ function geo(){
 	bgGeo.configure(geoSuccess, function(error) {
         mensaje('BackgroundGeoLocation error');
     }, {
-        desiredAccuracy: 10
-        , stationaryRadius: 20
-        , distanceFilter: 30
-        , notificationTitle: 'La aplicación se esta ejecutando.'
-		, notificationText: 'ENABLED'
+        desiredAccuracy: 0
+        , stationaryRadius: 3
+        , distanceFilter: 3
+        , notificationTitle: 'Siluet se esta ejecutando.'
+		, notificationText: 'Tomando datos'
 		, activityType: 'AutomotiveNavigation'
-        , debug: true
+        , debug: false
 		, stopOnTerminate: false 
 	});
 	
