@@ -847,7 +847,7 @@ function geo(){
         desiredAccuracy: 10
         , stationaryRadius: 20
         , distanceFilter: 30
-        , notificationTitle: 'La aplicación se esta ejecutando.',
+        , notificationTitle: 'La aplicación se esta ejecutando.'
 		, notificationText: 'ENABLED'
 		, activityType: 'AutomotiveNavigation'
         , debug: true
