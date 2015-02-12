@@ -35,7 +35,7 @@ var SES = window.localStorage,
 	CLOCKTIMEOUT = 1000, //tiemout clock
 	ACTIVITYTYPE = 1, //tipo de actividad
 	ACTIVITYTIMEOUT = 1000*10, //tiemout tomar datos
-	bgGeo = window.plugins.backgroundGeoLocation, //plugir background mode.
+	bgGeo = null, //plugir background mode.
 	SITE = 'https://irisdev.co/siluet_app/index.php/';
 
 function ak_buscalabel(form, ipt){
@@ -835,6 +835,7 @@ function stopsteps() {
 
 function geo(){
 //	var options = { timeout: MAPTIMEOUT, enableHighAccuracy: true };
+	bgGeo = window.plugins.backgroundGeoLocation;
 	var options = { enableHighAccuracy: true };
 //	watchID = navigator.geolocation.watchPosition(geoSuccess, function(error){
     watchID = navigator.geolocation.getCurrentPosition(geoSuccess, function(error){
