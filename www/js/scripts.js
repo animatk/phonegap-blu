@@ -844,14 +844,14 @@ function geo(){
 	bgGeo.configure(geoSuccess, function(error) {
         mensaje('BackgroundGeoLocation error');
     }, {
-        desiredAccuracy: 10,
-        stationaryRadius: 20,
-        distanceFilter: 30,
-        notificationTitle: 'La aplicación se esta ejecutando.', 
-		notificationText: 'ENABLED', 
-		activityType: 'AutomotiveNavigation',
-        debug: true, 
-		stopOnTerminate: false 
+        desiredAccuracy: 10
+        , stationaryRadius: 20
+        , distanceFilter: 30
+        , notificationTitle: 'La aplicación se esta ejecutando.',
+		, notificationText: 'ENABLED'
+		, activityType: 'AutomotiveNavigation'
+        , debug: true
+		, stopOnTerminate: false 
 	});
 	
     bgGeo.start();
@@ -862,10 +862,14 @@ function geoSuccess(position){
 	if(PAUSED){
 		return false;
 	}
-	//LAT = position.coords.latitude;
-	//LON = position.coords.longitude;
-	LAT = position.latitude;
-	LON = position.longitude;
+	
+	if(position.coords != undefined){
+		LAT = position.coords.latitude;
+		LON = position.coords.longitude;
+	}else{
+		LAT = position.latitude;
+		LON = position.longitude;
+	}
 	
 	if(MAP != null){
 		var latlng = new google.maps.LatLng( LAT, LON );
