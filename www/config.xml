@@ -2,11 +2,11 @@
 	<widget xmlns   = "http://www.w3.org/ns/widgets"
 		xmlns:gap   = "http://phonegap.com/ns/1.0"
 		id          = "com.grupoiris.bluetooth"
-		versionCode = "10" 
+		versionCode = "1" 
 		version     = "0.0.1" >
 	<!-- versionCode is optional and Android only -->
 	
-	<name>Bluetooth Connect</name>
+	<name>Siluet</name>
 	<description>
 		Connect with bluetooth device
 	</description>
@@ -23,9 +23,9 @@
 	<gap:plugin name="com.randdusing.bluetoothle" version="2.0.0" />
 	<gap:plugin name="org.apache.cordova.device-motion" version="0.2.10" />
 	<gap:plugin name="org.apache.cordova.geolocation" version="0.3.10" />
-	<!--gap:plugin name="de.appplant.cordova.plugin.background-mode" version="0.5.0" /--> 
+	<gap:plugin name="de.appplant.cordova.plugin.background-mode" version="0.5.0" /> 
 	<!--backgroud mode info: https://github.com/katzer/cordova-plugin-background-mode/blob/ac5fef831dbf9e567277dc900389923bd9bc7714/README.md-->
-	<gap:plugin name="org.transistorsoft.cordova.background-geolocation" version="0.3.5" />
+
 	
 	
 	<!-- Define app icon for each platform. -->
