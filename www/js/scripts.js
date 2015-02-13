@@ -711,7 +711,7 @@ function principal(form){
 	steps();
 	geo();
 	trackActivity();
-	window.plugin.backgroundMode.enable();
+//	window.plugin.backgroundMode.enable();
 }
 function trackActivity(){
 	if(SES['actividad'] && !PAUSED){
@@ -835,15 +835,17 @@ function stopsteps() {
 }
 
 function geo(){
-	var options = { timeout: MAPTIMEOUT, enableHighAccuracy: true };
-//	bgGeo = window.plugins.backgroundGeoLocation;
-//	var options = { enableHighAccuracy: true };
-	watchID = navigator.geolocation.watchPosition(geoSuccess, function(error){
-//  watchID = navigator.geolocation.getCurrentPosition(geoSuccess, function(error){
-	  mensaje("Geo Error : " + error.code + "<br/> Mensaje : " + error.message );
-	}, options);
-/*
-	bgGeo.configure(geoSuccess, function(error) {
+	bgGeo = window.plugins.backgroundGeoLocation;
+
+	bgGeo.configure(function(error) {
+	//	var options = { timeout: MAPTIMEOUT, enableHighAccuracy: true };
+		var options = { enableHighAccuracy: true };
+	//	watchID = navigator.geolocation.watchPosition(geoSuccess, function(error){
+		watchID = navigator.geolocation.getCurrentPosition(geoSuccess, function(error){
+		  mensaje("Geo Error : " + error.code + "<br/> Mensaje : " + error.message );
+		}, options);
+	//
+    }, function(error) {
         mensaje('BackgroundGeoLocation error');
     }, {
         desiredAccuracy: 0
@@ -857,7 +859,7 @@ function geo(){
 	});
 	
     bgGeo.start();
-*/
+
 }
 
 function geoSuccess(position){
@@ -930,7 +932,7 @@ function pause(){
 	$('#BtnDetener').removeClass('oculto');
 	$('#BtnContinuar').removeClass('oculto');
 	PAUSED = true;
-	window.plugin.backgroundMode.disable();
+//	window.plugin.backgroundMode.disable();
 }
 function stop(){
 	if(SES['actividad']){
@@ -938,7 +940,7 @@ function stop(){
 		SES.removeItem('actividad');
 	}
 	
-//	bgGeo.stop();
+	bgGeo.stop();
 	STEP = 0;
 	PPM = 0;
 	if(MAPLINE != null){
