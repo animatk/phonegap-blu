@@ -352,6 +352,12 @@ function ak_showtip(ipt, msj){
 	$('body').prepend(tip);
 }
 
+function isDevice(){
+	return (navigator.userAgent.match(/iPad/i))  == "iPad" ? "iPad" : (navigator.userAgent.match(/iPhone/i)
+													) == "iPhone" ? "iPhone" : (navigator.userAgent.match(/Android/i)
+													) == "Android" ? "Android" : false;
+}
+
 function iniciar(){
 	if( SES['chain'] ){
 		if( SES['info_basica'] ){
@@ -835,31 +841,32 @@ function stopsteps() {
 }
 
 function geo(){
-	bgGeo = window.plugins.backgroundGeoLocation;
-
-	bgGeo.configure(function(error) {
+	
+	if(isDevice() == 'Android'){
 	//	var options = { timeout: MAPTIMEOUT, enableHighAccuracy: true };
 		var options = { enableHighAccuracy: true };
 	//	watchID = navigator.geolocation.watchPosition(geoSuccess, function(error){
 		watchID = navigator.geolocation.getCurrentPosition(geoSuccess, function(error){
 		  mensaje("Geo Error : " + error.code + "<br/> Mensaje : " + error.message );
 		}, options);
-	//
-    }, function(error) {
-        mensaje('BackgroundGeoLocation error');
-    }, {
-        desiredAccuracy: 0
-        , stationaryRadius: 3
-        , distanceFilter: 3
-        , notificationTitle: 'Siluet se esta ejecutando.'
-		, notificationText: 'Tomando datos'
-		, activityType: 'AutomotiveNavigation'
-        , debug: false
-		, stopOnTerminate: false 
-	});
+	}
 	
-    bgGeo.start();
-
+	if(bgGeo == null){
+		bgGeo = window.plugins.backgroundGeoLocation;
+		bgGeo.configure( geoSuccess, function(error) {
+			mensaje('BackgroundGeoLocation error');
+		}, {
+			desiredAccuracy: 0
+			, stationaryRadius: 3
+			, distanceFilter: 3
+			, notificationTitle: 'Siluet se esta ejecutando.'
+			, notificationText: 'Tomando datos'
+			, activityType: 'AutomotiveNavigation'
+			, debug: false
+			, stopOnTerminate: false 
+		});
+		bgGeo.start();
+	}
 }
 
 function geoSuccess(position){
@@ -867,6 +874,8 @@ function geoSuccess(position){
 	if(PAUSED){
 		return false;
 	}
+	
+	mensaje('Ejecutando GPS');
 	
 	if(position.coords != undefined){
 		LAT = position.coords.latitude;
@@ -913,7 +922,9 @@ function geoSuccess(position){
 		});
 	}
 	//
-//	setTimeout(function(){ geo(); }, MAPTIMEOUT);
+	if(isDevice() == 'Android'){
+		setTimeout(function(){ geo(); }, MAPTIMEOUT);
+	}
 }
 
 function pause(){
@@ -940,7 +951,10 @@ function stop(){
 		SES.removeItem('actividad');
 	}
 	
-	bgGeo.stop();
+	if(bgGeo != null){
+		bgGeo.stop();
+		bgGeo = null;
+	}
 	STEP = 0;
 	PPM = 0;
 	if(MAPLINE != null){
