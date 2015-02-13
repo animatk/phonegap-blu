@@ -887,7 +887,7 @@ function geoSuccess(position){
 	
 	if(MAP != null){
 		var latlng = new google.maps.LatLng( LAT, LON );
-		
+		/*
 		if(MAPLINE != null){
 			var path = MAPLINE.getPath();
 			path.push(latlng);
@@ -899,7 +899,7 @@ function geoSuccess(position){
 			};
 			MAPLINE = new google.maps.Polyline(polyOptions);
 			MAPLINE.setMap(MAP);
-		}
+		} */
 		
 		if(ICO != null){
 			ICO.setPosition(latlng);
