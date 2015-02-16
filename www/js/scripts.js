@@ -940,9 +940,9 @@ function geoSuccess(position){
 		}
 	}
 	//
-//	if(isDevice() == 'Android'){
-//		setTimeout(function(){ geo(); }, MAPTIMEOUT);
-//	}
+	if(isDevice() != 'Android'){
+		setTimeout(function(){ geo(); }, MAPTIMEOUT);
+	}
 }
 
 function pause(){
