@@ -933,7 +933,7 @@ function geoSuccess(position){
 		
 		MAP.setCenter(latlng);
 	}else{
-		if(isOnLine()){
+		if(isOnLine() && MAP == null){
 			loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyAihfNS3dpn6vB16RXRREYAy9jXEf63yUE&callback=map_init', function(){
 			//	
 			});
