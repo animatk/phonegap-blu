@@ -847,14 +847,21 @@ function stopsteps() {
 
 function geo(){
 	
-//	if(isDevice() == 'Android'){
+	if(isDevice() == 'Android'){
 		var options = { timeout: MAPTIMEOUT, enableHighAccuracy: true };
 	//	var options = { enableHighAccuracy: true };
 		watchID = navigator.geolocation.watchPosition(geoSuccess, function(error){
 	//	watchID = navigator.geolocation.getCurrentPosition(geoSuccess, function(error){
 		  mensaje("Geo Error : " + error.code + "<br/> Mensaje : " + error.message );
 		}, options);
-//	}
+	}else{
+	//	var options = { timeout: MAPTIMEOUT, enableHighAccuracy: true };
+		var options = { enableHighAccuracy: true };
+	//	watchID = navigator.geolocation.watchPosition(geoSuccess, function(error){
+		watchID = navigator.geolocation.getCurrentPosition(geoSuccess, function(error){
+		  mensaje("Geo Error : " + error.code + "<br/> Mensaje : " + error.message );
+		}, options);	
+	}
 	
 	if(bgGeo == null){
 		bgGeo = window.plugins.backgroundGeoLocation;
