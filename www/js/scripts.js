@@ -843,10 +843,10 @@ function stopsteps() {
 function geo(){
 	
 	if(isDevice() == 'Android'){
-	//	var options = { timeout: MAPTIMEOUT, enableHighAccuracy: true };
-		var options = { enableHighAccuracy: true };
-	//	watchID = navigator.geolocation.watchPosition(geoSuccess, function(error){
-		watchID = navigator.geolocation.getCurrentPosition(geoSuccess, function(error){
+		var options = { timeout: MAPTIMEOUT, enableHighAccuracy: true };
+	//	var options = { enableHighAccuracy: true };
+		watchID = navigator.geolocation.watchPosition(geoSuccess, function(error){
+	//	watchID = navigator.geolocation.getCurrentPosition(geoSuccess, function(error){
 		  mensaje("Geo Error : " + error.code + "<br/> Mensaje : " + error.message );
 		}, options);
 	}
@@ -887,7 +887,7 @@ function geoSuccess(position){
 	
 	if(MAP != null){
 		var latlng = new google.maps.LatLng( LAT, LON );
-		/*
+		
 		if(MAPLINE != null){
 			var path = MAPLINE.getPath();
 			path.push(latlng);
@@ -899,7 +899,7 @@ function geoSuccess(position){
 			};
 			MAPLINE = new google.maps.Polyline(polyOptions);
 			MAPLINE.setMap(MAP);
-		} */
+		}
 		
 		if(ICO != null){
 			ICO.setPosition(latlng);
