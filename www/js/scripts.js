@@ -29,7 +29,7 @@ var SES = window.localStorage,
 	LAT = 0, //map latitude
 	LON = 0, //map longitude
 	ICO = null, //icon map
-	MAPTIMEOUT = 5000, //tiemout map
+	MAPTIMEOUT = 3000, //tiemout map
 	MAPLINE = null, //linea de recorrido
 	ACCELTIMEOUT = 500, //tiemout mapa
 	CLOCKTIMEOUT = 1000, //tiemout clock
@@ -847,18 +847,20 @@ function stopsteps() {
 
 function geo(){
 	
-	if(isDevice() == 'Android'){
+//	if(isDevice() == 'Android'){
 		var options = { timeout: MAPTIMEOUT, enableHighAccuracy: true };
 	//	var options = { enableHighAccuracy: true };
 		watchID = navigator.geolocation.watchPosition(geoSuccess, function(error){
 	//	watchID = navigator.geolocation.getCurrentPosition(geoSuccess, function(error){
 		  mensaje("Geo Error : " + error.code + "<br/> Mensaje : " + error.message );
 		}, options);
-	}
+//	}
 	
 	if(bgGeo == null){
 		bgGeo = window.plugins.backgroundGeoLocation;
-		bgGeo.configure( geoSuccess, function(error) {
+		bgGeo.configure( function(){
+			//
+		}, function(error) {
 			mensaje('BackgroundGeoLocation error');
 		}, {
 			desiredAccuracy: 0
@@ -889,6 +891,8 @@ function geoSuccess(position){
 		LAT = position.latitude;
 		LON = position.longitude;
 	}
+	
+	mensaje('lat: '+LAT+' lon: '+LON);
 	
 	if(MAP != null){
 		var latlng = new google.maps.LatLng( LAT, LON );
