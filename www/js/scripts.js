@@ -358,6 +358,11 @@ function isDevice(){
 													) == "Android" ? "Android" : false;
 }
 
+function isOffLine(){
+	return 'onLine' in navigator && !navigator.onLine;
+}
+
+
 function iniciar(){
 	if( SES['chain'] ){
 		if( SES['info_basica'] ){
@@ -917,9 +922,11 @@ function geoSuccess(position){
 		
 		MAP.setCenter(latlng);
 	}else{
-		loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyAihfNS3dpn6vB16RXRREYAy9jXEf63yUE&callback=map_init', function(){
-		//	
-		});
+		if(isOffLine()){
+			loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyAihfNS3dpn6vB16RXRREYAy9jXEf63yUE&callback=map_init', function(){
+			//	
+			});
+		}
 	}
 	//
 	if(isDevice() == 'Android'){
