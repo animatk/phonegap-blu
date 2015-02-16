@@ -194,7 +194,11 @@ function connectSuccess(obj)
   if (obj.status == "connected")
   {
 	//CONECTADO
-	isDiscovered(obj.address);
+	if(isDevice() == 'Android'){
+		isDiscovered(obj.address);
+	}else{
+		subscribe(obj.address, alerts.serviceUid, alerts.characterisUid );  
+	}
   }
   else if (obj.status == "connecting")
   {
