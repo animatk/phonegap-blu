@@ -358,8 +358,8 @@ function isDevice(){
 													) == "Android" ? "Android" : false;
 }
 
-function isOffLine(){
-	return 'onLine' in navigator && !navigator.onLine;
+function isOnLine(){
+	return navigator.onLine;
 }
 
 
@@ -922,16 +922,16 @@ function geoSuccess(position){
 		
 		MAP.setCenter(latlng);
 	}else{
-		if(isOffLine()){
+		if(isOnLine()){
 			loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyAihfNS3dpn6vB16RXRREYAy9jXEf63yUE&callback=map_init', function(){
 			//	
 			});
 		}
 	}
 	//
-	if(isDevice() == 'Android'){
-		setTimeout(function(){ geo(); }, MAPTIMEOUT);
-	}
+//	if(isDevice() == 'Android'){
+//		setTimeout(function(){ geo(); }, MAPTIMEOUT);
+//	}
 }
 
 function pause(){
