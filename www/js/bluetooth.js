@@ -9,6 +9,7 @@ alerts = {
 	, error_stop_scan : 'Error al detener el scaneo de dispositivos.'
 	, serviceUid : '180d'
 	, characterisUid : '2a37'
+	, encender_bluetooth : 'Debe activar el bluetooth para poder conectarse con su dispositivo.'
 }
 
 function isInitialized()
@@ -67,11 +68,19 @@ function isEnabledSuccess(obj)
   }
   else
   {
-  	if(confirm(alerts.activar)){
-		enable();
-	}else{
+  	if(isDevice() == 'Android'){
 		
-		alert( alerts.error_inicio + ' code : isEnabledSuccess' );
+		if(confirm(alerts.activar)){
+			enable();
+		}else{
+			alert( alerts.error_inicio + ' code : isEnabledSuccess' );
+		}
+	}else{
+		//si es iOS entoces solo envia la alerta de encender el bluetooth
+		$('#dispMain').removeClass('oculto');
+		$('#btn-accion-izq').removeClass('oculto');
+		$('#dispFind').addClass('oculto');
+		alert( alerts.encender_bluetooth );
 	}
   }
 }
