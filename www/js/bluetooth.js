@@ -77,9 +77,6 @@ function isEnabledSuccess(obj)
 		}
 	}else{
 		//si es iOS entoces solo envia la alerta de encender el bluetooth
-		$('#dispMain').removeClass('oculto');
-		$('#btn-accion-izq').removeClass('oculto');
-		$('#dispFind').addClass('oculto');
 		alert( alerts.encender_bluetooth );
 	}
   }
@@ -206,7 +203,9 @@ function connectSuccess(obj)
 	if(isDevice() == 'Android'){
 		isDiscovered(obj.address);
 	}else{
-		subscribe(obj.address, alerts.serviceUid, alerts.characterisUid );  
+		//si es iOS hay que descubrir los servicios las carsctei
+		//subscribe(obj.address, alerts.serviceUid, alerts.characterisUid );
+		
 	}
   }
   else if (obj.status == "connecting")
@@ -323,3 +322,57 @@ function addClassHRM(){
 function removeClassHRM(){
 	$('div[data-add="'+DEVICE+'"]').removeClass('activo').attr('data-add', "");
 }
+
+/* iOS functions */
+function discover(address)
+{
+	var paramsObj = {address:address};
+	mensaje("Discover : " + JSON.stringify(paramsObj));
+	bluetoothle.discover(discoverSuccess, discoverError, paramsObj);
+	return false;
+}
+function discoverSuccess(obj)
+{
+	mensaje("Discover Success : " + JSON.stringify(obj));
+/*	
+	if (obj.status == "discovered")
+	{
+		mensaje("Discovered");
+		
+		var address = obj.address;
+		
+		var services = obj.services;
+		
+		for (var i = 0; i < services.length; i++)
+		{
+			var service = services[i];
+			
+			addService(address, service.serviceUuid);
+			
+			var characteristics = service.characteristics;
+			
+			for (var j = 0; j < characteristics.length; j++)
+			{
+				var characteristic = characteristics[j];
+				
+				addCharacteristic(address, service.serviceUuid, characteristic.characteristicUuid);
+				
+				var descriptors = characteristic.descriptors;
+				
+				for (var k = 0; k < descriptors.length; k++)
+				{
+					var descriptor = descriptors[k];
+					
+					addDescriptor(address, service.serviceUuid, characteristic.characteristicUuid, descriptor.descriptorUuid);
+				}
+			}
+		}
+  }
+  else
+  {
+  	mensaje("Unexpected Discover Status");
+  }
+*/
+}
+
+/* end iOS functions */

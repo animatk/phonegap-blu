@@ -260,6 +260,10 @@ header{
 
 
 /* dispositivos */
+.disp-find{
+	padding-bottom: 20px;
+	background: url(../img/loader-mini.gif) no-repeat center bottom;
+}
 .disp-list .disp-item,
 .disp-find .disp-item{
 	display: block;
