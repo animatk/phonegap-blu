@@ -368,7 +368,7 @@ function characteristicsSuccess(obj)
   	mensaje("Characteristics");
     var characteristics = obj.characteristics;
 	//
-	descriptors(obj.address, alerts.serviceUid. alerts.characterisUid );
+	descriptors(obj.address, alerts.serviceUid, alerts.characterisUid );
   }else{
   	mensaje("Unexpected Characteristics Status");
   }
