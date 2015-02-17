@@ -341,17 +341,60 @@ function servicesSuccess(obj)
   if (obj.status == "services")
   {
   	mensaje("Services");
-  	
     var serviceUuids = obj.serviceUuids;
-    
-    for (var i = 0; i < serviceUuids.length; i++)
-    {
-			addService(obj.address, serviceUuids[i]);
-    }
+	characteristics(obj.address, alerts.serviceUid );
   }
 	else
   {
   	mensaje("Unexpected Services Status");
   }
 }
+
+function characteristics(address, serviceUuid)
+{
+	var paramsObj = {address:address, serviceUuid:serviceUuid, characteristicUuids:[]};
+	mensaje("Characteristics : " + JSON.stringify(paramsObj));
+	bluetoothle.characteristics(characteristicsSuccess, function(obj){
+	  mensaje("Characteristics Error : " + JSON.stringify(obj));
+	}, paramsObj);
+	return false;
+}
+
+function characteristicsSuccess(obj)
+{
+  mensaje("Characteristics Success : " + JSON.stringify(obj));
+  if (obj.status == "characteristics")
+  {
+  	mensaje("Characteristics");
+    var characteristics = obj.characteristics;
+	//
+	descriptors(obj.address, alerts.serviceUid. alerts.characterisUid );
+  }else{
+  	mensaje("Unexpected Characteristics Status");
+  }
+}
+
+function descriptors(address, serviceUuid, characteristicUuid)
+{
+	var paramsObj = {address:address, serviceUuid:serviceUuid, characteristicUuid:characteristicUuid};
+	mensaje("Descriptors : " + JSON.stringify(paramsObj));
+	bluetoothle.descriptors(descriptorsSuccess, function(obj){
+	  mensaje("Descriptors Error : " + JSON.stringify(obj));
+	}, paramsObj);
+	return false;
+}
+
+function descriptorsSuccess(obj)
+{
+	mensaje("Descriptors Success : " + JSON.stringify(obj));
+  if (obj.status == "descriptors")
+  {
+  	mensaje("Descriptors");
+  	var descriptorUuids = obj.descriptorUuids;
+	subscribe(obj.address, alerts.serviceUid, alerts.characterisUid );
+  }else{
+  	mensaje("Unexpected Descriptors Status");
+  }
+}
+
 /* end iOS function */
