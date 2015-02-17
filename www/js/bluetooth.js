@@ -205,7 +205,7 @@ function connectSuccess(obj)
 	}else{
 		//si es iOS hay que descubrir los servicios las carsctei
 		//subscribe(obj.address, alerts.serviceUid, alerts.characterisUid );
-		
+		services(obj.address);
 	}
   }
   else if (obj.status == "connecting")
@@ -323,56 +323,35 @@ function removeClassHRM(){
 	$('div[data-add="'+DEVICE+'"]').removeClass('activo').attr('data-add', "");
 }
 
-/* iOS functions */
-function discover(address)
+
+/* iOS function */
+function services(address)
 {
-	var paramsObj = {address:address};
-	mensaje("Discover : " + JSON.stringify(paramsObj));
-	bluetoothle.discover(discoverSuccess, discoverError, paramsObj);
+	var paramsObj = {address:address, serviceUuids:[]};
+	mensaje("Services : " + JSON.stringify(paramsObj));
+	bluetoothle.services(servicesSuccess, function(obj){
+		  mensaje("Services Error : " + JSON.stringify(obj));
+	}, paramsObj);
 	return false;
 }
-function discoverSuccess(obj)
-{
-	mensaje("Discover Success : " + JSON.stringify(obj));
-/*	
-	if (obj.status == "discovered")
-	{
-		mensaje("Discovered");
-		
-		var address = obj.address;
-		
-		var services = obj.services;
-		
-		for (var i = 0; i < services.length; i++)
-		{
-			var service = services[i];
-			
-			addService(address, service.serviceUuid);
-			
-			var characteristics = service.characteristics;
-			
-			for (var j = 0; j < characteristics.length; j++)
-			{
-				var characteristic = characteristics[j];
-				
-				addCharacteristic(address, service.serviceUuid, characteristic.characteristicUuid);
-				
-				var descriptors = characteristic.descriptors;
-				
-				for (var k = 0; k < descriptors.length; k++)
-				{
-					var descriptor = descriptors[k];
-					
-					addDescriptor(address, service.serviceUuid, characteristic.characteristicUuid, descriptor.descriptorUuid);
-				}
-			}
-		}
-  }
-  else
-  {
-  	mensaje("Unexpected Discover Status");
-  }
-*/
-}
 
-/* end iOS functions */
+function servicesSuccess(obj)
+{
+	mensaje("Services Success : " + JSON.stringify(obj));
+  if (obj.status == "services")
+  {
+  	mensaje("Services");
+  	
+    var serviceUuids = obj.serviceUuids;
+    
+    for (var i = 0; i < serviceUuids.length; i++)
+    {
+			addService(obj.address, serviceUuids[i]);
+    }
+  }
+	else
+  {
+  	mensaje("Unexpected Services Status");
+  }
+}
+/* end iOS function */
