@@ -813,7 +813,7 @@ function initClock(obj, segundos) {
 	CALO = Math.round(aux_calories*10)/10;
 	$(".CALOR").html( CALO );
 
-	if((SECOND) > (LASTTTACK+(10))){
+	if(SECOND > LASTTTACK+10){
 		LASTTTACK = SECOND;
 		trackActivity();
 	}
@@ -835,18 +835,21 @@ function steps(){
 	}, options);
 }
 
-function stepsSuccess(acceleration){
+function stepsSuccess(a){
 	//
-	var x = acceleration.x
-	, sensible = parseInt($('#sensible').val())
-	, y = acceleration.y
-	, z = acceleration.z
-	, promedio = Math.round((x +y +z)/3);
+	var x = a.x
+	, s = parseInt($('#sensible').val())
+	, y = a.y
+	, z = a.z
+	, m = Math.round((x +y +z)/3);
 	//
-	if(ACCE != promedio){
+	mensaje('aCCE : '+ACCE);
+	mensaje('pMED : '+m);
+	
+	if(ACCE != m){
 		//
-		if(ACCE > (promedio + sensible)){ 
-		//	|| ACCE < (promedio - sensible)){
+		if(ACCE > (m + s)){ 
+		//	|| ACCE < (m - s)){
 			STEP = STEP+1;
 			PAUSED = false;
 			
@@ -855,19 +858,18 @@ function stepsSuccess(acceleration){
 				actividad = JSON.parse(SES['actividad']);
 			}
 			var tot = actividad.length;
-			if(tot <= 0 || actividad[tot-1].sec != undefined){
+			if(tot < 1 || actividad[tot-1].seg != undefined){
 				actividad.push({
 					ini : new Date()
 				});
 				SES['actividad'] = JSON.stringify(actividad);
-			}
-			
-			
+			}			
 			initClock();
 		}
-		ACCE = promedio;
+		ACCE = m;
 	}else{
 		if(!PAUSED){
+			mensaje('pAUSE');
 			pause();
 		}
 	}	
