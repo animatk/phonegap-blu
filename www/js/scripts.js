@@ -821,7 +821,7 @@ function initClock(obj, segundos) {
 	CALO = Math.round(aux_calories*10)/10;
 	$(".CALOR").html( CALO );
 
-	if((SECOND/60) > (LASTTTACK+(10))){
+	if((SECOND) > (LASTTTACK+(10))){
 		LASTTTACK = SECOND;
 		trackActivity();
 	}
@@ -859,8 +859,11 @@ function stepsSuccess(acceleration){
 			PAUSED = false;
 			initClock();
 		}
-		
 		ACCE = promedio;
+	}else{
+		if(!PAUSED){
+			pause();
+		}
 	}	
 	$('.PASOS').html(STEP);
 }
