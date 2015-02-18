@@ -697,14 +697,6 @@ function addDisp(name, address)
 /*! principal */
 function principal(form){
 	ak_navigate( form ,'#principal');
-	var actividad = [];
-	if(SES['actividad']){
-		actividad = JSON.parse(SES['actividad']);
-	}
-	actividad.push({
-		ini : new Date()
-	});
-	SES['actividad'] = JSON.stringify(actividad);
 	var mySwiper = new Swiper ('.swiper-container', {
 		// Optional parameters
 		direction: 'horizontal'
@@ -857,6 +849,20 @@ function stepsSuccess(acceleration){
 		//	|| ACCE < (promedio - sensible)){
 			STEP = STEP+1;
 			PAUSED = false;
+			
+			var actividad = [];
+			if(SES['actividad']){
+				actividad = JSON.parse(SES['actividad']);
+			}
+			var tot = actividad.length;
+			if(tot <= 0 || actividad[tot-1].sec != undefined){
+				actividad.push({
+					ini : new Date()
+				});
+				SES['actividad'] = JSON.stringify(actividad);
+			}
+			
+			
 			initClock();
 		}
 		ACCE = promedio;
