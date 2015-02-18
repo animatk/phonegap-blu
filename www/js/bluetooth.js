@@ -182,7 +182,6 @@ function addDevice(address, name){
 			mensaje("Dispositivo: "+ address +' listado correctamente');
 		}
 	}
-	
 }
 
 function connect(address)
@@ -203,8 +202,6 @@ function connectSuccess(obj)
 	if(isDevice() == 'Android'){
 		isDiscovered(obj.address);
 	}else{
-		//si es iOS hay que descubrir los servicios las carsctei
-		//subscribe(obj.address, alerts.serviceUid, alerts.characterisUid );
 		services(obj.address);
 	}
   }
