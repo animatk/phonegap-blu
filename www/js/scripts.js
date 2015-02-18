@@ -28,6 +28,7 @@ var SES = window.localStorage,
 	PERFIL = null, //status of activity
 	PPM = 0, //HRM sensor 
 	StepID = null, //acelerometro id
+	watchID = null, //gps track
 	MAP = null, //map google
 	LAT = 0, //map latitude
 	LON = 0, //map longitude
@@ -38,6 +39,7 @@ var SES = window.localStorage,
 	CLOCKTIMEOUT = 1000, //tiemout clock
 	ACTIVITYTYPE = 1, //tipo de actividad
 	ACTIVITYTIMEOUT = 1000*10, //tiemout tomar datos
+	PauseSens = 0, //sensibilidad del estado de pausa para que sea mas tolerante el numero de veces indicado
 	bgGeo = null, //plugir background mode.
 	SITE = 'https://irisdev.co/siluet_app/index.php/';
 
@@ -843,8 +845,7 @@ function stepsSuccess(a){
 	, z = a.z
 	, m = Math.round((x +y +z)/3);
 	//
-	mensaje('aCCE : '+ACCE);
-	mensaje('pMED : '+m);
+	mensaje('aCCE : '+ACCE+' pMED : '+m);
 	
 	if(ACCE != m){
 		//
@@ -867,15 +868,16 @@ function stepsSuccess(a){
 			initClock();
 		}
 		ACCE = m;
+		PauseSens = 0;
 	}else{
-		if(!PAUSED){
+		if(!PAUSED && PauseSens >= 5){
 			mensaje('pAUSE');
 			pause();
 		}
+		PauseSens = PauseSens+1;
 	}	
 	$('.PASOS').html(STEP);
 }
-
 
 function stopsteps() {
 	if (StepID) {
@@ -923,11 +925,16 @@ function geo(){
 
 function geoSuccess(position){
 	
+	if(isDevice() != 'Android'){
+		setTimeout(function(){ geo(); }, MAPTIMEOUT);
+	}
+
+	mensaje('Ejecutando GPS');
+	
 	if(PAUSED){
 		return false;
 	}
 	
-	mensaje('Ejecutando GPS');
 	
 	if(position.coords != undefined){
 		LAT = position.coords.latitude;
@@ -941,7 +948,7 @@ function geoSuccess(position){
 	
 	if(MAP != null){
 		var latlng = new google.maps.LatLng( LAT, LON );
-		
+		/*
 		if(MAPLINE != null){
 			var path = MAPLINE.getPath();
 			path.push(latlng);
@@ -953,7 +960,7 @@ function geoSuccess(position){
 			};
 			MAPLINE = new google.maps.Polyline(polyOptions);
 			MAPLINE.setMap(MAP);
-		}
+		} */
 		
 		if(ICO != null){
 			ICO.setPosition(latlng);
@@ -978,9 +985,6 @@ function geoSuccess(position){
 		}
 	}
 	//
-	if(isDevice() != 'Android'){
-		setTimeout(function(){ geo(); }, MAPTIMEOUT);
-	}
 }
 
 function pause(){
@@ -1016,6 +1020,11 @@ function stop(){
 	if(MAPLINE != null){
 		MAPLINE.setMap(null);
 		MAPLINE = null;
+	}
+	
+	stopsteps();
+	if(isDevice() == 'Android'){
+		geolocation.clearWatch(watchID);
 	}
 	
 	ak_navigate('#principal','#inicio');
