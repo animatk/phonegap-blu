@@ -804,13 +804,10 @@ function initClock(obj, segundos) {
     }else{
         $('.ppal-clock').html( m+":"+s );
     } 
-	
 	/*! contador calorias */
-	
 	if(PERFIL == null){
 		PERFIL = JSON.parse(SES['perfil']);
 	}
-	
 	var minutes = (SECOND/60),
 	level = .142, //nivel de actividad "correr"
 	aux_calories = (PERFIL.weight*2.2)*minutes*level;
@@ -821,7 +818,6 @@ function initClock(obj, segundos) {
 		LASTTTACK = SECOND;
 		trackActivity();
 	}
-
   //  var t = setTimeout(function(){ initClock(actividad, segundos_mas); }, CLOCKTIMEOUT);
 }
 
@@ -869,19 +865,18 @@ function stepsSuccess(a){
 			// 1 mt. = a 39.370 pulgadas
 			// mujer = altura en pulgadas * 0,413 para obtener longitud de zancada media. 
 			// hombre = altura en pulgadas * 0,415 para obtener longitud de zancada media.
-			if(PERFIL.height != undefined){
-				var pul = parseFloat(PERFIL.height) * 39.370,
-				med = (PERFIL.gender == 'M')? 0.415 : 0.413;
+			if(PERFIL != null){
+		//	if(PERFIL.height != undefined){
+				var pul = parseFloat(PERFIL.height) * 39.370;
+				var med = (PERFIL.gender == 'M')? 0.415 : 0.413;
 				DISTA = (pul * med) * STEP;
 				$(".DISTA").html( DISTA );
 			}
-			
 			initClock();
 		}
 		ACCE = m;
 		PauseSens = 0;
 	}else{
-		
 		if(!PAUSED && PauseSens >= 5){
 			mensaje('pAUSE');
 			pause();
@@ -936,18 +931,12 @@ function geo(){
 }
 
 function geoSuccess(position){
-	
 	if(isDevice() != 'Android'){
 		setTimeout(function(){ geo(); }, MAPTIMEOUT);
 	}
-
-	mensaje('Ejecutando GPS');
-	
 	if(PAUSED){
 		return false;
 	}
-	
-	
 	if(position.coords != undefined){
 		LAT = position.coords.latitude;
 		LON = position.coords.longitude;
@@ -955,9 +944,6 @@ function geoSuccess(position){
 		LAT = position.latitude;
 		LON = position.longitude;
 	}
-	
-	mensaje('lat: '+LAT+' lon: '+LON);
-	
 	if(MAP != null){
 		var latlng = new google.maps.LatLng( LAT, LON );
 		/*
@@ -996,7 +982,6 @@ function geoSuccess(position){
 			});
 		}
 	}
-	//
 }
 
 function pause(){
