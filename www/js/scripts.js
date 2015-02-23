@@ -23,6 +23,7 @@ var SES = window.localStorage,
 	SECOND = 0,
 	CALO = 0, //calorias
 	STEP = 0, //pasos
+	DISTA = 0, //distancia recorrida
 	ACCE = 0, //ACCELERATION
 	PAUSED = true, //status of activity
 	PERFIL = null, //status of activity
@@ -736,6 +737,7 @@ function trackActivity(){
 			lon : LON,
 			ste : STEP,
 			cal : CALO,
+			dis : DISTA,
 			ppm : PPM
 		});
 		actividad[curIndex] = actual;
@@ -810,11 +812,11 @@ function initClock(obj, segundos) {
 	}
 	
 	var minutes = (SECOND/60),
-	level = .142,
+	level = .142, //nivel de actividad "correr"
 	aux_calories = (PERFIL.weight*2.2)*minutes*level;
 	CALO = Math.round(aux_calories*10)/10;
 	$(".CALOR").html( CALO );
-
+	
 	if(SECOND > LASTTTACK+10){
 		LASTTTACK = SECOND;
 		trackActivity();
@@ -844,8 +846,6 @@ function stepsSuccess(a){
 	, y = a.y
 	, z = a.z
 	, m = Math.round((x +y +z)/3);
-	//
-	mensaje('aCCE : '+ACCE+' pMED : '+m);
 	
 	if(ACCE != m){
 		//
@@ -864,12 +864,24 @@ function stepsSuccess(a){
 					ini : new Date()
 				});
 				SES['actividad'] = JSON.stringify(actividad);
-			}			
+			}
+			
+			// 1 mt. = a 39.370 pulgadas
+			// mujer = altura en pulgadas * 0,413 para obtener longitud de zancada media. 
+			// hombre = altura en pulgadas * 0,415 para obtener longitud de zancada media.
+			if(PERFIL.height != undefined){
+				var pul = parseFloat(PERFIL.height) * 39.370,
+				med = (PERFIL.gender == 'M')? 0.415 : 0.413;
+				DISTA = (pul * med) * STEP;
+				$(".DISTA").html( DISTA );
+			}
+			
 			initClock();
 		}
 		ACCE = m;
 		PauseSens = 0;
 	}else{
+		
 		if(!PAUSED && PauseSens >= 5){
 			mensaje('pAUSE');
 			pause();
