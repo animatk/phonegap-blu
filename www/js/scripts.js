@@ -870,7 +870,16 @@ function stepsSuccess(a){
 				var pul = parseFloat(PERFIL.height) * 39.370;
 				var med = (PERFIL.gender == 'M')? 0.415 : 0.413;
 				DISTA = (pul * med) * STEP;
-				$(".DISTA").html( DISTA );
+				var pul = DISTA; //pulgadas
+				var metro = 39.370; //1 metro
+				var recorrido = pul/metro;
+				var mostrar = recorrido.toFixed(1) + ' Mts.'
+				if( recorrido > 1000 ){
+					recorrido = recorrido/1000;
+					mostrar = recorrido.toFixed(2) + ' Km.'
+				} 
+				
+				$(".DISTA").html( mostrar );
 			}
 			initClock();
 		}
