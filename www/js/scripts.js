@@ -403,7 +403,6 @@ function iniciar(){
 			,fn: '$(\'#btnMenu\').removeClass(\'oculto\')'
 		});
 	}
-	
 }
 
 /*
@@ -729,7 +728,6 @@ function listarDispositivos(){
 		//
 		output += '<div class="ak-alert"> No hay dispositivos recordados </div>';
 	}
-	
 	$('.disp-list').html(output);
 }
 
@@ -797,11 +795,13 @@ function principal(form){
 	$('#BtnContinuar').addClass('oculto');
 	$('#BtnDetener').addClass('oculto');
 	PAUSED = false;
-//	initClock();
-	steps();
-	geo();
-//	trackActivity();
-//	window.plugin.backgroundMode.enable();
+
+	if(StepID == null){
+		steps();
+	}
+	if(watchID == null){
+		geo();
+	}
 }
 function trackActivity(){
 	if(SES['actividad'] && !PAUSED){
@@ -1020,8 +1020,20 @@ function geo(){
 	}
 }
 
+function stopgeo(){
+	if(watchID){
+		if(isDevice() == 'Android'){
+			geolocation.clearWatch(watchID);
+		}else{
+			StopGeoiOS = true;
+		}
+		watchID = null
+	}
+}
+
 function geoSuccess(position){
 	if(isDevice() != 'Android'){
+		if(StopGeoiOS != undefined){ StopGeoiOS = undefined; return false; }
 		setTimeout(function(){ geo(); }, MAPTIMEOUT);
 	}
 	if(PAUSED){
@@ -1090,7 +1102,6 @@ function pause(){
 	$('#BtnDetener').removeClass('oculto');
 	$('#BtnContinuar').removeClass('oculto');
 	PAUSED = true;
-//	window.plugin.backgroundMode.disable();
 }
 function stop(){
 	if(SES['actividad']){
@@ -1108,11 +1119,8 @@ function stop(){
 		MAPLINE.setMap(null);
 		MAPLINE = null;
 	}
-	
 	stopsteps();
-	if(isDevice() == 'Android'){
-		geolocation.clearWatch(watchID);
-	}
+	stopgeo();
 	
 	ak_navigate('#principal','#inicio');
 	$('#btn-accion-izq').addClass('oculto');
