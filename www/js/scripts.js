@@ -843,7 +843,7 @@ function Dist(lat1, lon1, lat2, lon2)
 }
 
 function initClock(obj, segundos) {
-	mensage('Clock!');
+	mensaje('Clock!');
 	if(PAUSED){
 		return false;
 	}
@@ -926,7 +926,7 @@ function stopsteps() {
 }
 function stepsSuccess(a){
 	//
-	mensage('Step');
+	mensaje('Step');
 	var x = a.x
 	, s = parseInt($('#sensible').val())
 	, y = a.y
@@ -1035,7 +1035,7 @@ function stopgeo(){
 }
 
 function geoSuccess(position){
-	mensage('Geo!');
+	mensaje('Geo!');
 	if(isDevice() != 'Android'){
 		if(StopGeoiOS != undefined){ StopGeoiOS = undefined; return false; }
 		setTimeout(function(){ geo(); }, MAPTIMEOUT);
