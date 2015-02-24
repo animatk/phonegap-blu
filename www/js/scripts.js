@@ -797,9 +797,11 @@ function principal(form){
 	PAUSED = false;
 
 	if(StepID == null){
+		mensaje('load Step');
 		steps();
 	}
 	if(watchID == null){
+		mensaje('load Geo');
 		geo();
 	}
 }
@@ -841,6 +843,7 @@ function Dist(lat1, lon1, lat2, lon2)
 }
 
 function initClock(obj, segundos) {
+	mensage('Clock!');
 	if(PAUSED){
 		return false;
 	}
@@ -915,9 +918,15 @@ function steps(){
 	  //error
 	}, options);
 }
-
+function stopsteps() {
+	if (StepID) {
+		navigator.accelerometer.clearWatch(StepID);
+		StepID = null;
+	}
+}
 function stepsSuccess(a){
 	//
+	mensage('Step');
 	var x = a.x
 	, s = parseInt($('#sensible').val())
 	, y = a.y
@@ -976,12 +985,6 @@ function stepsSuccess(a){
 	$('.PASOS').html(STEP);
 }
 
-function stopsteps() {
-	if (StepID) {
-		navigator.accelerometer.clearWatch(StepID);
-		StepID = null;
-	}
-}
 
 function geo(){
 	if(isDevice() == 'Android'){
@@ -1032,6 +1035,7 @@ function stopgeo(){
 }
 
 function geoSuccess(position){
+	mensage('Geo!');
 	if(isDevice() != 'Android'){
 		if(StopGeoiOS != undefined){ StopGeoiOS = undefined; return false; }
 		setTimeout(function(){ geo(); }, MAPTIMEOUT);
