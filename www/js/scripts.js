@@ -28,8 +28,6 @@ var SES = window.localStorage,
 	PAUSED = true, //status of activity
 	PERFIL = null, //status of activity
 	PPM = 0, //HRM sensor 
-	StepID = null, //acelerometro id
-	watchID = null, //gps track
 	MAP = null, //map google
 	LAT = 0, //map latitude
 	LON = 0, //map longitude
@@ -796,14 +794,15 @@ function principal(form){
 	$('#BtnDetener').addClass('oculto');
 	PAUSED = false;
 
-	if(StepID == null){
-		mensaje('load Step');
-		steps();
+	if(SES['StepID']){
+		stopsteps();
 	}
-	if(watchID == null){
-		mensaje('load Geo');
+	steps();
+	
+	if(SES['GeoID']){
+		stopgeo();
+	}
 		geo();
-	}
 }
 function trackActivity(){
 	if(SES['actividad'] && !PAUSED){
@@ -914,19 +913,19 @@ function checkTime(i) {
 function steps(){
 //	mensaje("-pasos-" );
 	var options = { frequency: ACCELTIMEOUT };
-	StepID = navigator.accelerometer.watchAcceleration(stepsSuccess, function(){
+	SES['StepID'] = navigator.accelerometer.watchAcceleration(stepsSuccess, function(){
 	  //error
 	}, options);
 }
 function stopsteps() {
-	if (StepID) {
-		navigator.accelerometer.clearWatch(StepID);
-		StepID = null;
+	if (SES['StepID']) {
+		navigator.accelerometer.clearWatch(SES['StepID']);
+		SES.removeItem('StepID');
 	}
 }
 function stepsSuccess(a){
-	//
-	mensaje('Step ID : '+ StepID);
+	
+	mensaje('Step ID');
 	var x = a.x
 	, s = parseInt($('#sensible').val())
 	, y = a.y
@@ -989,12 +988,12 @@ function stepsSuccess(a){
 function geo(){
 	if(isDevice() == 'Android'){
 		var options = { timeout: MAPTIMEOUT, enableHighAccuracy: true };
-		watchID = navigator.geolocation.watchPosition(geoSuccess, function(error){
+		SES['GeoID'] = navigator.geolocation.watchPosition(geoSuccess, function(error){
 			mensaje("Geo Error : " + error.code + "<br/> Mensaje : " + error.message );
 		}, options);
 	}else{
 		var options = { enableHighAccuracy: true };
-		watchID = navigator.geolocation.getCurrentPosition(geoSuccess, function(error){
+		navigator.geolocation.getCurrentPosition(geoSuccess, function(error){
 		  mensaje("Geo Error : " + error.code + "<br/> Mensaje : " + error.message );
 		}, options);	
 	}
@@ -1020,18 +1019,18 @@ function geo(){
 }
 
 function stopgeo(){
-	if(watchID){
-		if(isDevice() == 'Android'){
-			geolocation.clearWatch(watchID);
-		}else{
-			StopGeoiOS = true;
+	if(isDevice() == 'Android'){
+		if(SES['GeoID']){
+			geolocation.clearWatch(SES['GeoID']);
+			SES.removeItem('GeoID');
 		}
+	}else{
+		StopGeoiOS = true;
 	}
-	watchID = null;
 }
 
 function geoSuccess(position){
-	mensaje('Geo ID : '+ watchID);
+	mensaje('GeoID');
 	if(isDevice() != 'Android'){
 		if(StopGeoiOS != undefined){ StopGeoiOS = undefined; return false; }
 		setTimeout(function(){ geo(); }, MAPTIMEOUT);
