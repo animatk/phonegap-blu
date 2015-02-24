@@ -926,7 +926,7 @@ function stopsteps() {
 }
 function stepsSuccess(a){
 	//
-	mensaje('Step');
+	mensaje('Step ID : '+ StepID);
 	var x = a.x
 	, s = parseInt($('#sensible').val())
 	, y = a.y
@@ -989,15 +989,11 @@ function stepsSuccess(a){
 function geo(){
 	if(isDevice() == 'Android'){
 		var options = { timeout: MAPTIMEOUT, enableHighAccuracy: true };
-	//	var options = { enableHighAccuracy: true };
 		watchID = navigator.geolocation.watchPosition(geoSuccess, function(error){
-	//	watchID = navigator.geolocation.getCurrentPosition(geoSuccess, function(error){
-		  mensaje("Geo Error : " + error.code + "<br/> Mensaje : " + error.message );
+			mensaje("Geo Error : " + error.code + "<br/> Mensaje : " + error.message );
 		}, options);
 	}else{
-	//	var options = { timeout: MAPTIMEOUT, enableHighAccuracy: true };
 		var options = { enableHighAccuracy: true };
-	//	watchID = navigator.geolocation.watchPosition(geoSuccess, function(error){
 		watchID = navigator.geolocation.getCurrentPosition(geoSuccess, function(error){
 		  mensaje("Geo Error : " + error.code + "<br/> Mensaje : " + error.message );
 		}, options);	
@@ -1030,12 +1026,12 @@ function stopgeo(){
 		}else{
 			StopGeoiOS = true;
 		}
-		watchID = null;
 	}
+	watchID = null;
 }
 
 function geoSuccess(position){
-	mensaje('Geo!');
+	mensaje('Geo ID : '+ watchID);
 	if(isDevice() != 'Android'){
 		if(StopGeoiOS != undefined){ StopGeoiOS = undefined; return false; }
 		setTimeout(function(){ geo(); }, MAPTIMEOUT);
