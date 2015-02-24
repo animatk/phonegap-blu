@@ -963,10 +963,10 @@ function stepsSuccess(a){
 				var pul = DISTA; //pulgadas
 				var metro = 39.370; //1 metro
 				var recorrido = pul/metro;
-				var mostrar = recorrido.toFixed(1) + ' Mts.'
+				var mostrar = recorrido.toFixed(1) + ' m.'
 				if( recorrido > 1000 ){
 					recorrido = recorrido/1000;
-					mostrar = recorrido.toFixed(2) + ' Km.'
+					mostrar = recorrido.toFixed(2) + ' k.'
 				} 
 				
 				$(".DISTA").html( mostrar );
@@ -1030,7 +1030,7 @@ function stopgeo(){
 		}else{
 			StopGeoiOS = true;
 		}
-		watchID = null
+		watchID = null;
 	}
 }
 
@@ -1136,14 +1136,14 @@ function stop(){
 /*! map */
 function map_init(){
 	var mapOptions = {
-		panControl: false,
-		zoomControl: false,
-		mapTypeControl: false,
-		scaleControl: false,
-		streetViewControl: false,
-		overviewMapControl: false,
-		center: { lat: LAT, lng: LON},
-		zoom: 16
+		panControl: false
+		, zoomControl: false
+		, mapTypeControl: false
+		, scaleControl: false
+		, streetViewControl: false
+		, overviewMapControl: false
+		, center: { lat: LAT, lng: LON}
+		, zoom: 16
 	};
 	MAP = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 }
