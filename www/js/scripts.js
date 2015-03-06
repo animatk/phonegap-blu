@@ -802,7 +802,13 @@ function principal(form){
 	if(SES['GeoID']){
 		stopgeo();
 	}
-		geo();
+	
+	if(SES['bgGeo']){
+		nGeo = window.plugins.backgroundGeoLocation;
+		nGeo.stop();
+	}
+	
+	geo();
 }
 function trackActivity(){
 	if(SES['actividad'] && !PAUSED){
@@ -1015,6 +1021,7 @@ function geo(){
 			, stopOnTerminate: false 
 		});
 		bgGeo.start();
+		SES['bgGeo'] = true;
 	}
 }
 
