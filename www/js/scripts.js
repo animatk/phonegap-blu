@@ -369,13 +369,15 @@ function isOnLine(){
 /*!
 	Onload Event
 */
-$(document).ready(function(){
+document.addEventListener("deviceready", IniciarTodo, false);
+
+function IniciarTodo(){
 	if(SES['actividad']){
-		pause(function(){
+	//	pause(function(){
 			principal('#inicio');
-		});
+	//	});
 	}	
-});
+}
 
 function iniciar(){
 	if( SES['chain'] ){
@@ -795,7 +797,7 @@ function principal(form){
 	$('#BtnContinuar').addClass('oculto');
 	$('#BtnDetener').addClass('oculto');
 	PAUSED = false;
-/*
+
 	if(SES['StepID']){
 		mensaje('existia steps se detiene');
 		stopsteps();
@@ -811,7 +813,7 @@ function principal(form){
 		nGeo = window.plugins.backgroundGeoLocation;
 		nGeo.stop();
 	}
-*/
+	
 	steps();
 	geo();
 }
@@ -927,6 +929,7 @@ function steps(){
 	var options = { frequency: ACCELTIMEOUT };
 	SES['StepID'] = navigator.accelerometer.watchAcceleration(stepsSuccess, function(){
 	  //error
+	  mensaje('Error STEPS');
 	}, options);
 }
 function stopsteps() {
