@@ -373,7 +373,12 @@ document.addEventListener("deviceready", IniciarTodo, false);
 
 function IniciarTodo(){
 	if(SES['actividad']){
+		var actividad = JSON.parse(SES['actividad']),
+		curIndex= actividad.length-1,
+		actual = actividad[curIndex];
+		STEP = actual.ste;
 		pause(function(){
+			initClock();
 			principal('#inicio');
 		});
 	}	
@@ -797,17 +802,7 @@ function principal(form){
 	$('#BtnContinuar').addClass('oculto');
 	$('#BtnDetener').addClass('oculto');
 	PAUSED = false;
-/*
-	if(SES['StepID']){
-		mensaje('existia steps se detiene');
-		stopsteps();
-	}
-	
-	if(SES['GeoID']){
-		mensaje('existia GEO se detiene');
-		stopgeo();
-	} */
-	
+
 	if(SES['bgGeo']){
 		mensaje('existia bgGEO se detiene');
 		nGeo = window.plugins.backgroundGeoLocation;
@@ -855,7 +850,6 @@ function Dist(lat1, lon1, lat2, lon2)
 }
 
 function initClock(obj, segundos) {
-	mensaje('Clock!');
 	if(PAUSED){
 		return false;
 	}
@@ -924,12 +918,9 @@ function checkTime(i) {
 
 
 function steps(){
-//	mensaje("-pasos-" );
-	mensaje('inicio STEPS');
 	var options = { frequency: ACCELTIMEOUT };
 	SES['StepID'] = navigator.accelerometer.watchAcceleration(stepsSuccess, function(){
 	  //error
-	  mensaje('Error STEPS');
 	}, options);
 }
 function stopsteps() {
@@ -939,8 +930,6 @@ function stopsteps() {
 	}
 }
 function stepsSuccess(a){
-	
-	mensaje('-Step-');
 	var x = a.x
 	, s = parseInt($('#sensible').val())
 	, y = a.y
@@ -951,7 +940,6 @@ function stepsSuccess(a){
 		//
 		if(ACCE > (m + s)){ 
 		//	|| ACCE < (m - s)){
-			STEP = STEP+1;
 			PAUSED = false;
 			
 			var actividad = [];
@@ -965,6 +953,8 @@ function stepsSuccess(a){
 				});
 				SES['actividad'] = JSON.stringify(actividad);
 			}
+
+			STEP = STEP+1;
 			
 			// 1 mt. = a 39.370 pulgadas
 			// mujer = altura en pulgadas * 0,413 para obtener longitud de zancada media. 
