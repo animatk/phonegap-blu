@@ -951,11 +951,9 @@ function stepsSuccess(a){
 			}
 			
 			if(SES['steps']){
-				STEP = SES['steps'];
+				STEP = parseInt(SES['steps']);
 			}
-			
 			STEP = STEP+1;
-			
 			
 			// 1 mt. = a 39.370 pulgadas
 			// mujer = altura en pulgadas * 0,413 para obtener longitud de zancada media. 
