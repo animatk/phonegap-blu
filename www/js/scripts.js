@@ -373,12 +373,7 @@ document.addEventListener("deviceready", IniciarTodo, false);
 
 function IniciarTodo(){
 	if(SES['actividad']){
-		var actividad = JSON.parse(SES['actividad']),
-		curIndex= actividad.length-1,
-		actual = actividad[curIndex];
-		STEP = actual.ste;
 		pause(function(){
-			initClock();
 			principal('#inicio');
 		});
 	}	
@@ -832,6 +827,7 @@ function trackActivity(){
 		});
 		actividad[curIndex] = actual;
 		//
+		SES['steps'] = STEP;
 		SES['actividad'] = JSON.stringify(actividad);
 	//	setTimeout(function(){ trackActivity(); }, ACTIVITYTIMEOUT);
 	}
@@ -953,8 +949,13 @@ function stepsSuccess(a){
 				});
 				SES['actividad'] = JSON.stringify(actividad);
 			}
-
+			
+			if(SES['steps']){
+				STEP = SES['steps'];
+			}
+			
 			STEP = STEP+1;
+			
 			
 			// 1 mt. = a 39.370 pulgadas
 			// mujer = altura en pulgadas * 0,413 para obtener longitud de zancada media. 
