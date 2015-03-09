@@ -794,10 +794,10 @@ function principal(form){
 	$('#BtnDetener').addClass('oculto');
 	PAUSED = false;
 
-	if(SES['StepID']){
-		mensaje('existia steps se detiene');
-		stopsteps();
-	}
+//	if(SES['StepID']){
+//		mensaje('existia steps se detiene');
+//		stopsteps();
+//	}
 	steps();
 	
 	if(SES['GeoID']){
