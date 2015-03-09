@@ -793,12 +793,11 @@ function principal(form){
 	$('#BtnContinuar').addClass('oculto');
 	$('#BtnDetener').addClass('oculto');
 	PAUSED = false;
-
-//	if(SES['StepID']){
-//		mensaje('existia steps se detiene');
-//		stopsteps();
-//	}
-	steps();
+/*
+	if(SES['StepID']){
+		mensaje('existia steps se detiene');
+		stopsteps();
+	}
 	
 	if(SES['GeoID']){
 		mensaje('existia GEO se detiene');
@@ -810,7 +809,8 @@ function principal(form){
 		nGeo = window.plugins.backgroundGeoLocation;
 		nGeo.stop();
 	}
-	
+*/
+	steps();
 	geo();
 }
 function trackActivity(){
