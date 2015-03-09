@@ -373,9 +373,9 @@ document.addEventListener("deviceready", IniciarTodo, false);
 
 function IniciarTodo(){
 	if(SES['actividad']){
-	//	pause(function(){
+		pause(function(){
 			principal('#inicio');
-	//	});
+		});
 	}	
 }
 
@@ -813,7 +813,7 @@ function principal(form){
 		nGeo = window.plugins.backgroundGeoLocation;
 		nGeo.stop();
 	}
-	
+
 	steps();
 	geo();
 }
