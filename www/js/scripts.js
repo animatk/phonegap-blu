@@ -795,15 +795,18 @@ function principal(form){
 	PAUSED = false;
 
 	if(SES['StepID']){
+		mensaje('existia steps se detiene');
 		stopsteps();
 	}
 	steps();
 	
 	if(SES['GeoID']){
+		mensaje('existia GEO se detiene');
 		stopgeo();
 	}
 	
 	if(SES['bgGeo']){
+		mensaje('existia bgGEO se detiene');
 		nGeo = window.plugins.backgroundGeoLocation;
 		nGeo.stop();
 	}
@@ -918,6 +921,7 @@ function checkTime(i) {
 
 function steps(){
 //	mensaje("-pasos-" );
+	mensaje('inicio STEPS');
 	var options = { frequency: ACCELTIMEOUT };
 	SES['StepID'] = navigator.accelerometer.watchAcceleration(stepsSuccess, function(){
 	  //error
@@ -931,7 +935,7 @@ function stopsteps() {
 }
 function stepsSuccess(a){
 	
-	mensaje('Step ID');
+	mensaje('-Step-');
 	var x = a.x
 	, s = parseInt($('#sensible').val())
 	, y = a.y
