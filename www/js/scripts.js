@@ -371,7 +371,9 @@ function isOnLine(){
 */
 $(document).ready(function(){
 	if(SES['actividad']){
-		principal('#inicio');
+		pause(function(){
+			principal('#inicio');
+		});
 	}	
 });
 
@@ -1096,7 +1098,7 @@ function geoSuccess(position){
 	}
 }
 
-function pause(){
+function pause(call){
 	if(SES['actividad']){
 		var actividad = JSON.parse(SES['actividad']),
 		endDate = new Date(),
@@ -1112,6 +1114,10 @@ function pause(){
 	$('#BtnDetener').removeClass('oculto');
 	$('#BtnContinuar').removeClass('oculto');
 	PAUSED = true;
+	
+	if(call != undefined){
+		call();
+	}
 }
 function stop(){
 	if(SES['actividad']){
