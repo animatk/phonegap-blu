@@ -797,7 +797,7 @@ function principal(form){
 	$('#BtnContinuar').addClass('oculto');
 	$('#BtnDetener').addClass('oculto');
 	PAUSED = false;
-
+/*
 	if(SES['StepID']){
 		mensaje('existia steps se detiene');
 		stopsteps();
@@ -806,7 +806,7 @@ function principal(form){
 	if(SES['GeoID']){
 		mensaje('existia GEO se detiene');
 		stopgeo();
-	}
+	} */
 	
 	if(SES['bgGeo']){
 		mensaje('existia bgGEO se detiene');
