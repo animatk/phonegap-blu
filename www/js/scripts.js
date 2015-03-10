@@ -953,7 +953,7 @@ function stepsSuccess(a){
 				SES['actividad'] = JSON.stringify(actividad);
 			}
 
-			STEP = parseInt(SES['steps'])+1;
+			STEP = (SES['steps'])? parseInt(SES['steps'])+1: 1;
 			SES['steps'] = STEP;
 			
 			// 1 mt. = a 39.370 pulgadas
