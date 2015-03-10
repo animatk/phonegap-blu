@@ -826,7 +826,6 @@ function trackActivity(){
 		});
 		actividad[curIndex] = actual;
 		//
-		SES['steps'] = STEP;
 		SES['actividad'] = JSON.stringify(actividad);
 	//	setTimeout(function(){ trackActivity(); }, ACTIVITYTIMEOUT);
 	}
@@ -954,6 +953,7 @@ function stepsSuccess(a){
 			
 			if(SES['steps']){
 				STEP = parseInt(SES['steps']);
+				SES.removeItem('steps');
 			}
 			STEP = STEP+1;
 			
@@ -1102,6 +1102,7 @@ function pause(call){
 		actividad[curIndex].seg = parseInt((endDate-iniTime)/1000);
 		//
 		SES['actividad'] = JSON.stringify(actividad);
+		SES['steps'] = STEP;
 	}
 	$('#BtnPausar').addClass('oculto');
 	$('#BtnDetener').removeClass('oculto');
@@ -1116,6 +1117,7 @@ function stop(){
 	if(SES['actividad']){
 		mensaje(SES['actividad']);
 		SES.removeItem('actividad');
+		SES.removeItem('steps');
 	}
 	
 	if(bgGeo != null){
