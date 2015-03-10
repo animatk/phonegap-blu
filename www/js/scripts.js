@@ -952,12 +952,9 @@ function stepsSuccess(a){
 				});
 				SES['actividad'] = JSON.stringify(actividad);
 			}
-			
-			if(SES['steps']){
-				STEP = parseInt(SES['steps']);
-				SES.removeItem('steps');
-			}
-			STEP = STEP+1;
+
+			STEP = parseInt(SES['steps'])+1;
+			SES['steps'] = STEP;
 			
 			// 1 mt. = a 39.370 pulgadas
 			// mujer = altura en pulgadas * 0,413 para obtener longitud de zancada media. 
@@ -1104,7 +1101,6 @@ function pause(call){
 		actividad[curIndex].seg = parseInt((endDate-iniTime)/1000);
 		//
 		SES['actividad'] = JSON.stringify(actividad);
-		SES['steps'] = STEP;
 	}
 	$('#BtnPausar').addClass('oculto');
 	$('#BtnDetener').removeClass('oculto');
