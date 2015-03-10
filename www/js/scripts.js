@@ -800,8 +800,10 @@ function principal(form){
 
 	if(SES['bgGeo']){
 		mensaje('existia bgGEO se detiene');
-		nGeo = window.plugins.backgroundGeoLocation;
-		nGeo.stop();
+	//	nGeo = window.plugins.backgroundGeoLocation;
+	//	nGeo.stop();
+		
+		cordova.plugins.backgroundMode.disable();
 	}
 
 	steps();
@@ -1004,22 +1006,29 @@ function geo(){
 //	}
 	
 	if(bgGeo == null){
-		bgGeo = window.plugins.backgroundGeoLocation;
-		bgGeo.configure( function(){
-			//
-		}, function(error) {
-			//	mensaje('BackgroundGeoLocation error');
-		}, {
-			desiredAccuracy: 0
-			, stationaryRadius: 3
-			, distanceFilter: 3
-			, notificationTitle: 'Siluet se esta ejecutando.'
-			, notificationText: 'Tomando datos'
-			, activityType: 'AutomotiveNavigation'
-			, debug: false
-			, stopOnTerminate: false 
-		});
-		bgGeo.start();
+		
+		
+	//	bgGeo = window.plugins.backgroundGeoLocation;
+	//	bgGeo.configure( function(){
+	//		//
+	//	}, function(error) {
+	//		//	mensaje('BackgroundGeoLocation error');
+	//	}, {
+	//		desiredAccuracy: 0
+	//		, stationaryRadius: 3
+	//		, distanceFilter: 3
+	//		, notificationTitle: 'Siluet se esta ejecutando.'
+	//		, notificationText: 'Tomando datos'
+	//		, activityType: 'AutomotiveNavigation'
+	//		, debug: false
+	//		, stopOnTerminate: false 
+	//	});
+	//	bgGeo.start();
+	
+		cordova.plugins.backgroundMode.setDefaults({ text:'Siluet se esta ejecutando.'});
+		cordova.plugins.backgroundMode.enable();
+		bgGeo = true;
+		
 		SES['bgGeo'] = true;
 	}
 }
@@ -1117,8 +1126,11 @@ function stop(){
 		SES.removeItem('steps');
 		SES.removeItem('bgGeo');
 	}
+	
+	
 	if(bgGeo != null){
-		bgGeo.stop();
+		cordova.plugins.backgroundMode.disable();
+		// bgGeo.stop();
 		bgGeo = null;
 	}
 	stopsteps();
