@@ -805,7 +805,6 @@ function principal(form){
 	}
 
 	steps();
-	geo();
 }
 function trackActivity(){
 	if(SES['actividad'] && !PAUSED){
@@ -926,11 +925,14 @@ function stopsteps() {
 	}
 }
 function stepsSuccess(a){
+	geo();
+	
 	var x = a.x
 	, s = parseInt($('#sensible').val())
 	, y = a.y
 	, z = a.z
 	, m = Math.round((x +y +z)/3);
+	
 	
 	if(ACCE != m){
 		//
@@ -990,17 +992,17 @@ function stepsSuccess(a){
 
 
 function geo(){
-	if(isDevice() == 'Android'){
+/*	if(isDevice() == 'Android'){
 		var options = { timeout: MAPTIMEOUT, enableHighAccuracy: true };
 		SES['GeoID'] = navigator.geolocation.watchPosition(geoSuccess, function(error){
 			mensaje("Geo Error : " + error.code + "<br/> Mensaje : " + error.message );
 		}, options);
-	}else{
+	}else{*/
 		var options = { enableHighAccuracy: true };
 		navigator.geolocation.getCurrentPosition(geoSuccess, function(error){
-		  mensaje("Geo Error : " + error.code + "<br/> Mensaje : " + error.message );
+			//
 		}, options);	
-	}
+//	}
 	
 	if(bgGeo == null){
 		bgGeo = window.plugins.backgroundGeoLocation;
@@ -1022,7 +1024,7 @@ function geo(){
 		SES['bgGeo'] = true;
 	}
 }
-
+/*
 function stopgeo(){
 	if(isDevice() == 'Android'){
 		if(SES['GeoID']){
@@ -1032,14 +1034,13 @@ function stopgeo(){
 	}else{
 		StopGeoiOS = true;
 	}
-}
+}*/
 
 function geoSuccess(position){
-	mensaje('GeoID');
-	if(isDevice() != 'Android'){
+/*	if(isDevice() != 'Android'){
 		if(StopGeoiOS != undefined){ StopGeoiOS = undefined; return false; }
 		setTimeout(function(){ geo(); }, MAPTIMEOUT);
-	}
+	} */
 	if(PAUSED){
 		return false;
 	}
@@ -1128,7 +1129,7 @@ function stop(){
 		MAPLINE = null;
 	}
 	stopsteps();
-	stopgeo();
+//	stopgeo();
 	
 	ak_navigate('#principal','#inicio');
 	$('#btn-accion-izq').addClass('oculto');
