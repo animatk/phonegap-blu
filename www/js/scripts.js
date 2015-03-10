@@ -925,20 +925,22 @@ function stopsteps() {
 }
 function stepsSuccess(a){
 	geo();
-	
+	//
 	var x = a.x
 	, s = parseInt($('#sensible').val())
 	, y = a.y
 	, z = a.z
 	, m = Math.round((x +y +z)/3);
-	
-	
+	//
 	if(ACCE != m){
 		//
 		if(ACCE > (m + s)){ 
 		//	|| ACCE < (m - s)){
+			$('#BtnPausar').removeClass('oculto');
+			$('#BtnDetener').addClass('oculto');
+			$('#BtnContinuar').addClass('oculto');
+			//
 			PAUSED = false;
-			
 			var actividad = [];
 			if(SES['actividad']){
 				actividad = JSON.parse(SES['actividad']);
@@ -1009,7 +1011,7 @@ function geo(){
 		bgGeo.configure( function(){
 			//
 		}, function(error) {
-			mensaje('BackgroundGeoLocation error');
+			//	mensaje('BackgroundGeoLocation error');
 		}, {
 			desiredAccuracy: 0
 			, stationaryRadius: 3
@@ -1093,10 +1095,10 @@ function geoSuccess(position){
 
 function pause(call){
 	if(SES['actividad']){
-		var actividad = JSON.parse(SES['actividad']),
-		endDate = new Date(),
-		curIndex= actividad.length-1,
-		iniTime = new Date(actividad[curIndex].ini);
+		var actividad = JSON.parse(SES['actividad'])
+		,endDate = new Date()
+		,curIndex= actividad.length-1
+		,iniTime = new Date(actividad[curIndex].ini);
 		//
 		actividad[curIndex].end = endDate;
 		actividad[curIndex].seg = parseInt((endDate-iniTime)/1000);
@@ -1108,35 +1110,23 @@ function pause(call){
 	$('#BtnDetener').removeClass('oculto');
 	$('#BtnContinuar').removeClass('oculto');
 	PAUSED = true;
-	
 	if(call != undefined){
 		call();
 	}
 }
 function stop(){
-	if(SES['actividad']){
+	if( SES['actividad'] ){
 		mensaje(SES['actividad']);
 		SES.removeItem('actividad');
 		SES.removeItem('steps');
+		SES.removeItem('bgGeo');
 	}
-	
 	if(bgGeo != null){
 		bgGeo.stop();
 		bgGeo = null;
 	}
-	STEP = 0;
-	PPM = 0;
-	if(MAPLINE != null){
-		MAPLINE.setMap(null);
-		MAPLINE = null;
-	}
 	stopsteps();
-//	stopgeo();
-	
-	ak_navigate('#principal','#inicio');
-	$('#btn-accion-izq').addClass('oculto');
-	$('#btn-accion-der').addClass('oculto');
-	$('#btnMenu').removeClass('oculto');
+	location.reload();
 }
 
 /*! end principal */
