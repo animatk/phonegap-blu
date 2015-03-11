@@ -878,6 +878,7 @@ function initClock(obj, segundos) {
 		time_ini = actual.ini;
 	}
 	var t1 = new Date(time_ini),
+    t = '00:00',
     t2 = new Date(),
     dif = t2-t1,
     SECOND = parseInt((dif/1000) + segundos_mas),
@@ -886,10 +887,16 @@ function initClock(obj, segundos) {
     s = checkTime(parseInt( SECOND % 60 ));        
     if( h > 0 ){
         var h = checkTime(h);
-        $('.ppal-clock').html( h+":"+m+":"+s);
+		t = h+":"+m+":"+s;
     }else{
-        $('.ppal-clock').html( m+":"+s );
+        t = m+":"+s;
     } 
+	$('.ppal-clock').html( t );
+	
+	cordova.plugins.backgroundMode.configure({
+		text: 'T: '+t
+	});
+	
 	/*! contador calorias */
 	if(PERFIL == null){
 		PERFIL = JSON.parse(SES['perfil']);
@@ -904,6 +911,7 @@ function initClock(obj, segundos) {
 		LASTTTACK = SECOND;
 		trackActivity();
 	}
+	
   //  var t = setTimeout(function(){ initClock(actividad, segundos_mas); }, CLOCKTIMEOUT);
 }
 
@@ -933,6 +941,8 @@ function stepsSuccess(a){
 	, y = a.y
 	, z = a.z
 	, m = Math.round((x +y +z)/3);
+	//
+	initClock();
 	//
 	if(ACCE != m){
 		//
@@ -977,7 +987,6 @@ function stepsSuccess(a){
 				
 				$(".DISTA").html( mostrar );
 			}
-			initClock();
 		}
 		ACCE = m;
 		PauseSens = 0;
@@ -1025,7 +1034,11 @@ function geo(){
 	//	});
 	//	bgGeo.start();
 	
-		cordova.plugins.backgroundMode.setDefaults({ text:'Siluet se esta ejecutando.'});
+		cordova.plugins.backgroundMode.setDefaults({ 
+			title:'Siluet se esta ejecutando.'
+			,text:'Calculando tiempo.'
+			,ticker:'Prueba'
+		});
 		cordova.plugins.backgroundMode.enable();
 		bgGeo = true;
 		
