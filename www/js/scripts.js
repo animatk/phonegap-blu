@@ -893,11 +893,10 @@ function initClock(obj, segundos) {
     } 
 	$('.ppal-clock').html( t );
 	
-	/*
 	cordova.plugins.backgroundMode.configure({
 		text: 'T: '+t
 	});
-	*/
+	
 	
 	/*! contador calorias */
 	if(PERFIL == null){
@@ -944,7 +943,6 @@ function stepsSuccess(a){
 	, z = a.z
 	, m = Math.round((x +y +z)/3);
 	//
-	initClock();
 	//
 	if(ACCE != m){
 		//
@@ -999,6 +997,7 @@ function stepsSuccess(a){
 		}
 		PauseSens = PauseSens+1;
 	}	
+	initClock();
 	$('.PASOS').html(STEP);
 }
 
