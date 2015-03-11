@@ -893,9 +893,11 @@ function initClock(obj, segundos) {
     } 
 	$('.ppal-clock').html( t );
 	
+	/*
 	cordova.plugins.backgroundMode.configure({
 		text: 'T: '+t
 	});
+	*/
 	
 	/*! contador calorias */
 	if(PERFIL == null){
