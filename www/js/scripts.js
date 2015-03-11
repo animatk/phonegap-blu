@@ -34,7 +34,7 @@ var SES = window.localStorage,
 	ICO = null, //icon map
 	MAPTIMEOUT = 3000, //tiemout map
 	MAPLINE = null, //linea de recorrido
-	ACCELTIMEOUT = 500, //tiemout mapa
+	ACCELTIMEOUT = 500, //tiemout accel
 	CLOCKTIMEOUT = 1000, //tiemout clock
 	ACTIVITYTYPE = 1, //tipo de actividad
 	ACTIVITYTIMEOUT = 1000*10, //tiemout tomar datos
@@ -376,10 +376,46 @@ function IniciarTodo(){
 		pause(function(){
 			principal('#inicio');
 		});
-	}	
+	}
 }
 
+/*! SQL LITE */
+var webdb = {};
+webdb.db = null;
+
+// Función para crear la base de datos
+webdb.open = function(options) {
+	if (typeof openDatabase == "undefined") return;
+	// Opciones por defecto
+   	var options = options || {};
+	options.name = options.name || 'noname';
+	options.mb = options.mb || 5;
+	options.description = options.description || 'no description';
+	options.version = options.version || '1.0';
+	// Definimos el tamaño en MB
+   	var dbSize = options.mb * 1024 * 1024;
+	// Cargamos la base de datos
+   	webdb.db = openDatabase(options.name, options.version, options.description, dbSize);
+}
+// ExecuteSql
+webdb.executeSql = function(sql, data, onSuccess, onError){
+	if (!webdb.db) return;
+	webdb.db.transaction(function(tx){tx.executeSql(sql, data,onSuccess,onError);});
+}
+// Base de datos
+var opt = {
+	name: "sforza",
+	mb: 2,
+	description: "Base de datos local de sforza",
+	version: "1.0"
+};
+// Abrimos la base de datos
+webdb.open(opt);
+
+/*! END SQL LITE */
+
 function iniciar(){
+
 	if( SES['chain'] ){
 		if( SES['info_basica'] ){
 			ak_navigate('#inicio', '#config');
@@ -781,6 +817,8 @@ function addDisp(name, address)
 /*! principal */
 function principal(form){
 	ak_navigate( form ,'#principal');
+	$('#btnMenu, .btn-accion-izq, .btn-accion-der').addClass('oculto');
+	
 	var mySwiper = new Swiper ('.swiper-container', {
 		// Optional parameters
 		direction: 'horizontal'
@@ -971,7 +1009,6 @@ function stepsSuccess(a){
 			// mujer = altura en pulgadas * 0,413 para obtener longitud de zancada media. 
 			// hombre = altura en pulgadas * 0,415 para obtener longitud de zancada media.
 			if(PERFIL != null){
-		//	if(PERFIL.height != undefined){
 				var pul = parseFloat(PERFIL.height) * 39.370;
 				var med = (PERFIL.gender == 'M')? 0.415 : 0.413;
 				DISTA = (pul * med) * STEP;
@@ -983,7 +1020,7 @@ function stepsSuccess(a){
 					recorrido = recorrido/1000;
 					mostrar = recorrido.toFixed(2) + ' k.'
 				} 
-				
+				//
 				$(".DISTA").html( mostrar );
 			}
 		}
@@ -1136,20 +1173,34 @@ function pause(call){
 function stop(){
 	if( SES['actividad'] ){
 		mensaje(SES['actividad']);
+		
+		webdb.executeSql('CREATE TABLE IF NOT EXISTS actividad (ID INTEGER PRIMARY KEY ASC, chain TEXT, json TEXT, sync TEXT, data TEXT)', [],
+			function(tx, r){},
+			function(tx, e){});
+			
+		var actividad = JSON.parse(SES['actividad']),
+		fecha = actividad[0].ini;
+		
+		webdb.executeSql('INSERT INTO actividad (chain, json, sync, data) VALUES (?,?,?,?)', 
+			[ SES['chain'], SES['actividad'], 'NO', fecha],
+			function(tx, r){},
+			function(tx, e){});
+			
 		SES.removeItem('actividad');
 		SES.removeItem('steps');
 		SES.removeItem('bgGeo');
-	}
-	
-	
+	}		
 	if(bgGeo != null){
 		// bgGeo.stop();
 		cordova.plugins.backgroundMode.disable();
-		
 		bgGeo = null;
 	}
 	stopsteps();
-	location.reload();
+	$('.ppal-clock').html('00:00');
+	$('.PPM, .PASOS, .DISTA, .CALOR').html('0');
+	
+	ak_navigate('#principal', '#inicio');
+	$('#btnMenu').removeClass('oculto');
 }
 
 /*! end principal */
@@ -1167,111 +1218,15 @@ function map_init(){
 	};
 	MAP = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 }
-/*! end map */
+/*! end map */	
 
-/*!
-var myWeight;
-var myDistance;
-
-function HowMany(form){
-	var difference;
-	difference = (myDistance * myWeight) * .653;
-}
-
-function getCalories()
-{
-	pounds = parseInt(document.CALform.pounds.value);
-	minutes = parseInt(document.CALform.minutes.value);
-	exercise = document.CALform.exercise[document.CALform.exercise.selectedIndex].value;
-	if (exercise=="aerobic") 
-	{
-	   level = .046;
-	}
-	if (exercise=="ciclismo") 
-	{
-	   level = .048;
-	}
-	if (exercise=="bailar") 
-	{
-	   level = .034;
-	}
-	if (exercise=="correr1") 
-	{
-	   level = .082;
-	}
-	if (exercise=="correr7") 
-	{
-	   level = .102;
-	}
-	if (exercise=="correr10") 
-	{
-	   level = .142;
-	}
-	if (exercise=="tenis") 
-	{
-	   level = .049;
-	}
-	if (exercise=="caminar2") 
-	{
-	   level = .026;
-	}
-	if (exercise=="caminar3") 
-	{
-	   level = .035;
-	}
-	if (exercise=="caminar4") 
-	{
-	   level = .048;
-	   }
-	if (exercise=="futbol") 
-	{
-	   level = .061;
-	}
-	if (exercise=="golf") 
-	{
-	   level = .029;
-	}
-	if (exercise=="basket") 
-	{
-	   level = .045;
-	}
-	if (exercise=="limpiar") 
-	{
-	   level = .048;
-	}
-	if (exercise=="besar") 
-	{
-	   level = .008;
-	}
-	if (exercise=="pintar") 
-	{
-	   level = .048;
-	}
-	if (exercise=="limpiarcoche") 
-	{
-	   level = .034;
-	}
-	if (exercise=="vertv") 
-	{
-	   level = .008;
-	}
-	if (exercise=="tenis2") 
-	{
-	   level = .036;
-	}
-	if (exercise=="kayak") 
-	{
-	   level = .045;
-	}
-	if (exercise=="spinning") 
-	{
-	   level = .053;
-	}
+function getSQL(f){
+	var from = f||'actividad';
 	
-	var level=level;
-	
-	aux_calories = (pounds*2.2)*minutes*level;
-	aux_calories = Math.round(aux_calories*10)/10;
-	document.getElementById("calories").innerHTML = aux_calories;		
+	webdb.executeSql('SELECT * FROM '+from, [],
+			function(tx, r){
+				var rows = r.rows;
+				mensaje(JSON.stringify(rows));
+			},
+			function(tx, e){});
 }
-*/	
