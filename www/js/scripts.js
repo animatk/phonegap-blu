@@ -846,9 +846,9 @@ function Dist(lat1, lon1, lat2, lon2)
 }
 
 function initClock(obj, segundos) {
-	if(PAUSED){
-		return false;
-	}
+//	if(PAUSED){
+//		return false;
+//	}
 	var actividad = [],
 	segundos_mas = 0;
 	if(obj != undefined){			
