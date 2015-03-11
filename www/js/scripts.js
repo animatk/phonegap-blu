@@ -1023,6 +1023,8 @@ function stepsSuccess(a){
 				//
 				$(".DISTA").html( mostrar );
 			}
+			
+			initClock();
 		}
 		ACCE = m;
 		PauseSens = 0;
@@ -1033,7 +1035,6 @@ function stepsSuccess(a){
 		}
 		PauseSens = PauseSens+1;
 	}	
-	initClock();
 	$('.PASOS').html(STEP);
 }
 
@@ -1221,7 +1222,7 @@ function map_init(){
 /*! end map */	
 
 function getSQL(f){
-	var from = f||'actividad';
+	var from = f ||'actividad';
 	
 	webdb.executeSql('SELECT * FROM '+from, [],
 			function(tx, r){
