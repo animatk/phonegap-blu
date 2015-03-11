@@ -802,14 +802,7 @@ function principal(form){
 		mensaje('existia bgGEO se detiene');
 	//	nGeo = window.plugins.backgroundGeoLocation;
 	//	nGeo.stop();
-		
-	//	cordova.plugins.backgroundMode.disable();
-	
-		window.plugins.BackgroundJS.UnlockBackgroundTime(
-		function(){}
-		, function(msg){
-			mensaje(msg);
-		});
+		cordova.plugins.backgroundMode.disable();
 	}
 
 	steps();
@@ -1041,21 +1034,13 @@ function geo(){
 	//	});
 	//	bgGeo.start();
 	
-	/*
 		cordova.plugins.backgroundMode.setDefaults({ 
 			title:'Siluet se esta ejecutando.'
 			,text:'Calculando tiempo.'
 			,ticker:'Prueba'
 		});
 		cordova.plugins.backgroundMode.enable();
-	*/	
-		
-		window.plugins.BackgroundJS.LockBackgroundTime(
-		function(){}
-		, function(msg){
-			mensaje(msg);
-		});
-		
+
 		bgGeo = true;
 		
 		SES['bgGeo'] = true;
@@ -1158,14 +1143,8 @@ function stop(){
 	
 	
 	if(bgGeo != null){
-	//	cordova.plugins.backgroundMode.disable();
 		// bgGeo.stop();
-		
-		window.plugins.BackgroundJS.UnlockBackgroundTime(
-		function(){}
-		, function(msg){
-			mensaje(msg);
-		});
+		cordova.plugins.backgroundMode.disable();
 		
 		bgGeo = null;
 	}
