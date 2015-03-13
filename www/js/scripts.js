@@ -979,7 +979,8 @@ function stepsSuccess(a){
 	, z = a.z
 	, m = ((x +y +z)/3).toFixed(1)
 	, s = parseFloat($('#sensible').val());
-	//
+	
+	mensaje(m+' -- '+(m + s));
 	//
 	if(ACCE != m){
 		//
