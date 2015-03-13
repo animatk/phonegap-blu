@@ -817,8 +817,8 @@ function addDisp(name, address)
 /*! principal */
 function principal(form){
 	ak_navigate( form ,'#principal');
-	$('#btnMenu, .btn-accion-izq, .btn-accion-der').addClass('oculto');
-	
+	$('#btnMenu, #btn-accion-izq, #btn-accion-der').addClass('oculto');
+
 	var mySwiper = new Swiper ('.swiper-container', {
 		// Optional parameters
 		direction: 'horizontal'
@@ -945,11 +945,6 @@ function initClock(obj, segundos) {
 	CALO = Math.round(aux_calories*10)/10;
 	$(".CALOR").html( CALO );
 	
-	if(SECOND > LASTTTACK+10){
-		LASTTTACK = SECOND;
-		trackActivity();
-	}
-	
   //  var t = setTimeout(function(){ initClock(actividad, segundos_mas); }, CLOCKTIMEOUT);
 }
 
@@ -1017,6 +1012,10 @@ function stepsSuccess(a){
 					recorrido = recorrido/1000;
 					mostrar = recorrido.toFixed(2) + ' k.'
 				} 
+				if(DISTA > LASTTTACK+(39.370*10)){
+					trackActivity();
+					LASTTTACK = DISTA;
+				}
 				//
 				$(".DISTA").html( mostrar );
 			}
@@ -1154,10 +1153,12 @@ function pause(call){
 		,curIndex= actividad.length-1
 		,iniTime = new Date(actividad[curIndex].ini);
 		//
-		actividad[curIndex].cal = CALO;
-		actividad[curIndex].ste = STEP;
 		actividad[curIndex].end = endDate;
 		actividad[curIndex].seg = parseInt((endDate-iniTime)/1000);
+		actividad[curIndex].ste = STEP;
+		actividad[curIndex].cal = CALO;
+		actividad[curIndex].dis = DISTA;
+		
 		//
 		SES['actividad'] = JSON.stringify(actividad);
 	}
@@ -1223,7 +1224,7 @@ function map_init(){
 
 function getSQL(f){
 	var FROM = f ||'actividad';
-	
+	//
 	webdb.executeSql('SELECT * FROM '+FROM, [],
 			function(tx, r){
 				var rows = r.rows,
