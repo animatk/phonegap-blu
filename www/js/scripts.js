@@ -977,8 +977,8 @@ function stepsSuccess(a){
 	var x = a.x
 	, y = a.y
 	, z = a.z
-	, m = Math.round((x +y +z)/3)
-	, s = parseInt($('#sensible').val());
+	, m = ((x +y +z)/3).toFixed(1)
+	, s = parseFloat($('#sensible').val());
 	//
 	//
 	if(ACCE != m){
@@ -1158,6 +1158,8 @@ function pause(call){
 		,curIndex= actividad.length-1
 		,iniTime = new Date(actividad[curIndex].ini);
 		//
+		actividad[curIndex].cal = CALO;
+		actividad[curIndex].ste = STEP;
 		actividad[curIndex].end = endDate;
 		actividad[curIndex].seg = parseInt((endDate-iniTime)/1000);
 		//
