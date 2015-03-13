@@ -982,8 +982,8 @@ function stepsSuccess(a){
 	//
 	if(ACCE != m){
 		//
-		if(ACCE < (m + s)){
-		//	|| ACCE < (m + s)){
+		if(ACCE > (m + s)){
+		//	|| ACCE < (m - s)){
 			$('#BtnPausar').removeClass('oculto');
 			$('#BtnDetener').addClass('oculto');
 			$('#BtnContinuar').addClass('oculto');
