@@ -1190,7 +1190,9 @@ function stop(){
 		SES.removeItem('actividad');
 		SES.removeItem('steps');
 		SES.removeItem('bgGeo');
-	}		
+	}
+	
+	STEP = 0;
 	if(bgGeo != null){
 		// bgGeo.stop();
 		cordova.plugins.backgroundMode.disable();
@@ -1229,7 +1231,7 @@ function getSQL(f){
 				var rows = r.rows,
 					tot = rows.length;
 				for(var i=0; i<tot; i++){
-					var row = rows[i];
+					var row = rows.item(i);
 					mensaje(JSON.stringify(row));
 				}
 			},
