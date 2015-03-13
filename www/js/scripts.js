@@ -866,8 +866,10 @@ function trackActivity(){
 		actividad[curIndex] = actual;
 		//
 		SES['actividad'] = JSON.stringify(actividad);
+		return true;
 	//	setTimeout(function(){ trackActivity(); }, ACTIVITYTIMEOUT);
 	}
+	return false;
 }
 function Dist(lat1, lon1, lat2, lon2)
 {
@@ -1013,8 +1015,9 @@ function stepsSuccess(a){
 					mostrar = recorrido.toFixed(2) + ' k.'
 				} 
 				if(DISTA > LASTTTACK+(39.370*10)){
-					trackActivity();
-					LASTTTACK = DISTA;
+					if(trackActivity()){
+						LASTTTACK = DISTA;
+					}
 				}
 				//
 				$(".DISTA").html( mostrar );
