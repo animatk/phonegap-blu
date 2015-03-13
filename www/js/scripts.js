@@ -982,8 +982,7 @@ function stepsSuccess(a){
 	//
 	if(ACCE != m){
 		//
-		if(ACCE > (m + s)){
-		//	|| ACCE < (m - s)){
+		if(ACCE > (m + s) || ACCE < (m - s)){
 			$('#BtnPausar').removeClass('oculto');
 			$('#BtnDetener').addClass('oculto');
 			$('#BtnContinuar').addClass('oculto');
@@ -1000,10 +999,9 @@ function stepsSuccess(a){
 				});
 				SES['actividad'] = JSON.stringify(actividad);
 			}
-
+			//
 			STEP = (SES['steps'])? parseInt(SES['steps'])+1: 1;
 			SES['steps'] = STEP;
-			
 			// 1 mt. = a 39.370 pulgadas
 			// mujer = altura en pulgadas * 0,413 para obtener longitud de zancada media. 
 			// hombre = altura en pulgadas * 0,415 para obtener longitud de zancada media.
@@ -1022,7 +1020,6 @@ function stepsSuccess(a){
 				//
 				$(".DISTA").html( mostrar );
 			}
-			
 			initClock();
 		}
 		ACCE = m;
