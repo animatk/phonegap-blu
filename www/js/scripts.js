@@ -977,7 +977,7 @@ function stepsSuccess(a){
 	var x = a.x
 	, y = a.y
 	, z = a.z
-	, m = ((x +y +z)/3).toFixed(1)
+	, m = parseFloat(((x +y +z)/3).toFixed(1))
 	, s = parseFloat($('#sensible').val());
 	
 	mensaje(m+' -- '+(m + s));
