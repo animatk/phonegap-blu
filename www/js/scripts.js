@@ -979,13 +979,10 @@ function stepsSuccess(a){
 	, z = a.z
 	, m = parseFloat(((x +y +z)/3).toFixed(1))
 	, s = parseFloat($('#sensible').val());
-	
-	mensaje(m+' -- '+(m + s));
 	//
 	if(ACCE != m){
 		//
-		if(ACCE > (m + s)){ 
-		//	|| ACCE < (m - s)){
+		if(ACCE > (m + s)|| ACCE < (m + s)){
 			$('#BtnPausar').removeClass('oculto');
 			$('#BtnDetener').addClass('oculto');
 			$('#BtnContinuar').addClass('oculto');
