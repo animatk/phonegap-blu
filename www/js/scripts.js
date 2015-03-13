@@ -975,10 +975,10 @@ function stepsSuccess(a){
 	geo();
 	//
 	var x = a.x
-	, s = parseInt($('#sensible').val())
 	, y = a.y
 	, z = a.z
-	, m = Math.round((x +y +z)/3);
+	, m = Math.round((x +y +z)/3)
+	, s = parseInt($('#sensible').val());
 	//
 	//
 	if(ACCE != m){
@@ -1222,12 +1222,16 @@ function map_init(){
 /*! end map */	
 
 function getSQL(f){
-	var from = f ||'actividad';
+	var FROM = f ||'actividad';
 	
-	webdb.executeSql('SELECT * FROM '+from, [],
+	webdb.executeSql('SELECT * FROM '+FROM, [],
 			function(tx, r){
-				var rows = r.rows;
-				mensaje(JSON.stringify(rows));
+				var rows = r.rows,
+					tot = rows.length;
+				for(var i=0; i<tot; i++){
+					var row = rows[i];
+					mensaje(JSON.stringify(row));
+				}
 			},
 			function(tx, e){});
 }
