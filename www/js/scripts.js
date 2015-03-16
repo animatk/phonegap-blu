@@ -377,6 +377,10 @@ function IniciarTodo(){
 			principal('#inicio');
 		});
 	}
+	//si connect
+	if(isOnLine()){
+		sincronizar(1);
+	}
 }
 
 /*! SQL LITE */
@@ -847,28 +851,22 @@ function principal(form){
 }
 function trackActivity(){
 	if(SES['actividad'] && !PAUSED){
-		var actividad = JSON.parse(SES['actividad']),
-		curIndex= actividad.length-1,
-		actual = actividad[curIndex];
+		var actividad = JSON.parse(SES['actividad'])
+		,endDate = new Date()
+		,curIndex= actividad.length-1
+		,iniTime = new Date(actividad[curIndex].ini);
 		//
-		if(actual.data == undefined){
-			actual.data = [];
-		}
-		actual.data.push({
-			time: new Date(),
-			lat : LAT,
-			lon : LON,
-			ste : STEP,
-			cal : CALO,
-			dis : DISTA,
-			ppm : PPM
-		});
-		actividad[curIndex] = actual;
+		actividad[curIndex].end = endDate;
+		actividad[curIndex].seg = parseInt((endDate-iniTime)/1000);
+		actividad[curIndex].ste = STEP;
+		actividad[curIndex].cal = CALO;
+		actividad[curIndex].dis = DISTA;
+		actividad[curIndex].ppm = PPM;
 		//
 		SES['actividad'] = JSON.stringify(actividad);
 		return true;
-	//	setTimeout(function(){ trackActivity(); }, ACTIVITYTIMEOUT);
 	}
+	
 	return false;
 }
 function Dist(lat1, lon1, lat2, lon2)
@@ -936,19 +934,95 @@ function initClock(obj, segundos) {
 		text: 'T: '+t
 	});
 */	
-	
 	/*! contador calorias */
+	
 	if(PERFIL == null){
 		PERFIL = JSON.parse(SES['perfil']);
 	}
-	var minutes = (SECOND/60),
-	level = .142, //nivel de actividad "correr"
-	aux_calories = (PERFIL.weight*2.2)*minutes*level;
-	CALO = Math.round(aux_calories*10)/10;
+	// si hrm activo
+	CALO = (PPM != 0)? calories_burn_hrm() : calories_burn_time();
+	
 	$(".CALOR").html( CALO );
 	
-  //  var t = setTimeout(function(){ initClock(actividad, segundos_mas); }, CLOCKTIMEOUT);
+	// var t = setTimeout(function(){ initClock(actividad, segundos_mas); }, CLOCKTIMEOUT);
 }
+
+function calories_burn_time(){
+	var minutes = (SECOND/60),
+	level = .035, //nivel de actividad "caminar moderado"
+	aux_calories = (PERFIL.weight*2.2)*minutes*level;
+	return Math.round(aux_calories*10)/10; 
+}
+
+function calories_burn_hrm(){
+	PERFIL = JSON.parse(SES['perfil']);
+	var edad = new Date().getFullYear() - new Date(PERFIL.birthdate).getFullYear();
+	var kilogramweight = (PERFIL.weightuni == 'p')? (0.4536 * PERFIL.weight).toFixed(1) : PERFIL.weight;
+	//
+	if (gender == "M") {
+		return Math.round(((-55.0969 + (0.6309*PPM) + (0.1988*kilogramweight) + (0.2017*edad))/4.184)*60);
+	}else{
+		return Math.round(((-20.4022 + (0.4472*PPM) - (0.1263*kilogramweight) + (0.074*edad))/4.184)*60);
+	} 
+}
+function calories_burn(){
+	
+	if(PERFIL == null){
+		PERFIL = JSON.parse(SES['perfil']);
+		/*
+		{	"gender":"F"
+			,"name":"andrea"
+			,"height":"1.6"
+			,"weight":"49"
+			,"weightuni":"k"
+			,"terms":"SI"
+			,"birthdate":"1988-12-03"
+		}
+		*/
+	}
+	
+	//peso ? libras a kilos : solo kilos
+	var kilogramweight = (PERFIL.weightuni == 'p')? (0.4536 * PERFIL.weight).toFixed(1) : PERFIL.weight;
+	//DISTA distancia en pulgadas
+	var metro = 39.370; //1 metro
+	var recorrido = (DISTA/metro)/1000;
+	var	kilometerrundistance = recorrido.toFixed(2);
+	//calculo edad
+	var edad = new Date().getFullYear() - new Date(PERFIL.birthdate).getFullYear();
+	//maximo HR segun edad
+	var maxhrtanaka = 208 - (0.7*edad);
+	//
+	var votwomax = Math.round(15.3*(maxhrtanaka/(PPM*3)));
+	var votwomaxfactor = 1;
+	
+	if (votwomax < 56 && votwomax >= 54) {
+		votwomaxfactor = 1.01;
+	}else if (votwomax < 54 && votwomax >= 52) {
+		votwomaxfactor = 1.02;
+	}else if (votwomax < 52 && votwomax >= 50) {
+		votwomaxfactor = 1.03;
+	}else if (votwomax < 50 && votwomax >= 48) {
+		votwomaxfactor = 1.04;
+	}else if (votwomax < 48 && votwomax >= 46) {
+		votwomaxfactor = 1.05;
+	}else if (votwomax < 46 && votwomax >= 44) {
+		votwomaxfactor = 1.06;
+	}else {
+		votwomaxfactor = 1.07;
+	}
+
+	if (ACTIVITYTYPE == 2) {
+		treadmillfactor = 0; //maquina de correr
+	}else {
+		treadmillfactor = 0.84;
+	}
+	//
+	var kcalperkgperkm = (0.05 * 0) + 0.95;
+	//
+	return  Math.round(((kcalperkgperkm*kilogramweight) + treadmillfactor)*kilometerrundistance*votwomaxfactor);	
+	
+}
+
 
 function checkTime(i) {
     if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
@@ -993,6 +1067,8 @@ function stepsSuccess(a){
 			if(tot < 1 || actividad[tot-1].seg != undefined){
 				actividad.push({
 					ini : new Date()
+					,lat: LAT
+					,lon: LON
 				});
 				SES['actividad'] = JSON.stringify(actividad);
 			}
@@ -1009,10 +1085,10 @@ function stepsSuccess(a){
 				var pul = DISTA; //pulgadas
 				var metro = 39.370; //1 metro
 				var recorrido = pul/metro;
-				var mostrar = recorrido.toFixed(1) + ' m.'
+				var mostrar = recorrido.toFixed(1) + ' m'
 				if( recorrido > 1000 ){
 					recorrido = recorrido/1000;
-					mostrar = recorrido.toFixed(2) + ' k.'
+					mostrar = recorrido.toFixed(2) + ' k'
 				} 
 				if(DISTA > LASTTTACK+(39.370*10)){
 					if(trackActivity()){
@@ -1022,18 +1098,18 @@ function stepsSuccess(a){
 				//
 				$(".DISTA").html( mostrar );
 			}
+			$('.PASOS').html(STEP);
 			initClock();
 		}
 		ACCE = m;
 		PauseSens = 0;
 	}else{
-		if(!PAUSED && PauseSens >= 5){
+		if(!PAUSED && PauseSens >= 4){
 			mensaje('pAUSE');
 			pause();
 		}
 		PauseSens = PauseSens+1;
 	}	
-	$('.PASOS').html(STEP);
 }
 
 
@@ -1229,13 +1305,40 @@ function getSQL(f){
 	var FROM = f ||'actividad';
 	//
 	webdb.executeSql('SELECT * FROM '+FROM, [],
-			function(tx, r){
-				var rows = r.rows,
-					tot = rows.length;
-				for(var i=0; i<tot; i++){
-					var row = rows.item(i);
-					mensaje(JSON.stringify(row));
-				}
-			},
-			function(tx, e){});
+		function(tx, r){
+			var rows = r.rows,
+				tot = rows.length;
+			for(var i=0; i<tot; i++){
+				var row = rows.item(i);
+				mensaje(JSON.stringify(row));
+			}
+		},
+		function(tx, e){});
+}
+
+function sincronizar(nu){
+	
+	webdb.executeSql('SELECT * FROM actividad WHERE sync = NO LIMIT 1 ORDER BY ID ASC', [],
+		function(tx, r){
+			var rows = r.rows,
+				tot = rows.length;
+			for(var i=0; i<tot; i++){
+				var row = rows.item(i);
+				post(SITE+'input', { 
+					chain: row.chain
+					,json: row.json 
+					,data: row.data 
+				}, function(){
+					webdb.executeSql('UPDATE actividad SET sync=? WHERE ID = ?', ['SI', row.ID],
+					function(tx, r){
+						var nnu = nu-1;
+						if(nnu > 0){
+							sincronizar(nnu);
+						}
+					},
+					function(tx, e){});
+				});
+			}
+		},
+		function(tx, e){});
 }
