@@ -948,6 +948,7 @@ function initClock(obj, segundos) {
 }
 
 function calories_burn_time(){
+	PERFIL = JSON.parse(SES['perfil']);
 	var minutes = (SECOND/60),
 	level = .035, //nivel de actividad "caminar moderado"
 	aux_calories = (PERFIL.weight*2.2)*minutes*level;
@@ -959,7 +960,7 @@ function calories_burn_hrm(){
 	var edad = new Date().getFullYear() - new Date(PERFIL.birthdate).getFullYear();
 	var kilogramweight = (PERFIL.weightuni == 'p')? (0.4536 * PERFIL.weight).toFixed(1) : PERFIL.weight;
 	//
-	if (gender == "M") {
+	if (PERFIL.gender == "M") {
 		return Math.round(((-55.0969 + (0.6309*PPM) + (0.1988*kilogramweight) + (0.2017*edad))/4.184)*60);
 	}else{
 		return Math.round(((-20.4022 + (0.4472*PPM) - (0.1263*kilogramweight) + (0.074*edad))/4.184)*60);
