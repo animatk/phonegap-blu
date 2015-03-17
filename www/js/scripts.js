@@ -375,8 +375,6 @@ function IniciarTodo(){
 	if(isOnLine()){
 		sincronizar(1);
 	}
-	
-	geo();
 }
 
 /*! SQL LITE */
@@ -824,14 +822,13 @@ function principal(form){
 	$('#BtnPausar').removeClass('oculto');
 	$('#BtnContinuar').addClass('oculto');
 	$('#BtnDetener').addClass('oculto');
-	
 	PAUSED = false;
 	if(SES['BG']){
 		mensaje('existia BG se detiene');
 		cordova.plugins.backgroundMode.disable();
 	}
-	
 	steps();
+	geo();
 }
 function trackActivity(){
 	if(SES['actividad'] && !PAUSED){
@@ -866,6 +863,9 @@ function Dist(lat1, lon1, lat2, lon2){
 }
 
 function initClock(obj, segundos) {
+	if(PAUSED){
+		return false;
+	}
 	var actividad = [],
 	segundos_mas = 0;
 	if(obj != undefined){			
@@ -1021,6 +1021,7 @@ function stepsSuccess(a){
 	if(ACTIVITYTYPE == 1){
 		loadMapa();
 	}
+	mensaje('-*-');
 	//
 	var x = a.x
 	, y = a.y
@@ -1212,16 +1213,29 @@ function stop(){
 		SES.removeItem('steps');
 		SES.removeItem('BG');
 	}
+	stopsteps();
+	stopgeo();
 	
+	PPM = 0;
 	STEP = 0;
+	LASTTTACK = 0, //ultimo registro tomado
+	SECOND = 0,
+	CALO = 0, //calorias
+	STEP = 0, //pasos
+	DISTA = 0, //distancia recorrida
+	ACCE = 0, //ACCELERATION
+	PAUSED = true, //status of activity
+	MAPLINE = null, //linea de recorrido
+	MAP = null, //map google
+	LAT = 0, //map latitude
+	LON = 0, //map longitude
+	ICO = null, //icon map	
 	if(BG != null){
 		cordova.plugins.backgroundMode.disable();
 		BG = null;
 	}
-	stopsteps();
 	$('.ppal-clock').html('00:00');
 	$('.PPM, .PASOS, .DISTA, .CALOR').html('0');
-	
 	ak_navigate('#principal', '#inicio');
 	$('#btnMenu').removeClass('oculto');
 }
