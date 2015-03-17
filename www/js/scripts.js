@@ -375,6 +375,7 @@ function IniciarTodo(){
 	if(isOnLine()){
 		sincronizar(1);
 	}
+	geo();
 }
 
 /*! SQL LITE */
@@ -828,7 +829,6 @@ function principal(form){
 		cordova.plugins.backgroundMode.disable();
 	}
 	steps();
-	geo();
 }
 function trackActivity(){
 	if(SES['actividad'] && !PAUSED){
@@ -1109,7 +1109,7 @@ function stepsSuccess(a){
 
 function geo(){
 		var options = { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true };
-		SES['GeoID'] = navigator.geolocation.watchPosition(geoSuccess, function(error){
+		GeoIDGeoID = navigator.geolocation.watchPosition(geoSuccess, function(error){
 			mensaje("Geo Error : " + error.code + "<br/> Mensaje : " + error.message );
 		}, options);
 
@@ -1119,9 +1119,9 @@ function geo(){
 	//	}, options);	
 }
 function stopgeo(){
-	if(SES['GeoID']){
-		geolocation.clearWatch(SES['GeoID']);
-		SES.removeItem('GeoID');
+	if(GeoID){
+		geolocation.clearWatch(GeoID);
+		GeoID=null;
 	}
 }
 function geoSuccess(position){
@@ -1195,7 +1195,6 @@ function pause(call){
 }
 function stop(){
 	stopsteps();
-	stopgeo();
 	PPM = 0;
 	STEP = 0;
 	LASTTTACK = 0; //ultimo registro tomado
@@ -1210,21 +1209,16 @@ function stop(){
 	LAT = 0; //map latitude
 	LON = 0; //map longitude
 	ICO = null; //icon map	
-	if(BG != null){
-		cordova.plugins.backgroundMode.disable();
-		BG = null;
-	}
-	
+
 	if( SES['actividad'] ){
 		mensaje(SES['actividad']);
-		
 		webdb.executeSql('CREATE TABLE IF NOT EXISTS actividad (ID INTEGER PRIMARY KEY ASC, chain TEXT, json TEXT, sync TEXT, data TEXT)', [],
 			function(tx, r){},
 			function(tx, e){});
 			
 		var actividad = JSON.parse(SES['actividad']),
 		fecha = actividad[0].ini;
-		
+
 		webdb.executeSql('INSERT INTO actividad (chain, json, sync, data) VALUES (?,?,?,?)', 
 			[ SES['chain'], SES['actividad'], 'NO', fecha],
 			function(tx, r){},
@@ -1232,10 +1226,13 @@ function stop(){
 			
 		SES.removeItem('actividad');
 		SES.removeItem('steps');
-		SES.removeItem('GeoID');
 		SES.removeItem('BG');
 	}
 	
+	if(BG != null){
+		cordova.plugins.backgroundMode.disable();
+		BG = null;
+	}
 	$('.ppal-clock').html('00:00');
 	$('.PPM, .PASOS, .DISTA, .CALOR').html('0');
 	ak_navigate('#principal', '#inicio');
