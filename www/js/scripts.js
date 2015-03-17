@@ -1194,28 +1194,8 @@ function pause(call){
 	}
 }
 function stop(){
-	if( SES['actividad'] ){
-		mensaje(SES['actividad']);
-		
-		webdb.executeSql('CREATE TABLE IF NOT EXISTS actividad (ID INTEGER PRIMARY KEY ASC, chain TEXT, json TEXT, sync TEXT, data TEXT)', [],
-			function(tx, r){},
-			function(tx, e){});
-			
-		var actividad = JSON.parse(SES['actividad']),
-		fecha = actividad[0].ini;
-		
-		webdb.executeSql('INSERT INTO actividad (chain, json, sync, data) VALUES (?,?,?,?)', 
-			[ SES['chain'], SES['actividad'], 'NO', fecha],
-			function(tx, r){},
-			function(tx, e){});
-			
-		SES.removeItem('actividad');
-		SES.removeItem('steps');
-		SES.removeItem('BG');
-	}
 	stopsteps();
 	stopgeo();
-	
 	PPM = 0;
 	STEP = 0;
 	LASTTTACK = 0, //ultimo registro tomado
@@ -1234,6 +1214,28 @@ function stop(){
 		cordova.plugins.backgroundMode.disable();
 		BG = null;
 	}
+	
+	if( SES['actividad'] ){
+		mensaje(SES['actividad']);
+		
+		webdb.executeSql('CREATE TABLE IF NOT EXISTS actividad (ID INTEGER PRIMARY KEY ASC, chain TEXT, json TEXT, sync TEXT, data TEXT)', [],
+			function(tx, r){},
+			function(tx, e){});
+			
+		var actividad = JSON.parse(SES['actividad']),
+		fecha = actividad[0].ini;
+		
+		webdb.executeSql('INSERT INTO actividad (chain, json, sync, data) VALUES (?,?,?,?)', 
+			[ SES['chain'], SES['actividad'], 'NO', fecha],
+			function(tx, r){},
+			function(tx, e){});
+			
+		SES.removeItem('actividad');
+		SES.removeItem('steps');
+		SES.removeItem('GeoID');
+		SES.removeItem('BG');
+	}
+	
 	$('.ppal-clock').html('00:00');
 	$('.PPM, .PASOS, .DISTA, .CALOR').html('0');
 	ak_navigate('#principal', '#inicio');
