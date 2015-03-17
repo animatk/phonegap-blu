@@ -1198,18 +1198,18 @@ function stop(){
 	stopgeo();
 	PPM = 0;
 	STEP = 0;
-	LASTTTACK = 0, //ultimo registro tomado
-	SECOND = 0,
-	CALO = 0, //calorias
-	STEP = 0, //pasos
-	DISTA = 0, //distancia recorrida
-	ACCE = 0, //ACCELERATION
-	PAUSED = true, //status of activity
-	MAPLINE = null, //linea de recorrido
-	MAP = null, //map google
-	LAT = 0, //map latitude
-	LON = 0, //map longitude
-	ICO = null, //icon map	
+	LASTTTACK = 0; //ultimo registro tomado
+	SECOND = 0;
+	CALO = 0; //calorias
+	STEP = 0; //pasos
+	DISTA = 0; //distancia recorrida
+	ACCE = 0; //ACCELERATION
+	PAUSED = true; //status of activity
+	MAPLINE = null; //linea de recorrido
+	MAP = null; //map google
+	LAT = 0; //map latitude
+	LON = 0; //map longitude
+	ICO = null; //icon map	
 	if(BG != null){
 		cordova.plugins.backgroundMode.disable();
 		BG = null;
