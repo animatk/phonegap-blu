@@ -1021,7 +1021,6 @@ function stepsSuccess(a){
 	if(ACTIVITYTYPE == 1){
 		loadMapa();
 	}
-	mensaje('StepID : '+ SES['StepID'] + ', BG : '+SES['BG']+', GeoID : '+SES['GeoID'] );
 	//
 	var x = a.x
 	, y = a.y
@@ -1052,18 +1051,21 @@ function stepsSuccess(a){
 		STEP = (SES['steps'])? parseInt(SES['steps'])+1: 1;
 		SES['steps'] = STEP;
 		// 1 mt. = a 39.370 pulgadas
-		// mujer = altura en pulgadas * 0,413 para obtener longitud de zancada media. 
-		// hombre = altura en pulgadas * 0,415 para obtener longitud de zancada media.
+		// mujer = altura_pulgadas * 0,413 para obtener longitud de zancada media. 
+		// hombre = altura_pulgadas * 0,415 para obtener longitud de zancada media.
 
 		if(PERFIL == null){
 			PERFIL = JSON.parse(SES['perfil']);
 		}
 		
-		var pulgadas = parseFloat(PERFIL.height) * 39.370;
+		var metro = 39.370, //1 metro en pulgadas
+			milla = 1.609344, //1 milla en kilometros
+			libra = 2.2046; //1 libra
+		
+		var pulgadas = parseFloat(PERFIL.height) * metro;
 		var med = (PERFIL.gender == 'M')? 0.415 : 0.413;
 		DISTA = (pulgadas * med) * STEP;
 		var pulgadas = DISTA; //pulgadas
-		var metro = 39.370; //1 metro
 		var metros = pulgadas/metro;
 		var mostrar = metros.toFixed(1) + ' m'
 		if( metros > 1000 ){
@@ -1080,17 +1082,17 @@ function stepsSuccess(a){
 		
 		/*! calorias */
 		
-		var efficiencia = .350,
-		peso_libras = (PERFIL.weightuni == 'p')? PERFIL.weight : (PERFIL.weight * 2.2046).toFixed(1);
+		var efficiencia = 0.6, //promedio de caminar y trotar
+		peso_libras = (PERFIL.weightuni == 'p')? PERFIL.weight : (PERFIL.weight * libra).toFixed(1);
 		// si hrm activo
 		if(PPM != 0){ 
-			eficiencia = (PPM/100)+0.008;
+			eficiencia = 0.5*(PPM/100);
 		}
-		CALO = (efficiencia * peso_libras * metros).toFixed(1);
-		$(".CALOR").html( CALO );
-			
+		CALO = (efficiencia * peso_libras * ((metros/1000)/milla)).toFixed(1);
+
 		initClock();
-		$('.PASOS').html(STEP);
+		$('.CALOR').html( CALO );
+		$('.PASOS').html( STEP );
 		PauseSens = 0;
 	}else{
 		if(!PAUSED && PauseSens >= 4){
