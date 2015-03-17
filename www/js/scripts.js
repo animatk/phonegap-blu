@@ -866,9 +866,6 @@ function Dist(lat1, lon1, lat2, lon2){
 }
 
 function initClock(obj, segundos) {
-//	if(PAUSED){
-//		return false;
-//	}
 	var actividad = [],
 	segundos_mas = 0;
 	if(obj != undefined){			
@@ -911,38 +908,21 @@ function initClock(obj, segundos) {
     }else{
         t = m+":"+s;
     } 
-	$('.ppal-clock').html( t );
-/*	
-	cordova.plugins.backgroundMode.configure({
-		text: 'T: '+t
-	});
-*/	
-	/*! contador calorias */
-	
+	$('.ppal-clock').html( t );	
+}
+function calories_burn_time(){
 	if(PERFIL == null){
 		PERFIL = JSON.parse(SES['perfil']);
 	}
-	// si hrm activo
-	if(PPM != 0){ 
-		CALO = calories_burn_hrm(); 
-	}else{ 
-		CALO = calories_burn_time();
-	}
-	
-	$(".CALOR").html( CALO );
-	
-	// var t = setTimeout(function(){ initClock(actividad, segundos_mas); }, CLOCKTIMEOUT);
-}
-
-function calories_burn_time(){
-	PERFIL = JSON.parse(SES['perfil']);
 	var minutes = (SECOND/60),
 	level = .035, //nivel de actividad "caminar moderado"
 	aux_calories = (PERFIL.weight*2.2)*minutes*level;
 	return Math.round(aux_calories*10)/10; 
 }
 function calories_burn_hrm(){
-	PERFIL = JSON.parse(SES['perfil']);
+	if(PERFIL == null){
+		PERFIL = JSON.parse(SES['perfil']);
+	}
 	var edad = new Date().getFullYear() - new Date(PERFIL.birthdate).getFullYear();
 	var kilogramweight = (PERFIL.weightuni == 'p')? (0.4536 * PERFIL.weight).toFixed(1) : PERFIL.weight;
 	//
@@ -1013,8 +993,6 @@ function checkTime(i) {
     if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
     return i;
 }
-
-
 function steps(){
 	var options = { frequency: ACCELTIMEOUT };
 	SES['StepID'] = navigator.accelerometer.watchAcceleration(stepsSuccess, function(){
@@ -1050,57 +1028,69 @@ function stepsSuccess(a){
 	, z = a.z
 	, m = parseFloat(((x +y +z)/3).toFixed(1))
 	, s = parseFloat($('#sensible').val());
-	//
-	if(ACCE != m){
-		if(ACCE > (m + s) || ACCE < (m - s)){
-			$('#BtnPausar').removeClass('oculto');
-			$('#BtnDetener').addClass('oculto');
-			$('#BtnContinuar').addClass('oculto');
-			//
-			PAUSED = false;
-			var actividad = [];
-			if(SES['actividad']){
-				actividad = JSON.parse(SES['actividad']);
-			}
-			var tot = actividad.length;
-			if(tot < 1 || actividad[tot-1].seg != undefined){
-				actividad.push({
-					ini : new Date()
-					,lat: LAT
-					,lon: LON
-				});
-				SES['actividad'] = JSON.stringify(actividad);
-			}
-			//
-			STEP = (SES['steps'])? parseInt(SES['steps'])+1: 1;
-			SES['steps'] = STEP;
-			// 1 mt. = a 39.370 pulgadas
-			// mujer = altura en pulgadas * 0,413 para obtener longitud de zancada media. 
-			// hombre = altura en pulgadas * 0,415 para obtener longitud de zancada media.
-			if(PERFIL != null){
-				var pul = parseFloat(PERFIL.height) * 39.370;
-				var med = (PERFIL.gender == 'M')? 0.415 : 0.413;
-				DISTA = (pul * med) * STEP;
-				var pul = DISTA; //pulgadas
-				var metro = 39.370; //1 metro
-				var recorrido = pul/metro;
-				var mostrar = recorrido.toFixed(1) + ' m'
-				if( recorrido > 1000 ){
-					recorrido = recorrido/1000;
-					mostrar = recorrido.toFixed(2) + ' k'
-				} 
-				if(DISTA > LASTTTACK+(39.370*10)){
-					if(trackActivity()){
-						LASTTTACK = DISTA;
-					}
-				}
-				//
-				$(".DISTA").html( mostrar );
-			}
-			$('.PASOS').html(STEP);
-			initClock();
+
+	if(ACCE > (m + s) || ACCE < (m - s)){
+		$('#BtnPausar').removeClass('oculto');
+		$('#BtnDetener').addClass('oculto');
+		$('#BtnContinuar').addClass('oculto');
+		//
+		PAUSED = false;
+		var actividad = [];
+		if(SES['actividad']){
+			actividad = JSON.parse(SES['actividad']);
 		}
-		ACCE = m;
+		var tot = actividad.length;
+		if(tot < 1 || actividad[tot-1].seg != undefined){
+			actividad.push({
+				ini : new Date()
+				,lat: LAT
+				,lon: LON
+			});
+			SES['actividad'] = JSON.stringify(actividad);
+		}
+		//
+		STEP = (SES['steps'])? parseInt(SES['steps'])+1: 1;
+		SES['steps'] = STEP;
+		// 1 mt. = a 39.370 pulgadas
+		// mujer = altura en pulgadas * 0,413 para obtener longitud de zancada media. 
+		// hombre = altura en pulgadas * 0,415 para obtener longitud de zancada media.
+
+		if(PERFIL == null){
+			PERFIL = JSON.parse(SES['perfil']);
+		}
+		
+		var pulgadas = parseFloat(PERFIL.height) * 39.370;
+		var med = (PERFIL.gender == 'M')? 0.415 : 0.413;
+		DISTA = (pulgadas * med) * STEP;
+		var pulgadas = DISTA; //pulgadas
+		var metro = 39.370; //1 metro
+		var metros = pulgadas/metro;
+		var mostrar = metros.toFixed(1) + ' m'
+		if( metros > 1000 ){
+			mostrar = metros/1000;
+			mostrar = metros.toFixed(2) + ' k'
+		} 
+		if(DISTA > LASTTTACK+(39.370*10)){
+			if(trackActivity()){
+				LASTTTACK = DISTA;
+			}
+		}
+		//
+		$(".DISTA").html( mostrar );
+		
+		/*! calorias */
+		
+		var efficiencia = .350,
+		peso_libras = (PERFIL.weightuni == 'p')? PERFIL.weight : (PERFIL.weight * 2.2046).toFixed(1);
+		// si hrm activo
+		if(PPM != 0){ 
+			eficiencia = (PPM/100)+0.008;
+		}
+		CALO = (efficiencia * peso_libras * metros).toFixed(1);
+		$(".CALOR").html( CALO );
+			
+		initClock();
+		$('.PASOS').html(STEP);
 		PauseSens = 0;
 	}else{
 		if(!PAUSED && PauseSens >= 4){
@@ -1109,6 +1099,8 @@ function stepsSuccess(a){
 		}
 		PauseSens = PauseSens+1;
 	}	
+	
+	ACCE = m;
 }
 
 
