@@ -39,7 +39,7 @@ var SES = window.localStorage,
 	ACTIVITYTYPE = 1, //tipo de actividad
 	ACTIVITYTIMEOUT = 1000*10, //tiemout tomar datos
 	PauseSens = 0, //sensibilidad del estado de pausa para que sea mas tolerante el numero de veces indicado
-	bgGeo = null, //plugir background mode.
+	BG = null, //plugir background mode.
 	SITE = 'https://irisdev.co/siluet_app/index.php/';
 
 function ak_buscalabel(form, ipt){
@@ -73,7 +73,6 @@ function serializeObject(form){
    });
    return o;
 };
-
 function ak_buscalabel(form, ipt){
 	var str = ipt.attr('name');
 	if(str.indexOf("[]") >= 0){ 
@@ -89,8 +88,6 @@ function ak_buscalabel(form, ipt){
 		return ipt.attr('placeholder');	
 	}
 }
-
-
 /*
 	funcion ak_validate
 	author @animatk 2013
@@ -336,7 +333,6 @@ function ak_validate( form, opts ){
  	}
 	return false;
 }
-
 function ak_showtip(ipt, msj){
 	//
 	$('.ak-tooltip').remove();
@@ -355,13 +351,11 @@ function ak_showtip(ipt, msj){
 	});	
 	$('body').prepend(tip);
 }
-
 function isDevice(){
 	return (navigator.userAgent.match(/iPad/i))  == "iPad" ? "iPad" : (navigator.userAgent.match(/iPhone/i)
 													) == "iPhone" ? "iPhone" : (navigator.userAgent.match(/Android/i)
 													) == "Android" ? "Android" : false;
 }
-
 function isOnLine(){
 	return navigator.onLine;
 }
@@ -381,6 +375,8 @@ function IniciarTodo(){
 	if(isOnLine()){
 		sincronizar(1);
 	}
+	
+	geo();
 }
 
 /*! SQL LITE */
@@ -531,7 +527,6 @@ function btnIzq(obj){
 	btmI.attr('onclick', "ak_navigate('"+obj.from+"', '"+obj.to+"' "+effect+"); $(this).addClass('oculto'); "+func );
 	btmI.removeClass('oculto');
 }
-
 function jsonp(url, callback) {
 	var callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
 	window[callbackName] = function(data) {
@@ -544,7 +539,6 @@ function jsonp(url, callback) {
 	script.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'callback=' + callbackName;
 	document.body.appendChild(script);
 }
-
 function loadScript(url, func) {
     var sc = document.createElement("script");
     sc.type = "text/javascript";
@@ -563,7 +557,6 @@ function loadScript(url, func) {
     sc.src = url;
     document.getElementsByTagName("head")[0].appendChild(sc);
 }
-
 function post(url, data, callback) {
 	$.ajax({
 		url: url
@@ -651,7 +644,6 @@ function botonRegistrar(){
 	}
 	$('select[name=edad_year]').html(years);
 }
-
 function register(form){
 	ak_validate( 
 		form, 
@@ -703,7 +695,6 @@ function botonRestore(){
 		,fn: 'btnIzq({ text:\'Cancelar\', from:\'#login\', to:\'#inicio\', fx:\'toRight\', fn:"$(\'#btnMenu\').removeClass(\'oculto\');"});'
 	});	
 }
-
 function restore(form){
 	ak_validate( 
 		form, 
@@ -752,7 +743,6 @@ function botonDispositivos(accion){
 	
 	listarDispositivos();
 }
-
 function listarDispositivos(){
 	var dispositivos = new Array(),
 	output = "";
@@ -772,15 +762,12 @@ function listarDispositivos(){
 	}
 	$('.disp-list').html(output);
 }
-
-
 function botonDispositivosFind(){
 	$('#dispMain').addClass('oculto');
 	$('#btn-accion-izq').addClass('oculto');
 	$('#dispFind').removeClass('oculto');
 	isInitialized();
 }
-
 function botonDispositivosCancel(){
 	stopScan();
 	$('#dispMain').removeClass('oculto');
@@ -789,8 +776,7 @@ function botonDispositivosCancel(){
 }
 
 
-function addDisp(name, address)
-{
+function addDisp(name, address){
 	stopScan();
 	mensaje("Funcion addDisp llamada con: "+name+' y '+ address );
 	var dispositivos = new Array(),
@@ -838,15 +824,13 @@ function principal(form){
 	$('#BtnPausar').removeClass('oculto');
 	$('#BtnContinuar').addClass('oculto');
 	$('#BtnDetener').addClass('oculto');
+	
 	PAUSED = false;
-
-	if(SES['bgGeo']){
-		mensaje('existia bgGEO se detiene');
-	//	nGeo = window.plugins.backgroundGeoLocation;
-	//	nGeo.stop();
+	if(SES['BG']){
+		mensaje('existia BG se detiene');
 		cordova.plugins.backgroundMode.disable();
 	}
-
+	
 	steps();
 }
 function trackActivity(){
@@ -869,8 +853,7 @@ function trackActivity(){
 	
 	return false;
 }
-function Dist(lat1, lon1, lat2, lon2)
-{
+function Dist(lat1, lon1, lat2, lon2){
   rad = function(x) {return x*Math.PI/180;}
   var R     = 6378.137; //Radio de la tierra en km
   var dLat  = rad( lat2 - lat1 );
@@ -940,7 +923,11 @@ function initClock(obj, segundos) {
 		PERFIL = JSON.parse(SES['perfil']);
 	}
 	// si hrm activo
-	CALO = (PPM != 0)? calories_burn_hrm() : calories_burn_time();
+	if(PPM != 0){ 
+		CALO = calories_burn_hrm(); 
+	}else{ 
+		CALO = calories_burn_time();
+	}
 	
 	$(".CALOR").html( CALO );
 	
@@ -954,7 +941,6 @@ function calories_burn_time(){
 	aux_calories = (PERFIL.weight*2.2)*minutes*level;
 	return Math.round(aux_calories*10)/10; 
 }
-
 function calories_burn_hrm(){
 	PERFIL = JSON.parse(SES['perfil']);
 	var edad = new Date().getFullYear() - new Date(PERFIL.birthdate).getFullYear();
@@ -1023,8 +1009,6 @@ function calories_burn(){
 	return  Math.round(((kcalperkgperkm*kilogramweight) + treadmillfactor)*kilometerrundistance*votwomaxfactor);	
 	
 }
-
-
 function checkTime(i) {
     if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
     return i;
@@ -1036,6 +1020,18 @@ function steps(){
 	SES['StepID'] = navigator.accelerometer.watchAcceleration(stepsSuccess, function(){
 	  //error
 	}, options);
+	
+	if(BG == null){
+		cordova.plugins.backgroundMode.setDefaults({ 
+			title:'sforza se esta ejecutando.'
+			,text:'calculando tiempo.'
+			,ticker:'sforza'
+		});
+		cordova.plugins.backgroundMode.enable();
+		//
+		BG = true;
+		SES['BG'] = true;
+	}
 }
 function stopsteps() {
 	if (SES['StepID']) {
@@ -1044,7 +1040,10 @@ function stopsteps() {
 	}
 }
 function stepsSuccess(a){
-	geo();
+	if(ACTIVITYTYPE == 1){
+		loadMapa();
+	}
+	mensaje('StepID : '+ SES['StepID'] + ', BG : '+SES['BG']+', GeoID : '+SES['GeoID'] );
 	//
 	var x = a.x
 	, y = a.y
@@ -1053,7 +1052,6 @@ function stepsSuccess(a){
 	, s = parseFloat($('#sensible').val());
 	//
 	if(ACCE != m){
-		//
 		if(ACCE > (m + s) || ACCE < (m - s)){
 			$('#BtnPausar').removeClass('oculto');
 			$('#BtnDetener').addClass('oculto');
@@ -1115,77 +1113,27 @@ function stepsSuccess(a){
 
 
 function geo(){
-/*	if(isDevice() == 'Android'){
-		var options = { timeout: MAPTIMEOUT, enableHighAccuracy: true };
+		var options = { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true };
 		SES['GeoID'] = navigator.geolocation.watchPosition(geoSuccess, function(error){
 			mensaje("Geo Error : " + error.code + "<br/> Mensaje : " + error.message );
 		}, options);
-	}else{*/
-		var options = { enableHighAccuracy: true };
-		navigator.geolocation.getCurrentPosition(geoSuccess, function(error){
-			//
-		}, options);	
-//	}
-	
-	if(bgGeo == null){
-		
-		
-	//	bgGeo = window.plugins.backgroundGeoLocation;
-	//	bgGeo.configure( function(){
-	//		//
-	//	}, function(error) {
-	//		//	mensaje('BackgroundGeoLocation error');
-	//	}, {
-	//		desiredAccuracy: 0
-	//		, stationaryRadius: 3
-	//		, distanceFilter: 3
-	//		, notificationTitle: 'Siluet se esta ejecutando.'
-	//		, notificationText: 'Tomando datos'
-	//		, activityType: 'AutomotiveNavigation'
-	//		, debug: false
-	//		, stopOnTerminate: false 
-	//	});
-	//	bgGeo.start();
-	
-		cordova.plugins.backgroundMode.setDefaults({ 
-			title:'Siluet se esta ejecutando.'
-			,text:'Calculando tiempo.'
-			,ticker:'Prueba'
-		});
-		cordova.plugins.backgroundMode.enable();
 
-		bgGeo = true;
-		
-		SES['bgGeo'] = true;
+	//	var options = { enableHighAccuracy: true };
+	//	navigator.geolocation.getCurrentPosition(geoSuccess, function(error){
+	//
+	//	}, options);	
+}
+function stopgeo(){
+	if(SES['GeoID']){
+		geolocation.clearWatch(SES['GeoID']);
+		SES.removeItem('GeoID');
 	}
 }
-/*
-function stopgeo(){
-	if(isDevice() == 'Android'){
-		if(SES['GeoID']){
-			geolocation.clearWatch(SES['GeoID']);
-			SES.removeItem('GeoID');
-		}
-	}else{
-		StopGeoiOS = true;
-	}
-}*/
-
 function geoSuccess(position){
-/*	if(isDevice() != 'Android'){
-		if(StopGeoiOS != undefined){ StopGeoiOS = undefined; return false; }
-		setTimeout(function(){ geo(); }, MAPTIMEOUT);
-	} */
-	if(PAUSED){
-		return false;
-	}
-	if(position.coords != undefined){
-		LAT = position.coords.latitude;
-		LON = position.coords.longitude;
-	}else{
-		LAT = position.latitude;
-		LON = position.longitude;
-	}
+	LAT = position.coords.latitude;
+	LON = position.coords.longitude;
+}
+function loadMapa(){
 	if(MAP != null){
 		var latlng = new google.maps.LatLng( LAT, LON );
 		/*
@@ -1268,14 +1216,13 @@ function stop(){
 			
 		SES.removeItem('actividad');
 		SES.removeItem('steps');
-		SES.removeItem('bgGeo');
+		SES.removeItem('BG');
 	}
 	
 	STEP = 0;
-	if(bgGeo != null){
-		// bgGeo.stop();
+	if(BG != null){
 		cordova.plugins.backgroundMode.disable();
-		bgGeo = null;
+		BG = null;
 	}
 	stopsteps();
 	$('.ppal-clock').html('00:00');
@@ -1319,7 +1266,7 @@ function getSQL(f){
 
 function sincronizar(nu){
 	
-	webdb.executeSql('SELECT * FROM actividad WHERE sync = NO LIMIT 1 ORDER BY ID ASC', [],
+	webdb.executeSql('SELECT * FROM actividad WHERE sync = ? ORDER BY ID ASC LIMIT 1', ['NO'],
 		function(tx, r){
 			var rows = r.rows,
 				tot = rows.length;
