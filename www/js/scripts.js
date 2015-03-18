@@ -1078,7 +1078,7 @@ function stepsSuccess(a){
 			}
 			var velocidad = 0;
 			
-			if(SPEED_SEG + 10 <= SECOND){
+			if( SECOND >= SPEED_SEG + 10){
 				speed.ant = 0;
 				if(speed.ste != undefined){
 					speed.ant = speed.ste;
@@ -1097,7 +1097,6 @@ function stepsSuccess(a){
 				}
 				
 				SES['speed'] = JSON.stringify(speed);
-				
 				velocidad = speed.tra;
 			}
 			
