@@ -1059,10 +1059,10 @@ function stepsSuccess(a){
 		var pulgadas = parseFloat(PERFIL.height) * metro;
 		
 			var dis = 0;
-			if( (STEP/SECOND) != Infinite &&  (STEP/SECOND) >= 2 ){
-				dis = (STEP/SECOND).toFixed(1);
-				mensaje('esta corriendo : '+dis);
-			}
+			//if( (STEP/SECOND) != 'Infinite' &&  (STEP/SECOND) >= 2 ){
+			//	dis = (STEP/SECOND).toFixed(1);
+				mensaje('esta corriendo : '+(STEP/SECOND) );
+		//	}
 			
 			var med = (PERFIL.gender == 'M')? 0.415 : 0.413;
 			DISTA = ((pulgadas + dis) * med) * STEP;
