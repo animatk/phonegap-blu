@@ -1059,7 +1059,7 @@ function stepsSuccess(a){
 		var pulgadas = parseFloat(PERFIL.height) * metro;
 		
 			var dis = 0;
-			if( isNumber(STEP/SECOND) &&  (STEP/SECOND) >= 2 ){
+			if( (STEP/SECOND) != Infinite &&  (STEP/SECOND) >= 2 ){
 				dis = (STEP/SECOND).toFixed(1);
 				mensaje('esta corriendo : '+dis);
 			}
