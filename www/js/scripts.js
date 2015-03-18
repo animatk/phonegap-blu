@@ -412,7 +412,6 @@ var opt = {
 webdb.open(opt);
 
 /*! END SQL LITE */
-
 function iniciar(){
 
 	if( SES['chain'] ){
@@ -441,7 +440,6 @@ function iniciar(){
 		});
 	}
 }
-
 /*
 loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyAihfNS3dpn6vB16RXRREYAy9jXEf63yUE&callback=initialize', function(){
 //	
@@ -509,7 +507,6 @@ function initialize() {
 	}
  }
 */
-
 function ak_navigate(from, to, effect){
 	var fx = (effect != undefined)? effect : 'toLeft';
 	$(from).removeClass('toCenter toLeft toRight');
@@ -517,7 +514,6 @@ function ak_navigate(from, to, effect){
 	$(from).addClass(fx);
 	$( to ).addClass('toCenter');
 }
-
 function btnIzq(obj){
 	var btmI = $('#btn-accion-izq'),
 	effect = (obj.fx)? ", '"+obj.fx+"'" : "",
@@ -568,7 +564,6 @@ function post(url, data, callback) {
 		}
 	});
 }
-
 /*! login */
 function login(form){
 	ak_validate( 
@@ -618,7 +613,6 @@ function CerrarSesion(){
 	location.reload();
 }
 /*! end login */
-
 /*! register */
 function botonRegistrar(){
 	ak_navigate('#login','#registro'); 
@@ -773,8 +767,6 @@ function botonDispositivosCancel(){
 	$('#btn-accion-izq').removeClass('oculto');
 	$('#dispFind').addClass('oculto');	
 }
-
-
 function addDisp(name, address){
 	stopScan();
 	mensaje("Funcion addDisp llamada con: "+name+' y '+ address );
@@ -861,7 +853,6 @@ function Dist(lat1, lon1, lat2, lon2){
   var d = R * c;
   return d.toFixed(3);//Retorna tres decimales
 }
-
 function initClock(obj, segundos) {
 	if(PAUSED){
 		return false;
@@ -1064,20 +1055,28 @@ function stepsSuccess(a){
 			libra = 2.2046; //1 libra
 		
 		var pulgadas = parseFloat(PERFIL.height) * metro;
-		var med = (PERFIL.gender == 'M')? 0.415 : 0.413;
-		DISTA = (pulgadas * med) * STEP;
-		var pulgadas = DISTA; //pulgadas
-		var metros = pulgadas/metro;
-		var mostrar = metros.toFixed(1) + ' m'
-		if( metros > 1000 ){
-			mostrar = metros/1000;
-			mostrar = metros.toFixed(2) + ' k'
-		} 
-		if(DISTA > LASTTTACK+(39.370*10)){
-			if(trackActivity()){
-				LASTTTACK = DISTA;
+		
+			var dis = 0;
+			if( (STEP/SECOND) >= 2 ){
+				dis = (STEP/SECOND).toFixed(1);
+				mensaje('esta corriendo : '+dis);
 			}
-		}
+			
+			var med = (PERFIL.gender == 'M')? 0.415 : 0.413;
+			DISTA = ((pulgadas + dis) * med) * STEP;
+			var pulgadas = DISTA; //pulgadas
+			var metros = pulgadas/metro;
+			var mostrar = metros.toFixed(1) + ' m'
+			if( metros > 1000 ){
+				mostrar = metros/1000;
+				mostrar = metros.toFixed(2) + ' k'
+			} 
+			if(DISTA > LASTTTACK+(39.370*10)){
+				if(trackActivity()){
+					LASTTTACK = DISTA;
+				}
+			}
+	//	}
 		//
 		$(".DISTA").html( mostrar );
 		
@@ -1105,8 +1104,6 @@ function stepsSuccess(a){
 	
 	ACCE = m;
 }
-
-
 function geo(){
 		var options = { maximumAge: 3000, timeout: 5000, enableHighAccuracy: true };
 		GeoIDGeoID = navigator.geolocation.watchPosition(geoSuccess, function(error){
@@ -1168,7 +1165,6 @@ function loadMapa(){
 		}
 	}
 }
-
 function pause(call){
 	if(SES['actividad']){
 		var actividad = JSON.parse(SES['actividad'])
@@ -1238,7 +1234,6 @@ function stop(){
 	ak_navigate('#principal', '#inicio');
 	$('#btnMenu').removeClass('oculto');
 }
-
 /*! end principal */
 /*! map */
 function map_init(){
@@ -1255,7 +1250,6 @@ function map_init(){
 	MAP = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 }
 /*! end map */	
-
 function getSQL(f){
 	var FROM = f ||'actividad';
 	//
@@ -1270,7 +1264,6 @@ function getSQL(f){
 		},
 		function(tx, e){});
 }
-
 function sincronizar(nu){
 	
 	webdb.executeSql('SELECT * FROM actividad WHERE sync = ? ORDER BY ID ASC LIMIT 1', ['NO'],
