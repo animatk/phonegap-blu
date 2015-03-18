@@ -1061,7 +1061,7 @@ function stepsSuccess(a){
 			var dis = 0;
 			//if( (STEP/SECOND) != 'Infinite' &&  (STEP/SECOND) >= 2 ){
 			//	dis = (STEP/SECOND).toFixed(1);
-				mensaje('esta corriendo : '+(STEP/SECOND) );
+				mensaje('step : '+STEP+  ' seconds : '+SECOND+ ' esta corriendo : '+(STEP/SECOND) );
 		//	}
 			
 			var med = (PERFIL.gender == 'M')? 0.415 : 0.413;
@@ -1097,7 +1097,7 @@ function stepsSuccess(a){
 		$('.PASOS').html( STEP );
 		PauseSens = 0;
 	}else{
-		if(!PAUSED && PauseSens >= 4){
+		if(!PAUSED && PauseSens >= 3){
 			mensaje('pAUSE');
 			pause();
 		}
