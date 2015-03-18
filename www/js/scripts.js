@@ -42,6 +42,9 @@ var SES = window.localStorage,
 	BG = null, //plugir background mode.
 	SITE = 'https://irisdev.co/siluet_app/index.php/';
 
+function isNumber(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}	
 function ak_buscalabel(form, ipt){
 	var str = ipt.attr('name');
 	if(str.indexOf("[]") >= 0){ 
@@ -57,7 +60,6 @@ function ak_buscalabel(form, ipt){
 		return ipt.attr('placeholder');	
 	}
 }
-
 function serializeObject(form){
    var o = {};
    var a = $(form).serializeArray();
@@ -1057,7 +1059,7 @@ function stepsSuccess(a){
 		var pulgadas = parseFloat(PERFIL.height) * metro;
 		
 			var dis = 0;
-			if( (STEP/SECOND) >= 2 ){
+			if( isNumber(STEP/SECOND) &&  (STEP/SECOND) >= 2 ){
 				dis = (STEP/SECOND).toFixed(1);
 				mensaje('esta corriendo : '+dis);
 			}
