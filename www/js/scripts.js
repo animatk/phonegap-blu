@@ -1077,7 +1077,8 @@ function stepsSuccess(a){
 				mensaje(SES['speed']);
 			}
 			var velocidad = 0;
-			if((SPEED_SEG + 10) >= SECOND){
+			
+			if(SPEED_SEG + 10 <= SECOND){
 				speed.ant = 0;
 				if(speed.ste != undefined){
 					speed.ant = speed.ste;
