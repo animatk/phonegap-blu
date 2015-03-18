@@ -890,11 +890,11 @@ function initClock(obj, segundos) {
 	var t1 = new Date(time_ini),
     t = '00:00',
     t2 = new Date(),
-    dif = t2-t1,
-    SECOND = parseInt((dif/1000) + segundos_mas),
-    h = parseInt( SECOND / 3600 ) % 24,
-    m = checkTime(parseInt( SECOND / 60 ) % 60),
-    s = checkTime(parseInt( SECOND % 60 ));        
+    dif = t2-t1;
+    SECOND = parseInt((dif/1000) + segundos_mas);
+    var h = parseInt( SECOND / 3600 ) % 24,
+		m = checkTime(parseInt( SECOND / 60 ) % 60),
+		s = checkTime(parseInt( SECOND % 60 ));        
     if( h > 0 ){
         var h = checkTime(h);
 		t = h+":"+m+":"+s;
@@ -1059,10 +1059,10 @@ function stepsSuccess(a){
 		var pulgadas = parseFloat(PERFIL.height) * metro;
 		
 			var dis = 0;
-			//if( (STEP/SECOND) != 'Infinite' &&  (STEP/SECOND) >= 2 ){
-			//	dis = (STEP/SECOND).toFixed(1);
-				mensaje('step : '+STEP+  ' seconds : '+SECOND+ ' esta corriendo : '+(STEP/SECOND) );
-		//	}
+			if( isNumber(STEP/SECOND) &&  (STEP/SECOND) >= 2 ){
+				dis = (STEP/SECOND).toFixed(1);
+				mensaje('step : '+STEP+  ' seconds : '+SECOND+ ' esta corriendo : '+dis );
+			}
 			
 			var med = (PERFIL.gender == 'M')? 0.415 : 0.413;
 			DISTA = ((pulgadas + dis) * med) * STEP;
