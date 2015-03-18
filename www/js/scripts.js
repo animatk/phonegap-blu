@@ -1060,12 +1060,12 @@ function stepsSuccess(a){
 		
 			var dis = 0;
 			if( isNumber(STEP/SECOND) &&  (STEP/SECOND) >= 2 ){
-				dis = (STEP/SECOND).toFixed(1);
+				dis = (STEP/SECOND).toFixed(0);
 				mensaje('step : '+STEP+  ' seconds : '+SECOND+ ' esta corriendo : '+dis );
 			}
 			
 			var med = (PERFIL.gender == 'M')? 0.415 : 0.413;
-			DISTA = ((pulgadas + dis) * med) * STEP;
+			DISTA = (pulgadas * med) * STEP+dis;
 			var pulgadas = DISTA; //pulgadas
 			var metros = pulgadas/metro;
 			var mostrar = metros.toFixed(1) + ' m'
