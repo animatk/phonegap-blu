@@ -27,6 +27,9 @@ var SES = window.localStorage,
 	ACCE = 0, //ACCELERATION
 	PAUSED = true, //status of activity
 	PERFIL = null, //status of activity
+	SPEED_SEG = 0, //HRM sensor 
+	SPEED_STEP = 0, //HRM sensor 
+	SPEED_TRACK = 0, //HRM sensor 
 	PPM = 0, //HRM sensor 
 	MAP = null, //map google
 	LAT = 0, //map latitude
@@ -1058,14 +1061,49 @@ function stepsSuccess(a){
 		
 		var pulgadas = parseFloat(PERFIL.height) * metro;
 		
+			/*
 			var dis = 0;
 			if( isNumber(STEP/SECOND) &&  (STEP/SECOND) >= 2 ){
 				dis = (STEP/SECOND).toFixed(0);
 				mensaje('step : '+STEP+  ' seconds : '+SECOND+ ' esta corriendo : '+dis );
 			}
+			*/
+			
+			var speed = {};
+			
+			if(SES['speed']){
+				speed = JSON.parse(SES['speed']);
+				SPEED_SEG = speed.seg;
+				mensaje(SES['speed']);
+			}
+			var velocidad = 0;
+			if((SPEED_SEG + 10) >= SECOND){
+				speed.ant = 0;
+				if(speed.ste != undefined){
+					speed.ant = speed.ste;
+				}
+				//
+				speed.ste = STEP;
+				speed.seg = SECOND;
+				var velo = (speed.ste - speed.ant)/10;
+				
+				if(velo >= 2){
+					if(speed.tra != undefined){
+						speed.tra = speed.tra + velo;
+					}else{
+						speed.tra = velo;
+					}
+				}
+				
+				SES['speed'] = JSON.stringify(speed);
+				
+				velocidad = speed.tra;
+			}
+			
+			mensaje('velocidad sumada : '+ velocidad);
 			
 			var med = (PERFIL.gender == 'M')? 0.415 : 0.413;
-			DISTA = (pulgadas * med) * STEP+dis;
+			DISTA = (pulgadas * med) * (STEP + velocidad);
 			var pulgadas = DISTA; //pulgadas
 			var metros = pulgadas/metro;
 			var mostrar = metros.toFixed(1) + ' m'
@@ -1199,6 +1237,9 @@ function stop(){
 	SECOND = 0;
 	CALO = 0; //calorias
 	STEP = 0; //pasos
+	SPEED_SEG = 0;
+	SPEED_STEP = 0;
+	SPEED_TRACK = 0;
 	DISTA = 0; //distancia recorrida
 	ACCE = 0; //ACCELERATION
 	PAUSED = true; //status of activity
@@ -1224,6 +1265,7 @@ function stop(){
 			
 		SES.removeItem('actividad');
 		SES.removeItem('steps');
+		SES.removeItem('speed');
 		SES.removeItem('BG');
 	}
 	
