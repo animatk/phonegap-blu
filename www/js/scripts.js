@@ -827,7 +827,9 @@ function principal(form){
 		cordova.plugins.backgroundMode.disable();
 	}
 	StopAcc = false;
-	steps();
+	if(!SES['StepID']){
+		steps();
+	}
 }
 function trackActivity(){
 	if(SES['actividad'] && !PAUSED){
