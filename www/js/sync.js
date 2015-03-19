@@ -106,7 +106,7 @@ function sincronizar(obj){
 				items.push(items);
 			}
 			var func = obj.res;
-			func(res);
+			func(JSON.stringify(items));
 		},
 		function(tx, e){});
 		
