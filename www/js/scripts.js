@@ -1070,10 +1070,11 @@ function stepsSuccess(a){
 			*/
 			
 			var speed = {};
+			SPEED_SEG = 0;
 			
 			if(SES['speed']){
 				speed = JSON.parse(SES['speed']);
-				SPEED_SEG = speed.seg;
+				SPEED_SEG = parseInt(speed.seg);
 				mensaje(SES['speed']);
 			}
 			var velocidad = 0;
