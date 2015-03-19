@@ -1069,24 +1069,19 @@ function stepsSuccess(a){
 			}
 			*/
 			
-			var speed = {};
-			SPEED_SEG = 0;
-			
-			if(SES['speed']){
-				speed = JSON.parse(SES['speed']);
-				SPEED_SEG = parseInt(speed.seg);
-				mensaje(SES['speed']);
-			}
 			var velocidad = 0;
 			
 			if( SECOND >= SPEED_SEG + 10){
+				SPEED_SEG = SECOND;
+				var speed = {};
+				if(SES['speed']){
+					speed = JSON.parse(SES['speed']);
+				}
 				speed.ant = 0;
 				if(speed.ste != undefined){
 					speed.ant = speed.ste;
 				}
-				//
 				speed.ste = STEP;
-				speed.seg = SECOND;
 				var velo = (speed.ste - speed.ant)/10;
 				
 				if(velo >= 2){
@@ -1099,9 +1094,9 @@ function stepsSuccess(a){
 				
 				SES['speed'] = JSON.stringify(speed);
 				velocidad = speed.tra;
+				mensaje('velocidad sumada : '+ velocidad+' capturada a los '+SECOND);
 			}
 			
-			mensaje('velocidad sumada : '+ velocidad);
 			
 			var med = (PERFIL.gender == 'M')? 0.415 : 0.413;
 			DISTA = (pulgadas * med) * (STEP + velocidad);
