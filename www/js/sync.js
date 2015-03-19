@@ -1,7 +1,7 @@
 /*! web worker calls */
 self.addEventListener('message', function(e) {
 	sincronizar({ 
-		url : e.data, 
+		url : e.data 
 		,res: function(resp){
 			self.postMessage(resp);
 		}
