@@ -381,11 +381,12 @@ function IniciarTodo(){
 	if(isOnLine()){
 	//	mensaje('sincronizar');
 	//	sincronizar(5);
-		
+		mensaje('Se inicia web worker');
+		//
 		var sync = new Worker('sync.js');
 		//
 		sync.addEventListener('message', function(e) {
-		  mensaje('Worker said: ', e.data);
+		  mensaje('Worker said: '+ e.data);
 		}, false);
 		// Send data to our worker.
 		sync.postMessage('Hello World'); 

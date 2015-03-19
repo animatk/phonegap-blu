@@ -85,11 +85,6 @@ function ajax(obj) {
 		xhr.send();
 	}
 }
-	
-//and here is how you use it to load a json file with ajax
-ajax('data.json', function(xhr) {	
-	var result = xhr.responseText;	
-});
 
 function sincronizar(obj){
 	if(!navigator.onLine){
