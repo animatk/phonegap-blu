@@ -379,7 +379,8 @@ function IniciarTodo(){
 	}
 	//si connect
 	if(isOnLine()){
-		sincronizar(1);
+		mensaje('sincronizar');
+		sincronizar(5);
 	}
 	geo();
 }
@@ -1205,11 +1206,13 @@ function sincronizar(nu){
 				tot = rows.length;
 			for(var i=0; i<tot; i++){
 				var row = rows.item(i);
+				mensaje('Enviando: '+JSON.stringify(row));
 				post(SITE+'input', { 
 					chain: row.chain
 					,json: row.json 
 					,data: row.data 
-				}, function(){
+				}, function(data){
+					mensaje('Recibido: '+JSON.stringify(data));
 					webdb.executeSql('UPDATE actividad SET sync=? WHERE ID = ?', ['SI', row.ID],
 					function(tx, r){
 						var nnu = nu-1;
