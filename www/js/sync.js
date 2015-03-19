@@ -1,18 +1,14 @@
-/*! web worker */
+/*! web worker calls */
 self.addEventListener('message', function(e) {
-	//sincronizar({ 
-	//	url : e.data, 
-	//	,res: function(resp){
-	//		self.postMessage(resp);
-	//	}
-	//});
-	var i = 1;
-	setInterval(function(){
-		self.postMessage('El Worker se esta ejecutando :'+(i++)+': recibio '+ e.data);
-	}, 2000);
+	sincronizar({ 
+		url : e.data, 
+		,res: function(resp){
+			self.postMessage(resp);
+		}
+	});
 	
 }, false);
-/*! web worker */
+/*! web worker calls */
 
 
 /*! SQL LITE */
