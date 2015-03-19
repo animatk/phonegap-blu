@@ -379,8 +379,16 @@ function IniciarTodo(){
 	}
 	//si connect
 	if(isOnLine()){
-		mensaje('sincronizar');
-		sincronizar(5);
+	//	mensaje('sincronizar');
+	//	sincronizar(5);
+		
+		var sync = new Worker('sync.js');
+		//
+		sync.addEventListener('message', function(e) {
+		  mensaje('Worker said: ', e.data);
+		}, false);
+		// Send data to our worker.
+		sync.postMessage('Hello World'); 
 	}
 	geo();
 }
@@ -1194,34 +1202,6 @@ function getSQL(f){
 			for(var i=0; i<tot; i++){
 				var row = rows.item(i);
 				mensaje(JSON.stringify(row));
-			}
-		},
-		function(tx, e){});
-}
-function sincronizar(nu){
-	
-	webdb.executeSql('SELECT * FROM actividad WHERE sync = ? ORDER BY ID ASC LIMIT 1', ['NO'],
-		function(tx, r){
-			var rows = r.rows,
-				tot = rows.length;
-			for(var i=0; i<tot; i++){
-				var row = rows.item(i);
-				mensaje('Enviando: '+JSON.stringify(row));
-				post(SITE+'input', { 
-					chain: row.chain
-					,json: row.json 
-					,data: row.data 
-				}, function(data){
-					mensaje('Recibido: '+JSON.stringify(data));
-					webdb.executeSql('UPDATE actividad SET sync=? WHERE ID = ?', ['SI', row.ID],
-					function(tx, r){
-						var nnu = nu-1;
-						if(nnu > 0){
-							sincronizar(nnu);
-						}
-					},
-					function(tx, e){});
-				});
 			}
 		},
 		function(tx, e){});
