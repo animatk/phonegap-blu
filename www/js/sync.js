@@ -6,7 +6,7 @@ self.addEventListener('message', function(e) {
 			self.postMessage(resp);
 		}
 	});
-});
+}, false);
 /*! web worker */
 
 
