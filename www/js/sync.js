@@ -88,33 +88,33 @@ function ajax(obj) {
 }
 
 function sincronizar(obj){
-	obj.online = navigator.onLine;
+	var online = navigator.onLine;
 	
-	//if(!obj.online){
-	//	return false;
-	//}
+	if(online === false){
+		return false;
+	}
 	
 	var id = obj.id || 0,
 		func = obj.res;
 	
-	func(JSON.stringify(obj));
+	func(id);
 	
 	
-//	if(id == 0){
-//		webdb.executeSql('SELECT * FROM actividad', [],
-//		function(tx, r){
-//			var rows = r.rows,
-//				items = [],
-//				tot = rows.length;
-//			for(var i=0; i<tot; i++){
-//				var row = rows.item(i);
-//				items.push(items);
-//			}
-//			var func = obj.res;
-//			func(JSON.stringify(items));
-//		},
-//		function(tx, e){});
-//		
+	if(id == 0){
+		webdb.executeSql('SELECT * FROM actividad', [],
+		function(tx, r){
+			var rows = r.rows,
+				items = [],
+				tot = rows.length;
+			for(var i=0; i<tot; i++){
+				var row = rows.item(i);
+				items.push(items);
+			}
+			var func = obj.res;
+			func(JSON.stringify(items));
+		},
+		function(tx, e){});
+	}	
 //	}else{
 //		
 //		webdb.executeSql('SELECT * FROM actividad WHERE sync = ? ORDER BY ID ASC LIMIT 1', ['NO'],
