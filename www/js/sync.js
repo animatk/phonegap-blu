@@ -108,7 +108,7 @@ function sincronizar(obj){
 				tot = rows.length;
 			for(var i=0; i<tot; i++){
 				var row = rows.item(i);
-				items.push(items);
+				items.push(row);
 			}
 			var func = obj.res;
 			func(JSON.stringify(items));
