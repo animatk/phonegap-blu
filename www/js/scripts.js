@@ -46,11 +46,6 @@ var SES = window.localStorage,
 	StopAcc = true, //detener accelerometro
 	SITE = 'https://irisdev.co/siluet_app/index.php/';
 
-var sync = new Worker('sync.js');
-//
-sync.addEventListener('message', function(e) {
-  mensaje('Worker said: '+ e.data);
-}, false);
 	
 function isNumber(n) {
   return !isNaN(parseFloat(n)) && isFinite(n);
@@ -387,7 +382,12 @@ function IniciarTodo(){
 	if(isOnLine()){
 	//	mensaje('sincronizar');
 	//	sincronizar(5);
-		mensaje('Se inicia web worker');		
+		mensaje('Se inicia web worker');
+		var sync = new Worker('js/sync.js');
+		//
+		sync.addEventListener('message', function(e) {
+		  mensaje('Worker said: '+ e.data);
+		}, false);
 		// Send data to our worker.
 		sync.postMessage('Hello World'); 
 	}

@@ -6,9 +6,9 @@ self.addEventListener('message', function(e) {
 	//		self.postMessage(resp);
 	//	}
 	//});
-	
-	setTimeout(function(){
-		self.postMessage('El Worker se esta ejecutando :: recibio '+ e.data);
+	var i = 1;
+	setInterval(function(){
+		self.postMessage('El Worker se esta ejecutando :'+(i++)+': recibio '+ e.data);
 	}, 2000);
 	
 }, false);
