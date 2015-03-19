@@ -88,55 +88,60 @@ function ajax(obj) {
 }
 
 function sincronizar(obj){
-	if(!navigator.onLine){
-		return false;
-	}
+	obj.online = navigator.onLine;
 	
-	var id = obj.id || 0;
+	//if(!obj.online){
+	//	return false;
+	//}
+	
+	var id = obj.id || 0,
+		func = obj.res;
+	
+	func(JSON.stringify(obj));
 	
 	
-	if(id == 0){
-		webdb.executeSql('SELECT * FROM actividad', [],
-		function(tx, r){
-			var rows = r.rows,
-				items = [],
-				tot = rows.length;
-			for(var i=0; i<tot; i++){
-				var row = rows.item(i);
-				items.push(items);
-			}
-			var func = obj.res;
-			func(JSON.stringify(items));
-		},
-		function(tx, e){});
-		
-	}else{
-		
-		webdb.executeSql('SELECT * FROM actividad WHERE sync = ? ORDER BY ID ASC LIMIT 1', ['NO'],
-		function(tx, r){
-			var rows = r.rows,
-				tot = rows.length;
-			for(var i=0; i<tot; i++){
-				var row = rows.item(i);
-				mensaje('Enviando: '+JSON.stringify(row));
-				post(SITE+'input', { 
-					chain: row.chain
-					,json: row.json 
-					,data: row.data 
-				}, function(data){
-					if(data.status){
-						webdb.executeSql('UPDATE actividad SET sync=? WHERE ID = ?', [data.sync, row.ID],
-						function(tx, r){
-							var nnu = nu-1;
-							if(nnu > 0){
-								sincronizar(nnu);
-							}
-						},
-						function(tx, e){});
-					}
-				});
-			}
-		},
-		function(tx, e){});
-	}
+//	if(id == 0){
+//		webdb.executeSql('SELECT * FROM actividad', [],
+//		function(tx, r){
+//			var rows = r.rows,
+//				items = [],
+//				tot = rows.length;
+//			for(var i=0; i<tot; i++){
+//				var row = rows.item(i);
+//				items.push(items);
+//			}
+//			var func = obj.res;
+//			func(JSON.stringify(items));
+//		},
+//		function(tx, e){});
+//		
+//	}else{
+//		
+//		webdb.executeSql('SELECT * FROM actividad WHERE sync = ? ORDER BY ID ASC LIMIT 1', ['NO'],
+//		function(tx, r){
+//			var rows = r.rows,
+//				tot = rows.length;
+//			for(var i=0; i<tot; i++){
+//				var row = rows.item(i);
+//				mensaje('Enviando: '+JSON.stringify(row));
+//				post(SITE+'input', { 
+//					chain: row.chain
+//					,json: row.json 
+//					,data: row.data 
+//				}, function(data){
+//					if(data.status){
+//						webdb.executeSql('UPDATE actividad SET sync=? WHERE ID = ?', [data.sync, row.ID],
+//						function(tx, r){
+//							var nnu = nu-1;
+//							if(nnu > 0){
+//								sincronizar(nnu);
+//							}
+//						},
+//						function(tx, e){});
+//					}
+//				});
+//			}
+//		},
+//		function(tx, e){});
+//	}
 }
