@@ -1069,7 +1069,6 @@ function stepsSuccess(a){
 			}
 			*/
 			
-			var velocidad = 0;
 			
 			if( SECOND >= SPEED_SEG + 10){
 				SPEED_SEG = SECOND;
@@ -1093,10 +1092,14 @@ function stepsSuccess(a){
 				}
 				
 				SES['speed'] = JSON.stringify(speed);
-				velocidad = speed.tra;
 				mensaje('velocidad sumada : '+ velocidad+' capturada a los '+SECOND);
 			}
 			
+			var velocidad = 0;
+			if(SES['speed']){
+				speed = JSON.parse(SES['speed']);
+				velocidad = speed.tra;
+			}
 			
 			var med = (PERFIL.gender == 'M')? 0.415 : 0.413;
 			DISTA = (pulgadas * med) * (STEP + velocidad);
