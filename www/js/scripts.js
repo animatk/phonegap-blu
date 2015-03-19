@@ -1061,62 +1061,26 @@ function stepsSuccess(a){
 		
 		var pulgadas = parseFloat(PERFIL.height) * metro;
 		
-			/*
-			var dis = 0;
-			if( isNumber(STEP/SECOND) &&  (STEP/SECOND) >= 2 ){
-				dis = (STEP/SECOND).toFixed(0);
-				mensaje('step : '+STEP+  ' seconds : '+SECOND+ ' esta corriendo : '+dis );
+		var med = (PERFIL.gender == 'M')? 0.415 : 0.413;
+		
+		if($('#velocidad').val() != ""){
+			med = med + parseFloat($('#velocidad').val());
+		}
+		
+		DISTA = (pulgadas * med) * STEP;
+		var pulgadas = DISTA; //pulgadas
+		var metros = pulgadas/metro;
+		var mostrar = metros.toFixed(1) + ' m'
+		if( metros > 1000 ){
+			mostrar = metros/1000;
+			mostrar = metros.toFixed(2) + ' k'
+		} 
+		if(DISTA > LASTTTACK+(39.370*10)){
+			if(trackActivity()){
+				LASTTTACK = DISTA;
 			}
-			*/
-			
-			
-			if( SECOND >= SPEED_SEG + 10){
-				SPEED_SEG = SECOND;
-				var speed = {};
-				if(SES['speed']){
-					speed = JSON.parse(SES['speed']);
-				}
-				speed.ant = 0;
-				if(speed.ste != undefined){
-					speed.ant = speed.ste;
-				}
-				speed.ste = STEP;
-				var velo = (speed.ste - speed.ant)/10;
-				
-				if(velo >= 2){
-					if(speed.tra != undefined){
-						speed.tra = speed.tra + velo;
-					}else{
-						speed.tra = velo;
-					}
-				}
-				
-				SES['speed'] = JSON.stringify(speed);
-				mensaje('velocidad sumada : '+ velocidad+' capturada a los '+SECOND);
-			}
-			
-			var velocidad = 0;
-			if(SES['speed']){
-				speed = JSON.parse(SES['speed']);
-				velocidad = speed.tra;
-			}
-			
-			var med = (PERFIL.gender == 'M')? 0.415 : 0.413;
-			DISTA = (pulgadas * med) * (STEP + velocidad);
-			var pulgadas = DISTA; //pulgadas
-			var metros = pulgadas/metro;
-			var mostrar = metros.toFixed(1) + ' m'
-			if( metros > 1000 ){
-				mostrar = metros/1000;
-				mostrar = metros.toFixed(2) + ' k'
-			} 
-			if(DISTA > LASTTTACK+(39.370*10)){
-				if(trackActivity()){
-					LASTTTACK = DISTA;
-				}
-			}
-	//	}
-		//
+		}
+
 		$(".DISTA").html( mostrar );
 		
 		/*! calorias */
