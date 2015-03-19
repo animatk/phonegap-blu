@@ -42,7 +42,8 @@ var SES = window.localStorage,
 	ACTIVITYTYPE = 1, //tipo de actividad
 	ACTIVITYTIMEOUT = 1000*10, //tiemout tomar datos
 	PauseSens = 0, //sensibilidad del estado de pausa para que sea mas tolerante el numero de veces indicado
-	BG = null, //plugir background mode.
+	BG = null, //plugir background mode.StopAcc
+	StopAcc = true, //detener accelerometro
 	SITE = 'https://irisdev.co/siluet_app/index.php/';
 
 function isNumber(n) {
@@ -825,6 +826,7 @@ function principal(form){
 		mensaje('existia BG se detiene');
 		cordova.plugins.backgroundMode.disable();
 	}
+	StopAcc = false;
 	steps();
 }
 function trackActivity(){
@@ -1008,7 +1010,7 @@ function steps(){
 	}
 }
 function stopsteps() {
-	if (SES['StepID']) {
+	if(SES['StepID']){
 		navigator.accelerometer.clearWatch(SES['StepID']);
 		SES.removeItem('StepID');
 	}
@@ -1017,7 +1019,13 @@ function stepsSuccess(a){
 	if(ACTIVITYTYPE == 1){
 		loadMapa();
 	}
-	mensaje('-*-');
+	var msj = 'El step se esta ejecutando ';
+	if(StopAcc){
+		mensaje(msj);
+		return false;
+	}
+	msj += ' ademas paso al siguente paso ';
+	mensaje(msj);
 	//
 	var x = a.x
 	, y = a.y
@@ -1080,11 +1088,9 @@ function stepsSuccess(a){
 				LASTTTACK = DISTA;
 			}
 		}
-
 		$(".DISTA").html( mostrar );
 		
 		/*! calorias */
-		
 		var efficiencia = 0.6, //promedio de caminar y trotar
 		peso_libras = (PERFIL.weightuni == 'p')? PERFIL.weight : (PERFIL.weight * libra).toFixed(1);
 		// si hrm activo
@@ -1092,7 +1098,6 @@ function stepsSuccess(a){
 			eficiencia = 0.5*(PPM/100);
 		}
 		CALO = (efficiencia * peso_libras * ((metros/1000)/milla)).toFixed(1);
-
 		initClock();
 		$('.CALOR').html( CALO );
 		$('.PASOS').html( STEP );
@@ -1211,6 +1216,7 @@ function stop(){
 	LAT = 0; //map latitude
 	LON = 0; //map longitude
 	ICO = null; //icon map	
+	StopAcc = true;
 
 	if( SES['actividad'] ){
 		mensaje(SES['actividad']);
