@@ -10,6 +10,7 @@ self.addEventListener('message', function(e) {
 }, false);
 /*! web worker calls */
 
+var SES = window.localStorage;
 
 /*! SQL LITE */
 var webdb = {};
@@ -95,6 +96,9 @@ function sincronizar(obj){
 	if(online === false){
 		return false;
 	}
+	if(!SES['chain']){
+		return false;
+	}
 	//
 	var id = obj.id || 0,
 		func = obj.res;
@@ -113,17 +117,19 @@ function sincronizar(obj){
 			
 			func('se va a enviar la data a : '+obj.url+'input/verificar');
 			
-			ajax({
-				url: obj.url+'input/verificar'
-				,method: 'POST'
-				,params: {data: items}
-				,success: function(resp){
-					func(JSON.stringify(resp));
-				}
-				,error: function(error){
-					func(JSON.stringify(error));
-				}
-			});
+			if(items.length > 0){
+				ajax({
+					url: obj.url+'input/verificar'
+					,method: 'POST'
+					,params: {chain: SES['chain'], data: items}
+					,success: function(resp){
+						func(JSON.stringify(resp));
+					}
+					,error: function(error){
+						func(JSON.stringify(error));
+					}
+				});
+			}
 		},
 		function(tx, e){});
 	}else{
