@@ -88,20 +88,17 @@ function ajax(obj) {
 }
 
 function sincronizar(obj){
+	//
 	var online = navigator.onLine;
-	
 	if(online === false){
 		return false;
 	}
-	
+	//
 	var id = obj.id || 0,
 		func = obj.res;
 	
-	func(id);
-	
-	
 	if(id == 0){
-		webdb.executeSql('SELECT * FROM actividad', [],
+		webdb.executeSql('SELECT ID, sync FROM actividad', [],
 		function(tx, r){
 			var rows = r.rows,
 				items = [],
@@ -111,37 +108,45 @@ function sincronizar(obj){
 				items.push(row);
 			}
 			var func = obj.res;
-			func(JSON.stringify(items));
+			func('se va a enviar la data a el servidor');
+			
+			ajax({
+				url: obj.url+'input/verificar'
+				,method: 'POST'
+				,params: {data: items}
+				,success: function(data){
+					func(JSON.stringify(obj.params));
+				}
+			});
 		},
 		function(tx, e){});
-	}	
-//	}else{
-//		
-//		webdb.executeSql('SELECT * FROM actividad WHERE sync = ? ORDER BY ID ASC LIMIT 1', ['NO'],
-//		function(tx, r){
-//			var rows = r.rows,
-//				tot = rows.length;
-//			for(var i=0; i<tot; i++){
-//				var row = rows.item(i);
-//				mensaje('Enviando: '+JSON.stringify(row));
-//				post(SITE+'input', { 
-//					chain: row.chain
-//					,json: row.json 
-//					,data: row.data 
-//				}, function(data){
-//					if(data.status){
-//						webdb.executeSql('UPDATE actividad SET sync=? WHERE ID = ?', [data.sync, row.ID],
-//						function(tx, r){
-//							var nnu = nu-1;
-//							if(nnu > 0){
-//								sincronizar(nnu);
-//							}
-//						},
-//						function(tx, e){});
-//					}
-//				});
-//			}
-//		},
-//		function(tx, e){});
-//	}
+	}else{
+		//
+		webdb.executeSql('SELECT * FROM actividad WHERE sync = ? ORDER BY ID ASC LIMIT 1', ['NO'],
+		function(tx, r){
+			var rows = r.rows,
+				tot = rows.length;
+			for(var i=0; i<tot; i++){
+				var row = rows.item(i);
+				mensaje('Enviando: '+JSON.stringify(row));
+				post(SITE+'input', { 
+					chain: row.chain
+					,json: row.json 
+					,data: row.data 
+				}, function(data){
+					if(data.status){
+						webdb.executeSql('UPDATE actividad SET sync=? WHERE ID = ?', [data.sync, row.ID],
+						function(tx, r){
+							var nnu = nu-1;
+							if(nnu > 0){
+								sincronizar(nnu);
+							}
+						},
+						function(tx, e){});
+					}
+				});
+			}
+		},
+		function(tx, e){});
+	}
 }
