@@ -1,11 +1,19 @@
 /*! web worker calls */
 self.addEventListener('message', function(e) {
-	sincronizar({ 
-		url : e.data 
-		,res: function(resp){
-			self.postMessage(resp);
-		}
-	});
+	var obj = JSON.parse(e.data);
+	switch (obj.fun) {
+		case "sincronizar":
+			sincronizar({ 
+				url : obj.url 
+				,cha : obj.chain 
+				,res: function(resp){
+					self.postMessage(resp);
+				}
+			});
+		break;
+		default :
+			self.postMessage(JSON.stringify({success: false, msj: 'funcion no recibida' }));
+	}
 	
 }, false);
 /*! web worker calls */
@@ -96,9 +104,6 @@ function sincronizar(obj){
 	if(online === false){
 		return false;
 	}
-	if(!SES['chain']){
-		return false;
-	}
 	//
 	var id = obj.id || 0,
 		func = obj.res;
@@ -121,7 +126,7 @@ function sincronizar(obj){
 				ajax({
 					url: obj.url+'input/verificar'
 					,method: 'POST'
-					,params: {chain: SES['chain'], data: items}
+					,params: {chain: obj.cha, data: items}
 					,success: function(resp){
 						func(JSON.stringify(resp));
 					}

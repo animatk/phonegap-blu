@@ -379,7 +379,7 @@ function IniciarTodo(){
 		});
 	}
 	//si connect
-	if(isOnLine()){
+	if(isOnLine() && SES['chain']){
 	//	mensaje('sincronizar');
 	//	sincronizar(5);
 		mensaje('Se inicia web worker');
@@ -389,7 +389,7 @@ function IniciarTodo(){
 		  mensaje('Worker said: '+ e.data);
 		}, false);
 		// Send data to our worker.
-		sync.postMessage(SITE); 
+		sync.postMessage(JSON.stringify({fun: 'sincronizar', url: SITE, chain: SES['chain'] })); 
 	}
 	geo();
 }
