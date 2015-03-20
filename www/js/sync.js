@@ -183,6 +183,7 @@ function subir_bajar(key_actual, key_cola, arr, func, url){
 				}
 				,success: function(data){
 					if(data.success){
+						func(' Se recube '+data.sync );
 						webdb.executeSql('UPDATE actividad SET sync=? WHERE ID = ?', [data.sync, row.ID],
 						function(tx, r){
 							subir_bajar(key_actual+1, key_cola, arr, func, url);
