@@ -1,6 +1,7 @@
 /*! web worker calls */
 self.addEventListener('message', function(e) {
 	var obj = JSON.parse(e.data);
+	self.postMessage(' Recibido: '+e.data +' Instrucion: '+obj.fun +' chain: '+obj.chain);
 	switch (obj.fun) {
 		case "sincronizar":
 			sincronizar({ 
@@ -11,7 +12,7 @@ self.addEventListener('message', function(e) {
 				}
 			});
 		break;
-		default :
+		default:
 			self.postMessage(JSON.stringify({success: false, msj: 'funcion no recibida' }));
 	}
 	
