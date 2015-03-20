@@ -389,7 +389,7 @@ function IniciarTodo(){
 		  mensaje('Worker said: '+ e.data);
 		}, false);
 		// Send data to our worker.
-		sync.postMessage('Hello World'); 
+		sync.postMessage(SITE); 
 	}
 	geo();
 }
