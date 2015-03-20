@@ -3,7 +3,6 @@ self.addEventListener('message', function(e) {
 	var obj = JSON.parse(e.data);
 	switch (obj.fun) {
 		case "sincronizar":
-			self.postMessage('entro al case');
 			sincronizar({ 
 				url : obj.url 
 				,cha : obj.chain 
@@ -18,8 +17,6 @@ self.addEventListener('message', function(e) {
 	
 }, false);
 /*! web worker calls */
-
-var SES = localStorage;
 
 /*! SQL LITE */
 var webdb = {};
@@ -101,13 +98,17 @@ function ajax(obj) {
 }
 function sincronizar(obj){
 	//
+	var id = obj.id || 0,
+		func = obj.res;
+
+		func('entro a la funcion');
+		
 	var online = navigator.onLine;
 	if(online === false){
 		return false;
 	}
 	//
-	var id = obj.id || 0,
-		func = obj.res;
+	
 		
 	if(id == 0){
 		webdb.executeSql('SELECT ID, sync FROM actividad', [],
