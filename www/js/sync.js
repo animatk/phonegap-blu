@@ -113,8 +113,8 @@ function sincronizar(obj){
 			
 			ajax({
 				url: obj.url+'input/verificar'
-				,method: 'POST'
-				,params: {data: items}
+				,method: 'GET'
+			//	,params: {data: items}
 				,success: function(resp){
 					func(JSON.stringify(resp));
 				}
