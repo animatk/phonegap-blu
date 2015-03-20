@@ -98,73 +98,100 @@ function ajax(obj) {
 }
 function sincronizar(obj){
 	//
-	var id = obj.id || 0,
-		func = obj.res;
-
-		func('entro a la funcion');
-		
+	var func = obj.res;
+	
 	var online = navigator.onLine;
 	if(online === false){
 		return false;
 	}
 	//
 	
+	webdb.executeSql('SELECT ID, sync FROM actividad', [],
+	function(tx, r){
+		var rows = r.rows,
+			items = [],
+			tot = rows.length;
+		for(var i=0; i<tot; i++){
+			var row = rows.item(i);
+			items.push(row);
+		}
+	
+		func('se va a enviar la data a : '+obj.url+'input/verificar');
 		
-	if(id == 0){
-		webdb.executeSql('SELECT ID, sync FROM actividad', [],
-		function(tx, r){
-			var rows = r.rows,
-				items = [],
-				tot = rows.length;
-			for(var i=0; i<tot; i++){
-				var row = rows.item(i);
-				items.push(row);
-			}
-		
-			func('se va a enviar la data a : '+obj.url+'input/verificar');
-			
-			if(items.length > 0){
-				ajax({
-					url: obj.url+'input/verificar'
-					,method: 'POST'
-					,params: {chain: obj.cha, data: items}
-					,success: function(resp){
-						func(JSON.stringify(resp));
+		if(items.length > 0){
+			ajax({
+				url: obj.url+'input/verificar'
+				,method: 'POST'
+				,params: {chain: obj.cha, data: items}
+				,success: function(r){
+					if(r.success){
+						var cola = [];
+						if(r.sincroniza.length > 0){
+							cola.push(r.sincroniza);
+						}
+						if(r.subir.length > 0){
+							cola.push(r.subir);
+						}
+						if(r.bajar.length > 0){
+							cola.push(r.bajar);
+						}
+						if(cola.length > 0){
+							subir_bajar(0, 0, cola, func, obj.url);
+						}
 					}
-					,error: function(error){
-						func(JSON.stringify(error));
-					}
-				});
-			}
-		},
-		function(tx, e){});
-	}else{
-		//
-		webdb.executeSql('SELECT * FROM actividad WHERE sync = ? ORDER BY ID ASC LIMIT 1', ['NO'],
-		function(tx, r){
-			var rows = r.rows,
-				tot = rows.length;
-			for(var i=0; i<tot; i++){
-				var row = rows.item(i);
-				mensaje('Enviando: '+JSON.stringify(row));
-				post(SITE+'input', { 
+					func(JSON.stringify(resp));
+				}
+				,error: function(error){
+				//	func(JSON.stringify(error));
+				}
+			});
+		}
+	},
+	function(tx, e){});
+	
+}
+
+function subir_bajar(key_actual, key_cola, arr, func, url){
+	
+	var arrgeglo = arr[key_cola];
+	
+	if(arrgeglo[key_actual] == undefined){
+		func('No existe llave en en arreglo.');
+		if(key_cola < arr.length){
+			func('se ejecuta siguiente proceso');
+			subir_bajar(0, key_cola+1, arr, func, url);
+		}
+		return false;
+	}
+	
+	var id = arrgeglo[key_actual];
+	
+	webdb.executeSql('SELECT * FROM actividad WHERE ID = ?', [id],
+	function(tx, r){
+		var rows = r.rows,
+			tot = rows.length;
+		for(var i=0; i<tot; i++){
+			var row = rows.item(i);
+			func('Enviando: '+JSON.stringify(row));
+			ajax({
+				url: url+'input'
+				,method : 'POST'
+				,params : { 
 					chain: row.chain
 					,json: row.json 
 					,data: row.data 
-				}, function(data){
+				}
+				,success: function(data){
 					if(data.status){
 						webdb.executeSql('UPDATE actividad SET sync=? WHERE ID = ?', [data.sync, row.ID],
 						function(tx, r){
-							var nnu = nu-1;
-							if(nnu > 0){
-								sincronizar(nnu);
-							}
+							subir_bajar(key_actual+1, key_cola, arr, func, url);
 						},
 						function(tx, e){});
 					}
-				});
-			}
-		},
-		function(tx, e){});
-	}
+				}
+			});
+		}
+	},
+	function(tx, e){});
 }
