@@ -10,7 +10,7 @@ self.addEventListener('message', function(e) {
 }, false);
 /*! web worker calls */
 
-var SES = window.localStorage;
+var SES = localStorage;
 
 /*! SQL LITE */
 var webdb = {};
