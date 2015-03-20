@@ -108,14 +108,18 @@ function sincronizar(obj){
 				items.push(row);
 			}
 			var func = obj.res;
-			func('se va a enviar la data a el servidor');
+			
+			func('se va a enviar la data a : '+obj.url+'input/verificar');
 			
 			ajax({
 				url: obj.url+'input/verificar'
 				,method: 'POST'
 				,params: {data: items}
-				,success: function(data){
-					func(JSON.stringify(obj.params));
+				,success: function(resp){
+					func(JSON.stringify(resp));
+				}
+				,error: function(error){
+					func(JSON.stringify(error));
 				}
 			});
 		},
