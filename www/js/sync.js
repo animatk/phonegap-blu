@@ -79,7 +79,8 @@ function ajax(obj) {
 	}
 	var method = obj.method || 'GET';
 	xhr.open(method, obj.url, true);
-		
+	xhr.responseType = 'application/json';
+	xhr.crossDomain = true;
 	if(obj.params){
 		//POST
 		var str = JSON.stringify(obj.params);
@@ -88,18 +89,6 @@ function ajax(obj) {
 	}else{
 		xhr.send();
 	}
-}
-function post(url, data, callback) {
-	$.ajax({
-		url: url
-		,type: 'POST'
-		,data: data
-		,dataType: "json"
-		,crossDomain: true
-		,success: function(data){
-			callback(data);
-		}
-	});
 }
 function sincronizar(obj){
 	//
@@ -125,11 +114,17 @@ function sincronizar(obj){
 			
 			func('se va a enviar la data a : '+obj.url+'input/verificar');
 			
-			post(obj.url+'input/verificar'
-				,{data: items}
-				,function(resp){
+			ajax({
+				url: obj.url+'input/verificar'
+				,method: 'POST'
+				,params: {data: items}
+				,success: function(resp){
 					func(JSON.stringify(resp));
-				});
+				}
+				,error: function(error){
+					func(JSON.stringify(error));
+				}
+			});
 		},
 		function(tx, e){});
 	}else{
