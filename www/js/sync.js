@@ -172,9 +172,9 @@ function subir_bajar(key_actual, key_cola, arr, func, url){
 			tot = rows.length;
 		for(var i=0; i<tot; i++){
 			var row = rows.item(i);
-			func('Enviando: '+JSON.stringify(row));
+			func('Enviando: '+id);
 			ajax({
-				url: url+'input'
+				url: url+'input/index'
 				,method : 'POST'
 				,params : { 
 					chain: row.chain
@@ -182,7 +182,7 @@ function subir_bajar(key_actual, key_cola, arr, func, url){
 					,data: row.data 
 				}
 				,success: function(data){
-					if(data.status){
+					if(data.success){
 						webdb.executeSql('UPDATE actividad SET sync=? WHERE ID = ?', [data.sync, row.ID],
 						function(tx, r){
 							subir_bajar(key_actual+1, key_cola, arr, func, url);
