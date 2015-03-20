@@ -1,9 +1,9 @@
 /*! web worker calls */
 self.addEventListener('message', function(e) {
 	var obj = JSON.parse(e.data);
-	self.postMessage(' Recibido: '+e.data +' Instrucion: '+obj.fun +' chain: '+obj.chain);
 	switch (obj.fun) {
 		case "sincronizar":
+			self.postMessage('entro al case');
 			sincronizar({ 
 				url : obj.url 
 				,cha : obj.chain 
@@ -108,7 +108,7 @@ function sincronizar(obj){
 	//
 	var id = obj.id || 0,
 		func = obj.res;
-	
+		
 	if(id == 0){
 		webdb.executeSql('SELECT ID, sync FROM actividad', [],
 		function(tx, r){
@@ -119,8 +119,7 @@ function sincronizar(obj){
 				var row = rows.item(i);
 				items.push(row);
 			}
-			var func = obj.res;
-			
+		
 			func('se va a enviar la data a : '+obj.url+'input/verificar');
 			
 			if(items.length > 0){
