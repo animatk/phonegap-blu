@@ -116,7 +116,7 @@ function sincronizar(obj){
 			items.push(row);
 		}
 	
-		func('se va a enviar la data: ');
+		func('se va a enviar la data: '+JSON.stringify(items));
 		
 		if(items.length > 0){
 			ajax({
@@ -124,6 +124,7 @@ function sincronizar(obj){
 				,method: 'POST'
 				,params: {chain: obj.cha, data: items}
 				,success: function(r){
+					func(JSON.stringify(r));
 					if(r.success){						
 						var cola = [];
 						if(r.sincroniza.length > 0){
@@ -139,7 +140,6 @@ function sincronizar(obj){
 							subir_bajar(0, 0, cola, func, obj.url);
 						}
 					}
-					func(JSON.stringify(r));
 				}
 				,error: function(error){
 				//	func(JSON.stringify(error));
