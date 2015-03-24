@@ -1207,3 +1207,14 @@ function getSQL(f){
 		},
 		function(tx, e){});
 }
+
+function exeSQL(sql){
+	//
+	webdb.executeSql(sql, [],
+		function(tx, r){
+			mensaje('SQL : exito');
+		},
+		function(tx, e){
+			mensaje('SQL : error');
+		});
+}
