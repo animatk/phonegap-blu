@@ -25,8 +25,10 @@
 	<gap:plugin name="org.apache.cordova.geolocation" version="0.3.10" />
 	
 	<gap:plugin name="de.appplant.cordova.plugin.background-mode" version="0.6.4" />
-	<!--backgroud mode info: https://github.com/katzer/cordova-plugin-background-mode/blob/ac5fef831dbf9e567277dc900389923bd9bc7714/README.md-->
-	<!--gap:plugin name="org.transistorsoft.cordova.background-geolocation" version="0.3.5" /-->
+	<gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.9.0">
+		<param name="APP_ID" value="833553210051226" />
+		<param name="APP_NAME" value="Sforza" />
+	</gap:plugin>
 	
 	
 	<!-- Define app icon for each platform. -->

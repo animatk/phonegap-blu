@@ -42,6 +42,7 @@ var SES = window.localStorage,
 	ACTIVITYTYPE = 1, //tipo de actividad
 	ACTIVITYTIMEOUT = 1000*10, //tiemout tomar datos
 	PauseSens = 0, //sensibilidad del estado de pausa para que sea mas tolerante el numero de veces indicado
+	sync = null, //plugir background mode.StopAcc
 	BG = null, //plugir background mode.StopAcc
 	StopAcc = true, //detener accelerometro
 	SITE = 'https://irisdev.co/siluet_app/index.php/';
@@ -366,34 +367,35 @@ function isDevice(){
 function isOnLine(){
 	return navigator.onLine;
 }
-
 /*!
 	Onload Event
 */
 document.addEventListener("deviceready", IniciarTodo, false);
-
 function IniciarTodo(){
 	if(SES['actividad']){
 		pause(function(){
 			principal('#inicio');
 		});
 	}
-	//si connect
 	if(isOnLine() && SES['chain']){
-	//	mensaje('sincronizar');
-	//	sincronizar(5);
-		mensaje('Se inicia web worker');
-		var sync = new Worker('js/sync.js');
-		//
-		sync.addEventListener('message', function(e) {
-		  mensaje('Worker said: '+ e.data);
-		}, false);
-		// Send data to our worker.
-		sync.postMessage(JSON.stringify({fun: 'sincronizar', url: SITE, chain: SES['chain'] })); 
+		worker({fun: 'sincronizar', url: SITE, chain: SES['chain'] });
 	}
+	
 	geo();
 }
-
+function worker(obj, fun){
+	if(sync == null){
+		sync = new Worker('js/sync.js');
+		sync.addEventListener('message', function(e) {
+			if(fun != undefined){
+				fun(e.data);
+			}
+		}, false);
+		sync.postMessage(JSON.stringify(obj)); 
+	}else{
+		sync.postMessage(JSON.stringify(obj)); 
+	}
+}
 /*! SQL LITE */
 var webdb = {};
 webdb.db = null;
@@ -522,6 +524,7 @@ function initialize() {
 		}
 	}
  }
+ 
 */
 function ak_navigate(from, to, effect){
 	var fx = (effect != undefined)? effect : 'toLeft';
@@ -582,6 +585,16 @@ function post(url, data, callback) {
 }
 /*! login */
 function login(form){
+function fbLogin(){
+	var fbLoginSuccess = function (userData) {
+		mensaje("UserInfo: " + JSON.stringify(userData));
+	}
+
+	facebookConnectPlugin.login(["public_profile","user_birthday","email"],
+		fbLoginSuccess,
+		function (error) { mensaje("E: " + error) }
+	);
+}
 	ak_validate( 
 		form, 
 		{ bt: '#BtnLogin'
@@ -1207,7 +1220,6 @@ function getSQL(f){
 		},
 		function(tx, e){});
 }
-
 function exeSQL(sql){
 	//
 	webdb.executeSql(sql, [],

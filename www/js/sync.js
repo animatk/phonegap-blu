@@ -97,15 +97,11 @@ function ajax(obj) {
 	}
 }
 function sincronizar(obj){
-	//
 	var func = obj.res;
-	
 	var online = navigator.onLine;
 	if(online === false){
 		return false;
 	}
-	//
-	
 	webdb.executeSql('SELECT ID, sync FROM actividad', [],
 	function(tx, r){
 		var rows = r.rows,
@@ -114,17 +110,13 @@ function sincronizar(obj){
 		for(var i=0; i<tot; i++){
 			var row = rows.item(i);
 			items.push(row);
-		}
-	
-		func('se va a enviar la data: '+JSON.stringify(items));
-		
+		}	
 		if(items.length > 0){
 			ajax({
 				url: obj.url+'input/verificar'
 				,method: 'POST'
 				,params: {chain: obj.cha, data: items}
 				,success: function(r){
-					func(JSON.stringify(r));
 					if(r.success){						
 						var cola = [];
 						if(r.sincroniza.length > 0){
@@ -149,24 +141,17 @@ function sincronizar(obj){
 	},
 	function(tx, e){});
 }
-
 function subir_bajar(key_actual, key_cola, arr, func, url, chain){
-	
 	var arrgeglo = arr[key_cola];
-	
 	if(arrgeglo[key_actual] == undefined){
-		func('No existe llave en en arreglo.');
 		if(key_cola < arr.length){
-			func('se ejecuta siguiente proceso');
 			setTimeout(function(){
 				subir_bajar(0, key_cola+1, arr, func, url, chain);
 			}, 200);
 		}
 		return false;
 	}
-	
 	var id = arrgeglo[key_actual];
-	
 	if(id.length != 32){
 		webdb.executeSql('SELECT * FROM actividad WHERE ID = ?', [id],
 		function(tx, r){
@@ -174,7 +159,6 @@ function subir_bajar(key_actual, key_cola, arr, func, url, chain){
 				tot = rows.length;
 			for(var i=0; i<tot; i++){
 				var row = rows.item(i);
-				func('Enviando: '+id);
 				ajax({
 					url: url+'input/index'
 					,method : 'POST'
@@ -185,7 +169,6 @@ function subir_bajar(key_actual, key_cola, arr, func, url, chain){
 					}
 					,success: function(data){
 						if(data.success){
-							func(' Se recube '+data.sync );
 							webdb.executeSql('UPDATE actividad SET sync=? WHERE ID = ?', [data.sync, row.ID],
 							function(tx, r){
 								setTimeout(function(){
@@ -206,11 +189,9 @@ function subir_bajar(key_actual, key_cola, arr, func, url, chain){
 		function(tx, r){
 			var rows = r.rows,
 				tot = rows.length;
-				
 			if(tot > 0){				
 				for(var i=0; i<tot; i++){
 					var row = rows.item(i);
-					func('Enviando: '+id);
 					ajax({
 						url: url+'input/index/'+id
 						,method : 'POST'
@@ -221,7 +202,6 @@ function subir_bajar(key_actual, key_cola, arr, func, url, chain){
 						}
 						,success: function(data){
 							if(data.success){
-								func(' Se recibe '+data.sync );
 								setTimeout(function(){
 									subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
 								}, 200);
@@ -230,7 +210,6 @@ function subir_bajar(key_actual, key_cola, arr, func, url, chain){
 					});	
 				}
 			}else{
-				func('Buscando: '+id);
 				ajax({
 					url: url+'input/bajar/'+chain+'/'+id
 					,method : 'GET'
@@ -243,7 +222,6 @@ function subir_bajar(key_actual, key_cola, arr, func, url, chain){
 							webdb.executeSql('INSERT INTO actividad (chain, json, sync, data) VALUES (?,?,?,?)'
 							,[ chain, JSON.stringify(act), id, fecha]
 							,function(tx, r){
-								func('Se inserto en dispositivo : '+id);
 								setTimeout(function(){
 									subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
 								}, 200);
@@ -262,13 +240,3 @@ function subir_bajar(key_actual, key_cola, arr, func, url, chain){
 		function(tx, e){});
 	}
 }
-
-// sync que se borra del dispositivo
-// daef94dafff3fc2701c24e9cc1c6b8e5 era el id 5 en disp 
-// 9f88db0f6e58d0302a54b86197210258 era el id 6 en disp 
-// 3bed02cc0793ede46434c3ea39430ab5 era el id 7 en disp 
-
-// sync que se borra del servidor
-// daef94dafff3fc2701c24e9cc1c6b8e5 era el id 5 en disp 
-// 9f88db0f6e58d0302a54b86197210258 era el id 6 en disp 
-// 3bed02cc0793ede46434c3ea39430ab5 era el id 7 en disp 
