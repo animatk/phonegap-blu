@@ -156,10 +156,13 @@ function subir_bajar(key_actual, key_cola, arr, func, url, chain){
 	
 	if(arrgeglo[key_actual] == undefined){
 		func('No existe llave en en arreglo.');
-		if(key_cola < arr.length){
+		if(key_cola < (arr.length-1)){
 			func('se ejecuta siguiente proceso');
-			subir_bajar(0, key_cola+1, arr, func, url, chain);
+			setTimeout(function(){
+				subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
+			}, 200);
 		}
+		return;
 	}
 	
 	var id = arrgeglo[key_actual];
@@ -185,7 +188,9 @@ function subir_bajar(key_actual, key_cola, arr, func, url, chain){
 							func(' Se recube '+data.sync );
 							webdb.executeSql('UPDATE actividad SET sync=? WHERE ID = ?', [data.sync, row.ID],
 							function(tx, r){
-								subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
+								setTimeout(function(){
+									subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
+								}, 200);
 							},
 							function(tx, e){});
 						}
@@ -217,7 +222,9 @@ function subir_bajar(key_actual, key_cola, arr, func, url, chain){
 						,success: function(data){
 							if(data.success){
 								func(' Se recibe '+data.sync );
-								subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
+								setTimeout(function(){
+									subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
+								}, 200);
 							}
 						}
 					});	
@@ -237,11 +244,15 @@ function subir_bajar(key_actual, key_cola, arr, func, url, chain){
 							,[ chain, JSON.stringify(act), id, fecha]
 							,function(tx, r){
 								func('Se inserto en dispositivo : '+id);
-								subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
+								setTimeout(function(){
+									subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
+								}, 200);
 							}
 							,function(tx, e){});
 						}else{
-							subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
+							setTimeout(function(){
+								subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
+							}, 200);
 						}
 					}
 				});	
