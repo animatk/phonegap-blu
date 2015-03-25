@@ -160,7 +160,6 @@ function subir_bajar(key_actual, key_cola, arr, func, url, chain){
 			func('se ejecuta siguiente proceso');
 			subir_bajar(0, key_cola+1, arr, func, url, chain);
 		}
-		return false;
 	}
 	
 	var id = arrgeglo[key_actual];
@@ -252,3 +251,8 @@ function subir_bajar(key_actual, key_cola, arr, func, url, chain){
 		function(tx, e){});
 	}
 }
+
+// sync que se borra del servidor
+// daef94dafff3fc2701c24e9cc1c6b8e5 era el id 5 en disp 
+// 9f88db0f6e58d0302a54b86197210258 era el id 6 en disp 
+// 3bed02cc0793ede46434c3ea39430ab5 era el id 7 en disp 
