@@ -584,7 +584,6 @@ function post(url, data, callback) {
 	});
 }
 /*! login */
-function login(form){
 function fbLogin(){
 	var fbLoginSuccess = function (userData) {
 		mensaje("UserInfo: " + JSON.stringify(userData));
@@ -595,6 +594,7 @@ function fbLogin(){
 		function (error) { mensaje("E: " + error) }
 	);
 }
+function login(form){
 	ak_validate( 
 		form, 
 		{ bt: '#BtnLogin'
