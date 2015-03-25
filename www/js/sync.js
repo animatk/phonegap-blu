@@ -137,7 +137,7 @@ function sincronizar(obj){
 							cola.push(r.bajar);
 						}
 						if(cola.length > 0){
-							subir_bajar(0, 0, cola, func, obj.url);
+							subir_bajar(0, 0, cola, func, obj.url, obj.cha);
 						}
 					}
 				}
@@ -148,10 +148,9 @@ function sincronizar(obj){
 		}
 	},
 	function(tx, e){});
-	
 }
 
-function subir_bajar(key_actual, key_cola, arr, func, url){
+function subir_bajar(key_actual, key_cola, arr, func, url, chain){
 	
 	var arrgeglo = arr[key_cola];
 	
@@ -159,40 +158,97 @@ function subir_bajar(key_actual, key_cola, arr, func, url){
 		func('No existe llave en en arreglo.');
 		if(key_cola < arr.length){
 			func('se ejecuta siguiente proceso');
-			subir_bajar(0, key_cola+1, arr, func, url);
+			subir_bajar(0, key_cola+1, arr, func, url, chain);
 		}
 		return false;
 	}
 	
 	var id = arrgeglo[key_actual];
 	
-	webdb.executeSql('SELECT * FROM actividad WHERE ID = ?', [id],
-	function(tx, r){
-		var rows = r.rows,
-			tot = rows.length;
-		for(var i=0; i<tot; i++){
-			var row = rows.item(i);
-			func('Enviando: '+id);
-			ajax({
-				url: url+'input/index'
-				,method : 'POST'
-				,params : { 
-					chain: row.chain
-					,json: row.json 
-					,data: row.data 
-				}
-				,success: function(data){
-					if(data.success){
-						func(' Se recube '+data.sync );
-						webdb.executeSql('UPDATE actividad SET sync=? WHERE ID = ?', [data.sync, row.ID],
-						function(tx, r){
-							subir_bajar(key_actual+1, key_cola, arr, func, url);
-						},
-						function(tx, e){});
+	if(id.length != 32){
+		webdb.executeSql('SELECT * FROM actividad WHERE ID = ?', [id],
+		function(tx, r){
+			var rows = r.rows,
+				tot = rows.length;
+			for(var i=0; i<tot; i++){
+				var row = rows.item(i);
+				func('Enviando: '+id);
+				ajax({
+					url: url+'input/index'
+					,method : 'POST'
+					,params : { 
+						chain: row.chain
+						,json: row.json 
+						,data: row.data 
 					}
+					,success: function(data){
+						if(data.success){
+							func(' Se recube '+data.sync );
+							webdb.executeSql('UPDATE actividad SET sync=? WHERE ID = ?', [data.sync, row.ID],
+							function(tx, r){
+								subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
+							},
+							function(tx, e){});
+						}
+					}
+				});
+			}
+		},
+		function(tx, e){});
+	}else{
+		//puede ser subir o bajar para saberlo hay que buscarlo en local
+		//si existe hay que subirlo y si no existe hay que bajarlo
+		webdb.executeSql('SELECT * FROM actividad WHERE chain = ? AND sync = ?', [chain, id],
+		function(tx, r){
+			var rows = r.rows,
+				tot = rows.length;
+				
+			if(tot > 0){				
+				for(var i=0; i<tot; i++){
+					var row = rows.item(i);
+					func('Enviando: '+id);
+					ajax({
+						url: url+'input/index/'+id
+						,method : 'POST'
+						,params : { 
+							chain: row.chain
+							,json: row.json 
+							,data: row.data 
+						}
+						,success: function(data){
+							if(data.success){
+								func(' Se recibe '+data.sync );
+								subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
+							}
+						}
+					});	
 				}
-			});
-		}
-	},
-	function(tx, e){});
+			}else{
+				func('Buscando: '+id);
+				ajax({
+					url: url+'input/bajar/'+chain+'/'+id
+					,method : 'GET'
+					,success: function(r){
+						if(r.success){
+							var act = r.data,
+								tot = act.length,
+								fecha = act[0].ini;
+								
+							webdb.executeSql('INSERT INTO actividad (chain, json, sync, data) VALUES (?,?,?,?)'
+							,[ chain, JSON.stringify(act), id, fecha]
+							,function(tx, r){
+								func('Se inserto en dispositivo : '+id);
+								subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
+							}
+							,function(tx, e){});
+						}else{
+							subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
+						}
+					}
+				});	
+				
+			}
+		},
+		function(tx, e){});
+	}
 }
