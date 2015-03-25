@@ -159,7 +159,7 @@ function subir_bajar(key_actual, key_cola, arr, func, url, chain){
 		if(key_cola < arr.length){
 			func('se ejecuta siguiente proceso');
 			setTimeout(function(){
-				subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
+				subir_bajar(0, key_cola+1, arr, func, url, chain);
 			}, 200);
 		}
 		return false;
