@@ -630,7 +630,7 @@ function fbLogin(){
 								SES['perfil'] = JSON.stringify(udata);
 								if(udata.height == undefined 
 									|| udata.weight == undefined ){
-									SES['info_basica'] = false;
+									SES.removeItem('info_basica');
 								}
 								
 								iniciar();
