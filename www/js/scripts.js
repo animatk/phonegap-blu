@@ -586,22 +586,22 @@ function post(url, data, callback) {
 /*! login */
 function fbLogin(){
 	//
+	$('body').prepend('<div id="cortina"> &nbsp; </div>');
+	var cortina = $('#cortina');
 	openFB.init({appId: '833553210051226'});
 	
 	openFB.login(
 	function(response) {
 		if(response.status === 'connected') {
 			var accessToken = response.authResponse.token;
-			mensaje('Facebook login OK : ' + accessToken);
-			
 			jsonp('https://graph.facebook.com/v2.3/me?access_token='+accessToken+'&fields=id%2Cname%2Cemail%2Cbirthday%2Cgender&format=json&method=get&pretty=0&suppress_http_code=1'
 			,function(resp){
 				if(resp.error != undefined){
-					alert('error al usar su informacion desde facebook, intentelo nuevamente.');
+					cortina.remove();
+					alert('Error al usar su informacion desde facebook, intentelo nuevamente.');
 				}else{
 					var data = {},
 						bdate = resp.birthday.split("/");
-						//
 						data.genero = (resp.gender == 'male')? 'M': 'F';
 						data.nombre = resp.name;
 						data.edad_day = bdate[1];
@@ -612,21 +612,47 @@ function fbLogin(){
 						data.fb_token = accessToken;
 						data.terminos = 'SI';
 						
-						mensaje('jsonp OK ');
-						
-						post(SITE+'main/fbregister', data, function(r){
-							mensaje(r);
+						post(SITE+'main/fbregister', data, function(obj){
+							if(obj.success === false){
+								alert(obj.message);
+							}else{
+								var udata = {};
+								if(SES['perfil']){
+									udata = JSON.parse(SES['perfil']);
+								}
+								
+								udata.gender : data.genero
+								udata.name : data.nombre
+								udata.terms : data.terminos
+								udata.birthdate : data.edad_year+'-'+data.edad_month+'-'+data.edad_day
+								
+								SES['chain'] = obj.chain;
+								SES['perfil'] = JSON.stringify(udata);
+								if(udata.height == undefined 
+									|| udata.weight == undefined ){
+									SES['info_basica'] = false;
+								}
+								
+								ak_navigate('#login', '#config');
+								$('#btnMenu').addClass('oculto');
+								btnIzq({
+									text: 'Cancelar'	
+									,from: '#config'	
+									,to: '#inicio'	
+									,fx: 'toRight'	
+									,fn: '$(\'#btnMenu\').removeClass(\'oculto\')'
+								});
+								
+							}
+							cortina.remove();
 						});
-					
 				}
 			});
 		} else {
-			mensaje('Facebook login failed: ' + response.error);
+			cortina.remove();
+			alert('Error al conectar con facebook, intentelo nuevamente.');
 		}
 	}, {scope: 'email,user_birthday'});
-}
-function fbLoginSuccess(obj){
-	console.log(obj);
 }
 function login(form){
 	ak_validate( 
