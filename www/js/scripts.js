@@ -591,7 +591,7 @@ function fbLogin(){
 	openFB.login(
 	function(response) {
 		if(response.status === 'connected') {
-			var accessToken = response.authResponse.token
+			var accessToken = response.authResponse.token;
 			jsonp('https://graph.facebook.com/v2.3/me?access_token='+accessToken+'&fields=id%2Cname%2Cemail%2Cbirthday%2Cgender&format=json&method=get&pretty=0&suppress_http_code=1'
 			,function(resp){
 				if(resp.error != undefined){
