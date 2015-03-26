@@ -592,6 +592,8 @@ function fbLogin(){
 	function(response) {
 		if(response.status === 'connected') {
 			var accessToken = response.authResponse.token;
+			mensaje('Facebook login OK : ' + accessToken);
+			
 			jsonp('https://graph.facebook.com/v2.3/me?access_token='+accessToken+'&fields=id%2Cname%2Cemail%2Cbirthday%2Cgender&format=json&method=get&pretty=0&suppress_http_code=1'
 			,function(resp){
 				if(resp.error != undefined){
@@ -607,8 +609,10 @@ function fbLogin(){
 						data.edad_year = bdate[2];
 						data.correo = resp.email;
 						data.fb_id = resp.id;
-						data.fb_token = userData.accessToken;
+						data.fb_token = accessToken;
 						data.terminos = 'SI';
+						
+						mensaje('jsonp OK ');
 						
 						post(SITE+'main/fbregister', data, function(r){
 							mensaje(r);
