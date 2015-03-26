@@ -585,7 +585,27 @@ function post(url, data, callback) {
 }
 /*! login */
 function fbLogin(){
-	facebookConnectPlugin.browserInit('833553210051226');
+	/*
+	var win = window.open('https://www.facebook.com/v2.3/dialog/oauth'+
+	'?response_type=token&display=popup&client_id=833553210051226'+
+	'&redirect_uri=https%3A%2F%2Fdevelopers.facebook.com%2Ftools%2Fexplorer%2Fcallback'+
+	'&scope=user_birthday%2Cemail', '_blank', '');
+	*/
+	
+	openFB.init({appId: '833553210051226'});
+	
+	openFB.login(
+	function(response) {
+		if(response.status === 'connected') {
+			mensaje('Facebook login succeeded, got access token: ' + response.authResponse.token);
+		} else {
+			mensaje('Facebook login failed: ' + response.error);
+		}
+	}, {scope: 'email,user_birthday'});
+/*
+	// FBID 833553210051226
+	//
+	
 	
 	facebookConnectPlugin.login(["public_profile","user_birthday","email"],
 		function (Data) {
@@ -616,6 +636,10 @@ function fbLogin(){
 			}
 		}); 
 	},function (error) { mensaje("E: " + error) });
+*/
+}
+function fbLoginSuccess(obj){
+	console.log(obj);
 }
 function login(form){
 	ak_validate( 
