@@ -633,16 +633,7 @@ function fbLogin(){
 									SES['info_basica'] = false;
 								}
 								
-								ak_navigate('#login', '#config');
-								$('#btnMenu').addClass('oculto');
-								btnIzq({
-									text: 'Cancelar'	
-									,from: '#config'	
-									,to: '#inicio'	
-									,fx: 'toRight'	
-									,fn: '$(\'#btnMenu\').removeClass(\'oculto\')'
-								});
-								
+								iniciar();
 							}
 							cortina.remove();
 						});
