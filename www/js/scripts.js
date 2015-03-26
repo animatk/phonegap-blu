@@ -585,6 +585,8 @@ function post(url, data, callback) {
 }
 /*! login */
 function fbLogin(){
+	facebookConnectPlugin.browserInit('833553210051226');
+	
 	facebookConnectPlugin.login(["public_profile","user_birthday","email"],
 		function (Data) {
 		var userData = JSON.stringify(Data);
