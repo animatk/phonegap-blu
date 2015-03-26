@@ -585,14 +585,35 @@ function post(url, data, callback) {
 }
 /*! login */
 function fbLogin(){
-	var fbLoginSuccess = function (userData) {
-		mensaje("UserInfo: " + JSON.stringify(userData));
-	}
-
 	facebookConnectPlugin.login(["public_profile","user_birthday","email"],
-		fbLoginSuccess,
-		function (error) { mensaje("E: " + error) }
-	);
+		function (Data) {
+		var userData = JSON.stringify(Data);
+		//
+		jsonp('https://graph.facebook.com/v2.3/me?access_token='+userData.accessToken+'&fields=id%2Cname%2Cemail%2Cbirthday%2Cgender&format=json&method=get&pretty=0&suppress_http_code=1'
+		,function(resp){
+			if(resp.error != undefined){
+				alert('error al usar su informacion desde facebook, intentelo nuevamente.');
+			}else{
+				var data = {},
+					bdate = resp.birthday.split("/");
+					//
+					data.genero = (resp.gender == 'male')? 'M': 'F';
+					data.nombre = resp.name;
+					data.edad_day = bdate[1];
+					data.edad_month = bdate[0];
+					data.edad_year = bdate[2];
+					data.correo = resp.email;
+					data.fb_id = resp.id;
+					data.fb_token = userData.accessToken;
+					data.terminos = 'SI';
+					
+					post(SITE+'main/fbregister', data, function(r){
+						mensaje(r);
+					});
+				
+			}
+		}); 
+	},function (error) { mensaje("E: " + error) });
 }
 function login(form){
 	ak_validate( 

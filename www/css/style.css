@@ -236,7 +236,7 @@ header{
 	z-index: 2;
 }
 
-.menu-lateral a{
+.menu-lateral span{
 	color: #4D4D4D;
 	display: block;
 	padding: 8px 15px;
