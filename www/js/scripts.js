@@ -621,10 +621,10 @@ function fbLogin(){
 									udata = JSON.parse(SES['perfil']);
 								}
 								
-								udata.gender : data.genero
-								udata.name : data.nombre
-								udata.terms : data.terminos
-								udata.birthdate : data.edad_year+'-'+data.edad_month+'-'+data.edad_day
+								udata.gender = data.genero;
+								udata.name = data.nombre;
+								udata.terms = data.terminos;
+								udata.birthdate = data.edad_year+'-'+data.edad_month+'-'+data.edad_day;
 								
 								SES['chain'] = obj.chain;
 								SES['perfil'] = JSON.stringify(udata);
