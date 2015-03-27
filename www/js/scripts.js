@@ -1101,7 +1101,7 @@ function stepsSuccess(a){
 		// 1 mt. = a 39.370 pulgadas
 		// mujer = altura_pulgadas * 0,413 para obtener longitud de zancada media. 
 		// hombre = altura_pulgadas * 0,415 para obtener longitud de zancada media.
-
+		
 		if(PERFIL == null){
 			PERFIL = JSON.parse(SES['perfil']);
 		}
@@ -1113,6 +1113,21 @@ function stepsSuccess(a){
 		var pulgadas = parseFloat(PERFIL.height) * metro;
 		
 		var med = (PERFIL.gender == 'M')? 0.415 : 0.413;
+		
+		var velocidad = {};
+			velocidad.ant = 0;
+			
+		if(SES['velocidad']){
+			mensaje('Existe velocidad' );
+			velocidad = JSON.parse(SES['velocidad']);
+		}
+		
+		if(SECOND > (velocidad.ant + 10)){
+			velocidad.ant = SECOND;
+			SES['velocidad'] = JSON.stringify(velocidad);
+		}
+		
+		mensaje('Velocidad : '+JSON.stringify(velocidad));
 		
 		if($('#velocidad').val() != ""){
 			med = med + parseFloat($('#velocidad').val());
