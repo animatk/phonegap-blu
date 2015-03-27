@@ -102,6 +102,7 @@ function sincronizar(obj){
 	if(online === false){
 		return false;
 	}
+	func('se inicia la sincronizacion');
 	webdb.executeSql('SELECT ID, sync FROM actividad', [],
 	function(tx, r){
 		var rows = r.rows,
@@ -110,7 +111,8 @@ function sincronizar(obj){
 		for(var i=0; i<tot; i++){
 			var row = rows.item(i);
 			items.push(row);
-		}	
+		}
+		func('se envia al servidor un total de : '+tot ); 
 		if(items.length > 0){
 			ajax({
 				url: obj.url+'input/verificar'
@@ -169,6 +171,7 @@ function subir_bajar(key_actual, key_cola, arr, func, url, chain){
 					}
 					,success: function(data){
 						if(data.success){
+							func('se subio : '+row.ID ); 
 							webdb.executeSql('UPDATE actividad SET sync=? WHERE ID = ?', [data.sync, row.ID],
 							function(tx, r){
 								setTimeout(function(){
@@ -202,6 +205,7 @@ function subir_bajar(key_actual, key_cola, arr, func, url, chain){
 						}
 						,success: function(data){
 							if(data.success){
+								func('se sincronizo : '+id ); 
 								setTimeout(function(){
 									subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
 								}, 200);
@@ -222,6 +226,7 @@ function subir_bajar(key_actual, key_cola, arr, func, url, chain){
 							webdb.executeSql('INSERT INTO actividad (chain, json, sync, data) VALUES (?,?,?,?)'
 							,[ chain, JSON.stringify(act), id, fecha]
 							,function(tx, r){
+								func('se bajo : '+id ); 
 								setTimeout(function(){
 									subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
 								}, 200);

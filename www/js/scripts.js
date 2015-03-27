@@ -380,7 +380,7 @@ function IniciarTodo(){
 		inicio();
 	}
 	if(isOnLine() && SES['chain']){
-		worker({fun: 'sincronizar', url: SITE, chain: SES['chain'] });
+		worker({fun: 'sincronizar', url: SITE, chain: SES['chain'] }, function(data){ mensaje(data) });
 	}
 	geo();
 }
