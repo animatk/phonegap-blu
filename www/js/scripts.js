@@ -467,7 +467,7 @@ function inicio(from){
             }
             $('#esta-pas span').html(pas);
             $('#esta-dis span').html(dis);
-            $('#esta-cal span').html(cal.toFixed(1));
+            $('#esta-cal span').html(cal.toFixed(2));
 		},
 		function(tx, e){});
     
