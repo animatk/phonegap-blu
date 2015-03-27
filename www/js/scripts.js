@@ -441,7 +441,6 @@ function inicio(from){
     //queris para determinar valores
     webdb.executeSql('SELECT * FROM actividad', [],
 		function(tx, r){
-            mensaje('el SQL trajo resultados');
 			var rows = r.rows,
 				tot = rows.length,
                 pul = 0,
@@ -454,8 +453,7 @@ function inicio(from){
                     act = JSON.parse(row.json),
                     t = act.length,
                     ult = act[t-1];
-                
-                mensaje('row : '+JSON.stringify(row));
+					
                 if(isNumber(parseFloat(ult.dis))){
 					dis = dis + parseFloat(ult.dis);
 				}
@@ -1063,13 +1061,10 @@ function stepsSuccess(a){
 	if(ACTIVITYTYPE == 1){
 		loadMapa();
 	}
-	var msj = 'El step se esta ejecutando ';
 	if(StopAcc){
 		mensaje(msj);
 		return false;
 	}
-	msj += ' ademas paso al siguente paso ';
-	mensaje(msj);
 	//
 	var x = a.x
 	, y = a.y
@@ -1123,7 +1118,7 @@ function stepsSuccess(a){
 			velocidad = JSON.parse(SES['velocidad']);
 		}
 		
-		if(SECOND > (velocidad.time_act + 9)){
+		if(SECOND > (velocidad.time_act + 1)){
 			velocidad.time_act = SECOND;
 			var pasos = (STEP - velocidad.paso_act);
 			velocidad.paso_act = STEP;
