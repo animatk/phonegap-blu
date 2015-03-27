@@ -471,7 +471,8 @@ function inicio(from){
 			
             $('#esta-pas span').html(pas);
             $('#esta-dis span').html(dis);
-            $('#esta-cal span').html(cal.toFixed(1));
+			cal = (isNumber(cal))? cal.toFixed(1): 0;
+            $('#esta-cal span').html(cal);
 		},
 		function(tx, e){});
     
