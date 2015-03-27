@@ -1122,7 +1122,7 @@ function stepsSuccess(a){
 			velocidad.time_act = SECOND;
 			var pasos = (STEP - velocidad.paso_act);
 			velocidad.paso_act = STEP;
-			var	PasosDivSegundos = (pasos / 10);
+			var	PasosDivSegundos = (pasos / 2);
 			mensaje('Pasos dados : '+ pasos +', Pasos / Segundos : '+PasosDivSegundos );
 			SES['velocidad'] = JSON.stringify(velocidad);
 			
