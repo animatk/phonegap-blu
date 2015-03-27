@@ -287,7 +287,7 @@ function ak_validate( form, opts ){
 				ipt.removeClass('error');
 				com.removeClass('error');
 			}
-		}		
+		}
 	}
 	
 	if(btn.hasClass('deactive') === false){
@@ -458,10 +458,16 @@ function inicio(from){
                 pas = pas + ult.ste;
                 cal = cal + ult.cal;  
 			}
-        
+            var metro = 39.370;
+            var metros = dis/metro;
+            dis = metros.toFixed(1) + ' m'
+            if( metros > 1000 ){
+                dis = metros/1000;
+                dis = dis.toFixed(2) + ' k'
+            }
             $('#esta-pas span').html(pas);
             $('#esta-dis span').html(dis);
-            $('#esta-cal span').html(cal);
+            $('#esta-cal span').html(cal.toFixed(1));
 		},
 		function(tx, e){});
     
@@ -1113,7 +1119,7 @@ function stepsSuccess(a){
 		if( metros > 1000 ){
 			mostrar = metros/1000;
 			mostrar = metros.toFixed(2) + ' k'
-		} 
+		}
 		if(DISTA > LASTTTACK+(39.370*10)){
 			if(trackActivity()){
 				LASTTTACK = DISTA;
