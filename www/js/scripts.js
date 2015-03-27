@@ -456,8 +456,9 @@ function inicio(from){
                     ult = act[t-1];
                 
                 mensaje('row : '+JSON.stringify(row));
-                
-                dis = dis + parseFloat(ult.dis);
+                if(isNumber(parseFloat(ult.dis))){
+					dis = dis + parseFloat(ult.dis);
+				}
                 pas = pas + ult.ste;
                 cal = cal + parseFloat(ult.cal);  
 			}
