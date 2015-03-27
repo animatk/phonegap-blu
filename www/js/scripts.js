@@ -439,11 +439,26 @@ function inicio(from){
     webdb.executeSql('SELECT * FROM activiad', [],
 		function(tx, r){
 			var rows = r.rows,
-				tot = rows.length;
+				tot = rows.length,
+                pul = 0,
+                pas = 0,
+                dis = 0,
+                cal = 0;
+                
 			for(var i=0; i<tot; i++){
-				var row = rows.item(i);
-				mensaje(JSON.stringify(row));
+				var row = rows.item(i),
+                    act = JSON.parse(row.json),
+                    t = act.length,
+                    ult = act[t-1];
+                
+                dis = dis + ult.dis;
+                pas = pas + ult.ste;
+                cal = cal + ult.cal;  
 			}
+        
+            $('#esta-pas span').html(pas);
+            $('#esta-dis span').html(dis);
+            $('#esta-cal span').html(cal);
 		},
 		function(tx, e){});
     
@@ -1256,8 +1271,9 @@ function stop(){
 	}
 	$('.ppal-clock').html('00:00');
 	$('.PPM, .PASOS, .DISTA, .CALOR').html('0');
-	ak_navigate('#principal', '#inicio');
 	$('#btnMenu').removeClass('oculto');
+    
+    inicio('#principal');
 }
 /*! end principal */
 /*! map */
