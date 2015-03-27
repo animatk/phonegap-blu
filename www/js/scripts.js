@@ -456,7 +456,7 @@ function inicio(from){
                 
                 dis = dis + ult.dis;
                 pas = pas + ult.ste;
-                cal = cal + ult.cal;  
+                cal = cal + parseFloat(ult.cal);  
 			}
             var metro = 39.370;
             var metros = dis/metro;
@@ -467,7 +467,7 @@ function inicio(from){
             }
             $('#esta-pas span').html(pas);
             $('#esta-dis span').html(dis);
-            $('#esta-cal span').html(cal);
+            $('#esta-cal span').html(cal.toFixed(1));
 		},
 		function(tx, e){});
     
