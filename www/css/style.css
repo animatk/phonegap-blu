@@ -219,6 +219,26 @@ header{
 	border-color: #BB4A4A;
 }
 
+
+.btn-iniciar{
+	width: 150px;
+	height: 150px;
+	border-radius: 500px;
+	font-size: 35px;
+	padding-top: 53px;
+}
+
+.btn-estadisticas{
+	display: block;
+	background: none;
+	border-color: #ddd;
+	min-height: 80px;
+}
+.btn-estadisticas span{
+	display: block;
+	padding: 8px 0;
+	font-size: 25px;
+}
 /* end header*/
 
 /* menu lateral */

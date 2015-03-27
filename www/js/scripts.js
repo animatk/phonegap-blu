@@ -376,11 +376,12 @@ function IniciarTodo(){
 		pause(function(){
 			principal('#inicio');
 		});
+	}else{
+		inicio();
 	}
 	if(isOnLine() && SES['chain']){
 		worker({fun: 'sincronizar', url: SITE, chain: SES['chain'] });
 	}
-	
 	geo();
 }
 function worker(obj, fun){
@@ -430,6 +431,23 @@ var opt = {
 webdb.open(opt);
 
 /*! END SQL LITE */
+function inicio(from){
+    var frm = (from!=undefined)? from : "";
+    ak_navigate( frm , '#inicio');
+    
+    //queris para determinar valores
+    webdb.executeSql('SELECT * FROM activiad', [],
+		function(tx, r){
+			var rows = r.rows,
+				tot = rows.length;
+			for(var i=0; i<tot; i++){
+				var row = rows.item(i);
+				mensaje(JSON.stringify(row));
+			}
+		},
+		function(tx, e){});
+    
+}
 function iniciar(){
 
 	if( SES['chain'] ){

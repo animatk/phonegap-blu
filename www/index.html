@@ -40,11 +40,43 @@
 			</div>
 			<div class="menu-back" onclick="$('#menu').removeClass('toCenter');"></div>
 		</section>
-		<section id="inicio" class="Page toCenter">
+		<section id="inicio" class="Page">
 			<div class="container Main">
-				<span class="btn btn-primary" onclick="iniciar();">
-					Iniciar
-				</span>
+				<div class="row row2">
+					<div class="col text-center">
+						<span class="btn btn-default btn-estadisticas" onclick="estadisticas('PUL');">
+							Pulso
+                            <span>110</span>
+						</span>
+					</div>
+					<div class="col text-center">
+						<span class="btn btn-default btn-estadisticas" onclick="estadisticas('PAS');">
+							Pasos
+                            <span>250</span>
+						</span>
+					</div>
+				</div>
+				<div>&nbsp;</div>
+				<div class="row row2">
+					<div class="col text-center">
+						<span class="btn btn-default btn-estadisticas" onclick="estadisticas('DIS');">
+							Distancia
+                            <span>220k</span>
+						</span>
+					</div>
+					<div class="col text-center">
+						<span class="btn btn-default btn-estadisticas" onclick="estadisticas('CAL');">
+							Calorias
+                            <span>2050</span>
+						</span>
+					</div>
+				</div>
+				<div>&nbsp;</div>
+				<div class="text-center">
+					<span class="btn btn-primary btn-iniciar" onclick="iniciar();">
+						iniciar
+					</span>
+				</div>
 				<!--div id="map_canvas" style="width:100%; height:600px;"></div-->
 			</div>
 		</section>
@@ -258,7 +290,7 @@
 								<div class="col">
 									<div class="ppal-deta-tit"> Calorias </div>
 									<div class="ppal-deta-num CALOR"> 0 </div>
-								</div>					
+								</div>
 							</div>
 							<div>
 								<span id="BtnPausar" class="btn btn-info" onclick="pause();"> Pausar </span>
@@ -300,9 +332,9 @@
 			color: #fff;
 		}
 	</style>
-	<form onsubmit="javascript:eval($(this).find('input').val()); return false;">
+	<!--form onsubmit="javascript:eval($(this).find('input').val()); return false;">
 	<input style="font-size: 8px; position: fixed; bottom: 78px; width: 100%; z-index: 9999; margin: 0; padding: 3px;" class="form-control">
 	</form>
-	<div id="mensajes" style="height:78px; z-index: 99999; position: fixed; display: block; width: 100%; overflow: hidden; overflow-y: auto; bottom:0; left:0; color: #666; background: #000; font-size: 8px; border-top: 1px solid #333;"></div>
+	<div id="mensajes" style="height:78px; z-index: 99999; position: fixed; display: block; width: 100%; overflow: hidden; overflow-y: auto; bottom:0; left:0; color: #666; background: #000; font-size: 8px; border-top: 1px solid #333;"></div-->
   </body>
 </html>
