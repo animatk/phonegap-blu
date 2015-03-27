@@ -489,7 +489,7 @@ function iniciar(){
 				,from: '#config'	
 				,to: '#inicio'	
 				,fx: 'toRight'	
-				,fn: '$(\'#btnMenu\').removeClass(\'oculto\')'
+				,fn: 'inicio(); $(\'#btnMenu\').removeClass(\'oculto\')'
 			});
 		}else{
 			ak_navigate('#inicio', '#perfil');
@@ -502,7 +502,7 @@ function iniciar(){
 			,from: '#login'	
 			,to: '#inicio'	
 			,fx: 'toRight'	
-			,fn: '$(\'#btnMenu\').removeClass(\'oculto\')'
+			,fn: 'inicio(); $(\'#btnMenu\').removeClass(\'oculto\')'
 		});
 	}
 }
@@ -725,7 +725,7 @@ function login(form){
 						,from: '#config'	
 						,to: '#inicio'	
 						,fx: 'toRight'	
-						,fn: '$(\'#btnMenu\').removeClass(\'oculto\')'
+						,fn: 'inicio(); $(\'#btnMenu\').removeClass(\'oculto\')'
 					});
 				}
 				
@@ -797,7 +797,7 @@ function register(form){
 							,from: '#config'
 							,to: '#inicio'
 							,fx: 'toRight'
-							,fn: '$(\'#btnMenu\').removeClass(\'oculto\')'
+							,fn: 'inicio(); $(\'#btnMenu\').removeClass(\'oculto\')'
 						});
 					}
 					cortina.remove();
@@ -835,7 +835,7 @@ function restore(form){
 							,from: '#login'	
 							,to: '#inicio'	
 							,fx: 'toRight'	
-							,fn: '$(\'#btnMenu\').removeClass(\'oculto\')'
+							,fn: 'inicio(); $(\'#btnMenu\').removeClass(\'oculto\')'
 						});
 					}
 					cortina.remove();
