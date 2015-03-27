@@ -434,10 +434,11 @@ webdb.open(opt);
 function inicio(from){
     var frm = (from!=undefined)? from : "";
     ak_navigate( frm , '#inicio');
-    
+    mensaje('se cargo la funcion de inicio');
     //queris para determinar valores
     webdb.executeSql('SELECT * FROM activiad', [],
 		function(tx, r){
+            mensaje('el SQL trajo resultados');
 			var rows = r.rows,
 				tot = rows.length,
                 pul = 0,
@@ -450,6 +451,8 @@ function inicio(from){
                     act = JSON.parse(row.json),
                     t = act.length,
                     ult = act[t-1];
+                
+                mensaje('row : '+JSON.stringify(row));
                 
                 dis = dis + ult.dis;
                 pas = pas + ult.ste;
