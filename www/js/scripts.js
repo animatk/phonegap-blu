@@ -433,8 +433,11 @@ webdb.open(opt);
 /*! END SQL LITE */
 function inicio(from){
     var frm = (from!=undefined)? from : "";
+	if(!SES['perfil']){
+		ak_navigate( frm , '#login');
+		return false;
+	}
     ak_navigate( frm , '#inicio');
-    mensaje('se cargo la funcion de inicio');
     //queris para determinar valores
     webdb.executeSql('SELECT * FROM actividad', [],
 		function(tx, r){
@@ -454,7 +457,7 @@ function inicio(from){
                 
                 mensaje('row : '+JSON.stringify(row));
                 
-                dis = dis + ult.dis;
+                dis = dis + parseFloat(ult.dis);
                 pas = pas + ult.ste;
                 cal = cal + parseFloat(ult.cal);  
 			}
@@ -465,6 +468,7 @@ function inicio(from){
                 dis = metros/1000;
                 dis = dis.toFixed(2) + ' k'
             }
+			
             $('#esta-pas span').html(pas);
             $('#esta-dis span').html(dis);
             $('#esta-cal span').html(cal.toFixed(1));
