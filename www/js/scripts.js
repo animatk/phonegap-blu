@@ -1118,11 +1118,11 @@ function stepsSuccess(a){
 			velocidad = JSON.parse(SES['velocidad']);
 		}
 		
-		if(SECOND > (velocidad.time_act + 1)){
+		if(SECOND > (velocidad.time_act + 4)){
 			velocidad.time_act = SECOND;
 			var pasos = (STEP - velocidad.paso_act);
 			velocidad.paso_act = STEP;
-			var	PasosDivSegundos = (pasos / 2);
+			var	PasosDivSegundos = (pasos / 5);
 			mensaje('Pasos dados : '+ pasos +', Pasos / Segundos : '+PasosDivSegundos );
 			SES['velocidad'] = JSON.stringify(velocidad);
 			
