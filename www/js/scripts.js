@@ -1106,8 +1106,11 @@ function stepsSuccess(a){
 			libra = 2.2046; //1 libra
 		
 		var pulgadas = parseFloat(PERFIL.height) * metro;
-		
-		var med = (PERFIL.gender == 'M')? 0.415 : 0.413;
+	//	
+	// 	media original de el efecto de caminar
+	//	var med = (PERFIL.gender == 'M')? 0.415 : 0.413;
+	//  media menos 1.5 para compenzar la sumatoria de la aceleracion
+		var med = (PERFIL.gender == 'M')? 0.265 : 0.263;
 		
 		var velocidad = {};
 			velocidad.time_act = 0;
