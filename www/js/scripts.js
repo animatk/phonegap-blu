@@ -436,7 +436,7 @@ function inicio(from){
     ak_navigate( frm , '#inicio');
     mensaje('se cargo la funcion de inicio');
     //queris para determinar valores
-    webdb.executeSql('SELECT * FROM activiad', [],
+    webdb.executeSql('SELECT * FROM actividad', [],
 		function(tx, r){
             mensaje('el SQL trajo resultados');
 			var rows = r.rows,
