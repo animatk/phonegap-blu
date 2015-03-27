@@ -1114,8 +1114,8 @@ function stepsSuccess(a){
 		
 		var med = (PERFIL.gender == 'M')? 0.415 : 0.413;
 		
-		var velocidad = {},
-			velocidad.time_act = 0,
+		var velocidad = {};
+			velocidad.time_act = 0;
 			velocidad.paso_act = 0;
 			
 		if(SES['velocidad']){
@@ -1125,10 +1125,9 @@ function stepsSuccess(a){
 		
 		if(SECOND > (velocidad.time_act + 9)){
 			velocidad.time_act = SECOND;
-			var pasos = STEP - velocidad.paso_act;
+			var pasos = (STEP - velocidad.paso_act);
 			velocidad.paso_act = STEP;
-			mensaje('Pasos dados : '+ pasos +
-			' Seg / pasos : '+ (10 / pasos) );
+			mensaje('Pasos dados : '+ pasos +' Seg / pasos : '+ (10 / pasos) );
 			SES['velocidad'] = JSON.stringify(velocidad);
 		}
 		
@@ -1296,7 +1295,7 @@ function stop(){
 			
 		SES.removeItem('actividad');
 		SES.removeItem('steps');
-		SES.removeItem('speed');
+		SES.removeItem('velocidad');
 		SES.removeItem('BG');
 	}
 	
