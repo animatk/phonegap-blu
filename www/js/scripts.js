@@ -1125,33 +1125,33 @@ function stepsSuccess(a){
 		
 		if(SECOND > (velocidad.time_act + 9)){
 			velocidad.time_act = SECOND;
-			var pasos = (STEP - velocidad.paso_act);
+			var pasos = (STEP - velocidad.paso_act),
+				PasosDivSegundos = pasos / 10;
 			velocidad.paso_act = STEP;
-			mensaje('Pasos dados : '+ pasos +' Seg / pasos : '+ (10 / pasos) );
+			
+			mensaje('Pasos dados : '+ pasos +', Seg / pasos : '+  );
 			SES['velocidad'] = JSON.stringify(velocidad);
-		}
-		
-		if($('#velocidad').val() != ""){
-			med = med + parseFloat($('#velocidad').val());
-		}
-		
-		DISTA = (pulgadas * med) * STEP;
-		var pulgadas = DISTA; //pulgadas
-		var metros = pulgadas/metro;
-		var mostrar = metros.toFixed(1) + ' m'
-		if( metros > 1000 ){
-			mostrar = metros/1000;
-			mostrar = metros.toFixed(2) + ' k'
-		}
-		if(DISTA > LASTTTACK+(39.370*10)){
-			if(trackActivity()){
-				LASTTTACK = DISTA;
+			
+			var ndista = (pulgadas * (med * PasosDivSegundos)) * pasos;
+			DISTA = DISTA + ndista;
+		//	DISTA = (pulgadas * med) * STEP;
+			var pulgadas = DISTA; //pulgadas
+			var metros = pulgadas/metro;
+			var mostrar = metros.toFixed(1) + ' m'
+			if( metros > 1000 ){
+				mostrar = metros/1000;
+				mostrar = metros.toFixed(2) + ' k'
 			}
+			if(DISTA > LASTTTACK+(39.370*10)){
+				if(trackActivity()){
+					LASTTTACK = DISTA;
+				}
+			}
+			$(".DISTA").html( mostrar );
 		}
-		$(".DISTA").html( mostrar );
 		
 		
-		
+
 		/*! calorias */
 		var efficiencia = 0.6, //promedio de caminar y trotar
 		peso_libras = (PERFIL.weightuni == 'p')? PERFIL.weight : (PERFIL.weight * libra).toFixed(1);
