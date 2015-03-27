@@ -1107,17 +1107,14 @@ function stepsSuccess(a){
 		
 		var pulgadas = parseFloat(PERFIL.height) * metro;
 	//	
-	// 	media original de el efecto de caminar
-	//	var med = (PERFIL.gender == 'M')? 0.415 : 0.413;
-	//  media menos 1.5 para compenzar la sumatoria de la aceleracion
-		var med = (PERFIL.gender == 'M')? 0.265 : 0.263;
-		
+
+		var med = (PERFIL.gender == 'M')? 0.415 : 0.413;
+
 		var velocidad = {};
 			velocidad.time_act = 0;
 			velocidad.paso_act = 0;
 			
 		if(SES['velocidad']){
-			mensaje('Existe velocidad' );
 			velocidad = JSON.parse(SES['velocidad']);
 		}
 		
@@ -1125,11 +1122,13 @@ function stepsSuccess(a){
 			velocidad.time_act = SECOND;
 			var pasos = (STEP - velocidad.paso_act);
 			velocidad.paso_act = STEP;
-			var	PasosDivSegundos = (pasos / 5);
-			mensaje('Pasos dados : '+ pasos +', Pasos / Segundos : '+PasosDivSegundos );
+			var	PasosDivSegundos = (pasos / 5).toFixed(1);
+			var PpS = (PasosDivSegundos > 1.5)? PasosDivSegundos : 0;
+			
+			mensaje('Pasos dados : '+ pasos +', Pasos / Segundos : '+PpS );
 			SES['velocidad'] = JSON.stringify(velocidad);
 			
-			var ndista = (pulgadas * (med * PasosDivSegundos)) * pasos;
+			var ndista = (pulgadas * (med * PpS)) * pasos;
 			DISTA = DISTA + ndista;
 		//	DISTA = (pulgadas * med) * STEP;
 			var pulgadas = DISTA; //pulgadas
@@ -1277,7 +1276,6 @@ function stop(){
 	StopAcc = true;
 
 	if( SES['actividad'] ){
-		mensaje(SES['actividad']);
 		webdb.executeSql('CREATE TABLE IF NOT EXISTS actividad (ID INTEGER PRIMARY KEY ASC, chain TEXT, json TEXT, sync TEXT, data TEXT)', [],
 			function(tx, r){},
 			function(tx, e){});
