@@ -1125,11 +1125,10 @@ function stepsSuccess(a){
 		
 		if(SECOND > (velocidad.time_act + 9)){
 			velocidad.time_act = SECOND;
-			var pasos = (STEP - velocidad.paso_act),
-				PasosDivSegundos = pasos / 10;
+			var pasos = (STEP - velocidad.paso_act);
 			velocidad.paso_act = STEP;
-			
-			mensaje('Pasos dados : '+ pasos +', Seg / pasos : '+  );
+			var	PasosDivSegundos = (pasos / 10);
+			mensaje('Pasos dados : '+ pasos +', Pasos / Segundos : '+PasosDivSegundos );
 			SES['velocidad'] = JSON.stringify(velocidad);
 			
 			var ndista = (pulgadas * (med * PasosDivSegundos)) * pasos;
