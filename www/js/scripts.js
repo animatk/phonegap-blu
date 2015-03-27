@@ -1114,20 +1114,23 @@ function stepsSuccess(a){
 		
 		var med = (PERFIL.gender == 'M')? 0.415 : 0.413;
 		
-		var velocidad = {};
-			velocidad.ant = 0;
+		var velocidad = {},
+			velocidad.time_act = 0,
+			velocidad.paso_act = 0;
 			
 		if(SES['velocidad']){
 			mensaje('Existe velocidad' );
 			velocidad = JSON.parse(SES['velocidad']);
 		}
 		
-		if(SECOND > (velocidad.ant + 10)){
-			velocidad.ant = SECOND;
+		if(SECOND > (velocidad.time_act + 9)){
+			velocidad.time_act = SECOND;
+			var pasos = STEP - velocidad.paso_act;
+			velocidad.paso_act = STEP;
+			mensaje('Pasos dados : '+ pasos +
+			' Seg / pasos : '+ (10 / pasos) );
 			SES['velocidad'] = JSON.stringify(velocidad);
 		}
-		
-		mensaje('Velocidad : '+JSON.stringify(velocidad));
 		
 		if($('#velocidad').val() != ""){
 			med = med + parseFloat($('#velocidad').val());
@@ -1147,6 +1150,8 @@ function stepsSuccess(a){
 			}
 		}
 		$(".DISTA").html( mostrar );
+		
+		
 		
 		/*! calorias */
 		var efficiencia = 0.6, //promedio de caminar y trotar
