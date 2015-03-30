@@ -1152,10 +1152,10 @@ function stepsSuccess(a){
 				eficiencia = 0.5*(PPM/100);
 			}
 			CALO = (efficiencia * peso_libras * ((metros/1000)/milla)).toFixed(1);
-			initClock();
 			$('.CALOR').html( CALO );
 		}
 		$('.PASOS').html( STEP );
+		initClock();
 		PauseSens = 0;
 	}else{
 		if(!PAUSED && PauseSens >= 3){
