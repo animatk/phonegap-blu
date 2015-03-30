@@ -1229,21 +1229,7 @@ function loadMapa(){
 	}
 }
 function pause(call){
-	if(SES['actividad']){
-		var actividad = JSON.parse(SES['actividad'])
-		,endDate = new Date()
-		,curIndex= actividad.length-1
-		,iniTime = new Date(actividad[curIndex].ini);
-		//
-		actividad[curIndex].end = endDate;
-		actividad[curIndex].seg = parseInt((endDate-iniTime)/1000);
-		actividad[curIndex].ste = STEP;
-		actividad[curIndex].cal = CALO;
-		actividad[curIndex].dis = DISTA;
-		
-		//
-		SES['actividad'] = JSON.stringify(actividad);
-	}
+	trackActivity();
 	$('#BtnPausar').addClass('oculto');
 	$('#BtnDetener').removeClass('oculto');
 	PAUSED = true;
@@ -1272,24 +1258,10 @@ function stop(){
 	ICO = null; //icon map	
 	StopAcc = true;
 
-	if( SES['actividad'] ){
-		webdb.executeSql('CREATE TABLE IF NOT EXISTS actividad (ID INTEGER PRIMARY KEY ASC, chain TEXT, json TEXT, sync TEXT, data TEXT)', [],
-			function(tx, r){},
-			function(tx, e){});
-			
-		var actividad = JSON.parse(SES['actividad']),
-		fecha = actividad[0].ini;
+	SES.removeItem('steps');
+	SES.removeItem('velocidad');
+	SES.removeItem('BG');
 
-		webdb.executeSql('INSERT INTO actividad (chain, json, sync, data) VALUES (?,?,?,?)', 
-			[ SES['chain'], SES['actividad'], 'NO', fecha],
-			function(tx, r){},
-			function(tx, e){});
-			
-		SES.removeItem('actividad');
-		SES.removeItem('steps');
-		SES.removeItem('velocidad');
-		SES.removeItem('BG');
-	}
 	
 	if(BG != null){
 		cordova.plugins.backgroundMode.disable();
@@ -1297,9 +1269,29 @@ function stop(){
 	}
 	$('.ppal-clock').html('00:00');
 	$('.PPM, .PASOS, .DISTA, .CALOR').html('0');
+	
+	ak_navigate('#principal', '#stop');
+}
+function guardar(resp){
+	if( SES['actividad'] ){
+		if(resp == 'SI'){
+
+			webdb.executeSql('CREATE TABLE IF NOT EXISTS actividad (ID INTEGER PRIMARY KEY ASC, chain TEXT, json TEXT, sync TEXT, data TEXT)', [],
+				function(tx, r){},
+				function(tx, e){});
+
+			var actividad = JSON.parse(SES['actividad']),
+			fecha = actividad[0].ini;
+
+			webdb.executeSql('INSERT INTO actividad (chain, json, sync, data) VALUES (?,?,?,?)', 
+				[ SES['chain'], SES['actividad'], 'NO', fecha],
+				function(tx, r){},
+				function(tx, e){});
+		}
+		SES.removeItem('actividad');
+	}
 	$('#btnMenu').removeClass('oculto');
-    
-    inicio('#principal');
+    inicio('#stop');
 }
 /*! end principal */
 /*! map */
