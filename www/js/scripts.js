@@ -1144,20 +1144,17 @@ function stepsSuccess(a){
 				}
 			}
 			$(".DISTA").html( mostrar );
+			/*! calorias */
+			var efficiencia = 0.6, //promedio de caminar y trotar
+			peso_libras = (PERFIL.weightuni == 'p')? PERFIL.weight : (PERFIL.weight * libra).toFixed(1);
+			// si hrm activo
+			if(PPM != 0){ 
+				eficiencia = 0.5*(PPM/100);
+			}
+			CALO = (efficiencia * peso_libras * ((metros/1000)/milla)).toFixed(1);
+			initClock();
+			$('.CALOR').html( CALO );
 		}
-		
-		
-
-		/*! calorias */
-		var efficiencia = 0.6, //promedio de caminar y trotar
-		peso_libras = (PERFIL.weightuni == 'p')? PERFIL.weight : (PERFIL.weight * libra).toFixed(1);
-		// si hrm activo
-		if(PPM != 0){ 
-			eficiencia = 0.5*(PPM/100);
-		}
-		CALO = (efficiencia * peso_libras * ((metros/1000)/milla)).toFixed(1);
-		initClock();
-		$('.CALOR').html( CALO );
 		$('.PASOS').html( STEP );
 		PauseSens = 0;
 	}else{
