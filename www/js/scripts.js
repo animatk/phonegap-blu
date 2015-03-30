@@ -439,7 +439,7 @@ function inicio(from){
 	}
     ak_navigate( frm , '#inicio');
     //queris para determinar valores
-    webdb.executeSql('SELECT * FROM actividad', [],
+    webdb.executeSql('SELECT * FROM actividad WHERE chain = ?', [SES['chain']],
 		function(tx, r){
 			var rows = r.rows,
 				tot = rows.length,
