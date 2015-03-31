@@ -296,6 +296,18 @@ header{
 	border-color: #87B694;
 }
 /* end dispositivos */
+/* perfil */
+.perfil-photo{
+	display: inline-block;
+	width: 100px;
+	height: 100px;
+	border-radius: 500px;
+	background-color: #ccc;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+/* end perfil */
 /* principal */
 .ppal-clock{
 	text-align: center;
@@ -347,8 +359,11 @@ header{
 .container:before,
 .row:before,
 .row:after{
-	content:"";
+	clear: both;
+	content:" ";
 	display: table;
+	-webkit-box-sizing: border-box;
+	        box-sizing: border-box;
 }
 
 .row .col{
@@ -360,22 +375,20 @@ header{
 
 }
 .row2 .col{
-	float: left;
 	width: 50%;
 }
 .row3 .col{
-	float: left;
 	width: 33.3%;
 }
 .row4 .col{
-	float: left;
 	width: 25%;
 }
 .row5 .col{
-	float: left;
 	width: 20%;
 }
 
+.row2 .col, .row3 .col,
+.row4 .col, .row5 .col,
 .col10, .col20,
 .col30, .col40,
 .col50, .col60,

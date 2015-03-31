@@ -742,7 +742,6 @@ function CerrarSesion(){
 	location.reload();
 }
 function perfil(){
-	var foto = 'perfil-man.jpg',
 		edad = 0;
 		
 	if(SES['perfil']){
@@ -755,7 +754,8 @@ function perfil(){
 			}
 		}
 		var res = new Date() - new Date(PERFIL.birthdate);
-		edad = (res / (1000 * 60 * 60 * 24 * 365)).toFixed(0);
+		edad = (res / (1000 * 60 * 60 * 24 * 365));
+		edad = Math.floor(edad * 1) / 1;
 		
 		$('.perfil-edad').text(edad);
 		$('.perfil-nombre').text(PERFIL.name);
