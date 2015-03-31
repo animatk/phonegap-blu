@@ -491,6 +491,7 @@ function iniciar(){
 			});
 		}else{
 			ak_navigate('#inicio', '#perfil');
+			perfil();
 		}
 	}else{
 		ak_navigate('#inicio', '#login');
@@ -667,6 +668,8 @@ function fbLogin(){
 									udata = JSON.parse(SES['perfil']);
 								}
 								
+								udata.fbid = resp.id;
+								udata.fbtoken = accessToken;
 								udata.gender = data.genero;
 								udata.name = data.nombre;
 								udata.terms = data.terminos;
@@ -737,6 +740,39 @@ function login(form){
 function CerrarSesion(){
 	SES.clear();
 	location.reload();
+}
+function perfil(){
+	var foto = 'perfil-man.jpg',
+		edad = 0;
+		
+	if(SES['perfil']){
+		PERFIL = JSON.parse(SES['perfil']);
+		if(PERFIL.fbid){
+			foto = 'https://graph.facebook.com/'+PERFIL.fbid+'/picture?width=256&height=256';
+		}else{
+			if(PERFIL.gender == 'F'){
+				foto = 'perfil-woman.jpg';
+			}
+		}
+		var res = new Date() - new Date(PERFIL.birthdate);
+		edad = (res / (1000 * 60 * 60 * 24 * 365)).toFixed(0);
+		
+		$('.perfil-edad').text(edad);
+		$('.perfil-nombre').text(PERFIL.name);
+		$('.perfil-genero').text(PERFIL.gender);
+		if(SES['info_basica']){
+			$('.perfil-peso').text(PERFIL.weight);
+			$('.perfil-estatura').text(PERFIL.height);
+		}else{
+			$('#btnWizard').text('Siguiente');
+			$('#btn-accion-izq, #btnMenu, #btn-accion-der').addClass('oculto');
+		}
+	}
+	$('.perfil-photo').html('<img src="'+foto+'" width="100%" />');
+}
+function wizard(paso){
+	var paso = paso || 0;
+	mensaje('se ejceutara el paso : '+paso );
 }
 /*! end login */
 /*! register */

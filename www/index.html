@@ -261,10 +261,30 @@
 			</div>
 		</section>	
 		<section id="perfil" class="Page">
-			<div class="container Main">
-				Perfil
-				<div></div>
-			</div>
+				<div class="container Main">
+					<div class="row">
+						<div class="col col30">
+							<div class="perfil-photo text-center">
+								
+							</div>
+						</div>
+						<div class="col col70">
+							<div class="perfil-nombre">
+							</div>
+							<div class="perfil-genero">
+							</div>
+						</div>
+					</div>
+					<div class="perfil-edad">
+					</div>
+					<div class="perfil-estatura">
+					</div>
+					<div class="perfil-peso">
+					</div>
+					<div class="text-center">
+						<span id="btnWizard" class="btn btn-info" onclick="wizard();"> Editar Perfil </span>
+					</div>
+				</div>
 		</section>
 		<section id="principal" class="Page">
 			<div class="swiper-container">
@@ -346,7 +366,7 @@
 		}
 	</style>
 	<form onsubmit="javascript:eval($(this).find('input').val()); return false;">
-	<input style="font-size: 8px; position: fixed; bottom: 78px; width: 100%; z-index: 9999; margin: 0; padding: 3px;" class="form-control">
+	<input style="font-size: 8px; position: fixed; bottom: 40px; width: 100%; z-index: 9999; margin: 0; padding: 3px;" class="form-control">
 	</form>
 	<div id="mensajes" style="height:40px; z-index: 99999; position: fixed; display: block; width: 100%; overflow: hidden; overflow-y: auto; bottom:0; left:0; color: #666; background: #000; font-size: 8px; border-top: 1px solid #333;"></div>
   </body>
