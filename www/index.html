@@ -5,9 +5,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, user-scalable=no" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
-    <script type="text/javascript" src="cordova.js"></script>
+    <!--script type="text/javascript" src="cordova.js"></script-->
     <script type="text/javascript" src="js/bluetooth.js"></script>
-    <script type="text/javascript" src="js/openfb.js"></script>
+    <!--script type="text/javascript" src="js/openfb.js"></script-->
     <script type="text/javascript" src="js/scripts.js"></script>
   </head>
   <body>
@@ -23,7 +23,7 @@
 						</span>
 						<span id="btn-accion-izq" class="btn oculto"> Volver </span>
 					</div>
-					<div class="col">
+					<div class="col" data-lang="title">
 						Siluet Control
 					</div>
 					<div class="col">
@@ -269,10 +269,8 @@
 							</span>
 						</div>
 						<div class="col col60">
-							<h2 class="perfil-nombre">Alejandro St</h2>
-							<div class="perfil-genero">
-							M
-							</div>
+							<h2 class="perfil-nombre"></h2>
+							<div class="perfil-genero"></div>
 						</div>
 					</div>
 					<div class="perfil-edad">
@@ -280,6 +278,10 @@
 					<div class="perfil-estatura">
 					</div>
 					<div class="perfil-peso">
+					</div>
+					<div class="text-center" id="fbConnect">
+						<span class="btn btn-primary" onclick="fbLogin();"> REGISTRAR CON FACEBOOK  </span>
+						<div>&nbsp;</div>
 					</div>
 					<div class="text-center">
 						<span id="btnWizard" class="btn btn-info" onclick="wizard();"> Editar Perfil </span>
