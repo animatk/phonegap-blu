@@ -401,22 +401,18 @@ function worker(obj, fun){
 	}
 }
 $(function(){
-	mensaje('cargo el evento load');
 	getLang({exe: 'setText'});
 });
 
 function getLang(show){
-	mensaje('F : getLang');
 	var lang_detect = show.lang || navigator.language.substring(0,2).toLowerCase(),
 		key = langs.indexOf(lang_detect);
 	if(key !== -1){
 		lang = langs[key];
 	}
 	$.get('js/lang_'+lang+'.json', function(resp){
-		mensaje('$.get success : true');
-		language = resp;
+		language = JSON.parse(resp);
 		if(show.exe){
-			mensaje('fires : '+show.exe);
 			var func = window[show.exe];
 			func(language);
 		}
@@ -424,8 +420,6 @@ function getLang(show){
 }
 
 function setText(param){
-	mensaje('F : setText');
-	
 	if(typeof param === 'string'){
 		if(language == null){
 			 getLang();
@@ -437,15 +431,13 @@ function setText(param){
 			tot = items.length;
 		for(var i=0; i<tot; i++){
 			var it = $(items[i]),
-				con = it.data('lang'),
+				con = it.attr('data-lang'),
 				t = language[con];
 				if(t != undefined){
 					it.html(t);
 				}
 		}
 	}
-	
-	mensaje('final : '+JSON.stringify(language));
 }
 /*! SQL LITE */
 var webdb = {};
