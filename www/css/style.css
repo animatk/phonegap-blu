@@ -418,13 +418,20 @@ header.noshow{
 
 .form-control{
 	width: 100%;
-	border: 1px solid #ccc;
+	color: #fff;
+	border: 1px solid #0F0F0F;
 	padding: 10px;
-	background: #fff;
+	background: #232127;
 	margin-bottom: 15px;
 }
 
+select.form-control{
+  -webkit-appearance: none;
+  -webkit-border-radius: 0px;
+}
+
 .form-control.error{
+	color: #000;
 	background: #F8D7CC;
 	border: 1px solid #D19393;
 }
