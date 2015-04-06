@@ -520,7 +520,6 @@ function inicio(from){
     
 }
 function iniciar(){
-
 	if( SES['chain'] ){
 		if( SES['info_basica'] ){
 			ak_navigate('#inicio', '#config');
@@ -634,6 +633,7 @@ function btnIzq(obj){
 	func = (obj.fn)? obj.fn : "";
 	btmI.html(obj.text);
 	btmI.attr('onclick', "ak_navigate('"+obj.from+"', '"+obj.to+"' "+effect+"); $(this).addClass('oculto'); "+func );
+	$('#btnMenu').addClass('oculto');
 	btmI.removeClass('oculto');
 }
 function jsonp(url, callback) {
@@ -685,10 +685,7 @@ function post(url, data, callback) {
 /*! login */
 function fbLogin(){
 	//
-	$('body').prepend('<div id="cortina"> &nbsp; </div>');
-	var cortina = $('#cortina');
 	openFB.init({appId: '833553210051226'});
-	
 	openFB.login(
 	function(response) {
 		if(response.status === 'connected') {
@@ -696,7 +693,6 @@ function fbLogin(){
 			jsonp('https://graph.facebook.com/v2.3/me?access_token='+accessToken+'&fields=id%2Cname%2Cemail%2Cbirthday%2Cgender&format=json&method=get&pretty=0&suppress_http_code=1'
 			,function(resp){
 				if(resp.error != undefined){
-					cortina.remove();
 					alert('Error al usar su informacion desde facebook, intentelo nuevamente.');
 				}else{
 					var data = {},
@@ -736,12 +732,10 @@ function fbLogin(){
 								
 								iniciar();
 							}
-							cortina.remove();
 						});
 				}
 			});
 		} else {
-			cortina.remove();
 			alert('Error al conectar con facebook, intentelo nuevamente.');
 		}
 	}, {scope: 'email,user_birthday'});
