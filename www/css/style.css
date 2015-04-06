@@ -189,6 +189,12 @@ header.noshow{
 	background: #ccc;
 }
 
+.btn-block{
+	width: 100%;
+	display: inline-block;
+	max-width: 200px;
+}
+
 .btn-info,
 .btn-danger,
 .btn-primary,
@@ -243,6 +249,17 @@ header.noshow{
 	padding: 8px 0;
 	font-size: 25px;
 }
+
+.btn-action{
+	color: #347730;
+	border: 0;
+	padding: 10px 20px;
+	background: radial-gradient(#dbff06, #b4ff04);
+	font-weight: bold;
+	text-shadow: 1px 1px 0 #fff;
+	border-radius: 500px;
+}
+
 /* end header*/
 
 /* menu lateral */
@@ -432,7 +449,7 @@ select.form-control{
 }
 
 .form-control.error{
-	color: #000;
+	color: #ccc;
 	background: transparent;
 	background: -webkit-linear-gradient(top, rgba(0,0,0,.0), rgba(255, 0, 0, 0.1));
 	border-bottom: 1px solid #D19393;

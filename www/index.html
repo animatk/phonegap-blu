@@ -82,10 +82,12 @@
 		</section>
 		<section id="login" class="Page">
 			<div class="container Main">
-				<h2>Ingresar</h2>
+				<div class="text-center">
+					<img src="img/sforza-login.jpg" alt="Sforza"/>
+				</div>
 				<div>&nbsp;</div>
 				<div class="text-center">
-					<span class="btn btn-primary" onclick="fbLogin();"> REGISTRAR CON FACEBOOK </span>
+					<img src="img/login-facebook.jpg" onclick="fbLogin();" />
 				</div>
 				<div>&nbsp;</div>
 				<form onsubmit="return login(this); return false;">
@@ -96,13 +98,13 @@
 							<span onclick="botonRestore();">Olvide mi contraseña</span>
 						</div>
 						<div class="col text-right">
-							<button id="BtnLogin" class="btn btn-primary"> ENTRAR </button>
+							<button id="BtnLogin" class="btn btn-action"> Iniciar </button>
 						</div>
 					</div>
 				</form>
 				<div>&nbsp;</div>
 				<div class="text-center">
-					<span class="btn btn-success" onclick="botonRegistrar();"> REGISTRAR NUEVO USUARIO </span>
+					<span class="btn btn-action btn-block" onclick="botonRegistrar();"> Registrar</span>
 				</div>
 			</div>
 		</section>
