@@ -163,7 +163,7 @@ header{
 }
 
 header.noshow{
-	top: -50px;
+	top: -80px;
 }
 
 .btn{
@@ -254,10 +254,11 @@ header.noshow{
 	color: #347730;
 	border: 0;
 	padding: 10px 20px;
-	background: radial-gradient(#dbff06, #b4ff04);
+	background: -webkit-linear-gradient(left,#b4ff04, #dbff06, #b4ff04);
 	font-weight: bold;
 	text-shadow: 1px 1px 0 #fff;
 	border-radius: 500px;
+	box-shadow: 0 0 0 5px rgba(0,0,0,.2);
 }
 
 /* end header*/
