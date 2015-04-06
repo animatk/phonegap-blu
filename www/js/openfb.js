@@ -35,9 +35,6 @@ var openFB = (function () {
         // Used in the exit event handler to identify if the login has already been processed elsewhere (in the oauthCallback function)
         loginProcessed;
 
-    console.log(oauthRedirectURL);
-    console.log(logoutRedirectURL);
-
     document.addEventListener("deviceready", function () {
         runningInCordova = true;
     }, false);
@@ -112,13 +109,11 @@ var openFB = (function () {
 
         // Inappbrowser exit handler: Used when running in Cordova only
         function loginWindow_exitHandler() {
-            console.log('exit and remove listeners');
             // Handle the situation where the user closes the login window manually before completing the login process
             deferredLogin.reject({error: 'user_cancelled', error_description: 'User cancelled login process', error_reason: "user_cancelled"});
             loginWindow.removeEventListener('loadstop', loginWindow_loadStartHandler);
             loginWindow.removeEventListener('exit', loginWindow_exitHandler);
             loginWindow = null;
-            console.log('done removing listeners');
         }
 
         if (options && options.scope) {

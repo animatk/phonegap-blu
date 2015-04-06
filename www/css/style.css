@@ -162,6 +162,10 @@ header{
 		    transition-duration: .25s;
 }
 
+header.noshow{
+	top: -50px;
+}
+
 .btn{
 	padding: 6px 12px;
 	display:inline-block;
@@ -272,8 +276,13 @@ header{
 	z-index: 1;
 	position: absolute;
 }
-/* end menu lateral */
 
+/* si es iOS */
+.ios-device header{padding-top: 25px;}
+.ios-device .Main,
+.ios-device .menu-lateral{padding-top: 85px;}
+
+/* end menu lateral */
 /* secciones */
 #menu{ z-index: 3; background: none; }
 /* end secciones */

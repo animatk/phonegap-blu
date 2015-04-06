@@ -401,15 +401,17 @@ function worker(obj, fun){
 	}
 }
 $(function(){
+	if(isDevice() != 'Android'){
+		$('body').addClass('ios-device');
+	}
 	getLang({exe: 'setText'});
 });
-
 function getLang(show){
 	var lang_detect = show.lang || navigator.language.substring(0,2).toLowerCase(),
 		key = langs.indexOf(lang_detect);
 	if(key !== -1){
 		lang = langs[key];
-	}
+	}	
 	$.get('js/lang_'+lang+'.json', function(resp){
 		language = JSON.parse(resp);
 		if(show.exe){
@@ -418,7 +420,6 @@ function getLang(show){
 		}
 	});
 }
-
 function setText(param){
 	if(typeof param === 'string'){
 		if(language == null){
@@ -616,6 +617,11 @@ function initialize() {
  
 */
 function ak_navigate(from, to, effect){
+	if(to == '#login'){
+		$('header').addClass('noshow');
+	}else{
+		$('header').removeClass('noshow');
+	}
 	var fx = (effect != undefined)? effect : 'toLeft';
 	$(from).removeClass('toCenter toLeft toRight');
 	$( to ).removeClass('toCenter toLeft toRight');
