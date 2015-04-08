@@ -12,11 +12,11 @@
   </head>
   <body>
 	<section class="Canvas">
-		<header>
+		<header class="noshow">
 			<div class="container">
 				<div class="row row3">
 					<div class="col">
-						<span id="btnMenu" onclick="$('#menu').toggleClass('toCenter');" class="btn btn-hambur"> 
+						<span id="btnMenu" onclick="$('#menu').toggleClass('toCenter');" class="btn btn-hambur oculto"> 
 							<span> </span>
 							<span> </span>
 							<span> </span>
@@ -73,7 +73,7 @@
 				</div>
 				<div>&nbsp;</div>
 				<div class="text-center">
-					<span class="btn btn-primary btn-iniciar" onclick="iniciar();">
+					<span class="btn btn-primary btn-iniciar" onclick="iniciar('#inicio');">
 						iniciar
 					</span>
 				</div>
@@ -104,7 +104,7 @@
 				</form>
 				<div>&nbsp;</div>
 				<div class="text-center">
-					<span class="btn btn-action btn-block" onclick="botonRegistrar();"> Registrar</span>
+					<span class="btn btn-action btn-block" onclick="show_paso_uno({to:'#login'});"> Registrar</span>
 				</div>
 			</div>
 		</section>
@@ -124,7 +124,7 @@
 			<div class="container Main">
 				<h2>Info General</h2>
 				<div>&nbsp;</div>
-				<form onsubmit="return register(this); return false;">
+				<form onsubmit="return form_paso_uno(this); return false;">
 					<input name="nombre" class="form-control required" placeholder="Nombre" />
 					<select name="genero" class="form-control required" placeholder="Genero">
 						<option value=""> Genero </option>
@@ -174,13 +174,38 @@
 			<div class="container Main">
 				<h2>Info Personal</h2>
 				<div>&nbsp;</div>
-				<form onsubmit="return register(this); return false;">
+				<form onsubmit="return form_paso_dos(this); return false;">
+					<div class="config-item" onclick="$('select[name=unidad_medida]').click();">
+						<div class="row">
+							<span class="col30 config-item-left">Unidades</span>
+							<span class="col40 config-item-center">Mts.</span>
+							<span class="col30 config-item-right">Medicion</span>
+						</div>
+					</div>
+					<div class="config-item">
+						<div class="row">
+							<span class="col30 config-item-left">Estatura</span>
+							<span class="col40 config-item-center">0</span>
+							<span class="col30 config-item-right">Mts</span>
+						</div>
+					</div>
+					<div class="config-item">
+						<div class="row">
+							<span class="col30 config-item-left">Peso</span>
+							<span class="col40 config-item-center">0</span>
+							<span class="col30 config-item-right">Kg</span>
+						</div>
+					</div>
+					<select name="unidad_medida" class="form-control required oculto" placeholder="Unidad de medida">
+						<option value="M"> Metrico </option>
+						<option value="E"> English </option>
+					</select>
 					<div class="row row2">
 						<div class="col">
-							<input name="estatura" class="form-control required estatura" maxlength="4" placeholder="Estatura" />
+							<input name="estatura" class="form-control required estatura oculto" maxlength="4" placeholder="Estatura" />
 						</div>
 						<div class="col">
-							<input name="peso" class="form-control required onlydot" maxlength="4" placeholder="Peso" />
+							<input name="peso" class="form-control required onlydot oculto" maxlength="4" placeholder="Peso" />
 						</div>
 					</div>
 					<div class="text-center">

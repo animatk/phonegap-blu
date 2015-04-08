@@ -444,7 +444,6 @@ select.form-control{
 	border-bottom: 1px solid #5de252;
 	padding: 10px;
 	background: transparent;
-	background: -webkit-linear-gradient(top, rgba(0,0,0,.0), rgba(0,0,0,.25));
 	margin-bottom: 15px;
 	border-radius: 0;
 }
@@ -522,10 +521,22 @@ textarea.form-control{
 .config-item{
 	color: #C2C2C2;
 	padding: 10px;
-	border-bottom: 2px groove rgba(210, 210, 210, 0.6);
+	background: -webkit-linear-gradient(top, rgba(0,0,0,.3), rgba(0, 0, 0, 0));
 }
 .config-item.activo{
 	color: #333;
+}
+.config-item-left,
+.config-item-right{
+	padding-top: 11px;
+}
+.config-item-left{
+	text-align: right;
+}
+.config-item-center{
+	color: #fff;
+	text-align: center;
+	font-size: 30px;
 }
 /* end config */
 
