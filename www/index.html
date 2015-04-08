@@ -176,37 +176,41 @@
 				<div>&nbsp;</div>
 				<form onsubmit="return form_paso_dos(this); return false;">
 					<div class="config-item" onclick="$('select[name=unidad_medida]').trigger('click');">
-						<select name="unidad_medida" class="form-control required" placeholder="Unidad de medida">
+						<select name="unidad_medida" class="form-control required" onchange="switchUnits(this.value);" placeholder="Unidad de medida">
 							<option value="M"> Metrico </option>
 							<option value="E"> English </option>
 						</select>
 						<div class="row">
 							<span class="col30 config-item-left">Unidades</span>
-							<span class="col40 config-item-center">Mts.</span>
+							<span id="textUnids" class="col40 config-item-center">Mts.</span>
 							<span class="col30 config-item-right">Medicion</span>
 						</div>
 					</div>
 					<div class="config-item">
 						<input name="estatura" class="form-control required estatura" maxlength="4" placeholder="Estatura" />
-						<select name="unidad_medi" class="form-control required" placeholder="Unidad de medida">
-							<option value="M"> Metrico </option>
-							<option value="E"> English </option>
+						<select name="estatura_mts" class="form-control" onchange="unitsValue(this, 'input[name=estatura]', '#textEstatura');">
+							<option value=""> Select </option>
+						</select>
+						<select name="estatura_fee" class="form-control oculto" onchange="unitsValue(this, 'input[name=estatura]', '#textEstatura');">
+							<option value=""> Select </option>
 						</select>
 						<div class="row">
 							<span class="col30 config-item-left">Estatura</span>
-							<span class="col40 config-item-center">0</span>
+							<span id="textEstatura" class="col40 config-item-center">0</span>
 							<span class="col30 config-item-right">Mts</span>
 						</div>
 					</div>
 					<div class="config-item">
 						<input name="peso" class="form-control required onlydot" maxlength="4" placeholder="Peso" />
-						<select name="unidad_medid" class="form-control required" placeholder="Unidad de medida">
-							<option value="M"> Metrico </option>
-							<option value="E"> English </option>
+						<select name="peso_kgs" class="form-control" onchange="unitsValue(this, 'input[name=peso]', '#textPeso');">
+							<option value=""> Select </option>
+						</select>
+						<select name="peso_lbs" class="form-control oculto" onchange="unitsValue(this, 'input[name=peso]', '#textPeso');">
+							<option value=""> Select </option>
 						</select>
 						<div class="row">
 							<span class="col30 config-item-left">Peso</span>
-							<span class="col40 config-item-center">0</span>
+							<span id="textPeso" class="col40 config-item-center">0</span>
 							<span class="col30 config-item-right">Kg</span>
 						</div>
 					</div>
