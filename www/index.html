@@ -176,6 +176,10 @@
 				<div>&nbsp;</div>
 				<form onsubmit="return form_paso_dos(this); return false;">
 					<div class="config-item" onclick="$('select[name=unidad_medida]').trigger('click');">
+						<select name="unidad_medida" class="form-control required" placeholder="Unidad de medida">
+							<option value="M"> Metrico </option>
+							<option value="E"> English </option>
+						</select>
 						<div class="row">
 							<span class="col30 config-item-left">Unidades</span>
 							<span class="col40 config-item-center">Mts.</span>
@@ -183,6 +187,11 @@
 						</div>
 					</div>
 					<div class="config-item">
+						<input name="estatura" class="form-control required estatura" maxlength="4" placeholder="Estatura" />
+						<select name="unidad_medi" class="form-control required" placeholder="Unidad de medida">
+							<option value="M"> Metrico </option>
+							<option value="E"> English </option>
+						</select>
 						<div class="row">
 							<span class="col30 config-item-left">Estatura</span>
 							<span class="col40 config-item-center">0</span>
@@ -190,24 +199,19 @@
 						</div>
 					</div>
 					<div class="config-item">
+						<input name="peso" class="form-control required onlydot" maxlength="4" placeholder="Peso" />
+						<select name="unidad_medid" class="form-control required" placeholder="Unidad de medida">
+							<option value="M"> Metrico </option>
+							<option value="E"> English </option>
+						</select>
 						<div class="row">
 							<span class="col30 config-item-left">Peso</span>
 							<span class="col40 config-item-center">0</span>
 							<span class="col30 config-item-right">Kg</span>
 						</div>
 					</div>
-					<select name="unidad_medida" class="form-control required oculto" placeholder="Unidad de medida">
-						<option value="M"> Metrico </option>
-						<option value="E"> English </option>
-					</select>
-					<div class="row row2">
-						<div class="col">
-							<input name="estatura" class="form-control required estatura oculto" maxlength="4" placeholder="Estatura" />
-						</div>
-						<div class="col">
-							<input name="peso" class="form-control required onlydot oculto" maxlength="4" placeholder="Peso" />
-						</div>
-					</div>
+					<div>&nbsp;</div>
+					<div>&nbsp;</div>
 					<div class="text-center">
 						<button id="BtnRegister" class="btn btn-action btn-block"> Siguiente </button>
 					</div>
