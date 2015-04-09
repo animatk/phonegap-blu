@@ -392,7 +392,7 @@ function isOnLine(){
 	return navigator.onLine;
 }
 /*! Onload Phonegap Event*/
-document.addEventListener("deviceready", IniciarTodo, false);
+//document.addEventListener("deviceready", IniciarTodo, false);
 function IniciarTodo(){
 	if(SES['actividad']){
 		pause(function(){
@@ -406,9 +406,7 @@ function IniciarTodo(){
 	}
 	geo();
 }
-document.addEventListener('backbutton', function(e){
-	
-}, false);
+//document.addEventListener('backbutton', function(e){}, false);
 function worker(obj, fun){
 	if(sync == null){
 		sync = new Worker('js/sync.js');
@@ -434,8 +432,8 @@ function getLang(show){
 	if(key !== -1){
 		lang = langs[key];
 	}	
-	$.get('js/lang_'+lang+'.json', function(resp){
-		language = JSON.parse(resp);
+	$.getJSON('js/lang_'+lang+'.json', function(resp){
+		language = (typeof resp == 'object')? resp :JSON.parse(resp);
 		if(show.exe){
 			var func = window[show.exe];
 			if(show.params){
@@ -547,7 +545,7 @@ function iniciar(from){
 			show_paso_dos();
 		}
 	}else{
-		ak_navigate('#login');
+		show_login();
 	}
 }
 /*
@@ -619,6 +617,9 @@ function initialize() {
  
 */
 function ak_navigate(to, back){
+	
+	setText({sec: to});
+	
 	if(to == '#login'){
 		$('header').addClass('noshow');
 	}else{
@@ -752,6 +753,11 @@ function fbLogin(){
 		}
 	}, {scope: 'email,user_birthday'});
 }
+function show_login(back){
+	$('input[name=correo]').attr('placeholder', language.correo);
+	$('input[name=contrasena]').attr('placeholder', language.contrasena);
+	ak_navigate('#login', back); 
+}
 function login(form){
 	ak_validate( 
 		form, 
@@ -835,20 +841,28 @@ function wizard(paso){
 /*! end login */
 /*! register */
 function show_paso_uno(back){
-	ak_navigate('#registro', back); 
 	
-	var dias = '<option value="">Día</option>';
+	var dias = '<option value="">'+language.dia+'</option>';
 	for(var i=1; i<32; i++){
 		dias += '<option value="'+i+'">'+i+'</option>';
 	}
-	$('select[name=edad_day]').html(dias);
-	
-	var years = '<option value="">Año</option>';
+	var months = '<option value="">'+language.mes+'</option>';
+	for(var i=0; i<12; i++){
+		months += '<option value="'+checkTime(i+1)+'">'+language.meses[i]+'</option>';
+	}
+	var years = '<option value="">'+language.year+'</option>';
 	var year = new Date().getFullYear();
 	for(var i=0; i<69; i++){
 		years += '<option value="'+(year-i)+'">'+(year-i)+'</option>';
 	}
-	$('select[name=edad_year]').html(years);
+	
+	$('input[name=nombre]').attr('placeholder',language.nombre);
+	$('select[name=genero]').attr('placeholder',language.gender);
+	$('select[name=edad_day]').html(dias).attr('placeholder',language.edad_day);
+	$('select[name=edad_year]').html(years).attr('placeholder',language.edad_month);
+	$('select[name=edad_month]').html(months).attr('placeholder',language.edad_year);
+
+	ak_navigate('#registro', back); 
 }
 function form_paso_uno(form){
 	ak_validate(form, {
@@ -867,9 +881,7 @@ function form_paso_uno(form){
 	return false;
 }
 function show_paso_dos(back, unid){
-
 	var und = unid || 'M';
-	
 	var Est = '<option value="" selected="selected"> '+language.estatura+' </option>',
 		Pes = '<option value="" selected="selected"> '+language.peso+' </option>';
 	
@@ -885,7 +897,7 @@ function show_paso_dos(back, unid){
 		}
 		$('#symbolEstatura').text(language.ftin);
 		$('#symbolPeso').text(language.lbs);
-		$('#textUnids').text('Eng');
+		$('#textUnids').text(language.eng);
 	}else{
 		for(var i=120; i<245; i++){
 			var metros = (i/100);
@@ -903,10 +915,7 @@ function show_paso_dos(back, unid){
 	$('select[name=estatura]').html(Est).attr('placeholder', language.estatura);
 	$('select[name=peso]').html(Pes).attr('placeholder', language.peso);
 	
-	if(back != false){
-		setText({sec: '#registro-2'});
-		ak_navigate('#registro-2', back);
-	}
+	ak_navigate('#registro-2', back);
 }
 function form_paso_dos(form){
 	ak_validate(form, {

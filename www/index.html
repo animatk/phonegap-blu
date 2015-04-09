@@ -91,20 +91,20 @@
 				</div>
 				<div>&nbsp;</div>
 				<form onsubmit="return login(this); return false;">
-					<input name="correo" class="form-control required email" placeholder="Correo Electrónico" />
-					<input name="contrasena" type="password" class="form-control required" placeholder="Contraseña" />
+					<input name="correo" class="form-control required email" />
+					<input name="contrasena" type="password" class="form-control required" />
 					<div class="row row2">
 						<div class="col">
-							<span onclick="botonRestore();">Olvide mi contraseña</span>
+							<span onclick="botonRestore();" data-lang="olvide_contrasena"></span>
 						</div>
 						<div class="col text-right">
-							<button id="BtnLogin" class="btn btn-action"> Iniciar </button>
+							<button id="BtnLogin" class="btn btn-action" data-lang="login"></button>
 						</div>
 					</div>
 				</form>
 				<div>&nbsp;</div>
 				<div class="text-center">
-					<span class="btn btn-action btn-block" onclick="show_paso_uno({to:'#login'});"> Registrar</span>
+					<span class="btn btn-action btn-block" onclick="show_paso_uno({to:'#login'});" data-lang="register"></span>
 				</div>
 			</div>
 		</section>
@@ -122,42 +122,30 @@
 		</section>
 		<section id="registro" class="Page">
 			<div class="container Main">
-				<h2>Info General</h2>
+				<h2 data-lang="info_general"></h2>
 				<div>&nbsp;</div>
 				<form onsubmit="return form_paso_uno(this); return false;">
-					<input name="nombre" class="form-control required" placeholder="Nombre" />
-					<select name="genero" class="form-control required" placeholder="Genero">
-						<option value=""> Genero </option>
-						<option value="M"> Masculino </option>
-						<option value="F"> Femenino </option>
+					<input name="nombre" class="form-control required" />
+					<select name="genero" class="form-control required">
+						<option value="" data-lang="gender"></option>
+						<option value="M" data-lang="masculino"></option>
+						<option value="F" data-lang="femenino"></option>
 					</select>
-					<p>Edad (dd-mm-aaaa):</p>
+					<p data-lang="birth_date"></p>
 					<div class="row row3">
 						<div class="col">
-							<select name="edad_day" class="form-control required" placeholder="Edad día">
-								<option value="">Día</option>
+							<select name="edad_day" class="form-control required">
+								<option value=""></option>
 							</select>
 						</div>
 						<div class="col">
-							<select name="edad_month" class="form-control required" placeholder="Edad mes">
-								<option value="">Mes</option>
-								<option value="01"> Enero </option>
-								<option value="02"> Febrero </option>
-								<option value="03"> Marzo </option>
-								<option value="04"> Abril </option>
-								<option value="05"> Mayo </option>
-								<option value="06"> Junio </option>
-								<option value="07"> Julio </option>
-								<option value="08"> Agosto </option>
-								<option value="09"> Septiembre </option>
-								<option value="10"> Octubre </option>
-								<option value="11"> Noviembre </option>
-								<option value="12"> Diciembre </option>
+							<select name="edad_month" class="form-control required">
+								<option value=""></option>
 							</select>
 						</div>
 						<div class="col">
-							<select name="edad_year" class="form-control required" placeholder="Edad año">
-								<option value="">Año</option>
+							<select name="edad_year" class="form-control required">
+								<option value=""></option>
 							</select>
 						</div>
 					</div>
@@ -165,7 +153,7 @@
 					<div>&nbsp;</div>
 					<div>&nbsp;</div>
 					<div class="text-center">
-						<button id="BtnRegister" class="btn btn-action btn-block"> Siguiente </button>
+						<button id="BtnRegister" class="btn btn-action btn-block" data-lang="siguiente"></button>
 					</div>
 				</form>
 			</div>
@@ -187,7 +175,7 @@
 						</div>
 					</div>
 					<div class="config-item">
-						<select name="estatura" class="form-control required" placeholder="Estatura" onchange="unitsValue(this, '#textEstatura');">
+						<select name="estatura" class="form-control required" onchange="unitsValue(this, '#textEstatura');">
 							<option value=""></option>
 						</select>
 						<div class="row">
@@ -197,7 +185,7 @@
 						</div>
 					</div>
 					<div class="config-item">
-						<select name="peso" class="form-control required" placeholder="Estatura" onchange="unitsValue(this, '#textPeso');">
+						<select name="peso" class="form-control required" onchange="unitsValue(this, '#textPeso');">
 							<option value=""></option>
 						</select>
 						<div class="row">
