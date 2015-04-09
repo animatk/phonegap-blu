@@ -35,7 +35,7 @@
 		<section id="menu" class="Page toLeft">
 			<div class="menu-lateral">
 				<div class="container">
-					<span onclick="javascript:CerrarSesion();">Cerrar Sesión</span>
+					<span onclick="javascript:CerrarSesion();" data-lang="cerrar_sesion">Cerrar Sesión</span>
 				</div>
 			</div>
 			<div class="menu-back" onclick="$('#menu').removeClass('toCenter');"></div>
@@ -193,7 +193,7 @@
 						<div class="row">
 							<span class="col30 config-item-left" data-lang="estatura">Estatura</span>
 							<span id="textEstatura" class="col40 config-item-center">-</span>
-							<span class="col30 config-item-right">Mts</span>
+							<span id="symbolEstatura" class="col30 config-item-right">Mts</span>
 						</div>
 					</div>
 					<div class="config-item">
@@ -201,9 +201,9 @@
 							<option value=""> Select </option>
 						</select>
 						<div class="row">
-							<span class="col30 config-item-left" data-lang="Peso">Peso</span>
+							<span class="col30 config-item-left" data-lang="peso">Peso</span>
 							<span id="textPeso" class="col40 config-item-center">-</span>
-							<span class="col30 config-item-right">Kgs</span>
+							<span id="symbolPeso" class="col30 config-item-right">Kgs</span>
 						</div>
 					</div>
 					<div>&nbsp;</div>

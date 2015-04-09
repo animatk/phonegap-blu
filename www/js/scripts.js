@@ -878,6 +878,8 @@ function show_paso_dos(back, unid){
 		for(var i=22; i<401; i++){
 			Pes += '<option value="'+i+'">'+i+'</option>';
 		}
+		$('#symbolEstatura').text(language.ftin);
+		$('#symbolPeso').text(language.lbs);
 		$('#textUnids').text('Eng');
 	}else{
 		for(var i=120; i<245; i++){
@@ -887,6 +889,8 @@ function show_paso_dos(back, unid){
 		for(var i=22; i<181; i++){
 			Pes += '<option value="'+i+'">'+i+'</option>';
 		}
+		$('#symbolEstatura').text(language.mts);
+		$('#symbolPeso').text(language.kgs);
 		$('#textUnids').text('Mts');
 	}
 	$('#textEstatura').text('-');
@@ -895,6 +899,7 @@ function show_paso_dos(back, unid){
 	$('select[name=peso]').html(Pes);
 	
 	if(back != false){
+		setText({sec: '#registro-2'});
 		ak_navigate('#registro-2', back);
 	}
 }
