@@ -392,7 +392,7 @@ function isOnLine(){
 	return navigator.onLine;
 }
 /*! Onload Phonegap Event*/
-//document.addEventListener("deviceready", IniciarTodo, false);
+document.addEventListener("deviceready", IniciarTodo, false);
 function IniciarTodo(){
 	if(SES['actividad']){
 		pause(function(){
@@ -406,7 +406,7 @@ function IniciarTodo(){
 	}
 	geo();
 }
-//document.addEventListener('backbutton', function(e){}, false);
+document.addEventListener('backbutton', function(e){}, false);
 function worker(obj, fun){
 	if(sync == null){
 		sync = new Worker('js/sync.js');
