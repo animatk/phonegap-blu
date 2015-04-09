@@ -447,7 +447,6 @@ function getLang(show){
 	});
 }
 function setText(param){
-	
 	if(language == null){
 		getLang({exe: 'setText', params: param});
 	}else{
@@ -473,6 +472,12 @@ function setText(param){
 		
 		}
 	}
+}
+function unitsValue( sel, tar ){
+	var sel = $(sel),
+		tar = $(tar),
+		tex = (sel.val() == "")? '-': sel.find('option:selected').text();
+	tar.text(tex);
 }
 function inicio(from){
     var frm = (from!=undefined)? from : "";
@@ -865,8 +870,8 @@ function show_paso_dos(back, unid){
 
 	var und = unid || 'M';
 	
-	var Est = '<option value="" selected="selected"> Select </option>',
-		Pes = '<option value="" selected="selected"> Select </option>';
+	var Est = '<option value="" selected="selected"> '+language.estatura+' </option>',
+		Pes = '<option value="" selected="selected"> '+language.peso+' </option>';
 	
 	if(und == 'E'){
 		for(var i=4; i<8; i++){
@@ -895,19 +900,13 @@ function show_paso_dos(back, unid){
 	}
 	$('#textEstatura').text('-');
 	$('#textPeso').text('-');
-	$('select[name=estatura]').html(Est);
-	$('select[name=peso]').html(Pes);
+	$('select[name=estatura]').html(Est).attr('placeholder', language.estatura);
+	$('select[name=peso]').html(Pes).attr('placeholder', language.peso);
 	
 	if(back != false){
 		setText({sec: '#registro-2'});
 		ak_navigate('#registro-2', back);
 	}
-}
-function unitsValue( sel, tar ){
-	var sel = $(sel),
-		tar = $(tar),
-		tex = (sel.val() == "")? '-': sel.find('option:selected').text();
-	tar.text(tex);
 }
 function form_paso_dos(form){
 	ak_validate(form, {

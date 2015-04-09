@@ -172,44 +172,44 @@
 		</section>
 		<section id="registro-2" class="Page">
 			<div class="container Main">
-				<h2>Info Personal</h2>
+				<h2 data-lang="info_personal"></h2>
 				<div>&nbsp;</div>
 				<form onsubmit="return form_paso_dos(this); return false;">
 					<div class="config-item" onclick="$('select[name=unidad_medida]').trigger('click');">
 						<select name="unidad_medida" class="form-control required" onchange="show_paso_dos(false, this.value);" placeholder="Unidad de medida">
-							<option value="M" data-lang="metrico"> Metrico </option>
-							<option value="E" data-lang="ingles"> English </option>
+							<option value="M" data-lang="metrico"></option>
+							<option value="E" data-lang="ingles"></option>
 						</select>
 						<div class="row">
-							<span class="col30 config-item-left" data-lang="unidades">Unidades</span>
-							<span id="textUnids" class="col40 config-item-center">Mts.</span>
-							<span class="col30 config-item-right" data-lang="medicion">Medicion</span>
+							<span class="col30 config-item-left" data-lang="unidades"></span>
+							<span id="textUnids" class="col40 config-item-center"></span>
+							<span class="col30 config-item-right" data-lang="medicion"></span>
 						</div>
 					</div>
 					<div class="config-item">
 						<select name="estatura" class="form-control required" placeholder="Estatura" onchange="unitsValue(this, '#textEstatura');">
-							<option value=""> Select </option>
+							<option value=""></option>
 						</select>
 						<div class="row">
-							<span class="col30 config-item-left" data-lang="estatura">Estatura</span>
-							<span id="textEstatura" class="col40 config-item-center">-</span>
-							<span id="symbolEstatura" class="col30 config-item-right">Mts</span>
+							<span class="col30 config-item-left" data-lang="estatura"></span>
+							<span id="textEstatura" class="col40 config-item-center"></span>
+							<span id="symbolEstatura" class="col30 config-item-right"></span>
 						</div>
 					</div>
 					<div class="config-item">
 						<select name="peso" class="form-control required" placeholder="Estatura" onchange="unitsValue(this, '#textPeso');">
-							<option value=""> Select </option>
+							<option value=""></option>
 						</select>
 						<div class="row">
-							<span class="col30 config-item-left" data-lang="peso">Peso</span>
-							<span id="textPeso" class="col40 config-item-center">-</span>
-							<span id="symbolPeso" class="col30 config-item-right">Kgs</span>
+							<span class="col30 config-item-left" data-lang="peso"></span>
+							<span id="textPeso" class="col40 config-item-center"></span>
+							<span id="symbolPeso" class="col30 config-item-right"></span>
 						</div>
 					</div>
 					<div>&nbsp;</div>
 					<div>&nbsp;</div>
 					<div class="text-center">
-						<button id="BtnRegister" class="btn btn-action btn-block"> Siguiente </button>
+						<button id="BtnRegister" class="btn btn-action btn-block" data-lang="siguiente"></button>
 					</div>
 				</form>
 			</div>
