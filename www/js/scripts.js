@@ -434,31 +434,43 @@ function getLang(show){
 	if(key !== -1){
 		lang = langs[key];
 	}	
-	$.get('./js/lang_'+lang+'.json', function(resp){
+	$.get('js/lang_'+lang+'.json', function(resp){
 		language = JSON.parse(resp);
 		if(show.exe){
 			var func = window[show.exe];
-			func(language);
+			if(show.params){
+				func(show.params);
+			}else{
+				func();
+			}
 		}
 	});
 }
 function setText(param){
-	if(typeof param === 'string'){
-		if(language == null){
-			 getLang();
-		}else{
-			return language[param];
-		}
+	
+	if(language == null){
+		getLang({exe: 'setText', params: param});
 	}else{
-		var items = $('*[data-lang]'),
-			tot = items.length;
-		for(var i=0; i<tot; i++){
-			var it = $(items[i]),
-				con = it.attr('data-lang'),
-				t = language[con];
-				if(t != undefined){
-					it.html(t);
-				}
+		
+		if(typeof param === 'string'){
+			return language[param];
+		}else{
+			var par = param || {};
+			var sec = $('#menu, header');
+			if(par.sec){
+				sec = $(par.sec);
+			}
+			var items = sec.find('*[data-lang]'),
+				tot = items.length;
+			for(var i=0; i<tot; i++){
+				var it = $(items[i]),
+					con = it.attr('data-lang'),
+					t = language[con];
+					if(t != undefined){
+						it.html(t);
+					}
+			}
+		
 		}
 	}
 }
@@ -849,55 +861,48 @@ function form_paso_uno(form){
 	});
 	return false;
 }
-function show_paso_dos(back){
-	ak_navigate('#registro-2', back);
-	var eMts = '<option value=""> Select </option>',
-		fInc = '<option value=""> Select </option>',
-		kGm = '<option value=""> Select </option>',
-		lBs = '<option value=""> Select </option>';
-		
-	for(var i=120; i<245; i++){
-		
-		var inches = i*0.39370078740157,
-			feetInc = 0,
-			metros = (i/100);
-		feetInc = Math.floor(inches/12)+"' ";
-		inches = inches%12;
-		feetInc += inches.toFixed(0)+'"';
+function show_paso_dos(back, unid){
 
-		eMts += '<option value="'+metros+'"> '+metros+' </option>';
-		fInc += '<option value="'+metros+'"> '+feetInc+' </option>';
-	}
+	var und = unid || 'M';
 	
-	for(var i=22; i<181; i++){
-		var  libras = (i * 2.20462262).toFixed(1);
-		
-		kGm += '<option value="'+i+'">'+i+'</option>';
-		lBs += '<option value="'+i+'">'+libras+'</option>';
-	}
+	var Est = '<option value="" selected="selected"> Select </option>',
+		Pes = '<option value="" selected="selected"> Select </option>';
 	
-	$('select[name=estatura_mts]').html(eMts);
-	$('select[name=estatura_fee]').html(fInc);
-	$('select[name=peso_kgs]').html(kGm);
-	$('select[name=peso_lbs]').html(lBs);
-}
-function switchUnits(val){
-	if(val=='E'){
-		$('select[name=estatura_mts], select[name=peso_kgs]').addClass('oculto');
-		$('select[name=estatura_fee], select[name=peso_lbs]').removeClass('oculto');
+	if(und == 'E'){
+		for(var i=4; i<8; i++){
+			for(var k=0; k<12; k++){
+				var metros = ((((i*12)+k)*2.54)/100).toFixed(2);
+				Est += '<option value="'+metros+'"> '+i+'\' '+k+'" </option>';
+			}
+		}
+		for(var i=22; i<401; i++){
+			Pes += '<option value="'+i+'">'+i+'</option>';
+		}
 		$('#textUnids').text('Eng');
 	}else{
-		$('select[name=estatura_mts], select[name=peso_kgs]').removeClass('oculto');
-		$('select[name=estatura_fee], select[name=peso_lbs]').addClass('oculto');
+		for(var i=120; i<245; i++){
+			var metros = (i/100);
+			Est += '<option value="'+metros+'"> '+metros+' </option>';
+		}
+		for(var i=22; i<181; i++){
+			Pes += '<option value="'+i+'">'+i+'</option>';
+		}
 		$('#textUnids').text('Mts');
 	}
+	$('#textEstatura').text('-');
+	$('#textPeso').text('-');
+	$('select[name=estatura]').html(Est);
+	$('select[name=peso]').html(Pes);
+	
+	if(back != false){
+		ak_navigate('#registro-2', back);
+	}
 }
-function unitsValue(sel, tar1, tar2){
+function unitsValue( sel, tar ){
 	var sel = $(sel),
-		tar1 = $(tar1),
-		tar2 = $(tar2);
-	tar1.val(sel.val());
-	tar2.text(sel.find('option:selected').text());
+		tar = $(tar),
+		tex = (sel.val() == "")? '-': sel.find('option:selected').text();
+	tar.text(tex);
 }
 function form_paso_dos(form){
 	ak_validate(form, {

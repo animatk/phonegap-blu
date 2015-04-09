@@ -1,5 +1,12 @@
 {
     "title": "<img src='img/sforza.jpg' width='100%' />"
     ,"RegOnFb": "Conectar con Facebook"
+	,"cerrar_sesion": "Cerrar Sesión"
 	,"volver": "Volver"
+	,"metrico": "Metrico"
+	,"ingles": "Ingles"
+	,"unidades": "Unidades"
+	,"medicion": "Medicion"
+	,"estatura": "Estatura"
+	,"peso": "Peso"
 }
