@@ -175,12 +175,15 @@
 						</div>
 					</div>
 					<div class="config-item">
-						<select name="estatura" class="form-control required" onchange="unitsValue(this, '#textEstatura');">
+						<select name="estatura_uno" class="form-control config-input-1 required" onchange="unitsValue(this, '#textEstaturaUno');">
+							<option value=""></option>
+						</select>
+						<select name="estatura_dos" class="form-control config-input-2 required" onchange="unitsValue(this, '#textEstaturaDos');">
 							<option value=""></option>
 						</select>
 						<div class="row">
 							<span class="col30 config-item-left" data-lang="estatura"></span>
-							<span id="textEstatura" class="col40 config-item-center"></span>
+							<span class="col40 config-item-center"> <span id="textEstaturaUno"></span><span id="textEstaturaDos"></span></span>
 							<span id="symbolEstatura" class="col30 config-item-right"></span>
 						</div>
 					</div>

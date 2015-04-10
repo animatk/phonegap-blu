@@ -882,15 +882,18 @@ function form_paso_uno(form){
 }
 function show_paso_dos(back, unid){
 	var und = unid || 'M';
-	var Est = '<option value="" selected="selected"> '+language.estatura+' </option>',
+	var Est1 = '<option value="" selected="selected"> '+language.estatura+' </option>',
+		Est2 = '<option value="" selected="selected"> '+language.estatura+' </option>',
 		Pes = '<option value="" selected="selected"> '+language.peso+' </option>';
 	
 	if(und == 'E'){
+		//var metros = ((((i*12)+k)*2.54)/100).toFixed(2);
+		
 		for(var i=4; i<8; i++){
-			for(var k=0; k<12; k++){
-				var metros = ((((i*12)+k)*2.54)/100).toFixed(2);
-				Est += '<option value="'+metros+'"> '+i+'\' '+k+'" </option>';
-			}
+			Est1 += '<option value="'+i+'"> '+i+'\' </option>';
+		}
+		for(var k=0; k<12; k++){
+			Est2 += '<option value="'+k+'"> '+k+'" </option>';
 		}
 		for(var i=22; i<401; i++){
 			Pes += '<option value="'+i+'">'+i+'</option>';
@@ -899,9 +902,11 @@ function show_paso_dos(back, unid){
 		$('#symbolPeso').text(language.lbs);
 		$('#textUnids').text(language.eng);
 	}else{
-		for(var i=120; i<245; i++){
-			var metros = (i/100);
-			Est += '<option value="'+metros+'"> '+metros+' </option>';
+		for(var i=1; i<3; i++){
+			Est1 += '<option value="'+i+'">'+i+'.</option>';
+		}
+		for(var i=1; i<100; i++){
+			Est2 += '<option value="'+checkTime(i)+'">'+checkTime(i)+'</option>';
 		}
 		for(var i=22; i<181; i++){
 			Pes += '<option value="'+i+'">'+i+'</option>';
@@ -910,9 +915,11 @@ function show_paso_dos(back, unid){
 		$('#symbolPeso').text(language.kgs);
 		$('#textUnids').text('Mts');
 	}
-	$('#textEstatura').text('-');
-	$('#textPeso').text('-');
-	$('select[name=estatura]').html(Est).attr('placeholder', language.estatura);
+	$('#textEstaturaUno').text('0');
+	$('#textEstaturaDos').text('0');
+	$('#textPeso').text('0');
+	$('select[name=estatura_uno]').html(Est1).attr('placeholder', language.estatura);
+	$('select[name=estatura_dos]').html(Est2).attr('placeholder', language.estatura);
 	$('select[name=peso]').html(Pes).attr('placeholder', language.peso);
 	
 	ak_navigate('#registro-2', back);

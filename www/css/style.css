@@ -551,6 +551,14 @@ textarea.form-control{
 	opacity: 0;
 	position: absolute;
 }
+.config-item .form-control.config-input-1,
+.config-item .form-control.config-input-2{
+	width: 50%;
+}
+.config-item .form-control.config-input-2{
+	right: 0;
+	left: initial;
+}
 .config-item input.form-control{
 	height: 0px;
 }
