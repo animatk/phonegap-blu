@@ -459,6 +459,22 @@ textarea.form-control{
 	resize: vertical;
 }
 
+input[type='range'] {
+	-webkit-appearance: none;
+	border-radius: 5px;
+	background-color: #5de252;
+	width: 100%;
+	height: 5px;
+	vertical-align: middle;
+}
+input[type='range']::-webkit-slider-thumb {
+	-webkit-appearance: none !important;
+	border-radius: 20px;
+	background-color: #FFF;
+	height: 30px;
+	width: 30px;
+}
+
 /* ak-tooltip */
 .ak-tooltip{
 	position: absolute;

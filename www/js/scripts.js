@@ -540,7 +540,7 @@ function iniciar(from){
 		}
 	}else if( SES['perfil'] ){
 		if( SES['info_basica'] ){
-			ak_navigate('#registro-3');
+			show_paso_tres();
 		}else{
 			show_paso_dos();
 		}
@@ -881,12 +881,16 @@ function form_paso_uno(form){
 	return false;
 }
 function show_paso_dos(back, unid){
-	var und = unid || 'M';
-	var Est1 = '<option value="" selected="selected"> '+language.estatura+' </option>',
-		Est2 = '<option value="" selected="selected"> '+language.estatura+' </option>',
-		Pes = '<option value="" selected="selected"> '+language.peso+' </option>';
+	var und = unid || 'M',
+		Est1 = '<option value="" selected="selected">'+language.estatura+' '+language.mts+'</option>',
+		Est2 = '<option value="00" selected="selected">'+language.estatura+' '+language.centimetros+'</option>',
+		Pes = '<option value="" selected="selected">'+language.peso+' '+language.kgs+'</option>';
 	
 	if(und == 'E'){
+		//
+		Est1 = '<option value="" selected="selected"> '+language.estatura+' '+language.feet+'</option>',
+		Est2 = '<option value="00" selected="selected"> '+language.estatura+' '+language.inches+'</option>',
+		Pes = '<option value="" selected="selected"> '+language.peso+' '+language.lbs+'</option>';
 		//var metros = ((((i*12)+k)*2.54)/100).toFixed(2);
 		
 		for(var i=4; i<8; i++){
@@ -901,11 +905,13 @@ function show_paso_dos(back, unid){
 		$('#symbolEstatura').text(language.ftin);
 		$('#symbolPeso').text(language.lbs);
 		$('#textUnids').text(language.eng);
+		$('#textEstaturaUno').text("0' ");
+		$('#textEstaturaDos').text('0"');
 	}else{
 		for(var i=1; i<3; i++){
 			Est1 += '<option value="'+i+'">'+i+'.</option>';
 		}
-		for(var i=1; i<100; i++){
+		for(var i=0; i<100; i++){
 			Est2 += '<option value="'+checkTime(i)+'">'+checkTime(i)+'</option>';
 		}
 		for(var i=22; i<181; i++){
@@ -914,9 +920,9 @@ function show_paso_dos(back, unid){
 		$('#symbolEstatura').text(language.mts);
 		$('#symbolPeso').text(language.kgs);
 		$('#textUnids').text('Mts');
+		$('#textEstaturaUno').text('0.');
+		$('#textEstaturaDos').text('0');
 	}
-	$('#textEstaturaUno').text('0');
-	$('#textEstaturaDos').text('0');
 	$('#textPeso').text('0');
 	$('select[name=estatura_uno]').html(Est1).attr('placeholder', language.estatura);
 	$('select[name=estatura_dos]').html(Est2).attr('placeholder', language.estatura);
@@ -928,18 +934,34 @@ function form_paso_dos(form){
 	ak_validate(form, {
 		ajax: false
 		,func: function(data){
-			var udata = {};
+			var udata = {},
+				estat = 0,
+				estatura_uno = parseInt(data.estatura_uno),
+				estatura_dos = parseInt(data.estatura_dos);
+			
 			if(SES['perfil']){
 				udata = JSON.parse(SES['perfil']);
 			}
-			udata.height = data.estatura;
+			if(data.unidad_medida == "E"){
+				estat = ((((estatura_uno*12)+estatura_dos)*2.54)/100).toFixed(2);
+			}else{
+				estat = estatura_uno + (estatura_dos/100);
+			}
+			udata.height = estat;
 			udata.weight = data.peso;
 			udata.unit = data.unidad_medida;
-			
+			SES['perfil'] = JSON.stringify(udata);
+			SES['info_basica'] = true;
+			show_paso_tres();
 			$('#cortina').remove();
 		}
 	});
 	return false;
+}
+function show_paso_tres(back){
+	$('input[name=correo]').attr('placeholder', language.correo);
+	$('input[name=contrasena]').attr('placeholder', language.contrasena);
+	ak_navigate('#registro-3', back);
 }
 function register(form){
 	ak_validate( 

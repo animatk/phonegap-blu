@@ -44,7 +44,12 @@
 	,"estatura": "Estatura"
 	,"peso": "Peso"
 	,"ftin": "Pies Pulg."
+	,"feet": "Pies"
+	,"inches": "Pulgadas"
 	,"lbs": "Libras"
 	,"mts": "Mts."
+	,"centimetros": "Centimetros"
 	,"kgs": "Kgs."
+	,"info_acces": "Info de Acceso"
+	,"finalizar": "Finalizar"
 }

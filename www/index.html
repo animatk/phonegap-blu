@@ -207,11 +207,12 @@
 		</section>
 		<section id="registro-3" class="Page">
 			<div class="container Main">
-				<h2>Info de Acceso</h2>
+				<h2 data-lang="info_acces"></h2>
 				<div>&nbsp;</div>
-				<form onsubmit="return register(this); return false;">			
-					<input name="correo" class="form-control required email" placeholder="Correo Electrónico" />
-					<input name="contrasena" type="password" class="form-control required" placeholder="Contraseña" />
+				<form onsubmit="return form_paso_tres(this); return false;">			
+					<input name="correo" class="form-control required email" />
+					<input name="contrasena" type="password" class="form-control required"/>
+					<input name="calibrador" type="range" min="0" max="30" value="6" step="1" />
 					<!--div>&nbsp;</div>
 					<div>
 						<input name="recibir" type="checkbox" value="" onchange="var i=this; if(i.value==''){i.value='SI';}else{i.value='';}" placeholder="Recibir info vía email" />
@@ -221,10 +222,11 @@
 					<div>
 						<input name="terminos" type="checkbox" value="" onchange="var i=this; if(i.value==''){i.value='SI';}else{i.value='';}" class="required" placeholder="Terminos" />
 						Acepto terminos y condiciones
-					</div>
-					<div>&nbsp;</div-->
+					</div-->
+					<div>&nbsp;</div>
+					<div>&nbsp;</div>
 					<div class="text-center">
-						<button id="BtnRegister" class="btn btn-action btn-block"> Finalizar </button>
+						<button id="BtnRegister" class="btn btn-action btn-block" data-lang="finalizar"></button>
 					</div>
 				</form>
 			</div>
