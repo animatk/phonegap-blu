@@ -93,13 +93,10 @@
 				<form onsubmit="return login(this); return false;">
 					<input name="correo" class="form-control required email" />
 					<input name="contrasena" type="password" class="form-control required" />
-					<div class="row row2">
-						<div class="col">
-							<span onclick="botonRestore();" data-lang="olvide_contrasena"></span>
-						</div>
-						<div class="col text-right">
-							<button id="BtnLogin" class="btn btn-action" data-lang="login"></button>
-						</div>
+					<span onclick="botonRestore();" data-lang="olvide_contrasena"></span>
+					<div>&nbsp;</div>
+					<div class="text-center">
+						<button id="BtnLogin" class="btn btn-action btn-block" data-lang="login"></button>
 					</div>
 				</form>
 				<div>&nbsp;</div>
@@ -212,7 +209,7 @@
 				<form onsubmit="return form_paso_tres(this); return false;">			
 					<input name="correo" class="form-control required email" />
 					<input name="contrasena" type="password" class="form-control required"/>
-					<input name="calibrador" type="range" min="0" max="30" value="6" step="1" />
+					<!--input name="calibrador" type="range" min="0" max="30" value="6" step="1" /-->
 					<!--div>&nbsp;</div>
 					<div>
 						<input name="recibir" type="checkbox" value="" onchange="var i=this; if(i.value==''){i.value='SI';}else{i.value='';}" placeholder="Recibir info vía email" />
@@ -226,7 +223,7 @@
 					<div>&nbsp;</div>
 					<div>&nbsp;</div>
 					<div class="text-center">
-						<button id="BtnRegister" class="btn btn-action btn-block" data-lang="finalizar"></button>
+						<button id="BtnRegister3" class="btn btn-action btn-block" data-lang="finalizar"></button>
 					</div>
 				</form>
 			</div>

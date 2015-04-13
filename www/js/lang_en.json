@@ -52,4 +52,7 @@
 	,"kgs": "Kgs."
 	,"info_acces": "Acces Info"
 	,"finalizar": "Finish"
+	,"reg_error": "Error, we can't register your user data, try it later."
+	,"reg_errfb": "We can't obtain your information from Facebook. try it later."
+	,"reg_nonet": "You don't have internet connection, try it later."
 }

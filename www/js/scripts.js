@@ -693,11 +693,18 @@ function post(url, data, callback) {
 		,success: function(data){
 			callback(data);
 		}
+		,error: function(xhr, errorType, error){
+			alert(language.reg_nonet+' : '+errorType);
+		}
 	});
 }
 /*! login */
 function fbLogin(){
 	//
+	if(!isOnLine()){
+		alert(language.reg_nonet);
+		return false;
+	}
 	openFB.init({appId: '833553210051226'});
 	openFB.login(
 	function(response) {
@@ -706,7 +713,7 @@ function fbLogin(){
 			jsonp('https://graph.facebook.com/v2.3/me?access_token='+accessToken+'&fields=id%2Cname%2Cemail%2Cbirthday%2Cgender&format=json&method=get&pretty=0&suppress_http_code=1'
 			,function(resp){
 				if(resp.error != undefined){
-					alert('Error al usar su informacion desde facebook, intentelo nuevamente.');
+					alert(language.reg_errfb);
 				}else{
 					var data = {},
 						bdate = resp.birthday.split("/");
@@ -962,6 +969,63 @@ function show_paso_tres(back){
 	$('input[name=correo]').attr('placeholder', language.correo);
 	$('input[name=contrasena]').attr('placeholder', language.contrasena);
 	ak_navigate('#registro-3', back);
+}
+function form_paso_tres(form){
+	ak_validate(form, {
+		ajax: false
+		,func: function(data){
+			var udata = {},
+				sdata = {};
+				
+			if(SES['perfil']){
+				udata = JSON.parse(SES['perfil']);
+			}
+			var bdate = udata.birthdate.split("-");
+			
+			sdata.genero = udata.gender;
+			sdata.nombre = udata.name;
+			sdata.edad_day = bdate[2];
+			sdata.edad_month = bdate[1];
+			sdata.edad_year = bdate[0];
+			sdata.estatura = udata.height;
+			sdata.peso = udata.weight;
+			sdata.correo = data.correo;
+			sdata.contrasena = data.contrasena;
+			sdata.terminos = 'SI';
+			sdata.unit = udata.unit;
+			//
+			if(isOnLine()){
+				post(SITE+'main/fbregister', sdata, function(obj){
+					SES['chain'] = obj.chain;
+					SES['perfil'] = JSON.stringify(udata);
+					if(udata.height == undefined 
+						|| udata.weight == undefined ){
+						SES.removeItem('info_basica');
+					}
+					iniciar();
+				});
+			}else{
+				alert(language.reg_nonet);
+			/*	var chain = 'temp-'+Math.floor(Date.now() / 1000);
+				webdb.executeSql('CREATE TABLE IF NOT EXISTS tmp_users (ID INTEGER PRIMARY KEY ASC, email TEXT,  pass TEXT, chain TEXT, json TEXT)', [],
+					function(tx, r){},
+					function(tx, e){});
+				webdb.executeSql('INSERT INTO tmp_users (email, pass, chain, json) VALUES (?,?,?,?)', 
+					[ data.correo, data.contrasena, chain, JSON.stringify(sdata)],
+					function(tx, r){
+						SES['chain'] = chain;
+						SES['perfil'] = JSON.stringify(udata);
+						iniciar();
+					},
+					function(tx, e){
+						alert(language.reg_error);
+					});
+			*/
+			}
+			$('#cortina').remove();
+		}
+	});
+	return false;
 }
 function register(form){
 	ak_validate( 

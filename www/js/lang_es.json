@@ -52,4 +52,7 @@
 	,"kgs": "Kgs."
 	,"info_acces": "Info de Acceso"
 	,"finalizar": "Finalizar"
+	,"reg_error": "Error al registrar sus datos, intentlo nuevamente."
+	,"reg_errfb": "Error al usar su información desde facebook, intentelo nuevamente."
+	,"reg_nonet": "No tiene conexion a internet, intentelo mas tarde."
 }
