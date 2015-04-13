@@ -739,11 +739,10 @@ function fbLogin(){
 									udata.name = data.nombre;
 									udata.terms = data.terminos;
 									udata.birthdate = data.edad_year+'-'+data.edad_month+'-'+data.edad_day;
-									if(obj.udata.length > 0){
-										udata.unit = (obj.udata.unit)? obj.udata.unit : undefined;
-										udata.height = (obj.udata.height)? obj.udata.height : undefined;
-										udata.weight = (obj.udata.weight)? obj.udata.weight : undefined;
-									}
+									//
+									udata.unit = (obj.udata.unit != null)? obj.udata.unit : undefined;
+									udata.height = (obj.udata.height != null)? obj.udata.height : undefined;
+									udata.weight = (obj.udata.weight  != null)? obj.udata.weight : undefined;
 									udata.fbid = resp.id;
 									udata.fbtoken = accessToken;
 									
