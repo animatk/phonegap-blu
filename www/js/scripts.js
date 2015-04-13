@@ -694,7 +694,7 @@ function post(url, data, callback) {
 			callback(data);
 		}
 		,error: function(xhr, errorType, error){
-			alert(language.reg_nonet+' : '+errorType);
+			callback({success: false, message: language.reg_nonet+' : '+errorType});
 		}
 	});
 }
@@ -732,9 +732,6 @@ function fbLogin(){
 									alert(obj.message);
 								}else{
 									var udata = {};
-									if(SES['perfil']){
-										udata = JSON.parse(SES['perfil']);
-									}
 									
 									udata.fbid = resp.id;
 									udata.fbtoken = accessToken;
@@ -742,6 +739,12 @@ function fbLogin(){
 									udata.name = data.nombre;
 									udata.terms = data.terminos;
 									udata.birthdate = data.edad_year+'-'+data.edad_month+'-'+data.edad_day;
+									
+									if(obj.udata.length > 0){
+										udata.unit = (obj.udata.unit)? obj.udata.unit : undefined;
+										udata.height = (obj.udata.height)? obj.udata.height : undefined;
+										udata.weight = (obj.udata.weight)? obj.udata.weight : undefined;
+									}
 									
 									SES['chain'] = obj.chain;
 									SES['perfil'] = JSON.stringify(udata);
@@ -781,10 +784,13 @@ function login(form){
 					var udata = {
 						gender : obj.gender
 						,name : obj.name
+						,unit : obj.unit
 						,height : obj.height
 						,weight : obj.weight
 						,terms : obj.terms
 						,birthdate : obj.birthdate
+						,fbid : obj.fb_id
+						,fbtoken : obj.fb_token
 					};
 					
 					SES['chain'] = obj.chain;
@@ -801,9 +807,8 @@ function login(form){
 						,fn: 'inicio(); $(\'#btnMenu\').removeClass(\'oculto\')'
 					});
 				}
-				
+				cortina.remove();
 			});
-			cortina.remove();
 		}
 	});
 	return false;
@@ -1025,45 +1030,6 @@ function form_paso_tres(form){
 			$('#cortina').remove();
 		}
 	});
-	return false;
-}
-function register(form){
-	ak_validate( 
-		form, 
-		{ bt: '#BtnRegister'
-			, ajax: false
-			, func: function(data){
-				var cortina = $('#cortina');
-				post(SITE+'main/register', data, function(obj){
-					if(obj.success === false){
-						alert(obj.message);
-					}else{
-						//
-						var udata = {
-							gender : data.genero
-							,name : data.nombre
-							,height : data.estatura
-							,weight : data.peso
-							,terms : data.terminos
-							,birthdate : data.edad_year+'-'+data.edad_month+'-'+data.edad_day
-						};
-						
-						SES['chain'] = obj.chain;
-						SES['perfil'] = JSON.stringify(udata);
-						SES['info_basica'] = true;
-						
-						ak_navigate('#registro', '#config');
-						$('#btnMenu').addClass('oculto');
-						btnIzq({
-							text: 'Cancelar'
-							,from: '#config'
-							,to: '#inicio'
-							,fx: 'toRight'
-							,fn: 'inicio(); $(\'#btnMenu\').removeClass(\'oculto\')'
-						});
-					}
-					cortina.remove();
-				});}});
 	return false;
 }
 /*! end register */
