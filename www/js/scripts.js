@@ -704,61 +704,62 @@ function fbLogin(){
 	if(!isOnLine()){
 		alert(language.reg_nonet);
 		return false;
+	}else{
+		openFB.init({appId: '833553210051226'});
+		openFB.login(
+		function(response) {
+			if(response.status === 'connected') {
+				var accessToken = response.authResponse.token;
+				jsonp('https://graph.facebook.com/v2.3/me?access_token='+accessToken+'&fields=id%2Cname%2Cemail%2Cbirthday%2Cgender&format=json&method=get&pretty=0&suppress_http_code=1'
+				,function(resp){
+					if(resp.error != undefined){
+						alert(language.reg_errfb);
+					}else{
+						var data = {},
+							bdate = resp.birthday.split("/");
+							data.genero = (resp.gender == 'male')? 'M': 'F';
+							data.nombre = resp.name;
+							data.edad_day = bdate[1];
+							data.edad_month = bdate[0];
+							data.edad_year = bdate[2];
+							data.correo = resp.email;
+							data.fb_id = resp.id;
+							data.fb_token = accessToken;
+							data.terminos = 'SI';
+							
+							post(SITE+'main/fbregister', data, function(obj){
+								if(obj.success === false){
+									alert(obj.message);
+								}else{
+									var udata = {};
+									if(SES['perfil']){
+										udata = JSON.parse(SES['perfil']);
+									}
+									
+									udata.fbid = resp.id;
+									udata.fbtoken = accessToken;
+									udata.gender = data.genero;
+									udata.name = data.nombre;
+									udata.terms = data.terminos;
+									udata.birthdate = data.edad_year+'-'+data.edad_month+'-'+data.edad_day;
+									
+									SES['chain'] = obj.chain;
+									SES['perfil'] = JSON.stringify(udata);
+									if(udata.height == undefined 
+										|| udata.weight == undefined ){
+										SES.removeItem('info_basica');
+									}
+									
+									iniciar();
+								}
+							});
+					}
+				});
+			} else {
+				alert('Error al conectar con facebook, intentelo nuevamente.');
+			}
+		}, {scope: 'email,user_birthday'});
 	}
-	openFB.init({appId: '833553210051226'});
-	openFB.login(
-	function(response) {
-		if(response.status === 'connected') {
-			var accessToken = response.authResponse.token;
-			jsonp('https://graph.facebook.com/v2.3/me?access_token='+accessToken+'&fields=id%2Cname%2Cemail%2Cbirthday%2Cgender&format=json&method=get&pretty=0&suppress_http_code=1'
-			,function(resp){
-				if(resp.error != undefined){
-					alert(language.reg_errfb);
-				}else{
-					var data = {},
-						bdate = resp.birthday.split("/");
-						data.genero = (resp.gender == 'male')? 'M': 'F';
-						data.nombre = resp.name;
-						data.edad_day = bdate[1];
-						data.edad_month = bdate[0];
-						data.edad_year = bdate[2];
-						data.correo = resp.email;
-						data.fb_id = resp.id;
-						data.fb_token = accessToken;
-						data.terminos = 'SI';
-						
-						post(SITE+'main/fbregister', data, function(obj){
-							if(obj.success === false){
-								alert(obj.message);
-							}else{
-								var udata = {};
-								if(SES['perfil']){
-									udata = JSON.parse(SES['perfil']);
-								}
-								
-								udata.fbid = resp.id;
-								udata.fbtoken = accessToken;
-								udata.gender = data.genero;
-								udata.name = data.nombre;
-								udata.terms = data.terminos;
-								udata.birthdate = data.edad_year+'-'+data.edad_month+'-'+data.edad_day;
-								
-								SES['chain'] = obj.chain;
-								SES['perfil'] = JSON.stringify(udata);
-								if(udata.height == undefined 
-									|| udata.weight == undefined ){
-									SES.removeItem('info_basica');
-								}
-								
-								iniciar();
-							}
-						});
-				}
-			});
-		} else {
-			alert('Error al conectar con facebook, intentelo nuevamente.');
-		}
-	}, {scope: 'email,user_birthday'});
 }
 function show_login(back){
 	$('input[name=correo]').attr('placeholder', language.correo);
@@ -801,9 +802,8 @@ function login(form){
 					});
 				}
 				
-				cortina.remove();
 			});
-			
+			cortina.remove();
 		}
 	});
 	return false;
