@@ -701,7 +701,7 @@ function post(url, data, callback) {
 /*! login */
 function fbLogin(){
 	//
-	if(!isOnLine()){
+	if(isOnLine() === false){
 		alert(language.reg_nonet);
 		return false;
 	}else{
@@ -733,18 +733,19 @@ function fbLogin(){
 								}else{
 									var udata = {};
 									
-									udata.fbid = resp.id;
-									udata.fbtoken = accessToken;
+									mensaje(JSON.stringify(obj));
+									
 									udata.gender = data.genero;
 									udata.name = data.nombre;
 									udata.terms = data.terminos;
 									udata.birthdate = data.edad_year+'-'+data.edad_month+'-'+data.edad_day;
-									
 									if(obj.udata.length > 0){
 										udata.unit = (obj.udata.unit)? obj.udata.unit : undefined;
 										udata.height = (obj.udata.height)? obj.udata.height : undefined;
 										udata.weight = (obj.udata.weight)? obj.udata.weight : undefined;
 									}
+									udata.fbid = resp.id;
+									udata.fbtoken = accessToken;
 									
 									SES['chain'] = obj.chain;
 									SES['perfil'] = JSON.stringify(udata);
