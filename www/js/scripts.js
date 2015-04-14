@@ -392,14 +392,17 @@ function isOnLine(){
 	return navigator.onLine;
 }
 /*! Onload Phonegap Event*/
-document.addEventListener("deviceready", IniciarTodo, false);
-function IniciarTodo(){
+document.addEventListener("deviceready", DeviceReady, false);
+function DeviceReady(){
+	if(isDevice() != 'Android'){
+		$('body').addClass('ios-device');
+	}
 	if(SES['actividad']){
 		pause(function(){
 			principal('#inicio');
 		});
 	}else{
-		iniciar('inicio');
+		iniciar();
 	}
 	if(isOnLine() && SES['chain']){
 		worker({fun: 'sincronizar', url: SITE, chain: SES['chain'] }, function(data){ mensaje(data) });
@@ -420,12 +423,23 @@ function worker(obj, fun){
 		sync.postMessage(JSON.stringify(obj)); 
 	}
 }
-$(function(){
-	if(isDevice() != 'Android'){
-		$('body').addClass('ios-device');
+function iniciar(){
+	if( SES['chain'] ){
+		if( SES['info_basica'] ){
+			inicio();
+		}else{
+			show_paso_dos();
+		}
+	}else if( SES['perfil'] ){
+		if( SES['info_basica'] ){
+			show_paso_tres();
+		}else{
+			show_paso_dos();
+		}
+	}else{
+		show_login();
 	}
-	getLang({exe: 'setText'});
-});
+}
 function getLang(show){
 	var lang_detect = show.lang || navigator.language.substring(0,2).toLowerCase(),
 		key = langs.indexOf(lang_detect);
@@ -478,8 +492,7 @@ function unitsValue( sel, tar ){
 	tar.text(tex);
 }
 function inicio(from){
-    var frm = (from!=undefined)? from : "";
-    ak_navigate( frm , '#inicio');
+    ak_navigate('#inicio');
     //queris para determinar valores
     webdb.executeSql('SELECT * FROM actividad WHERE chain = ?', [SES['chain']],
 		function(tx, r){
@@ -517,36 +530,6 @@ function inicio(from){
 		},
 		function(tx, e){});
     
-}
-function iniciar(from){
-	if( SES['chain'] ){
-		if( SES['info_basica'] ){
-			if( from != undefined ){
-				ak_navigate(from, '#config');
-				$('#btnMenu').addClass('oculto');
-				btnIzq({
-					text: 'Cancelar'	
-					,from: '#config'	
-					,to: '#inicio'	
-					,fx: 'toRight'	
-					,fn: 'inicio(); $(\'#btnMenu\').removeClass(\'oculto\')'
-				});
-			}else{
-				inicio();
-			}
-		}else{
-			ak_navigate('#inicio', '#perfil');
-			perfil();
-		}
-	}else if( SES['perfil'] ){
-		if( SES['info_basica'] ){
-			show_paso_tres();
-		}else{
-			show_paso_dos();
-		}
-	}else{
-		show_login();
-	}
 }
 /*
 loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyAihfNS3dpn6vB16RXRREYAy9jXEf63yUE&callback=initialize', function(){
@@ -617,9 +600,7 @@ function initialize() {
  
 */
 function ak_navigate(to, back){
-	
 	setText({sec: to});
-	
 	if(to == '#login'){
 		$('header').addClass('noshow');
 	}else{
@@ -732,9 +713,7 @@ function fbLogin(){
 									alert(obj.message);
 								}else{
 									var udata = {};
-									
 									mensaje(JSON.stringify(obj));
-									
 									udata.gender = data.genero;
 									udata.name = data.nombre;
 									udata.terms = data.terminos;
@@ -748,6 +727,7 @@ function fbLogin(){
 									
 									SES['chain'] = obj.chain;
 									SES['perfil'] = JSON.stringify(udata);
+									SES['info_basica'] = true;
 									if(udata.height == undefined 
 										|| udata.weight == undefined ){
 										SES.removeItem('info_basica');
@@ -785,27 +765,25 @@ function login(form){
 						gender : obj.gender
 						,name : obj.name
 						,unit : obj.unit
-						,height : obj.height
-						,weight : obj.weight
 						,terms : obj.terms
 						,birthdate : obj.birthdate
 						,fbid : obj.fb_id
 						,fbtoken : obj.fb_token
 					};
+
+					udata.height = (obj.height != null)? obj.height : undefined;
+					udata.weight = (obj.weight  != null)? obj.weight : undefined;
 					
 					SES['chain'] = obj.chain;
 					SES['perfil'] = JSON.stringify(udata);
 					SES['info_basica'] = true;
 					
-					ak_navigate('#login', '#config');
-					$('#btnMenu').addClass('oculto');
-					btnIzq({
-						text: 'Cancelar'	
-						,from: '#config'	
-						,to: '#inicio'	
-						,fx: 'toRight'	
-						,fn: 'inicio(); $(\'#btnMenu\').removeClass(\'oculto\')'
-					});
+					if(udata.height == undefined 
+						|| udata.weight == undefined ){
+						SES.removeItem('info_basica');
+					}
+					
+					iniciar();
 				}
 				cortina.remove();
 			});
@@ -1000,14 +978,22 @@ function form_paso_tres(form){
 			sdata.unit = udata.unit;
 			//
 			if(isOnLine()){
-				post(SITE+'main/fbregister', sdata, function(obj){
-					SES['chain'] = obj.chain;
-					SES['perfil'] = JSON.stringify(udata);
-					if(udata.height == undefined 
-						|| udata.weight == undefined ){
-						SES.removeItem('info_basica');
+				var chain = "";
+				if(SES['chain']){
+					chain = SES['chain']; 
+				}
+				post(SITE+'main/fbregister/'+chain, sdata, function(obj){
+					if(obj.success === false){
+						alert(language.err[obj.message]);
+					}else{	
+						SES['chain'] = obj.chain;
+						SES['perfil'] = JSON.stringify(udata);
+						if(udata.height == undefined 
+							|| udata.weight == undefined ){
+							SES.removeItem('info_basica');
+						}
+						iniciar();
 					}
-					iniciar();
 				});
 			}else{
 				alert(language.reg_nonet);

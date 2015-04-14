@@ -55,4 +55,7 @@
 	,"reg_error": "Error, we can't register your user data, try it later."
 	,"reg_errfb": "We can't obtain your information from Facebook. try it later."
 	,"reg_nonet": "You don't have internet connection, try it later."
+	,"err": {
+		"key_required": "El correo electronico ya esta en la base de datos, use olvide mi contraseña para poder acceder."
+	}
 }
