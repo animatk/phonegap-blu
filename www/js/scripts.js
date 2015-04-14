@@ -42,6 +42,9 @@ var SES = window.localStorage,
 	BG = null, //plugir background mode.StopAcc
 	StopAcc = true, //detener accelerometro
 	SITE = 'https://irisdev.co/siluet_app/index.php/';
+	
+	getLang({exe: 'setText'});
+	
 /*! SQL LITE */
 var webdb = {};
 webdb.db = null;
@@ -397,6 +400,7 @@ function DeviceReady(){
 	if(isDevice() != 'Android'){
 		$('body').addClass('ios-device');
 	}
+
 	if(SES['actividad']){
 		pause(function(){
 			principal('#inicio');
@@ -682,7 +686,7 @@ function post(url, data, callback) {
 /*! login */
 function fbLogin(){
 	//
-	if(isOnLine() === false){
+	if(false === isOnLine()){
 		alert(language.reg_nonet);
 		return false;
 	}else{
@@ -708,9 +712,9 @@ function fbLogin(){
 							data.fb_token = accessToken;
 							data.terminos = 'SI';
 							
-							post(SITE+'main/fbregister', data, function(obj){
+							post(SITE+'main/register', data, function(obj){
 								if(obj.success === false){
-									alert(obj.message);
+									alert(language.err[obj.message]);
 								}else{
 									var udata = {};
 									mensaje(JSON.stringify(obj));
@@ -982,7 +986,7 @@ function form_paso_tres(form){
 				if(SES['chain']){
 					chain = SES['chain']; 
 				}
-				post(SITE+'main/fbregister/'+chain, sdata, function(obj){
+				post(SITE+'main/register/'+chain, sdata, function(obj){
 					if(obj.success === false){
 						alert(language.err[obj.message]);
 					}else{	
