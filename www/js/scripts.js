@@ -392,7 +392,7 @@ function isDevice(){
 													) == "Android" ? "Android" : false;
 }
 function isOnLine(){
-	return navigator.onLine;
+	return navigator.connection.type;
 }
 /*! Onload Phonegap Event*/
 document.addEventListener("deviceready", DeviceReady, false);
@@ -408,7 +408,7 @@ function DeviceReady(){
 	}else{
 		iniciar();
 	}
-	if(isOnLine() && SES['chain']){
+	if(isOnLine() != 'none' && SES['chain']){
 		worker({fun: 'sincronizar', url: SITE, chain: SES['chain'] }, function(data){ mensaje(data) });
 	}
 	geo();
@@ -686,7 +686,7 @@ function post(url, data, callback) {
 /*! login */
 function fbLogin(){
 	//
-	if(false === isOnLine()){
+	if(isOnLine() == 'none'){
 		alert(language.reg_nonet);
 		return false;
 	}else{
@@ -981,7 +981,7 @@ function form_paso_tres(form){
 			sdata.terminos = 'SI';
 			sdata.unit = udata.unit;
 			//
-			if(isOnLine()){
+			if(isOnLine() != 'none'){
 				var chain = "";
 				if(SES['chain']){
 					chain = SES['chain']; 
@@ -1441,7 +1441,7 @@ function loadMapa(){
 		
 		MAP.setCenter(latlng);
 	}else{
-		if(isOnLine() && MAP == null){
+		if(isOnLine() != 'none' && MAP == null){
 			loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyAihfNS3dpn6vB16RXRREYAy9jXEf63yUE&callback=map_init', function(){
 			//	
 			});
