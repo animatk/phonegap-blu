@@ -400,10 +400,9 @@ function DeviceReady(){
 	if(isDevice() != 'Android'){
 		$('body').addClass('ios-device');
 	}
-
 	if(SES['actividad']){
 		pause(function(){
-			principal('#inicio');
+			principal();
 		});
 	}else{
 		iniciar();
@@ -430,7 +429,7 @@ function worker(obj, fun){
 function iniciar(){
 	if( SES['chain'] ){
 		if( SES['info_basica'] ){
-			inicio();
+			show_inicio();
 		}else{
 			show_paso_dos();
 		}
@@ -495,7 +494,7 @@ function unitsValue( sel, tar ){
 		tex = (sel.val() == "")? '-': sel.find('option:selected').text();
 	tar.text(tex);
 }
-function inicio(from){
+function show_inicio(from){
     ak_navigate('#inicio');
     //queris para determinar valores
     webdb.executeSql('SELECT * FROM actividad WHERE chain = ?', [SES['chain']],
@@ -527,10 +526,10 @@ function inicio(from){
                 dis = dis.toFixed(2) + ' k'
             }
 			
-            $('#esta-pas span').html(pas);
-            $('#esta-dis span').html(dis);
+            $('#esta-pas .num').html(pas);
+            $('#esta-dis .num').html(dis);
 			cal = (isNumber(cal))? cal.toFixed(1): 0;
-            $('#esta-cal span').html(cal);
+            $('#esta-cal .num').html(cal);
 		},
 		function(tx, e){});
     
@@ -605,11 +604,19 @@ function initialize() {
 */
 function ak_navigate(to, back){
 	setText({sec: to});
-	if(to == '#login'){
-		$('header').addClass('noshow');
-	}else{
+	switch(to){
+		case "#login":
+			$('header').addClass('noshow');
+		break;
+		case "#inicio":
+			$('header').removeClass('noshow');
+			$('#btn-accion-izq').addClass('oculto');
+			$('#btnMenu').removeClass('oculto');
+		break;
+		default:
 		$('header').removeClass('noshow');
 	}
+
 	var from = $('.toCenter'),
 		to = $(to);
 	if(from){
@@ -621,17 +628,14 @@ function ak_navigate(to, back){
 	to.addClass('toCenter');
 	$('#btn-accion-izq').addClass('oculto');
 	
-	var bk = back||{},
-		bac = language.volver|| 'Back';
-	if(bk.to!=undefined && bk.to!=""){
-		btnIzq(bac, bk.to, bk.func);
+
+	if(back!=undefined && back!="" && back!== false){
+		btnIzq(back);
 	}
 }
-function btnIzq(str, to, func){
-	var funcion = 'javascript:void(0);';
-	if(to){ funcion = "ak_navigate('"+to+"'); ";}
-	if(func){ funcion += func;}
-	$('#btn-accion-izq').text(str).removeClass('oculto').attr('onclick', funcion);
+function btnIzq(obj){
+	var str = obj.tx || language.volver;
+	$('#btn-accion-izq').text(str).removeClass('oculto').attr('onclick', obj.to);
 	$('#btnMenu').addClass('oculto');
 }
 function jsonp(url, callback) {
@@ -799,8 +803,9 @@ function CerrarSesion(){
 	SES.clear();
 	location.reload();
 }
-function perfil(){
-	var	edad = 0;
+function show_perfil(){
+	var	edad = 0,
+		foto = 'img/perfil-man.jpg';
 	if(SES['perfil']){
 		PERFIL = JSON.parse(SES['perfil']);
 		if(PERFIL.fbid){
@@ -826,7 +831,9 @@ function perfil(){
 			$('#btn-accion-izq, #btnMenu, #btn-accion-der').addClass('oculto');
 		}
 	}
-	$('.perfil-photo').style('background-image', foto);
+	$('.perfil-photo').css('background-image', foto);
+	
+	ak_navigate('#perfil', {to:'show_inicio();'});
 }
 function wizard(paso){
 	var paso = paso || 0;
@@ -1062,6 +1069,9 @@ function restore(form){
 }
 /*! end restore */
 /*! Congiguracion */
+function show_config(back){
+	ak_navigate('#config', back); 
+}
 function tipoActividad(nu){
 	ACTIVITYTYPE = nu;
 	$('.actType').removeClass('btn-success');
@@ -1069,17 +1079,8 @@ function tipoActividad(nu){
 }
 /*! end Congiguracion */
 /*! dispositivos HRM  */
-function botonDispositivos(accion){
-	//navegacion
-	ak_navigate('#config','#dispositivos'); 
-	btnIzq({
-		text: 'Volver'
-		,from: '#dispositivos'
-		,to: '#config'
-		,fx: 'toRight'
-		,fn: 'btnIzq({ text:\'Cancelar\', from:\'#config\', to:\'#inicio\', fx:\'toRight\', fn:"$(\'#btnMenu\').removeClass(\'oculto\');"});'
-	});	
-	
+function botonDispositivos(back){
+	ak_navigate('#dispositivos', back); 
 	listarDispositivos();
 }
 function listarDispositivos(){
@@ -1097,7 +1098,7 @@ function listarDispositivos(){
 			
 	}else{
 		//
-		output += '<div class="ak-alert"> No hay dispositivos recordados </div>';
+		output += '<div class="ak-alert">'+language.nodisp+'</div>';
 	}
 	$('.disp-list').html(output);
 }
@@ -1142,10 +1143,8 @@ function addDisp(name, address){
 }
 /*! end dispositivos HRM */
 /*! principal */
-function principal(form){
-	ak_navigate( form ,'#principal');
-	$('#btnMenu, #btn-accion-izq, #btn-accion-der').addClass('oculto');
-
+function principal(back){
+	ak_navigate('#principal', back);
 	var mySwiper = new Swiper ('.swiper-container', {
 		// Optional parameters
 		direction: 'horizontal'
@@ -1162,7 +1161,6 @@ function principal(form){
 	$('#BtnDetener').addClass('oculto');
 	PAUSED = false;
 	if(SES['BG']){
-		mensaje('existia BG se detiene');
 		cordova.plugins.backgroundMode.disable();
 	}
 	StopAcc = false;
@@ -1490,7 +1488,7 @@ function stop(){
 	$('.ppal-clock').html('00:00');
 	$('.PPM, .PASOS, .DISTA, .CALOR').html('0');
 	
-	ak_navigate('#principal', '#stop');
+	ak_navigate('#stop');
 }
 function guardar(resp){
 	if( SES['actividad'] ){
@@ -1510,8 +1508,8 @@ function guardar(resp){
 		}
 		SES.removeItem('actividad');
 	}
-	$('#btnMenu').removeClass('oculto');
-    inicio('#stop');
+	
+    show_inicio();
 }
 /*! end principal */
 /*! map */

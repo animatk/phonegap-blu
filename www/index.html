@@ -35,7 +35,8 @@
 		<section id="menu" class="Page toLeft">
 			<div class="menu-lateral">
 				<div class="container">
-					<span onclick="javascript:CerrarSesion();" data-lang="cerrar_sesion">Cerrar Sesión</span>
+					<span onclick="show_perfil();" data-lang="perfil"></span>
+					<span onclick="CerrarSesion();" data-lang="cerrar_sesion"></span>
 				</div>
 			</div>
 			<div class="menu-back" onclick="$('#menu').removeClass('toCenter');"></div>
@@ -45,14 +46,14 @@
 				<div class="row row2">
 					<div class="col text-center">
 						<span id="esta-pul" class="btn btn-default btn-estadisticas" onclick="estadisticas('PUL');">
-							Pulso
-                            <span>0</span>
+							<span data-lang="pulso"></span>
+                            <span class="num">0</span>
 						</span>
 					</div>
 					<div class="col text-center">
 						<span id="esta-pas" class="btn btn-default btn-estadisticas" onclick="estadisticas('PAS');">
-							Pasos
-                            <span>0</span>
+							<span data-lang="pasos"></span>
+                            <span class="num">0</span>
 						</span>
 					</div>
 				</div>
@@ -60,22 +61,20 @@
 				<div class="row row2">
 					<div class="col text-center">
 						<span id="esta-dis" class="btn btn-default btn-estadisticas" onclick="estadisticas('DIS');">
-							Distancia
-                            <span>0</span>
+							<span data-lang="distancia"></span>
+                            <span class="num">0</span>
 						</span>
 					</div>
 					<div class="col text-center">
 						<span id="esta-cal" class="btn btn-default btn-estadisticas" onclick="estadisticas('CAL');">
-							Calorias
-                            <span>0</span>
+							<span data-lang="calorias"></span>
+                            <span class="num">0</span>
 						</span>
 					</div>
 				</div>
 				<div>&nbsp;</div>
 				<div class="text-center">
-					<span class="btn btn-primary btn-iniciar" onclick="iniciar('#inicio');">
-						iniciar
-					</span>
+					<span class="btn btn-primary btn-iniciar" onclick="show_config({to:'show_inicio();', tx: language.cancel});" data-lang="iniciar"></span>
 				</div>
 				<!--div id="map_canvas" style="width:100%; height:600px;"></div-->
 			</div>
@@ -101,7 +100,7 @@
 				</form>
 				<div>&nbsp;</div>
 				<div class="text-center">
-					<span class="btn btn-action btn-block" onclick="show_paso_uno({to:'#login'});" data-lang="register"></span>
+					<span class="btn btn-action btn-block" onclick="show_paso_uno({to:'show_login();'});" data-lang="register"></span>
 				</div>
 			</div>
 		</section>
@@ -230,26 +229,24 @@
 		</section>
 		<section id="config" class="Page">
 			<div class="container Main">
-				<h2> Configurar </h2>
+				<h2 data-lang="config"></h2>
 				<div>&nbsp;</div>
 				<div class="row row2">
-					<p class="text-center"> Lugar de la actividad </p>
+					<p class="text-center" data-lang="lugar_actividad"></p>
 					<div class="col text-center">
-						<span id="actividad-1" class="actType btn btn-default" onclick="tipoActividad(1);"> En Calle </span>
+						<span id="actividad-1" class="actType btn btn-default btn-success" onclick="tipoActividad(1);" data-lang="en_calle"></span>
 					</div>
 					<div class="col text-center">
-						<span id="actividad-2" class="actType btn btn-default" onclick="tipoActividad(2);"> En Casa </span>
+						<span id="actividad-2" class="actType btn btn-default" onclick="tipoActividad(2);" data-lang="en_interior"></span>
 					</div>
 				</div>
-				<div>&nbsp;</div>
-				<input id="velocidad" class="form-control" value=""/>
 				<div>&nbsp;</div>
 				<div>&nbsp;</div>
 				<div class="config-item" onclick="">
-					<span class="icon icon-music"> </span> <span>No hay lista seleccionada</span>
+					<span class="icon icon-music"> </span> <span>No music list selected</span>
 				</div>
-				<div id="botonDisp" class="config-item" onclick="botonDispositivos('configurar');">
-					<span class="icon icon-hearth"> </span> <span>No hay HRM conectado</span>
+				<div id="botonDisp" class="config-item" onclick="botonDispositivos({to:'show_config({to:\'show_inicio();\', tx: language.cancel});', tx: language.volver});">
+					<span class="icon icon-hearth"> </span> <span>No HRM connected</span>
 				</div>
 				<div>&nbsp;</div>
 				<select id="sensible" class="form-control">
@@ -274,13 +271,13 @@
 					<option value="5"> 5 </option>
 				</select>
 				<div class="text-center">
-					<span class="btn btn-primary" onclick="principal('#config');"> EMPEZAR AHORA </span>
+					<span class="btn btn-primary" onclick="principal();" data-lang="start_now"></span>
 				</div>
 			</div>
 		</section>
 		<section id="dispositivos" class="Page">
 			<div class="container Main">
-				<h2>Dispositivos HRM <span class="PPM"></span></h2>
+				<h2 data-lang="disp_hrm"></h2>
 				<div>&nbsp;</div>
 				<div id="dispMain">
 					<div class="disp-list">
@@ -288,7 +285,7 @@
 					</div>
 					<div>&nbsp;</div>
 					<div class="text-center">
-						<span class="btn btn-success" onclick="botonDispositivosFind();"> Buscar dispositivos </span>
+						<span class="btn btn-success" onclick="botonDispositivosFind();" data-lang="disp_find"></span>
 					</div>
 				</div>
 				<div id="dispFind" class="oculto">
@@ -297,7 +294,7 @@
 					</div>
 					<div>&nbsp;</div>
 					<div class="text-center">
-						<span class="btn btn-danger" onclick="botonDispositivosCancel();"> Cancelar </span>
+						<span class="btn btn-danger" onclick="botonDispositivosCancel();" data-lang="cancel"></span>
 					</div>
 				</div>
 			</div>
@@ -315,18 +312,21 @@
 							<div class="perfil-genero"></div>
 						</div>
 					</div>
-					<div class="perfil-edad">
+					<div>
+						<span data-lang="edad"></span> <span  class="perfil-edad"></span>
 					</div>
-					<div class="perfil-estatura">
+					<div>
+						<span data-lang="estatura"></span> <span  class="perfil-estatura"></span>
 					</div>
-					<div class="perfil-peso">
+					<div>
+						<span data-lang="peso"></span> <span  class="perfil-peso"></span>
 					</div>
 					<div class="text-center" id="fbConnect">
-						<span class="btn btn-primary" onclick="fbLogin();"> REGISTRAR CON FACEBOOK  </span>
+						<span class="btn btn-primary" onclick="fbLogin();" data-lang="RegOnFb"></span>
 						<div>&nbsp;</div>
 					</div>
 					<div class="text-center">
-						<span id="btnWizard" class="btn btn-info" onclick="wizard();"> Editar Perfil </span>
+						<span id="btnWizard" class="btn btn-info" onclick="show_paso_uno({to:'show_perfil({to:\'show_inicio();\'});'});"> Editar Perfil </span>
 					</div>
 				</div>
 		</section>
@@ -340,25 +340,25 @@
 							</div>
 							<div class="row row2 ppal-deta">
 								<div class="col">
-									<div class="ppal-deta-tit"> Pulso </div>
+									<div class="ppal-deta-tit" data-lang="pulso"></div>
 									<div class="ppal-deta-num PPM"> 0 </div>
 								</div>
 								<div class="col">
-									<div class="ppal-deta-tit"> Pasos </div>
+									<div class="ppal-deta-tit" data-lang="pasos"></div>
 									<div class="ppal-deta-num PASOS"> 0 </div>
 								</div>
 								<div class="col">
-									<div class="ppal-deta-tit"> Distancia </div>
+									<div class="ppal-deta-tit" data-lang="distancia"></div>
 									<div class="ppal-deta-num DISTA"> 0 </div>
 								</div>
 								<div class="col">
-									<div class="ppal-deta-tit"> Calorias </div>
+									<div class="ppal-deta-tit" data-lang="calorias"></div>
 									<div class="ppal-deta-num CALOR"> 0 </div>
 								</div>
 							</div>
 							<div>
-								<span id="BtnPausar" class="btn btn-info" onclick="pause();"> Pausar </span>
-								<span id="BtnDetener" class="btn btn-danger oculto" onclick="stop();"> Detener </span>
+								<span id="BtnPausar" class="btn btn-info" onclick="pause();" data-lang="pausar"></span>
+								<span id="BtnDetener" class="btn btn-danger oculto" onclick="stop();" data-lang="detener"></span>
 							</div>
 						</div>
 					</div>
@@ -373,13 +373,13 @@
 		</section>
 		<section id="stop" class="Page">
 			<div class="container Main">
-				<h2>Guradar Actividad</h2>
+				<h2 data-lang="save_activity"></h2>
 				<div class="row row2 ppal-deta">
 					<div class="col text-center">
-						<span class="btn btn-danger" onclick="if(confirm('Realmente desea descartar esta actividad?')){ guardar('NO');}"> Descartar </span>
+						<span class="btn btn-danger" onclick="if(confirm(language.realy_discard)){ guardar('NO');}" data-lang="discard"></span>
 					</div>
 					<div class="col text-center">
-						<span class="btn btn-info" onclick="guardar('SI');"> Guardar </span>
+						<span class="btn btn-info" onclick="guardar('SI');" data-lang="save"></span>
 					</div>
 				</div>
 			</div>
