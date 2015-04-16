@@ -14,8 +14,8 @@
 	<section class="Canvas">
 		<header class="noshow">
 			<div class="container">
-				<div class="row row3">
-					<div class="col">
+				<div class="row">
+					<div class="col col30">
 						<span id="btnMenu" onclick="$('#menu').toggleClass('toCenter');" class="btn btn-hambur oculto"> 
 							<span> </span>
 							<span> </span>
@@ -23,10 +23,10 @@
 						</span>
 						<span id="btn-accion-izq" class="btn oculto"> Volver </span>
 					</div>
-					<div class="col" data-lang="title">
-						Siluet Control
+					<div class="col col40 logo">
+						<img src="img/sforza-horz.png" alt="Sforza" />
 					</div>
-					<div class="col">	
+					<div class="col col30">	
 						<span id="btn-accion-der" class="btn oculto"> Cancelar</span>
 					</div>
 				</div>
@@ -81,17 +81,17 @@
 		</section>
 		<section id="login" class="Page">
 			<div class="container Main">
-				<div class="text-center">
-					<img src="img/sforza-login.jpg" alt="Sforza"/>
+				<div class="text-center login-logo">
+					<img src="img/sforza-vert.png" alt="Sforza"/>
 				</div>
 				<div>&nbsp;</div>
 				<div class="text-center">
-					<img src="img/login-facebook.jpg" onclick="fbLogin();" />
+					<span class="btn btn-facebook btn-block btn-icon btn-icon-fb" onclick="fbLogin();" data-lang="RegOnFb"></span>
 				</div>
 				<div>&nbsp;</div>
 				<form onsubmit="return login(this); return false;">
-					<input name="correo" class="form-control required email" />
-					<input name="contrasena" type="password" class="form-control required" />
+					<input name="correo" class="form-control required email btn-icon btn-icon-mail" />
+					<input name="contrasena" type="password" class="form-control required btn-icon btn-icon-lock" />
 					<span onclick="botonRestore();" data-lang="olvide_contrasena"></span>
 					<div>&nbsp;</div>
 					<div class="text-center">
@@ -128,18 +128,18 @@
 						<option value="F" data-lang="femenino"></option>
 					</select>
 					<p data-lang="birth_date"></p>
-					<div class="row row3">
-						<div class="col">
+					<div class="row">
+						<div class="col col20">
 							<select name="edad_day" class="form-control required">
 								<option value=""></option>
 							</select>
 						</div>
-						<div class="col">
+						<div class="col col50">
 							<select name="edad_month" class="form-control required">
 								<option value=""></option>
 							</select>
 						</div>
-						<div class="col">
+						<div class=" col col30">
 							<select name="edad_year" class="form-control required">
 								<option value=""></option>
 							</select>
@@ -159,7 +159,7 @@
 				<h2 data-lang="info_personal"></h2>
 				<div>&nbsp;</div>
 				<form onsubmit="return form_paso_dos(this); return false;">
-					<div class="config-item" onclick="$('select[name=unidad_medida]').trigger('click');">
+					<div class="config-item">
 						<select name="unidad_medida" class="form-control required" onchange="show_paso_dos(false, this.value);" placeholder="Unidad de medida">
 							<option value="M" data-lang="metrico"></option>
 							<option value="E" data-lang="ingles"></option>
@@ -196,7 +196,7 @@
 					<div>&nbsp;</div>
 					<div>&nbsp;</div>
 					<div class="text-center">
-						<button id="BtnRegister" class="btn btn-action btn-block" data-lang="siguiente"></button>
+						<button id="BtnRegister2" class="btn btn-action btn-block" data-lang="siguiente"></button>
 					</div>
 				</form>
 			</div>
@@ -322,7 +322,7 @@
 						<span data-lang="peso"></span> <span  class="perfil-peso"></span>
 					</div>
 					<div class="text-center" id="fbConnect">
-						<span class="btn btn-primary" onclick="fbLogin();" data-lang="RegOnFb"></span>
+						<span class="btn btn-facebook btn-block btn-icon btn-icon-fb" onclick="fbLogin();" data-lang="RegOnFb"></span>
 						<div>&nbsp;</div>
 					</div>
 					<div class="text-center">
@@ -409,9 +409,9 @@
 			color: #fff;
 		}
 	</style>
-	<form onsubmit="javascript:eval($(this).find('input').val()); return false;">
+	<!--form onsubmit="javascript:eval($(this).find('input').val()); return false;">
 	<input style="font-size: 8px; position: fixed; bottom: 40px; width: 100%; z-index: 9999; margin: 0; padding: 3px;" class="form-control">
 	</form>
-	<div id="mensajes" style="height:40px; z-index: 99999; position: fixed; display: block; width: 100%; overflow: hidden; overflow-y: auto; bottom:0; left:0; color: #666; background: #000; font-size: 8px; border-top: 1px solid #333;"></div>
+	<div id="mensajes" style="height:40px; z-index: 99999; position: fixed; display: block; width: 100%; overflow: hidden; overflow-y: auto; bottom:0; left:0; color: #666; background: #000; font-size: 8px; border-top: 1px solid #333;"></div-->
   </body>
 </html>

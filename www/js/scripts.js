@@ -808,7 +808,7 @@ function show_perfil(){
 		foto = 'img/perfil-man.jpg';
 	if(SES['perfil']){
 		PERFIL = JSON.parse(SES['perfil']);
-		if(PERFIL.fbid){
+		if(PERFIL.fbid != undefined && PERFIL.fbid != null && PERFIL.fbid != ""){
 			foto = 'https://graph.facebook.com/'+PERFIL.fbid+'/picture?width=120&height=120';
 			$('#fbConnect').addClass('oculto');
 		}else{
@@ -830,8 +830,9 @@ function show_perfil(){
 			$('#btnWizard').text('Siguiente');
 			$('#btn-accion-izq, #btnMenu, #btn-accion-der').addClass('oculto');
 		}
+		
+		$('.perfil-photo').css('background-image', 'url('+foto+')');
 	}
-	$('.perfil-photo').css('background-image', foto);
 	
 	ak_navigate('#perfil', {to:'show_inicio();'});
 }
@@ -845,7 +846,7 @@ function show_paso_uno(back){
 	
 	var dias = '<option value="">'+language.dia+'</option>';
 	for(var i=1; i<32; i++){
-		dias += '<option value="'+i+'">'+i+'</option>';
+		dias += '<option value="'+checkTime(i)+'">'+i+'</option>';
 	}
 	var months = '<option value="">'+language.mes+'</option>';
 	for(var i=0; i<12; i++){
@@ -862,18 +863,31 @@ function show_paso_uno(back){
 	$('select[name=edad_day]').html(dias).attr('placeholder',language.edad_day);
 	$('select[name=edad_year]').html(years).attr('placeholder',language.edad_month);
 	$('select[name=edad_month]').html(months).attr('placeholder',language.edad_year);
-
+	
 	ak_navigate('#registro', back); 
+	
+	if(SES['perfil']){
+		var p = JSON.parse(SES['perfil']),
+			d = p.birthdate.split('-');
+		$('input[name=nombre]').val(p.name);
+		$('select[name=genero]').val(p.gender);
+		$('select[name=edad_day]').val(d[2]);
+		$('select[name=edad_year]').val(d[0]);
+		$('select[name=edad_month]').val(d[1]);
+	}
 }
 function form_paso_uno(form){
 	ak_validate(form, {
 		ajax: false
 		,func: function(data){
-			var udata = {
-				gender : data.genero
-				,name : data.nombre
-				,birthdate : data.edad_year+'-'+data.edad_month+'-'+data.edad_day
-			};
+			var udata = {};
+			if(SES['perfil']){
+				udata = JSON.parse(SES['perfil']);
+			}
+			udata.gender = data.genero;
+			udata.name = data.nombre;
+			udata.birthdate = data.edad_year+'-'+data.edad_month+'-'+data.edad_day;
+				
 			SES['perfil'] = JSON.stringify(udata);
 			show_paso_dos();
 			$('#cortina').remove();
@@ -882,13 +896,18 @@ function form_paso_uno(form){
 	return false;
 }
 function show_paso_dos(back, unid){
-	var und = unid || 'M',
-		Est1 = '<option value="" selected="selected">'+language.estatura+' '+language.mts+'</option>',
-		Est2 = '<option value="00" selected="selected">'+language.estatura+' '+language.centimetros+'</option>',
-		Pes = '<option value="" selected="selected">'+language.peso+' '+language.kgs+'</option>';
-	
+	var und = unid || 'M'
+		,Est1 = '<option value="" selected="selected">'+language.estatura+' '+language.mts+'</option>'
+		,Est2 = '<option value="00" selected="selected">'+language.estatura+' '+language.centimetros+'</option>'
+		,Pes = '<option value="" selected="selected">'+language.peso+' '+language.kgs+'</option>'
+		,Tes1 = $('#textEstaturaUno')
+		,Tes2 = $('#textEstaturaDos')
+		,Tpe = $('#textPeso')
+		,Ies1 = $('select[name=estatura_uno]')
+		,Ies2 = $('select[name=estatura_dos]')
+		,Ipe = $('select[name=peso]');
+		
 	if(und == 'E'){
-		//
 		Est1 = '<option value="" selected="selected"> '+language.estatura+' '+language.feet+'</option>',
 		Est2 = '<option value="00" selected="selected"> '+language.estatura+' '+language.inches+'</option>',
 		Pes = '<option value="" selected="selected"> '+language.peso+' '+language.lbs+'</option>';
@@ -906,8 +925,8 @@ function show_paso_dos(back, unid){
 		$('#symbolEstatura').text(language.ftin);
 		$('#symbolPeso').text(language.lbs);
 		$('#textUnids').text(language.eng);
-		$('#textEstaturaUno').text("0' ");
-		$('#textEstaturaDos').text('0"');
+		Tes1.text("0' ");
+		Tes2.text('0"');
 	}else{
 		for(var i=1; i<3; i++){
 			Est1 += '<option value="'+i+'">'+i+'.</option>';
@@ -921,15 +940,57 @@ function show_paso_dos(back, unid){
 		$('#symbolEstatura').text(language.mts);
 		$('#symbolPeso').text(language.kgs);
 		$('#textUnids').text('Mts');
-		$('#textEstaturaUno').text('0.');
-		$('#textEstaturaDos').text('0');
+		Tes1.text('0.');
+		Tes2.text('0');
 	}
-	$('#textPeso').text('0');
-	$('select[name=estatura_uno]').html(Est1).attr('placeholder', language.estatura);
-	$('select[name=estatura_dos]').html(Est2).attr('placeholder', language.estatura);
-	$('select[name=peso]').html(Pes).attr('placeholder', language.peso);
 	
-	ak_navigate('#registro-2', back);
+	Tpe.text('0');
+	Ies1.html(Est1).attr('placeholder', language.estatura);
+	Ies2.html(Est2).attr('placeholder', language.estatura);
+	Ipe.html(Pes).attr('placeholder', language.peso);
+	
+	if(back === false){
+		return false;
+	}
+	if(SES['perfil']){
+		var p = JSON.parse(SES['perfil']);
+		if(p.unit != undefined && p.unit != null && p.unit != "" ){
+			if(und != p.unit){
+				show_paso_dos("", p.unit);
+				return false;
+			}
+			var h=0;
+			
+			if(p.unit == 'E'){
+				h = p.height.split(' ');
+				Tes1.text(h[0]+"' ");
+				Ies1.val(h[0]);
+				Tes2.text(h[1]+'"');
+				Ies2.val(h[1]);
+			}else{
+				h = p.height.split('.');
+				Tes1.text(h[0]+'.');
+				Ies1.val(h[0]);
+				Tes2.text(checkTime(h[1]));
+				Ies2.val(checkTime(h[1]));
+			}
+				Tpe.text(p.weight);
+				Ipe.val(p.weight);
+			$('select[name=unidad_medida]').val(p.unit);
+		}
+	}
+	
+	if(SES['chain']){
+		back = {to:'show_paso_uno({to:\'show_perfil();\'});'};
+		ak_navigate('#registro-2', back);
+		$('#BtnRegister2').text( language.save );
+	}else{
+		back = {to:'show_paso_uno({to:\'show_login();\'});'};
+		ak_navigate('#registro-2', back);
+		
+	}
+	
+	
 }
 function form_paso_dos(form){
 	ak_validate(form, {
@@ -943,17 +1004,45 @@ function form_paso_dos(form){
 			if(SES['perfil']){
 				udata = JSON.parse(SES['perfil']);
 			}
+			
 			if(data.unidad_medida == "E"){
-				estat = ((((estatura_uno*12)+estatura_dos)*2.54)/100).toFixed(2);
+			//	estat = ((((estatura_uno*12)+estatura_dos)*2.54)/100).toFixed(2);
+				estat = estatura_uno+' '+estatura_dos;
 			}else{
-				estat = estatura_uno + (estatura_dos/100);
+				estat = estatura_uno +'.'+estatura_dos;
 			}
+		
 			udata.height = estat;
 			udata.weight = data.peso;
 			udata.unit = data.unidad_medida;
 			SES['perfil'] = JSON.stringify(udata);
 			SES['info_basica'] = true;
-			show_paso_tres();
+			
+			if(SES['chain']){
+				var chain = SES['chain'],
+					sdata = {},
+					bdate = udata.birthdate.split("-");
+					
+				sdata.genero = udata.gender;
+				sdata.nombre = udata.name;
+				sdata.edad_day = bdate[2];
+				sdata.edad_month = bdate[1];
+				sdata.edad_year = bdate[0];
+				sdata.estatura = estat;
+				sdata.peso = data.peso;
+				sdata.unit = data.unidad_medida;
+			
+				post(SITE+'main/register/'+chain, sdata, function(obj){
+					if(obj.success === false){
+						alert(language.err[obj.message]);
+					}else{
+						iniciar();
+					}
+				});
+			}else{
+				show_paso_tres();
+			}
+			
 			$('#cortina').remove();
 		}
 	});
@@ -962,6 +1051,9 @@ function form_paso_dos(form){
 function show_paso_tres(back){
 	$('input[name=correo]').attr('placeholder', language.correo);
 	$('input[name=contrasena]').attr('placeholder', language.contrasena);
+	if(!SES['chain']){
+		back = {to: 'show_paso_dos();'};
+	}
 	ak_navigate('#registro-3', back);
 }
 function form_paso_tres(form){
