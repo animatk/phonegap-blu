@@ -370,8 +370,15 @@ header .btn{
 /* end menu lateral */
 /* secciones */
 #menu{ z-index: 3; background: none; }
+#login .Main{
+	padding-top: 6px;
+	padding-bottom: 0;
+}
+.ios-device #login .Main{
+	padding-top: 25px;
+}
 #login{
-	background: url(../img/login-bg.jpg) no-repeat center;
+	background: url(../img/login-bg.jpg) no-repeat center top;
 	background-size: cover;
 	
 }
