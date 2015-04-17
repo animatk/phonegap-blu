@@ -873,6 +873,7 @@ function show_paso_uno(back){
 		// Optional parameters
 			direction: 'vertical'
 			,loop: false
+			,freeMode: true
 			// If we need pagination
 		//	pagination: '.swiper-pagination',
 			// Navigation arrows
@@ -893,6 +894,7 @@ function show_paso_uno(back){
 		// Optional parameters
 			direction: 'vertical'
 			,loop: false
+			,freeMode: true
 			// If we need pagination
 		//	pagination: '.swiper-pagination',
 			// Navigation arrows
@@ -915,6 +917,7 @@ function show_paso_uno(back){
 		// Optional parameters
 			direction: 'vertical'
 			,loop: false
+			,freeMode: true
 			// If we need pagination
 		//	pagination: '.swiper-pagination',
 			// Navigation arrows
