@@ -391,17 +391,8 @@ header .btn{
 }
 
 #pickEdadDia,
-#pickEdadDia .swiper-container,
-#pickEdadDia .swiper-wrapper,
-#pickEdadDia .swiper-slide,
 #pickEdadMes,
-#pickEdadMes .swiper-container,
-#pickEdadMes .swiper-wrapper,
-#pickEdadMes .swiper-slide,
-#pickEdadAno,
-#pickEdadAno .swiper-container,
-#pickEdadAno .swiper-wrapper,
-#pickEdadAno .swiper-slide{
+#pickEdadAno{
 	height: 40px;
 	overflow: hidden;
 	font-size: 18px;
