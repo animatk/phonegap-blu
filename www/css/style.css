@@ -393,7 +393,7 @@ header .btn{
 #pickEdadDia,
 #pickEdadMes,
 #pickEdadAno{
-	height: 75px;
+	height: 90px;
 	overflow: hidden;
 	font-size: 18px;
 }
@@ -401,16 +401,7 @@ header .btn{
 #pickEdadDia .swiper-slide,
 #pickEdadMes .swiper-slide,
 #pickEdadAno .swiper-slide {
-	opacity: .1;
-}
-
-#pickEdadDia .swiper-slide-next,
-#pickEdadMes .swiper-slide-next,
-#pickEdadAno .swiper-slide-next,
-#pickEdadDia .swiper-slide-prev,
-#pickEdadMes .swiper-slide-prev,
-#pickEdadAno .swiper-slide-prev {
-	opacity: .4;
+	opacity: .2;
 }
 
 #pickEdadDia .swiper-slide-active,
