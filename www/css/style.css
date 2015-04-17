@@ -393,7 +393,7 @@ header .btn{
 #pickEdadDia,
 #pickEdadMes,
 #pickEdadAno{
-	height: 56px;
+	height: 75px;
 	overflow: hidden;
 	font-size: 18px;
 }
