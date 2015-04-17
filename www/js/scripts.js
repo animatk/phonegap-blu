@@ -41,6 +41,9 @@ var SES = window.localStorage,
 	sync = null, //plugir background mode.StopAcc
 	BG = null, //plugir background mode.StopAcc
 	StopAcc = true, //detener accelerometro
+	PickDia = null, //picker dia 
+	PickMes = null, //picker mes
+	PickAno = null, //picker año
 	SITE = 'https://irisdev.co/siluet_app/index.php/';
 	
 	getLang({exe: 'setText'});
@@ -843,7 +846,7 @@ function wizard(paso){
 /*! end login */
 /*! register */
 function show_paso_uno(back){
-	
+	/*
 	var dias = '<option value="">'+language.dia+'</option>';
 	for(var i=1; i<32; i++){
 		dias += '<option value="'+checkTime(i)+'">'+i+'</option>';
@@ -856,13 +859,75 @@ function show_paso_uno(back){
 	var year = new Date().getFullYear();
 	for(var i=0; i<69; i++){
 		years += '<option value="'+(year-i)+'">'+(year-i)+'</option>';
+	} */
+	if(PickDia == null){
+		var dias = '<div class="swiper-slide">'+language.dia+'</div>';
+		for(var i=1; i<32; i++){
+			dias += '<div class="swiper-slide">'+checkTime(i)+'</div>';
+		}
+		$('#pickEdadDia .swiper-wrapper').html(dias);
+		
+		PickDia = new Swiper ('#pickEdadDia .swiper-container', {
+		// Optional parameters
+			direction: 'vertical'
+			,loop: false
+			// If we need pagination
+		//	pagination: '.swiper-pagination',
+			// Navigation arrows
+		//	nextButton: '.swiper-button-next',
+		//	prevButton: '.swiper-button-prev',
+			// And if we need scrollbar
+		//	scrollbar: '.swiper-scrollbar',
+		});
+	}
+	if(PickMes == null){
+		var months = '<div class="swiper-slide">'+language.mes+'</div>';
+		for(var i=0; i<12; i++){
+			months += '<div class="swiper-slide" data-mes="'+checkTime(i+1)+'">'+language.meses[i]+'</div>';
+		}
+		$('#pickEdadMes .swiper-wrapper').html(months);
+		
+		PickMes = new Swiper ('#pickEdadMes .swiper-container', {
+		// Optional parameters
+			direction: 'vertical'
+			,loop: false
+			// If we need pagination
+		//	pagination: '.swiper-pagination',
+			// Navigation arrows
+		//	nextButton: '.swiper-button-next',
+		//	prevButton: '.swiper-button-prev',
+			// And if we need scrollbar
+		//	scrollbar: '.swiper-scrollbar',
+		});
 	}
 	
+	if(PickAno == null){
+		var years = '<div class="swiper-slide">'+language.year+'</div>';
+		var year = new Date().getFullYear();
+		for(var i=0; i<69; i++){
+			years += '<div class="swiper-slide">'+(year-i)+'</div>';
+		}
+		$('#pickEdadAno .swiper-wrapper').html(years);
+		
+		PickAno = new Swiper ('#pickEdadAno .swiper-container', {
+		// Optional parameters
+			direction: 'vertical'
+			,loop: false
+			// If we need pagination
+		//	pagination: '.swiper-pagination',
+			// Navigation arrows
+		//	nextButton: '.swiper-button-next',
+		//	prevButton: '.swiper-button-prev',
+			// And if we need scrollbar
+		//	scrollbar: '.swiper-scrollbar',
+		});
+	}
 	$('input[name=nombre]').attr('placeholder',language.nombre);
 	$('select[name=genero]').attr('placeholder',language.gender);
-	$('select[name=edad_day]').html(dias).attr('placeholder',language.edad_day);
-	$('select[name=edad_year]').html(years).attr('placeholder',language.edad_month);
-	$('select[name=edad_month]').html(months).attr('placeholder',language.edad_year);
+//	$('select[name=edad_day]').html(dias).attr('placeholder',language.edad_day);
+//	$('select[name=edad_year]').html(years).attr('placeholder',language.edad_month);
+//	$('select[name=edad_month]').html(months).attr('placeholder',language.edad_year);
+
 	
 	ak_navigate('#registro', back); 
 	
@@ -871,9 +936,9 @@ function show_paso_uno(back){
 			d = p.birthdate.split('-');
 		$('input[name=nombre]').val(p.name);
 		$('select[name=genero]').val(p.gender);
-		$('select[name=edad_day]').val(d[2]);
-		$('select[name=edad_year]').val(d[0]);
-		$('select[name=edad_month]').val(d[1]);
+//		$('select[name=edad_day]').val(d[2]);
+//		$('select[name=edad_year]').val(d[0]);
+//		$('select[name=edad_month]').val(d[1]);
 	}
 }
 function form_paso_uno(form){
@@ -1237,7 +1302,7 @@ function addDisp(name, address){
 /*! principal */
 function principal(back){
 	ak_navigate('#principal', back);
-	var mySwiper = new Swiper ('.swiper-container', {
+	var mySwiper = new Swiper ('#principal .swiper-container', {
 		// Optional parameters
 		direction: 'horizontal'
 		,loop: false
