@@ -874,6 +874,8 @@ function show_paso_uno(back){
 			direction: 'vertical'
 			,loop: false
 			,freeMode: true
+			,slidesPerView: 3
+			,centeredSlides: true
 			// If we need pagination
 		//	pagination: '.swiper-pagination',
 			// Navigation arrows
@@ -895,6 +897,8 @@ function show_paso_uno(back){
 			direction: 'vertical'
 			,loop: false
 			,freeMode: true
+			,slidesPerView: 3
+			,centeredSlides: true
 			// If we need pagination
 		//	pagination: '.swiper-pagination',
 			// Navigation arrows
@@ -918,6 +922,8 @@ function show_paso_uno(back){
 			direction: 'vertical'
 			,loop: false
 			,freeMode: true
+			,slidesPerView: 3
+			,centeredSlides: true
 			// If we need pagination
 		//	pagination: '.swiper-pagination',
 			// Navigation arrows

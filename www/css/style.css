@@ -1,6 +1,6 @@
 @charset "utf-8"; 
   
-*{ box-sizing: border-box; margin:0; padding:0; border:0; outline:0; zoom:1; font-size:100%; vertical-align:baseline; list-style:none; text-decoration:none; clear:none;} 
+*{ -webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-sizing: border-box; margin:0; padding:0; border:0; outline:0; zoom:1; font-size:100%; vertical-align:baseline; list-style:none; text-decoration:none; clear:none;} 
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display:block;} 
 
 @font-face {
@@ -393,9 +393,30 @@ header .btn{
 #pickEdadDia,
 #pickEdadMes,
 #pickEdadAno{
-	height: 25px;
+	height: 56px;
 	overflow: hidden;
 	font-size: 18px;
+}
+
+#pickEdadDia .swiper-slide,
+#pickEdadMes .swiper-slide,
+#pickEdadAno .swiper-slide {
+	opacity: .1;
+}
+
+#pickEdadDia .swiper-slide-next,
+#pickEdadMes .swiper-slide-next,
+#pickEdadAno .swiper-slide-next,
+#pickEdadDia .swiper-slide-prev,
+#pickEdadMes .swiper-slide-prev,
+#pickEdadAno .swiper-slide-prev {
+	opacity: .4;
+}
+
+#pickEdadDia .swiper-slide-active,
+#pickEdadMes .swiper-slide-active,
+#pickEdadAno .swiper-slide-active {
+	opacity: 1;
 }
 /* end secciones */
 
