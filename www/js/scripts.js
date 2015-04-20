@@ -874,7 +874,6 @@ function show_paso_uno(back){
 			direction: 'vertical'
 			,loop: false
 		//	,freeMode: true
-			,resistance: false
 			,slidesPerView: 3
 			,centeredSlides: true
 			// If we need pagination
@@ -898,7 +897,6 @@ function show_paso_uno(back){
 			direction: 'vertical'
 			,loop: false
 		//	,freeMode: true
-			,resistance: false
 			,slidesPerView: 3
 			,centeredSlides: true
 			// If we need pagination
@@ -924,7 +922,6 @@ function show_paso_uno(back){
 			direction: 'vertical'
 			,loop: false
 		//	,freeMode: true
-			,resistance: false
 			,slidesPerView: 3
 			,centeredSlides: true
 			// If we need pagination

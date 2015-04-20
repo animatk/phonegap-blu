@@ -398,6 +398,29 @@ header .btn{
 	font-size: 18px;
 }
 
+#pickEdadDia:before,
+#pickEdadMes:before,
+#pickEdadAno:before,
+#pickEdadDia:after,
+#pickEdadMes:after,
+#pickEdadAno:after{
+	content: " ";
+	position: absolute;
+	width: 50%;
+	height: 1px;
+	display: block;
+	background: #5de252;
+	top: 33%;
+	left: 25%;
+}
+
+#pickEdadDia:after,
+#pickEdadMes:after,
+#pickEdadAno:after{
+	top: 66%;
+}
+
+
 #pickEdadDia .swiper-slide,
 #pickEdadMes .swiper-slide,
 #pickEdadAno .swiper-slide {
