@@ -873,7 +873,8 @@ function show_paso_uno(back){
 		// Optional parameters
 			direction: 'vertical'
 			,loop: false
-			,freeMode: true
+		//	,freeMode: true
+			,resistance: false
 			,slidesPerView: 3
 			,centeredSlides: true
 			// If we need pagination
@@ -896,7 +897,8 @@ function show_paso_uno(back){
 		// Optional parameters
 			direction: 'vertical'
 			,loop: false
-			,freeMode: true
+		//	,freeMode: true
+			,resistance: false
 			,slidesPerView: 3
 			,centeredSlides: true
 			// If we need pagination
@@ -921,7 +923,8 @@ function show_paso_uno(back){
 		// Optional parameters
 			direction: 'vertical'
 			,loop: false
-			,freeMode: true
+		//	,freeMode: true
+			,resistance: false
 			,slidesPerView: 3
 			,centeredSlides: true
 			// If we need pagination
