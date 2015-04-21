@@ -390,6 +390,10 @@ header .btn{
 	padding-bottom: 20px;
 }
 
+
+#pkPeso,
+#pkEstUno,
+#pkEstDos,
 #pickEdadDia,
 #pickEdadMes,
 #pickEdadAno{
@@ -398,9 +402,21 @@ header .btn{
 	font-size: 18px;
 }
 
+#pkEstUno,
+#pkEstDos{
+	float: left;
+	width: 50%;
+}
+
+#pkPeso:before,
+#pkEstUno:before,
+#pkEstDos:before,
 #pickEdadDia:before,
 #pickEdadMes:before,
 #pickEdadAno:before,
+#pkPeso:after,
+#pkEstUno:after,
+#pkEstDos:after,
 #pickEdadDia:after,
 #pickEdadMes:after,
 #pickEdadAno:after{
@@ -413,7 +429,9 @@ header .btn{
 	top: 33%;
 	left: 25%;
 }
-
+#pkPeso:after,
+#pkEstUno:after,
+#pkEstDos:after,
 #pickEdadDia:after,
 #pickEdadMes:after,
 #pickEdadAno:after{
@@ -421,20 +439,31 @@ header .btn{
 }
 
 
+#pkPeso .swiper-slide:first-child,
+#pkEstUno .swiper-slide:first-child,
+#pkEstDos .swiper-slide:first-child,
+#pickEdadDia .swiper-slide:first-child,
+#pickEdadMes .swiper-slide:first-child,
+#pickEdadAno .swiper-slide:first-child,
+
+#pkPeso .swiper-slide,
+#pkEstUno .swiper-slide,
+#pkEstDos .swiper-slide,
 #pickEdadDia .swiper-slide,
 #pickEdadMes .swiper-slide,
 #pickEdadAno .swiper-slide {
 	opacity: .2;
 }
 
+#pkPeso .swiper-slide-active,
+#pkEstUno .swiper-slide-active,
+#pkEstDos .swiper-slide-active,
 #pickEdadDia .swiper-slide-active,
 #pickEdadMes .swiper-slide-active,
 #pickEdadAno .swiper-slide-active {
 	opacity: 1;
 }
 /* end secciones */
-
-
 /* dispositivos */
 .disp-find{
 	padding-bottom: 20px;
@@ -680,6 +709,9 @@ input[type='range']::-webkit-slider-thumb {
 .config-item-right{
 	padding-top: 11px;
 	font-style: italic;
+}
+.pktxaling{
+	padding-top: 30px;
 }
 .config-item-left{
 	text-align: right;

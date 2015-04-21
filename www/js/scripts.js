@@ -46,6 +46,9 @@ var SES = window.localStorage,
 	PickDia = null, //picker dia 
 	PickMes = null, //picker mes
 	PickAno = null, //picker año
+	pkEstUno = null, //picker estatura uno
+	pkEstDos = null, //picker estatura dos
+	pkPeso = null, //picker peso
 	SITE = 'https://irisdev.co/siluet_app/index.php/';
 	
 	getLang({exe: 'setText'});
@@ -848,97 +851,75 @@ function wizard(paso){
 /*! end login */
 /*! register */
 function show_paso_uno(back){
-	/*
-	var dias = '<option value="">'+language.dia+'</option>';
-	for(var i=1; i<32; i++){
-		dias += '<option value="'+checkTime(i)+'">'+i+'</option>';
-	}
-	var months = '<option value="">'+language.mes+'</option>';
-	for(var i=0; i<12; i++){
-		months += '<option value="'+checkTime(i+1)+'">'+language.meses[i]+'</option>';
-	}
-	var years = '<option value="">'+language.year+'</option>';
-	var year = new Date().getFullYear();
-	for(var i=0; i<69; i++){
-		years += '<option value="'+(year-i)+'">'+(year-i)+'</option>';
-	} */
 	if(PickDia == null){
-		var dias = '<div class="swiper-slide">'+language.dia+'</div>';
+		var dias = '<div class="swiper-slide" data-idx="0" data-val="">'+language.dia+'</div>',
+			k =1;
 		for(var i=1; i<32; i++){
-			dias += '<div class="swiper-slide">'+checkTime(i)+'</div>';
+			dias += '<div class="swiper-slide" data-idx="'+(k++)+'" data-val="'+checkTime(i)+'">'+checkTime(i)+'</div>';
 		}
 		$('#pickEdadDia .swiper-wrapper').html(dias);
 		
 		PickDia = new Swiper ('#pickEdadDia .swiper-container', {
-		// Optional parameters
 			direction: 'vertical'
 			,loop: false
 		//	,freeMode: true
 			,slidesPerView: 3
 			,centeredSlides: true
-			// If we need pagination
-		//	pagination: '.swiper-pagination',
-			// Navigation arrows
-		//	nextButton: '.swiper-button-next',
-		//	prevButton: '.swiper-button-prev',
-			// And if we need scrollbar
-		//	scrollbar: '.swiper-scrollbar',
+			,onSlideChangeEnd :function(s){
+				var v = $(PickDia.slides[PickDia.activeIndex]).attr('data-val');
+				$('input[name=edad_day]').val(v);
+			}
 		});
 	}
 	if(PickMes == null){
-		var months = '<div class="swiper-slide">'+language.mes+'</div>';
+		var months = '<div class="swiper-slide" data-idx="0" data-val="">'+language.mes+'</div>',
+			k =1;
 		for(var i=0; i<12; i++){
-			months += '<div class="swiper-slide" data-mes="'+checkTime(i+1)+'">'+language.meses[i]+'</div>';
+			months += '<div class="swiper-slide" data-idx="'+(k++)+'" data-val="'+checkTime(i+1)+'">'+language.meses[i]+'</div>';
 		}
 		$('#pickEdadMes .swiper-wrapper').html(months);
 		
 		PickMes = new Swiper ('#pickEdadMes .swiper-container', {
-		// Optional parameters
 			direction: 'vertical'
 			,loop: false
 		//	,freeMode: true
 			,slidesPerView: 3
 			,centeredSlides: true
-			// If we need pagination
-		//	pagination: '.swiper-pagination',
-			// Navigation arrows
-		//	nextButton: '.swiper-button-next',
-		//	prevButton: '.swiper-button-prev',
-			// And if we need scrollbar
-		//	scrollbar: '.swiper-scrollbar',
+			,onSlideChangeEnd :function(s){
+				var v = $(PickMes.slides[PickMes.activeIndex]).attr('data-val');
+				$('input[name=edad_month]').val(v);
+			}
 		});
 	}
 	
 	if(PickAno == null){
-		var years = '<div class="swiper-slide">'+language.year+'</div>';
+		var years = '<div class="swiper-slide" data-idx="0" data-val="">'+language.year+'</div>',
+			k =1;
 		var year = new Date().getFullYear();
 		for(var i=0; i<69; i++){
-			years += '<div class="swiper-slide">'+(year-i)+'</div>';
+			var y = year--;
+			years += '<div class="swiper-slide" data-idx="'+(k++)+'" data-val="'+y+'">'+y+'</div>';
 		}
 		$('#pickEdadAno .swiper-wrapper').html(years);
 		
 		PickAno = new Swiper ('#pickEdadAno .swiper-container', {
-		// Optional parameters
 			direction: 'vertical'
 			,loop: false
 		//	,freeMode: true
 			,slidesPerView: 3
 			,centeredSlides: true
-			// If we need pagination
-		//	pagination: '.swiper-pagination',
-			// Navigation arrows
-		//	nextButton: '.swiper-button-next',
-		//	prevButton: '.swiper-button-prev',
-			// And if we need scrollbar
-		//	scrollbar: '.swiper-scrollbar',
+			,onSlideChangeEnd :function(s){
+				var v = $(PickAno.slides[PickAno.activeIndex]).attr('data-val');
+				$('input[name=edad_year]').val(v);
+			}
 		});
 	
 	}
 	$('input[name=nombre]').attr('placeholder',language.nombre);
 	$('select[name=genero]').attr('placeholder',language.gender);
-//	$('select[name=edad_day]').html(dias).attr('placeholder',language.edad_day);
-//	$('select[name=edad_year]').html(years).attr('placeholder',language.edad_month);
-//	$('select[name=edad_month]').html(months).attr('placeholder',language.edad_year);
+	$('input[name=edad_day]').attr('placeholder',language.edad_day);
+	$('input[name=edad_year]').attr('placeholder',language.edad_month);
+	$('input[name=edad_month]').attr('placeholder',language.edad_year);
 
 	
 	ak_navigate('#registro', back); 
@@ -948,9 +929,23 @@ function show_paso_uno(back){
 			d = p.birthdate.split('-');
 		$('input[name=nombre]').val(p.name);
 		$('select[name=genero]').val(p.gender);
-//		$('select[name=edad_day]').val(d[2]);
-//		$('select[name=edad_year]').val(d[0]);
-//		$('select[name=edad_month]').val(d[1]);
+		
+		var ix1 = $('#pickEdadDia .swiper-slide[data-val="'+d[2]+'"]').data('idx'),
+			ix2 = $('#pickEdadMes .swiper-slide[data-val="'+d[1]+'"]').data('idx'),	
+			ix3 = $('#pickEdadAno .swiper-slide[data-val="'+d[0]+'"]').data('idx');
+			
+		if(ix1){
+			PickDia.slideTo(ix1);
+			$('input[name=edad_day]').val(d[2]);
+		}
+		if(ix2){
+			PickMes.slideTo(ix2);
+			$('input[name=edad_month]').val(d[1]);
+		}
+		if(ix3){
+			PickAno.slideTo(ix3);
+			$('input[name=edad_year]').val(d[0]);
+		}
 	}
 }
 function form_paso_uno(form){
@@ -974,61 +969,119 @@ function form_paso_uno(form){
 }
 function show_paso_dos(back, unid){
 	var und = unid || 'M'
-		,Est1 = '<option value="" selected="selected">'+language.estatura+' '+language.mts+'</option>'
-		,Est2 = '<option value="00" selected="selected">'+language.estatura+' '+language.centimetros+'</option>'
-		,Pes = '<option value="" selected="selected">'+language.peso+' '+language.kgs+'</option>'
-		,Tes1 = $('#textEstaturaUno')
-		,Tes2 = $('#textEstaturaDos')
-		,Tpe = $('#textPeso')
-		,Ies1 = $('select[name=estatura_uno]')
-		,Ies2 = $('select[name=estatura_dos]')
-		,Ipe = $('select[name=peso]');
+		,Ies1 = $('input[name=estatura]')
+		,Ipe = $('input[name=peso]')
+		,changeEstatura = function(s){
+			var v1 = $(pkEstUno.slides[pkEstUno.activeIndex]).attr('data-val'),
+				v2 = $(pkEstDos.slides[pkEstDos.activeIndex]).attr('data-val');
+			//	
+			if(v1 != "" && v2 != ""){
+				Ies1.val(v1+v2);
+			}else{
+				Ies1.val("");
+			}
+		};
 		
+		var es1 = ['<div class="swiper-slide" data-idx="0" data-val="">'+language.mts+'</div>'],
+			es2 = ['<div class="swiper-slide" data-idx="0" data-val="">'+language.centimetros+'</div>'],
+			pes = ['<div class="swiper-slide" data-idx="0" data-val="">'+language.kgs+'</div>'];
+
 	if(und == 'E'){
-		Est1 = '<option value="" selected="selected"> '+language.estatura+' '+language.feet+'</option>',
-		Est2 = '<option value="00" selected="selected"> '+language.estatura+' '+language.inches+'</option>',
-		Pes = '<option value="" selected="selected"> '+language.peso+' '+language.lbs+'</option>';
+		es1 = ['<div class="swiper-slide" data-idx="0" data-val="">'+language.feet+'</div>'],
+		es2 = ['<div class="swiper-slide" data-idx="0" data-val="">'+language.inches+'</div>'],
+		pes = ['<div class="swiper-slide" data-idx="0" data-val="">'+language.lbs+'</div>'];
 		//var metros = ((((i*12)+k)*2.54)/100).toFixed(2);
-		
+		var idx=1;
 		for(var i=4; i<8; i++){
-			Est1 += '<option value="'+i+'"> '+i+'\' </option>';
-		}
+			es1.push('<div class="swiper-slide" data-idx="'+(idx++)+'" data-val="'+i+' "> '+i+'\' </div>');
+		}	
+		idx=1;
 		for(var k=0; k<12; k++){
-			Est2 += '<option value="'+k+'"> '+k+'" </option>';
+			es2.push('<div class="swiper-slide" data-idx="'+(idx++)+'" data-val="'+k+'"> '+k+'" </div>');
 		}
+		idx=1;
 		for(var i=22; i<401; i++){
-			Pes += '<option value="'+i+'">'+i+'</option>';
+			pes.push('<div class="swiper-slide" data-idx="'+(idx++)+'" data-val="'+i+'"> '+i+' </div>');
 		}
 		$('#symbolEstatura').text(language.ftin);
 		$('#symbolPeso').text(language.lbs);
 		$('#textUnids').text(language.eng);
-		Tes1.text("0' ");
-		Tes2.text('0"');
 	}else{
+		var idx=1;
 		for(var i=1; i<3; i++){
-			Est1 += '<option value="'+i+'">'+i+'.</option>';
+			es1.push('<div class="swiper-slide" data-idx="'+(idx++)+'" data-val="'+i+'."> '+i+'. </div>');
 		}
+		idx=1;
 		for(var i=0; i<100; i++){
-			Est2 += '<option value="'+checkTime(i)+'">'+checkTime(i)+'</option>';
+			es2.push('<div class="swiper-slide" data-idx="'+(idx++)+'" data-val="'+checkTime(i)+'"> '+checkTime(i)+' </div>');
 		}
+		idx=1;
 		for(var i=22; i<181; i++){
-			Pes += '<option value="'+i+'">'+i+'</option>';
+			pes.push('<div class="swiper-slide" data-idx="'+(idx++)+'" data-val="'+i+'"> '+i+' </div>');
 		}
 		$('#symbolEstatura').text(language.mts);
 		$('#symbolPeso').text(language.kgs);
 		$('#textUnids').text('Mts');
-		Tes1.text('0.');
-		Tes2.text('0');
 	}
 	
-	Tpe.text('0');
-	Ies1.html(Est1).attr('placeholder', language.estatura);
-	Ies2.html(Est2).attr('placeholder', language.estatura);
-	Ipe.html(Pes).attr('placeholder', language.peso);
+	if(pkEstUno == null){
+		pkEstUno = new Swiper ('#pkEstUno', {
+			direction: 'vertical'
+			,loop: false
+		//	,freeMode: true
+			,slidesPerView: 3
+			,centeredSlides: true
+			,onSlideChangeEnd: changeEstatura
+		});
+	}else{
+		pkEstUno.removeAllSlides();
+	}
+	
+	pkEstUno.appendSlide(es1);
+	pkEstUno.slideTo(0);
+	
+	if(pkEstDos	== null){
+		pkEstDos = new Swiper ('#pkEstDos', {
+			direction: 'vertical'
+			,loop: false
+		//	,freeMode: true
+			,slidesPerView: 3
+			,centeredSlides: true
+			,onSlideChangeEnd: changeEstatura
+		});
+	}else{
+		pkEstDos.removeAllSlides();
+	}
+	
+	pkEstDos.appendSlide(es2);
+	pkEstDos.slideTo(0);
+	
+	if(pkPeso == null){
+		pkPeso = new Swiper ('#pkPeso', {
+			direction: 'vertical'
+			,loop: false
+		//	,freeMode: true
+			,slidesPerView: 3
+			,centeredSlides: true
+			,onSlideChangeEnd :function(s){
+				var v = $(pkPeso.slides[pkPeso.activeIndex]).attr('data-val');
+				Ipe.val(v);
+			}
+		});
+	}else{
+		pkPeso.removeAllSlides();
+	}
+	
+	pkPeso.appendSlide(pes);
+	pkPeso.slideTo(0);
+	
+	Ies1.attr('placeholder', language.estatura);
+	Ipe.attr('placeholder', language.peso);
 	
 	if(back === false){
 		return false;
 	}
+	
 	if(SES['perfil']){
 		var p = JSON.parse(SES['perfil']);
 		if(p.unit != undefined && p.unit != null && p.unit != "" ){
@@ -1036,23 +1089,27 @@ function show_paso_dos(back, unid){
 				show_paso_dos("", p.unit);
 				return false;
 			}
-			var h=0;
+			var h=0,
+				s='.';
 			
 			if(p.unit == 'E'){
-				h = p.height.split(' ');
-				Tes1.text(h[0]+"' ");
-				Ies1.val(h[0]);
-				Tes2.text(h[1]+'"');
-				Ies2.val(h[1]);
+				s=' ';
+				h = p.height.split(s);
 			}else{
-				h = p.height.split('.');
-				Tes1.text(h[0]+'.');
-				Ies1.val(h[0]);
-				Tes2.text(checkTime(h[1]));
-				Ies2.val(checkTime(h[1]));
+				h = p.height.split(s);
 			}
-				Tpe.text(p.weight);
-				Ipe.val(p.weight);
+			
+			var ix1 = $('#pkEstUno .swiper-slide[data-val="'+h[0]+s+'"]').data('idx'),
+				ix2 = $('#pkEstDos .swiper-slide[data-val="'+h[1]+'"]').data('idx'),	
+				ps1 = $('#pkPeso .swiper-slide[data-val="'+p.weight+'"]').data('idx');	
+				
+			pkEstUno.slideTo(ix1);
+			pkEstDos.slideTo(ix2);
+			Ies1.val(h[0]+s+h[1]);
+			
+			Ipe.val(p.weight);
+			pkPeso.slideTo(ps1);
+			
 			$('select[name=unidad_medida]').val(p.unit);
 		}
 	}
@@ -1066,30 +1123,21 @@ function show_paso_dos(back, unid){
 		ak_navigate('#registro-2', back);
 		
 	}
-	
-	
 }
 function form_paso_dos(form){
 	ak_validate(form, {
 		ajax: false
 		,func: function(data){
 			var udata = {},
-				estat = 0,
 				estatura_uno = parseInt(data.estatura_uno),
 				estatura_dos = parseInt(data.estatura_dos);
 			
 			if(SES['perfil']){
 				udata = JSON.parse(SES['perfil']);
 			}
-			
-			if(data.unidad_medida == "E"){
 			//	estat = ((((estatura_uno*12)+estatura_dos)*2.54)/100).toFixed(2);
-				estat = estatura_uno+' '+estatura_dos;
-			}else{
-				estat = estatura_uno +'.'+estatura_dos;
-			}
-		
-			udata.height = estat;
+
+			udata.height = data.estatura;
 			udata.weight = data.peso;
 			udata.unit = data.unidad_medida;
 			SES['perfil'] = JSON.stringify(udata);
@@ -1105,7 +1153,7 @@ function form_paso_dos(form){
 				sdata.edad_day = bdate[2];
 				sdata.edad_month = bdate[1];
 				sdata.edad_year = bdate[0];
-				sdata.estatura = estat;
+				sdata.estatura = data.estatura;
 				sdata.peso = data.peso;
 				sdata.unit = data.unidad_medida;
 			

@@ -128,24 +128,10 @@
 						<option value="F" data-lang="femenino"></option>
 					</select>
 					<p data-lang="birth_date"></p>
-					<!--div class="row">
-						<div class="col col20">
-							<select name="edad_day" class="form-control required">
-								<option value=""></option>
-							</select>
-						</div>
-						<div class="col col50">
-							<select name="edad_month" class="form-control required">
-								<option value=""></option>
-							</select>
-						</div>
-						<div class=" col col30">
-							<select name="edad_year" class="form-control required">
-								<option value=""></option>
-							</select>
-						</div>
-					</div-->
 					<div class="config-item">
+						<input name="edad_day" class="form-control required" value="" />
+						<input name="edad_year" class="form-control required" value="" />
+						<input name="edad_month" class="form-control required" value="" />
 						<div class="row">
 							<div id="pickEdadDia" class="col col30 config-item-center">
 								<div class="swiper-container">
@@ -190,26 +176,34 @@
 						</div>
 					</div>
 					<div class="config-item">
-						<select name="estatura_uno" class="form-control config-input-1 required" onchange="unitsValue(this, '#textEstaturaUno');">
-							<option value=""></option>
-						</select>
-						<select name="estatura_dos" class="form-control config-input-2 required" onchange="unitsValue(this, '#textEstaturaDos');">
-							<option value=""></option>
-						</select>
+						<input name="estatura" class="form-control required" value="" />
 						<div class="row">
-							<span class="col30 config-item-left" data-lang="estatura"></span>
-							<span class="col40 config-item-center"> <span id="textEstaturaUno"></span><span id="textEstaturaDos"></span></span>
-							<span id="symbolEstatura" class="col30 config-item-right"></span>
+							<div class="col col30 config-item-left pktxaling" data-lang="estatura">
+								<!---->
+							</div>
+							<div class="col40 config-item-center">
+								<div id="pkEstUno" class="swiper-container">
+									<div class="swiper-wrapper"></div>
+								</div>
+								<div id="pkEstDos" class="swiper-container">
+									<div class="swiper-wrapper"></div>
+								</div>
+							</div>
+							<div class="col col30 config-item-right">
+								<!---->
+							</div>
 						</div>
 					</div>
 					<div class="config-item">
-						<select name="peso" class="form-control required" onchange="unitsValue(this, '#textPeso');">
-							<option value=""></option>
-						</select>
+						<input name="peso" class="form-control required" value="" />
 						<div class="row">
-							<span class="col30 config-item-left" data-lang="peso"></span>
-							<span id="textPeso" class="col40 config-item-center"></span>
-							<span id="symbolPeso" class="col30 config-item-right"></span>
+							<span class="col30 config-item-left pktxaling" data-lang="peso"></span>
+							<span class="col40 config-item-center">
+								<div id="pkPeso" class="swiper-container">
+									<div class="swiper-wrapper"></div>
+								</div>
+							</span>
+							<span id="symbolPeso" class="col30 config-item-right pktxaling"></span>
 						</div>
 					</div>
 					<div>&nbsp;</div>
