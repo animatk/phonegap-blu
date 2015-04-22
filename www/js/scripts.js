@@ -861,17 +861,20 @@ function show_paso_uno(back){
 		}
 		$('#pickEdadDia .swiper-wrapper').html(dias);
 		
+		var fun1 = function(s){
+			var v = $(PickDia.slides[PickDia.activeIndex]).attr('data-val');
+			$('input[name=edad_day]').val(v);
+			PickDia.slideTo(PickDia.activeIndex);
+		};
+		
 		PickDia = new Swiper ('#pickEdadDia .swiper-container', {
 			direction: 'vertical'
 			,loop: false
 			,freeMode: true
 			,slidesPerView: 3
 			,centeredSlides: true
-			,onSlideChangeEnd :function(s){
-				var v = $(PickDia.slides[PickDia.activeIndex]).attr('data-val');
-				$('input[name=edad_day]').val(v);
-				PickDia.slideTo(PickDia.activeIndex);
-			}
+			,onTouchEnd : fun1
+			,onSlideChangeEnd : fun1
 		});
 	}
 	if(PickMes == null){
@@ -882,17 +885,20 @@ function show_paso_uno(back){
 		}
 		$('#pickEdadMes .swiper-wrapper').html(months);
 		
+		var fun2 = function(s){
+			var v = $(PickMes.slides[PickMes.activeIndex]).attr('data-val');
+			$('input[name=edad_month]').val(v);
+			PickMes.slideTo(PickMes.activeIndex);
+		};
+		
 		PickMes = new Swiper ('#pickEdadMes .swiper-container', {
 			direction: 'vertical'
 			,loop: false
 			,freeMode: true
 			,slidesPerView: 3
 			,centeredSlides: true
-			,onSlideChangeEnd :function(s){
-				var v = $(PickMes.slides[PickMes.activeIndex]).attr('data-val');
-				$('input[name=edad_month]').val(v);
-				PickMes.slideTo(PickMes.activeIndex);
-			}
+			,onTouchEnd : fun2
+			,onSlideChangeEnd : fun2
 		});
 	}
 	
@@ -906,17 +912,20 @@ function show_paso_uno(back){
 		}
 		$('#pickEdadAno .swiper-wrapper').html(years);
 		
+		var fun3 = function(s){
+			var v = $(PickAno.slides[PickAno.activeIndex]).attr('data-val');
+			$('input[name=edad_year]').val(v);
+			PickAno.slideTo(PickAno.activeIndex);
+		};
+		
 		PickAno = new Swiper ('#pickEdadAno .swiper-container', {
 			direction: 'vertical'
 			,loop: false
 			,freeMode: true
 			,slidesPerView: 3
 			,centeredSlides: true
-			,onSlideChangeEnd :function(s){
-				var v = $(PickAno.slides[PickAno.activeIndex]).attr('data-val');
-				$('input[name=edad_year]').val(v);
-				PickAno.slideTo(PickAno.activeIndex);
-			}
+			,onTouchEnd : fun3
+			,onSlideChangeEnd : fun3
 		});
 	
 	}
@@ -985,7 +994,8 @@ function show_paso_dos(back, unid){
 			}else{
 				Ies1.val("");
 			}
-			s.slideTo(s.activeIndex);
+			pkEstUno.slideTo(pkEstUno.activeIndex);
+			pkEstDos.slideTo(pkEstDos.activeIndex);
 		};
 		
 		var es1 = ['<div class="swiper-slide" data-idx="0" data-val="">'+language.mts+'</div>'],
@@ -1036,7 +1046,8 @@ function show_paso_dos(back, unid){
 			,freeMode: true
 			,slidesPerView: 3
 			,centeredSlides: true
-			,onSlideChangeEnd: changeEstatura
+			,onTouchEnd : changeEstatura
+			,onSlideChangeEnd : changeEstatura
 		});
 	}else{
 		pkEstUno.removeAllSlides();
@@ -1052,7 +1063,8 @@ function show_paso_dos(back, unid){
 			,freeMode: true
 			,slidesPerView: 3
 			,centeredSlides: true
-			,onSlideChangeEnd: changeEstatura
+			,onTouchEnd : changeEstatura
+			,onSlideChangeEnd : changeEstatura
 		});
 	}else{
 		pkEstDos.removeAllSlides();
@@ -1061,6 +1073,12 @@ function show_paso_dos(back, unid){
 	pkEstDos.appendSlide(es2);
 	pkEstDos.slideTo(0);
 	
+	var changePeso = function(s){
+		var v = $(pkPeso.slides[pkPeso.activeIndex]).attr('data-val');
+		Ipe.val(v);
+		pkPeso.slideTo(pkPeso.activeIndex);
+	};
+	
 	if(pkPeso == null){
 		pkPeso = new Swiper ('#pkPeso', {
 			direction: 'vertical'
@@ -1068,11 +1086,8 @@ function show_paso_dos(back, unid){
 			,freeMode: true
 			,slidesPerView: 3
 			,centeredSlides: true
-			,onSlideChangeEnd :function(s){
-				var v = $(pkPeso.slides[pkPeso.activeIndex]).attr('data-val');
-				Ipe.val(v);
-				pkPeso.slideTo(pkPeso.activeIndex);
-			}
+			,onTouchEnd : changePeso
+			,onSlideChangeEnd : changePeso
 		});
 	}else{
 		pkPeso.removeAllSlides();
