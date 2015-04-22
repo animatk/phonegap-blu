@@ -368,6 +368,12 @@ header .btn{
 
 /* end menu lateral */
 /* secciones */
+
+.general-title{
+	font-style: italic;
+	font-size: 1.1em;
+} 
+
 #menu{ z-index: 3; background: none; }
 #login .Main{
 	padding-top: 6px;

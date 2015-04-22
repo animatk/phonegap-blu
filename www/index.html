@@ -106,7 +106,7 @@
 		</section>
 		<section id="restore" class="Page">
 			<div class="container Main">
-				<h2>Restaurar Contraseña</h2>
+				<p class="text-center" data-lang="restore_pass"></p>
 				<div>&nbsp;</div>
 				<form onsubmit="return restore(this); return false;">
 					<input name="correo" class="form-control required email" placeholder="Correo Electrónico" />
@@ -118,8 +118,7 @@
 		</section>
 		<section id="registro" class="Page">
 			<div class="container Main">
-				<h2 data-lang="info_general"></h2>
-				<div>&nbsp;</div>
+				<p class="text-center general-title" data-lang="info_general"></p>
 				<form onsubmit="return form_paso_uno(this); return false;">
 					<input name="nombre" class="form-control required" />
 					<select name="genero" class="form-control required">
@@ -151,8 +150,6 @@
 						</div>
 					</div>
 					<div>&nbsp;</div>
-					<div>&nbsp;</div>
-					<div>&nbsp;</div>
 					<div class="text-center">
 						<button id="BtnRegister" class="btn btn-action btn-block" data-lang="siguiente"></button>
 					</div>
@@ -161,8 +158,7 @@
 		</section>
 		<section id="registro-2" class="Page">
 			<div class="container Main">
-				<h2 data-lang="info_personal"></h2>
-				<div>&nbsp;</div>
+				<p class="text-center general-title" data-lang="info_personal"></p>
 				<form onsubmit="return form_paso_dos(this); return false;">
 					<div class="config-item">
 						<select name="unidad_medida" class="form-control required" onchange="show_paso_dos(false, this.value);" placeholder="Unidad de medida">
@@ -206,8 +202,6 @@
 							<span id="symbolPeso" class="col30 config-item-right pktxaling"></span>
 						</div>
 					</div>
-					<div>&nbsp;</div>
-					<div>&nbsp;</div>
 					<div class="text-center">
 						<button id="BtnRegister2" class="btn btn-action btn-block" data-lang="siguiente"></button>
 					</div>
@@ -216,8 +210,7 @@
 		</section>
 		<section id="registro-3" class="Page">
 			<div class="container Main">
-				<h2 data-lang="info_acces"></h2>
-				<div>&nbsp;</div>
+				<p class="text-center general-title" data-lang="info_acces"></p>
 				<form onsubmit="return form_paso_tres(this); return false;">			
 					<input name="correo" class="form-control required email" />
 					<input name="contrasena" type="password" class="form-control required"/>
@@ -242,7 +235,7 @@
 		</section>
 		<section id="config" class="Page">
 			<div class="container Main">
-				<h2 data-lang="config"></h2>
+				<p class="text-center general-title" data-lang="config"></p>
 				<div>&nbsp;</div>
 				<div class="row row2">
 					<p class="text-center" data-lang="lugar_actividad"></p>
@@ -290,7 +283,7 @@
 		</section>
 		<section id="dispositivos" class="Page">
 			<div class="container Main">
-				<h2 data-lang="disp_hrm"></h2>
+				<p class="text-center general-title" data-lang="disp_hrm"></p>
 				<div>&nbsp;</div>
 				<div id="dispMain">
 					<div class="disp-list">
@@ -334,6 +327,7 @@
 					<div>
 						<span data-lang="peso"></span> <span  class="perfil-peso"></span>
 					</div>
+					<div>&nbsp;</div>
 					<div class="text-center" id="fbConnect">
 						<span class="btn btn-facebook btn-block btn-icon btn-icon-fb" onclick="fbLogin();" data-lang="RegOnFb"></span>
 						<div>&nbsp;</div>
@@ -422,9 +416,9 @@
 			color: #fff;
 		}
 	</style>
-	<form onsubmit="javascript:eval($(this).find('input').val()); return false;">
+	<!--form onsubmit="javascript:eval($(this).find('input').val()); return false;">
 	<input style="font-size: 8px; position: fixed; bottom: 40px; width: 100%; z-index: 9999; margin: 0; padding: 3px;" class="form-control">
 	</form>
-	<div id="mensajes" style="height:40px; z-index: 99999; position: fixed; display: block; width: 100%; overflow: hidden; overflow-y: auto; bottom:0; left:0; color: #666; background: #000; font-size: 8px; border-top: 1px solid #333;"></div>
+	<div id="mensajes" style="height:40px; z-index: 99999; position: fixed; display: block; width: 100%; overflow: hidden; overflow-y: auto; bottom:0; left:0; color: #666; background: #000; font-size: 8px; border-top: 1px solid #333;"></div-->
   </body>
 </html>

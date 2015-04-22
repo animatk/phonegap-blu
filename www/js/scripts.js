@@ -864,12 +864,13 @@ function show_paso_uno(back){
 		PickDia = new Swiper ('#pickEdadDia .swiper-container', {
 			direction: 'vertical'
 			,loop: false
-		//	,freeMode: true
+			,freeMode: true
 			,slidesPerView: 3
 			,centeredSlides: true
 			,onSlideChangeEnd :function(s){
 				var v = $(PickDia.slides[PickDia.activeIndex]).attr('data-val');
 				$('input[name=edad_day]').val(v);
+				PickDia.slideTo(PickDia.activeIndex);
 			}
 		});
 	}
@@ -884,12 +885,13 @@ function show_paso_uno(back){
 		PickMes = new Swiper ('#pickEdadMes .swiper-container', {
 			direction: 'vertical'
 			,loop: false
-		//	,freeMode: true
+			,freeMode: true
 			,slidesPerView: 3
 			,centeredSlides: true
 			,onSlideChangeEnd :function(s){
 				var v = $(PickMes.slides[PickMes.activeIndex]).attr('data-val');
 				$('input[name=edad_month]').val(v);
+				PickMes.slideTo(PickMes.activeIndex);
 			}
 		});
 	}
@@ -907,12 +909,13 @@ function show_paso_uno(back){
 		PickAno = new Swiper ('#pickEdadAno .swiper-container', {
 			direction: 'vertical'
 			,loop: false
-		//	,freeMode: true
+			,freeMode: true
 			,slidesPerView: 3
 			,centeredSlides: true
 			,onSlideChangeEnd :function(s){
 				var v = $(PickAno.slides[PickAno.activeIndex]).attr('data-val');
 				$('input[name=edad_year]').val(v);
+				PickAno.slideTo(PickAno.activeIndex);
 			}
 		});
 	
@@ -982,6 +985,7 @@ function show_paso_dos(back, unid){
 			}else{
 				Ies1.val("");
 			}
+			s.slideTo(s.activeIndex);
 		};
 		
 		var es1 = ['<div class="swiper-slide" data-idx="0" data-val="">'+language.mts+'</div>'],
@@ -1029,7 +1033,7 @@ function show_paso_dos(back, unid){
 		pkEstUno = new Swiper ('#pkEstUno', {
 			direction: 'vertical'
 			,loop: false
-		//	,freeMode: true
+			,freeMode: true
 			,slidesPerView: 3
 			,centeredSlides: true
 			,onSlideChangeEnd: changeEstatura
@@ -1045,7 +1049,7 @@ function show_paso_dos(back, unid){
 		pkEstDos = new Swiper ('#pkEstDos', {
 			direction: 'vertical'
 			,loop: false
-		//	,freeMode: true
+			,freeMode: true
 			,slidesPerView: 3
 			,centeredSlides: true
 			,onSlideChangeEnd: changeEstatura
@@ -1061,12 +1065,13 @@ function show_paso_dos(back, unid){
 		pkPeso = new Swiper ('#pkPeso', {
 			direction: 'vertical'
 			,loop: false
-		//	,freeMode: true
+			,freeMode: true
 			,slidesPerView: 3
 			,centeredSlides: true
 			,onSlideChangeEnd :function(s){
 				var v = $(pkPeso.slides[pkPeso.activeIndex]).attr('data-val');
 				Ipe.val(v);
+				pkPeso.slideTo(pkPeso.activeIndex);
 			}
 		});
 	}else{
@@ -1250,14 +1255,7 @@ function form_paso_tres(form){
 /*! end register */
 /*! restore */
 function botonRestore(){
-	ak_navigate('#login','#restore'); 
-	btnIzq({
-		text: 'Volver'
-		,from: '#restore'
-		,to: '#login'
-		,fx: 'toRight'
-		,fn: 'btnIzq({ text:\'Cancelar\', from:\'#login\', to:\'#inicio\', fx:\'toRight\', fn:"$(\'#btnMenu\').removeClass(\'oculto\');"});'
-	});	
+	ak_navigate('#restore', {to: 'show_login();'}); 
 }
 function restore(form){
 	ak_validate( 
@@ -1271,15 +1269,7 @@ function restore(form){
 						alert(obj.message);
 					}else{
 						alert(obj.message);
-						ak_navigate('#restore', '#login', 'toRight');
-						$('#btnMenu').addClass('oculto');
-						btnIzq({
-							text: 'Cancelar'	
-							,from: '#login'	
-							,to: '#inicio'	
-							,fx: 'toRight'	
-							,fn: 'inicio(); $(\'#btnMenu\').removeClass(\'oculto\')'
-						});
+						show_login();
 					}
 					cortina.remove();
 				});}});
