@@ -1580,7 +1580,7 @@ function stepsSuccess(a){
 			}
 			$(".DISTA").html( mostrar );
 			/*! calorias */
-			var efficiencia = 0.6, //promedio de caminar y trotar
+			var efficiencia = 0.6; //promedio de caminar y trotar
 			if(PES == null){
 				if(PERFIL.unit == 'E'){
 					PES = parseInt(PERFIL.weight);
