@@ -163,7 +163,6 @@ img{vertical-align:middle;}
 
 .Main{
 	padding-top: 70px;
-	padding-bottom: 60px;
 }
 
 .container{
@@ -321,11 +320,11 @@ header .btn{
 
 .btn-icon-mail{
 	background: url(../img/ico-mail.png) no-repeat left !important;
-	  background-size: auto 90% !important;
+	  background-size: auto 70% !important;
 }
 .btn-icon-lock{
 	background: url(../img/ico-lock.png) no-repeat left !important;
-	background-size: auto 90% !important;
+	background-size: auto 70% !important;
 }
 
 /* end header*/
@@ -372,7 +371,6 @@ header .btn{
 #menu{ z-index: 3; background: none; }
 #login .Main{
 	padding-top: 6px;
-	padding-bottom: 0;
 }
 .ios-device #login .Main{
 	padding-top: 25px;

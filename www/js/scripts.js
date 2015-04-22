@@ -14,6 +14,8 @@ var e=h.wrapper.children("."+h.params.slideClass);h.loopedSlides=parseInt(h.para
 
 
 var SES = window.localStorage,
+	ALT = null, //altura
+	PES = null, //peso
 	lang = 'en', //lenguaje por defecto
 	langs = ['en','es'], //lenguajes existentes
 	language = {}, //lenguajes existentes
@@ -990,7 +992,6 @@ function show_paso_dos(back, unid){
 		es1 = ['<div class="swiper-slide" data-idx="0" data-val="">'+language.feet+'</div>'],
 		es2 = ['<div class="swiper-slide" data-idx="0" data-val="">'+language.inches+'</div>'],
 		pes = ['<div class="swiper-slide" data-idx="0" data-val="">'+language.lbs+'</div>'];
-		//var metros = ((((i*12)+k)*2.54)/100).toFixed(2);
 		var idx=1;
 		for(var i=4; i<8; i++){
 			es1.push('<div class="swiper-slide" data-idx="'+(idx++)+'" data-val="'+i+' "> '+i+'\' </div>');
@@ -1363,16 +1364,8 @@ function addDisp(name, address){
 function principal(back){
 	ak_navigate('#principal', back);
 	var mySwiper = new Swiper ('#principal .swiper-container', {
-		// Optional parameters
 		direction: 'horizontal'
 		,loop: false
-		// If we need pagination
-	//	pagination: '.swiper-pagination',
-		// Navigation arrows
-	//	nextButton: '.swiper-button-next',
-	//	prevButton: '.swiper-button-prev',
-		// And if we need scrollbar
-	//	scrollbar: '.swiper-scrollbar',
 	});
 	$('#BtnPausar').removeClass('oculto');
 	$('#BtnDetener').addClass('oculto');
@@ -1535,14 +1528,24 @@ function stepsSuccess(a){
 		if(PERFIL == null){
 			PERFIL = JSON.parse(SES['perfil']);
 		}
-		
+
 		var metro = 39.370, //1 metro en pulgadas
 			milla = 1.609344, //1 milla en kilometros
 			libra = 2.2046; //1 libra
-		
-		var pulgadas = parseFloat(PERFIL.height) * metro;
-	//	
 
+		if(ALT == null){
+			if(PERFIL.unit == 'E'){
+				var a = PERFIL.height.split(' '),
+					a1= parseInt(a[0]),
+					a2= parseInt(a[1]);
+				
+				ALT = ((((a1*12)+a2)*2.54)/100).toFixed(2);
+			}else{
+				ALT = parseFloat(PERFIL.height).toFixed(2);
+			}
+		}	
+		var pulgadas = ALT * metro;
+		
 		var med = (PERFIL.gender == 'M')? 0.415 : 0.413;
 
 		var velocidad = {};
@@ -1559,10 +1562,7 @@ function stepsSuccess(a){
 			velocidad.paso_act = STEP;
 			var	PasosDivSegundos = (pasos / 5).toFixed(1);
 			var PpS = (PasosDivSegundos > 1.5)? PasosDivSegundos : 0;
-			
-			mensaje('Pasos dados : '+ pasos +', Pasos / Segundos : '+PpS );
 			SES['velocidad'] = JSON.stringify(velocidad);
-			
 			var ndista = (pulgadas * (med * PpS)) * pasos;
 			DISTA = DISTA + ndista;
 		//	DISTA = (pulgadas * med) * STEP;
@@ -1581,13 +1581,21 @@ function stepsSuccess(a){
 			$(".DISTA").html( mostrar );
 			/*! calorias */
 			var efficiencia = 0.6, //promedio de caminar y trotar
-			peso_libras = PERFIL.weight;
+			if(PES == null){
+				if(PERFIL.unit == 'E'){
+					PES = parseInt(PERFIL.weight);
+				}else{
+					PES = (parseInt(PERFIL.weight) * 2.20462262).toFixed(1);
+				}
+			}
 			// si hrm activo
 			if(PPM != 0){ 
 				eficiencia = 0.5*(PPM/100);
 			}
-			CALO = (efficiencia * peso_libras * ((metros/1000)/milla)).toFixed(1);
+			CALO = (efficiencia * PES * ((metros/1000)/milla)).toFixed(1);
 			$('.CALOR').html( CALO );
+			
+			mensaje('Alt: '+ALT+' Pes: '+PES);
 		}
 		$('.PASOS').html( STEP );
 		initClock();
