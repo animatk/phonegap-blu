@@ -755,6 +755,9 @@ input[type='range']::-webkit-slider-thumb {
 .config-item input.form-control{
 	height: 0px;
 }
+.config-item .form-control.swho-it{
+	height: 100%;
+}
 /* end config */
 
 /* icons */
