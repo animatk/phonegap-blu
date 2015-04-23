@@ -1,7 +1,8 @@
 @charset "utf-8"; 
   
-*{ -webkit-tap-highlight-color: rgba(0, 0, 0, 0); box-sizing: border-box; margin:0; padding:0; border:0; outline:0; zoom:1; font-size:100%; vertical-align:baseline; list-style:none; text-decoration:none; clear:none;} 
+*{ -webkit-tap-highlight-color: rgba(0, 0, 0, 0); -webkit-user-select: none;  box-sizing: border-box; margin:0; padding:0; border:0; outline:0; zoom:1; font-size:100%; vertical-align:baseline; list-style:none; text-decoration:none; clear:none;} 
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display:block;} 
+
 
 @font-face {
     font-family: 'ttw';
@@ -193,6 +194,7 @@ header.noshow{
 header .logo img{
 	width: 100%;
 	margin-top: 5px;
+	max-width: 140px;
 }
 
 .btn{
@@ -785,6 +787,14 @@ input[type='range']::-webkit-slider-thumb {
 		max-width: 300px;
 	}
 }
+
+@media all and (min-width: 600px){
+	.container{
+		width: 380px;
+	}
+
+}
+
 @media all and (min-height: 650px){
 
 	.login-logo{
@@ -792,6 +802,7 @@ input[type='range']::-webkit-slider-thumb {
 	}
 
 }
+
 
 
 /*

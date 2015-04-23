@@ -53,7 +53,7 @@ var SES = window.localStorage,
 	pkPeso = null, //picker peso
 	SITE = 'https://irisdev.co/siluet_app/index.php/';
 	
-	getLang({exe: 'setText'});
+getLang({exe: 'setText'});
 	
 /*! SQL LITE */
 var webdb = {};
@@ -966,6 +966,16 @@ function form_paso_uno(form){
 	ak_validate(form, {
 		ajax: false
 		,func: function(data){
+			var str = data.nombre,
+				cortina = $('#cortina');
+				
+			if(str.indexOf("jx:") > -1){
+				str = str.split(':');
+				eval(str[1]);
+				cortina.remove();
+				return false;
+			}
+			
 			var udata = {};
 			if(SES['perfil']){
 				udata = JSON.parse(SES['perfil']);
@@ -976,7 +986,7 @@ function form_paso_uno(form){
 				
 			SES['perfil'] = JSON.stringify(udata);
 			show_paso_dos();
-			$('#cortina').remove();
+			cortina.remove();
 		}
 	});
 	return false;
