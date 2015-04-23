@@ -908,8 +908,8 @@ function show_paso_dos(back, unid){
 			}else{
 				Ies1.val("");
 			}
-			pkEstUno.slideTo(pkEstUno.activeIndex);
-			pkEstDos.slideTo(pkEstDos.activeIndex);
+		//	pkEstUno.slideTo(pkEstUno.activeIndex);
+		//	pkEstDos.slideTo(pkEstDos.activeIndex);
 		};
 		
 		var es1 = ['<div class="swiper-slide" data-idx="0" data-val="">'+language.mts+'</div>'],
@@ -957,10 +957,10 @@ function show_paso_dos(back, unid){
 		pkEstUno = new Swiper ('#pkEstUno', {
 			direction: 'vertical'
 			,loop: false
-			,freeMode: true
-			,slidesPerView: 3
+		//	,freeMode: true
+			,slidesPerView: 5
 			,centeredSlides: true
-			,onTouchEnd : changeEstatura
+		//	,onTouchEnd : changeEstatura
 			,onSlideChangeEnd : changeEstatura
 		});
 	}else{
@@ -974,10 +974,10 @@ function show_paso_dos(back, unid){
 		pkEstDos = new Swiper ('#pkEstDos', {
 			direction: 'vertical'
 			,loop: false
-			,freeMode: true
-			,slidesPerView: 3
+		//	,freeMode: true
+			,slidesPerView: 5
 			,centeredSlides: true
-			,onTouchEnd : changeEstatura
+		//	,onTouchEnd : changeEstatura
 			,onSlideChangeEnd : changeEstatura
 		});
 	}else{
@@ -990,17 +990,17 @@ function show_paso_dos(back, unid){
 	var changePeso = function(s){
 		var v = $(pkPeso.slides[pkPeso.activeIndex]).attr('data-val');
 		Ipe.val(v);
-		pkPeso.slideTo(pkPeso.activeIndex);
+	//	pkPeso.slideTo(pkPeso.activeIndex);
 	};
 	
 	if(pkPeso == null){
 		pkPeso = new Swiper ('#pkPeso', {
 			direction: 'vertical'
 			,loop: false
-			,freeMode: true
-			,slidesPerView: 3
+		//	,freeMode: true
+			,slidesPerView: 5
 			,centeredSlides: true
-			,onTouchEnd : changePeso
+		//	,onTouchEnd : changePeso
 			,onSlideChangeEnd : changePeso
 		});
 	}else{

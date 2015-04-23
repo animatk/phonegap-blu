@@ -405,16 +405,12 @@ header .btn{
 #pickEdadDia,
 #pickEdadMes,
 #pickEdadAno{
-	height: 90px;
+	height: 180px;
 	overflow: hidden;
-	font-size: 18px;
+	font-size: 23px;
+	line-height: 29px
 }
 
-#pkEstUno,
-#pkEstDos{
-	float: left;
-	width: 50%;
-}
 
 #pkPeso:before,
 #pkEstUno:before,
@@ -434,7 +430,7 @@ header .btn{
 	height: 1px;
 	display: block;
 	background: #5de252;
-	top: 33%;
+	top: 40%;
 	left: 25%;
 }
 #pkPeso:after,
@@ -443,7 +439,7 @@ header .btn{
 #pickEdadDia:after,
 #pickEdadMes:after,
 #pickEdadAno:after{
-	top: 66%;
+	top: 58%;
 }
 
 
