@@ -853,113 +853,17 @@ function wizard(paso){
 /*! end login */
 /*! register */
 function show_paso_uno(back){
-	if(PickDia == null){
-		var dias = '<div class="swiper-slide" data-idx="0" data-val="">'+language.dia+'</div>',
-			k =1;
-		for(var i=1; i<32; i++){
-			dias += '<div class="swiper-slide" data-idx="'+(k++)+'" data-val="'+checkTime(i)+'">'+checkTime(i)+'</div>';
-		}
-		$('#pickEdadDia .swiper-wrapper').html(dias);
-		
-		var fun1 = function(s){
-			var v = $(PickDia.slides[PickDia.activeIndex]).attr('data-val');
-			$('input[name=edad_day]').val(v);
-			PickDia.slideTo(PickDia.activeIndex);
-		};
-		
-		PickDia = new Swiper ('#pickEdadDia .swiper-container', {
-			direction: 'vertical'
-			,loop: false
-			,freeMode: true
-			,slidesPerView: 3
-			,centeredSlides: true
-			,onTouchEnd : fun1
-			,onSlideChangeEnd : fun1
-		});
-	}
-	if(PickMes == null){
-		var months = '<div class="swiper-slide" data-idx="0" data-val="">'+language.mes+'</div>',
-			k =1;
-		for(var i=0; i<12; i++){
-			months += '<div class="swiper-slide" data-idx="'+(k++)+'" data-val="'+checkTime(i+1)+'">'+language.meses[i]+'</div>';
-		}
-		$('#pickEdadMes .swiper-wrapper').html(months);
-		
-		var fun2 = function(s){
-			var v = $(PickMes.slides[PickMes.activeIndex]).attr('data-val');
-			$('input[name=edad_month]').val(v);
-			PickMes.slideTo(PickMes.activeIndex);
-		};
-		
-		PickMes = new Swiper ('#pickEdadMes .swiper-container', {
-			direction: 'vertical'
-			,loop: false
-			,freeMode: true
-			,slidesPerView: 3
-			,centeredSlides: true
-			,onTouchEnd : fun2
-			,onSlideChangeEnd : fun2
-		});
-	}
-	
-	if(PickAno == null){
-		var years = '<div class="swiper-slide" data-idx="0" data-val="">'+language.year+'</div>',
-			k =1;
-		var year = new Date().getFullYear();
-		for(var i=0; i<69; i++){
-			var y = year--;
-			years += '<div class="swiper-slide" data-idx="'+(k++)+'" data-val="'+y+'">'+y+'</div>';
-		}
-		$('#pickEdadAno .swiper-wrapper').html(years);
-		
-		var fun3 = function(s){
-			var v = $(PickAno.slides[PickAno.activeIndex]).attr('data-val');
-			$('input[name=edad_year]').val(v);
-			PickAno.slideTo(PickAno.activeIndex);
-		};
-		
-		PickAno = new Swiper ('#pickEdadAno .swiper-container', {
-			direction: 'vertical'
-			,loop: false
-			,freeMode: true
-			,slidesPerView: 3
-			,centeredSlides: true
-			,onTouchEnd : fun3
-			,onSlideChangeEnd : fun3
-		});
-	
-	}
 	$('input[name=nombre]').attr('placeholder',language.nombre);
 	$('select[name=genero]').attr('placeholder',language.gender);
-	$('input[name=edad_day]').attr('placeholder',language.edad_day);
-	$('input[name=edad_year]').attr('placeholder',language.edad_month);
-	$('input[name=edad_month]').attr('placeholder',language.edad_year);
-
+	$('input[name=edad]').attr('placeholder',language.edad);
 	
-	ak_navigate('#registro', back); 
+	ak_navigate('#registro', back);
 	
 	if(SES['perfil']){
-		var p = JSON.parse(SES['perfil']),
-			d = p.birthdate.split('-');
+		var p = JSON.parse(SES['perfil']);
 		$('input[name=nombre]').val(p.name);
 		$('select[name=genero]').val(p.gender);
-		
-		var ix1 = $('#pickEdadDia .swiper-slide[data-val="'+d[2]+'"]').data('idx'),
-			ix2 = $('#pickEdadMes .swiper-slide[data-val="'+d[1]+'"]').data('idx'),	
-			ix3 = $('#pickEdadAno .swiper-slide[data-val="'+d[0]+'"]').data('idx');
-			
-		if(ix1){
-			PickDia.slideTo(ix1);
-			$('input[name=edad_day]').val(d[2]);
-		}
-		if(ix2){
-			PickMes.slideTo(ix2);
-			$('input[name=edad_month]').val(d[1]);
-		}
-		if(ix3){
-			PickAno.slideTo(ix3);
-			$('input[name=edad_year]').val(d[0]);
-		}
+		$('input[name=edad]').val(p.birthdate);
 	}
 }
 function form_paso_uno(form){
