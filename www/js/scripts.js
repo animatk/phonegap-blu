@@ -826,9 +826,7 @@ function show_perfil(){
 				foto = 'img/perfil-woman.jpg';
 			}
 		}
-		var res = new Date() - new Date(PERFIL.birthdate);
-		edad = (res / (1000 * 60 * 60 * 24 * 365));
-		edad = Math.floor(edad * 1) / 1;
+		edad = cal_edad(PERFIL.birthdate);
 		
 		$('.perfil-edad').text(edad);
 		$('.perfil-nombre').text(PERFIL.name);
@@ -846,16 +844,27 @@ function show_perfil(){
 	
 	ak_navigate('#perfil', {to:'show_inicio();'});
 }
+function cal_edad(data){
+	var res = new Date() - new Date(data);
+	var edad = (res / (1000 * 60 * 60 * 24 * 365));
+	return Math.floor(edad * 1) / 1;
+}
 function wizard(paso){
 	var paso = paso || 0;
 	mensaje('se ejceutara el paso : '+paso );
 }
 /*! end login */
 /*! register */
-function show_paso_uno(back){
+function show_paso_uno(back, edad){
 	$('input[name=nombre]').attr('placeholder',language.nombre);
 	$('select[name=genero]').attr('placeholder',language.gender);
 	$('input[name=edad]').attr('placeholder',language.edad);
+	
+	if(edad != undefined){
+		var e = cal_edad(edad);
+		$('#textEdad').text(e);
+		return false;
+	}
 	
 	ak_navigate('#registro', back);
 	
@@ -864,6 +873,8 @@ function show_paso_uno(back){
 		$('input[name=nombre]').val(p.name);
 		$('select[name=genero]').val(p.gender);
 		$('input[name=edad]').val(p.birthdate);
+		var e = cal_edad(p.birthdate);
+		$('#textEdad').text(e);
 	}
 }
 function form_paso_uno(form){
@@ -886,7 +897,7 @@ function form_paso_uno(form){
 			}
 			udata.gender = data.genero;
 			udata.name = data.nombre;
-			udata.birthdate = data.edad_year+'-'+data.edad_month+'-'+data.edad_day;
+			udata.birthdate = data.edad;
 				
 			SES['perfil'] = JSON.stringify(udata);
 			show_paso_dos();
@@ -898,23 +909,30 @@ function form_paso_uno(form){
 function show_paso_dos(back, unid){
 	var und = unid || 'M'
 		,Ies1 = $('input[name=estatura]')
+		,Tes1 = $('#textEstatura')
 		,Ipe = $('input[name=peso]')
+		,Tpe = $('#textPeso')
 		,changeEstatura = function(s){
 			var v1 = $(pkEstUno.slides[pkEstUno.activeIndex]).attr('data-val'),
 				v2 = $(pkEstDos.slides[pkEstDos.activeIndex]).attr('data-val');
 			//	
 			if(v1 != "" && v2 != ""){
 				Ies1.val(v1+v2);
+				var tes = (v1.indexOf('.') < 0)? v1.replace(' ',"' ")+v2+'"': v1+v2;
+				Tes1.text(tes);
 			}else{
 				Ies1.val("");
+				Tes1.text(0);
 			}
 		//	pkEstUno.slideTo(pkEstUno.activeIndex);
 		//	pkEstDos.slideTo(pkEstDos.activeIndex);
 		};
 		
-		var es1 = ['<div class="swiper-slide" data-idx="0" data-val="">'+language.mts+'</div>'],
-			es2 = ['<div class="swiper-slide" data-idx="0" data-val="">'+language.centimetros+'</div>'],
-			pes = ['<div class="swiper-slide" data-idx="0" data-val="">'+language.kgs+'</div>'];
+	$('.btnSave').text(language.save);
+	
+	var es1 = ['<div class="swiper-slide" data-idx="0" data-val="">'+language.mts+'</div>'],
+		es2 = ['<div class="swiper-slide" data-idx="0" data-val="">'+language.centimetros+'</div>'],
+		pes = ['<div class="swiper-slide" data-idx="0" data-val="">'+language.kgs+'</div>'];
 
 	if(und == 'E'){
 		es1 = ['<div class="swiper-slide" data-idx="0" data-val="">'+language.feet+'</div>'],
@@ -990,6 +1008,8 @@ function show_paso_dos(back, unid){
 	var changePeso = function(s){
 		var v = $(pkPeso.slides[pkPeso.activeIndex]).attr('data-val');
 		Ipe.val(v);
+		var tpe = (v=="")? 0: v;
+		Tpe.text(tpe);
 	//	pkPeso.slideTo(pkPeso.activeIndex);
 	};
 	
@@ -1042,7 +1062,11 @@ function show_paso_dos(back, unid){
 			pkEstDos.slideTo(ix2);
 			Ies1.val(h[0]+s+h[1]);
 			
+			var tes = (s == '.')? h[0]+"' "+s+h[1]+'"': h[0]+s+h[1];
+			Tes1.text(tes);
+			
 			Ipe.val(p.weight);
+			Tpe.text(p.weight);
 			pkPeso.slideTo(ps1);
 			
 			$('select[name=unidad_medida]').val(p.unit);

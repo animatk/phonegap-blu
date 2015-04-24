@@ -118,122 +118,94 @@
 		</section>
 		<section id="registro" class="Page">
 			<div class="container Main">
-				<p class="text-center general-title" data-lang="info_general"></p>
-				<form onsubmit="return form_paso_uno(this); return false;">
-					<input name="nombre" class="form-control required" />
-					<select name="genero" class="form-control required">
-						<option value="" data-lang="gender"></option>
-						<option value="M" data-lang="masculino"></option>
-						<option value="F" data-lang="femenino"></option>
-					</select>
-					
-					<div class="config-item">
-						<!--
-						<input name="edad_day" class="form-control required" value="" />
-						<input name="edad_year" class="form-control required" value="" />
-						<input name="edad_month" class="form-control required" value="" />
-						<div class="row">
-							<div id="pickEdadDia" class="col col30 config-item-center">
-								<div class="swiper-container">
-									<div class="swiper-wrapper"></div>
-								</div>
-							</div>
-							<div id="pickEdadMes" class="col col40 config-item-center">
-								<div class="swiper-container">
-									<div class="swiper-wrapper"></div>
-								</div>
-							</div>
-							<div id="pickEdadAno" class="col col30 config-item-center">
-								<div class="swiper-container">
-									<div class="swiper-wrapper"></div>
-								</div>
+				<div class="config-cont">
+					<p class="text-center general-title" data-lang="info_general"></p>
+					<form onsubmit="return form_paso_uno(this); return false;">
+						<input name="nombre" class="form-control required" />
+						<select name="genero" class="form-control required">
+							<option value="" data-lang="gender"></option>
+							<option value="M" data-lang="masculino"></option>
+							<option value="F" data-lang="femenino"></option>
+						</select>
+						<div class="config-item">
+							<input name="edad" type="date" class="form-control required swho-it" value="" onchange="show_paso_uno(false, this.value);" />
+							<div class="row">
+								<span class="col30 config-item-left" data-lang="birth_date"></span>
+								<span id="textEdad" class="col40 config-item-center">0</span>
+								<span class="col30 config-item-right"></span>
 							</div>
 						</div>
-						-->
-						<input name="edad" type="date" class="form-control required swho-it" value="" />
-						<div class="row">
-							<span class="col30 config-item-left" data-lang="birth_date"></span>
-							<span id="textUnids" class="col40 config-item-center">0</span>
-							<span class="col30 config-item-right"></span>
+						<div class="text-center">
+							<button id="BtnRegister" class="btn btn-action btn-block" data-lang="siguiente"></button>
 						</div>
-					</div>
-					<div class="text-center">
-						<button id="BtnRegister" class="btn btn-action btn-block" data-lang="siguiente"></button>
-					</div>
-				</form>
+					</form>
+				</div>
 			</div>
 		</section>
 		<section id="registro-2" class="Page">
 			<div class="container Main">
-				<p class="text-center general-title" data-lang="info_personal"></p>
-				<form onsubmit="return form_paso_dos(this); return false;">
-					<div class="config-item">
-						<select name="unidad_medida" class="form-control required" onchange="show_paso_dos(false, this.value);" placeholder="Unidad de medida">
-							<option value="M" data-lang="metrico"></option>
-							<option value="E" data-lang="ingles"></option>
-						</select>
-						<div class="row">
-							<span class="col30 config-item-left" data-lang="unidades"></span>
-							<span id="textUnids" class="col40 config-item-center"></span>
-							<span class="col30 config-item-right" data-lang="medicion"></span>
-						</div>
-					</div>
-					<div class="config-item">
-						<input name="estatura" class="form-control required" value="" />
-						<div class="row">
-							<div class="col col50 config-item-center">
-								<div id="pkEstUno" class="swiper-container">
-									<div class="swiper-wrapper"></div>
-								</div>
-							</div>
-							<div class="col col50 config-item-center">
-								<div id="pkEstDos" class="swiper-container">
-									<div class="swiper-wrapper"></div>
-								</div>
+				<div class="config-cont">
+					<p class="text-center general-title" data-lang="info_personal"></p>
+					<form onsubmit="return form_paso_dos(this); return false;">
+						<div class="config-item">
+							<select name="unidad_medida" class="form-control required" onchange="show_paso_dos(false, this.value);" placeholder="Unidad de medida">
+								<option value="M" data-lang="metrico"></option>
+								<option value="E" data-lang="ingles"></option>
+							</select>
+							<div class="row">
+								<span class="col30 config-item-left" data-lang="unidades"></span>
+								<span id="textUnids" class="col40 config-item-center"></span>
+								<span class="col30 config-item-right" data-lang="medicion"></span>
 							</div>
 						</div>
-					</div>
-					<div class="config-item">
-						<input name="peso" class="form-control required" value="" />
-						<div class="row">
-							<span class="col30 config-item-left pktxaling" data-lang="peso"></span>
-							<span class="col40 config-item-center">
-								<div id="pkPeso" class="swiper-container">
-									<div class="swiper-wrapper"></div>
-								</div>
-							</span>
-							<span id="symbolPeso" class="col30 config-item-right pktxaling"></span>
+						<div class="config-item" onclick="$('#PickEstatura').addClass('toCenter');" >
+							<input name="estatura" class="form-control required" value="" />
+							<div class="row">
+								<span class="col30 config-item-left" data-lang="estatura"></span>
+								<span id="textEstatura" class="col40 config-item-center">0</span>
+								<span class="col30 config-item-right"></span>
+							</div>
 						</div>
-					</div>
-					<div class="text-center">
-						<button id="BtnRegister2" class="btn btn-action btn-block" data-lang="siguiente"></button>
-					</div>
-				</form>
+						<div class="config-item" onclick="$('#PickPeso').addClass('toCenter');" >
+							<input name="peso" class="form-control required" value="" />
+							<div class="row">
+								<span class="col30 config-item-left" data-lang="peso"></span>
+								<span id="textPeso" class="col40 config-item-center">0</span>
+								<span class="col30 config-item-right"></span>
+							</div>
+						</div>
+						<div class="text-center">
+							<button id="BtnRegister2" class="btn btn-action btn-block" data-lang="siguiente"></button>
+						</div>
+					</form>
+				</div>
 			</div>
 		</section>
 		<section id="registro-3" class="Page">
 			<div class="container Main">
-				<p class="text-center general-title" data-lang="info_acces"></p>
-				<form onsubmit="return form_paso_tres(this); return false;">			
-					<input name="correo" class="form-control required email" />
-					<input name="contrasena" type="password" class="form-control required"/>
-					<!--input name="calibrador" type="range" min="0" max="30" value="6" step="1" /-->
-					<!--div>&nbsp;</div>
-					<div>
-						<input name="recibir" type="checkbox" value="" onchange="var i=this; if(i.value==''){i.value='SI';}else{i.value='';}" placeholder="Recibir info vía email" />
-						Deseo recibir información vía correo electrónico
-					</div>
-					<div>&nbsp;</div>
-					<div>
-						<input name="terminos" type="checkbox" value="" onchange="var i=this; if(i.value==''){i.value='SI';}else{i.value='';}" class="required" placeholder="Terminos" />
-						Acepto terminos y condiciones
-					</div-->
-					<div>&nbsp;</div>
-					<div>&nbsp;</div>
-					<div class="text-center">
-						<button id="BtnRegister3" class="btn btn-action btn-block" data-lang="finalizar"></button>
-					</div>
-				</form>
+				<div class="config-cont">
+					<p class="text-center general-title" data-lang="info_acces"></p>
+					<form onsubmit="return form_paso_tres(this); return false;">			
+						<input name="correo" class="form-control required email" />
+						<input name="contrasena" type="password" class="form-control required"/>
+						<!--input name="calibrador" type="range" min="0" max="30" value="6" step="1" /-->
+						<!--div>&nbsp;</div>
+						<div>
+							<input name="recibir" type="checkbox" value="" onchange="var i=this; if(i.value==''){i.value='SI';}else{i.value='';}" placeholder="Recibir info vía email" />
+							Deseo recibir información vía correo electrónico
+						</div>
+						<div>&nbsp;</div>
+						<div>
+							<input name="terminos" type="checkbox" value="" onchange="var i=this; if(i.value==''){i.value='SI';}else{i.value='';}" class="required" placeholder="Terminos" />
+							Acepto terminos y condiciones
+						</div-->
+						<div>&nbsp;</div>
+						<div>&nbsp;</div>
+						<div class="text-center">
+							<button id="BtnRegister3" class="btn btn-action btn-block" data-lang="finalizar"></button>
+						</div>
+					</form>
+				</div>
 			</div>
 		</section>
 		<section id="config" class="Page">
@@ -423,5 +395,46 @@
 	<input style="font-size: 8px; position: fixed; bottom: 40px; width: 100%; z-index: 9999; margin: 0; padding: 3px;" class="form-control">
 	</form>
 	<div id="mensajes" style="height:40px; z-index: 99999; position: fixed; display: block; width: 100%; overflow: hidden; overflow-y: auto; bottom:0; left:0; color: #666; background: #000; font-size: 8px; border-top: 1px solid #333;"></div-->
+	<section id="PickEstatura" class="popup-cont Page toLeft">
+		<div class="popup-int">
+			<div class="popup-content">
+				<div class="row">
+					<div class="col col50 config-item-center">
+						<div id="pkEstUno" class="swiper-container">
+							<div class="swiper-wrapper"></div>
+						</div>
+					</div>
+					<div class="col col50 config-item-center">
+						<div id="pkEstDos" class="swiper-container">
+							<div class="swiper-wrapper"></div>
+						</div>
+					</div>
+				</div>
+				<div>&nbsp;</div>
+				<div class="text-center">
+					<span class="btnSave btn btn-action btn-block" onclick="$('#PickEstatura').removeClass('toCenter');"></span>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section id="PickPeso" class="popup-cont Page toLeft">
+		<div class="popup-int">
+			<div class="popup-content">
+				<div class="row">
+					<span class="col30 config-item-left pktxaling" data-lang="peso"></span>
+					<span class="col40 config-item-center">
+						<div id="pkPeso" class="swiper-container">
+							<div class="swiper-wrapper"></div>
+						</div>
+					</span>
+					<span id="symbolPeso" class="col30 config-item-right pktxaling"></span>
+				</div>
+				<div>&nbsp;</div>
+				<div class="text-center">
+					<span class="btnSave btn btn-action btn-block" onclick="$('#PickPeso').removeClass('toCenter');"></span>
+				</div>
+			</div>
+		</div>
+	</section>
   </body>
 </html>
