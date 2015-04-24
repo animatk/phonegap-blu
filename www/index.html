@@ -42,17 +42,28 @@
 			<div class="menu-back" onclick="$('#menu').removeClass('toCenter');"></div>
 		</section>
 		<section id="inicio" class="Page">
-			<div class="container Main">
+			<div class="container Main wrapper_inicio">
+				<div class="row">
+					<div class="col text-center user_inicio">
+						<div class="perfil-photo-wrapper">
+							<span class="perfil-photo text-center" style="background-image:url(img/perfil-man.jpg);"></span>
+							<div class="edit_porfile_button"></div>
+						</div>
+						<h2 class="perfil-nombre">Lalo landa</h2>
+					</div>
+				</div>
 				<div class="row row2">
 					<div class="col text-center">
 						<span id="esta-pul" class="btn btn-default btn-estadisticas" onclick="estadisticas('PUL');">
-							<span data-lang="pulso"></span>
+							<span data-lang="pulso" class="btn_title"></span>
+							<span class="icon"><img src="img/hearth_icon.png" /></span>
                             <span class="num">0</span>
 						</span>
 					</div>
 					<div class="col text-center">
 						<span id="esta-pas" class="btn btn-default btn-estadisticas" onclick="estadisticas('PAS');">
-							<span data-lang="pasos"></span>
+							<span data-lang="pasos" class="btn_title"></span>
+							<span class="icon"><img src="img/step_icon.png" /></span>
                             <span class="num">0</span>
 						</span>
 					</div>
@@ -61,22 +72,22 @@
 				<div class="row row2">
 					<div class="col text-center">
 						<span id="esta-dis" class="btn btn-default btn-estadisticas" onclick="estadisticas('DIS');">
-							<span data-lang="distancia"></span>
-                            <span class="num">0</span>
+							<span data-lang="distancia" class="btn_title"></span>
+							<span class="icon"><img src="img/distance_icon.png" /></span>
+                            <span class="num">0km</span>
 						</span>
 					</div>
 					<div class="col text-center">
 						<span id="esta-cal" class="btn btn-default btn-estadisticas" onclick="estadisticas('CAL');">
-							<span data-lang="calorias"></span>
+							<span data-lang="calorias" class="btn_title"></span>
+							<span class="icon"><img src="img/calories_icon.png" /></span>
                             <span class="num">0</span>
 						</span>
 					</div>
 				</div>
-				<div>&nbsp;</div>
-				<div class="text-center">
-					<span class="btn btn-primary btn-iniciar" onclick="show_config({to:'show_inicio();', tx: language.cancel});" data-lang="iniciar"></span>
+				<div class="text-center btn_iniciar_wrapper">
+					<span class="btn btn-primary btn-iniciar" onclick="show_config({to:'show_inicio();', tx: language.cancel});" ></span>
 				</div>
-				<!--div id="map_canvas" style="width:100%; height:600px;"></div-->
 			</div>
 		</section>
 		<section id="login" class="Page">
@@ -122,10 +133,9 @@
 					<p class="text-center general-title" data-lang="info_general"></p>
 					<form onsubmit="return form_paso_uno(this); return false;">
 						<input name="nombre" class="form-control required" />
-						<select name="genero" class="form-control required">
-							<option value="" data-lang="gender"></option>
-							<option value="M" data-lang="masculino"></option>
+						<select name="genero" class="form-control required oculto">
 							<option value="F" data-lang="femenino"></option>
+							<option value="M" data-lang="masculino"></option>
 						</select>
 						<div class="config-item">
 							<input name="edad" type="date" class="form-control required swho-it" value="" onchange="show_paso_uno(false, this.value);" />
