@@ -29,7 +29,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
     font-style: italic;
 }
 
-
 html{ 
     overflow-x:hidden; 
     background:#37343e /*url(../images/image.jpg) no-repeat center top*/; 
@@ -45,7 +44,7 @@ html, body{
     height:100%; 
     font-size: 13px; 
     font-weight: 400;
-} 
+}
   
 /* FOOTER LAYOUT */
 .Container{ 
@@ -53,17 +52,16 @@ html, body{
     height:auto !important; 
     height:100%; 
     margin:0 auto -35px; 
-} 
+}
 .Push{ 
     height:50px; 
-} 
+}
 /*FOOTER LAYOUT*/
   
 h1,h3,h4,h5,h6{ 
     font-weight: 700; 
 	margin: 0 0 15px 0;
-} 
-  
+}
 h1{font-size:2.0em;} 
 h2{font-size:1.8em;} 
 h3{font-size:1.6em;} 
@@ -951,7 +949,7 @@ Pagination Styles
 	-webkit-border-radius: 20px;
 	-moz-border-radius: 20px;
 	border-radius: 20px;
-	margin-top: 110px;
+	margin-top: 48px;
 	padding: 20px;
 	padding-top: 0px;
 }

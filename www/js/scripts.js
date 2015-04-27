@@ -407,9 +407,6 @@ function isOnLine(){
 /*! Onload Phonegap Event*/
 document.addEventListener("deviceready", DeviceReady, false);
 function DeviceReady(){
-	if(isDevice() != 'Android'){
-		$('body').addClass('ios-device');
-	}
 	if(SES['actividad']){
 		pause(function(){
 			principal();
@@ -613,6 +610,9 @@ function initialize() {
  
 */
 function ak_navigate(to, back){
+	if(isDevice() != 'Android'){
+		$('body').addClass('ios-device');
+	}
 	setText({sec: to});
 	switch(to){
 		case "#login":
