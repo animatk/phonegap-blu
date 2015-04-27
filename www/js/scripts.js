@@ -1266,6 +1266,7 @@ function stepsConf(a){
 		STEP = STEP+1;
 		$('.sensibilidad-pasos').html(STEP);
 	}
+	ACCE = m;
 }
 
 function stepsConfStop(action){
