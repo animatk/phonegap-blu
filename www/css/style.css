@@ -392,7 +392,7 @@ header .btn{
 
 .general-title{
 	font-style: italic;
-	font-size: 1.1em;
+	font-size: 1.3em;
 } 
 
 #menu{ z-index: 3; background: none; }
@@ -484,6 +484,15 @@ header .btn{
 #pickEdadAno .swiper-slide-active {
 	opacity: 1;
 }
+
+#sensibilidad .sensibilidad-pasos{
+	background-size: 80%;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-image: url(../img/bg-calibracion.png);
+	text-align: center;
+	font-size: 125px;
+}
 /* end secciones */
 /* dispositivos */
 .disp-find{
@@ -515,28 +524,51 @@ header .btn{
 }
 /* end perfil */
 /* principal */
+.ppal-container{
+	padding: 0 15px;
+}
+.border-right{
+	border-right: 2px ridge #5C5C5C;
+}
+.border-bottom{
+	border-bottom: 2px ridge #5C5C5C;
+}
 .ppal-clock{
 	text-align: center;
-	font-size: 60px;
-	padding-bottom: 10px;
+	font-size: 40px;
+	font-weight: 700;
+	font-style: italic;
+	line-height: 30px;
 }
 
 .ppal-deta{
-	
+	background: #312e37;
+	border-radius: 15px;
 }
 .ppal-deta .col{
 	padding: 10px;
+}
+.ppal-deta-img{
+	text-align: center;
+	padding: 4px;
+	display: none;
+}
+.ppal-deta-img img{
+	height: 20px;
 }
 .ppal-deta-tit,
 .ppal-deta-num{
 	text-align: center;
 }
 .ppal-deta-tit{
-	color: #999;
+	color: #fff;
+	font-style: italic;
 }
 .ppal-deta-num{
-	color: #000;
+	color: #fff;
 	font-size: 38px;
+	font-style: italic;
+	font-weight: 700;
 }
 
 .map-protection{
@@ -647,18 +679,33 @@ textarea.form-control{
 
 input[type='range'] {
 	-webkit-appearance: none;
-	background-color: #5de252;
+	background: #5de252;
+	background: -webkit-linear-gradient(left, #5de252 0%, #5de252 50%, #212024 50%);
 	vertical-align: middle;
-	height: 1px;
+	height: 9px;
 	width: 100%;
+	border-radius: 5px;
+	box-shadow: 1px 1px 0 6px rgba(255,255,255,.07), 0 0 0 6px rgba(0,0,0,.2);
+	margin-top: 15px;
+	margin-bottom: 35px;
 }
+
 input[type='range']::-webkit-slider-thumb {
 	-webkit-appearance: none !important;
-	background-color: #fff;
+	background-color: #5de252;
 	border-radius: 20px;
-	height: 30px;
-	width: 30px;
+	border: 8px solid  #585858;
+	height: 23px;
+	width: 23px;
+	box-shadow: 1px 1px 3px 0px rgba(0,0,0,.6);
 }
+
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #ac51b5;
+}
+
+
 
 /* ak-tooltip */
 .ak-tooltip{
@@ -1022,13 +1069,11 @@ Pagination Styles
 .btn-estadisticas .icon img{
 	max-width: 30px;
 	max-height: 30px;
-	float: left;
 }
 .btn-estadisticas .num{
 	font-size: 39px;
 	margin: 0;
 	padding: 0;
-	float: left;
 	margin-left: 0px;
 	font-weight: bold;
 	font-style: italic;

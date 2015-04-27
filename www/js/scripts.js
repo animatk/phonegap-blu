@@ -502,6 +502,7 @@ function unitsValue( sel, tar ){
 	tar.text(tex);
 }
 function show_inicio(from){
+	show_perfil(false);
     ak_navigate('#inicio');
     //queris para determinar valores
     webdb.executeSql('SELECT * FROM actividad WHERE chain = ?', [SES['chain']],
@@ -810,10 +811,12 @@ function login(form){
 	return false;
 }
 function CerrarSesion(){
-	SES.clear();
+	SES.removeItem('chain');
+	SES.removeItem('perfil');
+	SES.removeItem('info_basica');
 	location.reload();
 }
-function show_perfil(){
+function show_perfil(nav){
 	var	edad = 0,
 		foto = 'img/perfil-man.jpg';
 	if(SES['perfil']){
@@ -841,8 +844,9 @@ function show_perfil(){
 		
 		$('.perfil-photo').css('background-image', 'url('+foto+')');
 	}
-	
-	ak_navigate('#perfil', {to:'show_inicio();'});
+	if(nav !== false){
+		ak_navigate('#perfil', {to:'show_inicio();'});
+	}
 }
 function cal_edad(data){
 	var res = new Date() - new Date(data);
@@ -1231,8 +1235,61 @@ function restore(form){
 /*! end restore */
 /*! Congiguracion */
 function show_config(back){
-	ak_navigate('#config', back); 
+	if(SES['sens']){
+		ak_navigate('#config', back); 
+	}else{
+		show_sensibilidad(back);
+	}
 }
+function show_sensibilidad(back){
+	ak_navigate('#sensibilidad', back);
+		
+	$('input[type="range"]').on('input', function () {
+		var percent = Math.ceil(((this.value - this.min) / (this.max - this.min)) * 100);
+		$(this).css('background', '-webkit-linear-gradient(left, #5de252 0%, #5de252 ' + percent + '%, #212024 ' + percent + '%)');
+	});
+	
+	if(SES['sens']){
+		var sens = 10 * parseFloat(SES['sens']),
+			percent = Math.ceil(((sens - 0) / (30-0)) * 100);
+		$('#sensible').val( sens ).css('background', '-webkit-linear-gradient(left, #5de252 0%, #5de252 ' + percent + '%, #212024 ' + percent + '%)');
+	}
+}
+function stepsConf(a){
+	var x = a.x
+	, y = a.y
+	, z = a.z
+	, m = parseFloat(((x +y +z)/3).toFixed(1))
+	, s = parseInt($('#sensible').val()) / 10;
+
+	if(ACCE > (m + s) || ACCE < (m - s)){
+		STEP = STEP+1;
+		$('.sensibilidad-pasos').html(STEP);
+	}
+}
+
+function stepsConfStop(action){
+	stopsteps();
+	if(action == 'save' || action == 'reset'){
+		$('.sens-ini').removeClass('oculto');
+		$('.sensibilidad-pasos').html(0);
+		$('#sensEnd').addClass('oculto');
+		$('#PickSensible').removeClass('toCenter');
+		
+		if(action == 'save'){
+			SES['sens'] = parseInt($('#sensible').val()) / 10;
+			show_config({to:'show_inicio();', tx: language.cancel});
+		}
+
+		STEP = 0;
+	}else{
+		$('.btnSave').html(language.save);
+		$('.btnVolv').html(language.volver);
+		$('.textSensible').html(language.sensible.replace('?', STEP));
+		$('#PickSensible').addClass('toCenter');
+	}
+}
+
 function tipoActividad(nu){
 	ACTIVITYTYPE = nu;
 	$('.actType').removeClass('btn-success');
@@ -1385,7 +1442,7 @@ function initClock(obj, segundos) {
 		time_ini = actual.ini;
 	}
 	var t1 = new Date(time_ini),
-    t = '00:00',
+    t = '00 : 00',
     t2 = new Date(),
     dif = t2-t1;
     SECOND = parseInt((dif/1000) + segundos_mas);
@@ -1394,9 +1451,9 @@ function initClock(obj, segundos) {
 		s = checkTime(parseInt( SECOND % 60 ));        
     if( h > 0 ){
         var h = checkTime(h);
-		t = h+":"+m+":"+s;
+		t = h+" : "+m+" : "+s;
     }else{
-        t = m+":"+s;
+        t = m+" : "+s;
     } 
 	$('.ppal-clock').html( t );	
 }
@@ -1404,17 +1461,24 @@ function checkTime(i) {
     if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
     return i;
 }
-function steps(){
-	var options = { frequency: ACCELTIMEOUT };
-	SES['StepID'] = navigator.accelerometer.watchAcceleration(stepsSuccess, function(){
+function steps(func){
+	
+	if(func == 'stepsConf'){
+		$('.sens-ini').addClass('oculto');
+		$('#sensEnd').removeClass('oculto');
+	}
+	
+	var options = { frequency: ACCELTIMEOUT },
+		funcion = (func)? func : 'stepsSuccess';
+	SES['StepID'] = navigator.accelerometer.watchAcceleration(funcion, function(){
 	  //error
 	}, options);
 	
 	if(BG == null){
 		cordova.plugins.backgroundMode.setDefaults({ 
-			title:'sforza se esta ejecutando.'
-			,text:'calculando tiempo.'
-			,ticker:'sforza'
+			title: language.sforza_exe 
+			,text: language.cal_time
+		//	,ticker:'sforza'
 		});
 		cordova.plugins.backgroundMode.enable();
 		//

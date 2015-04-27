@@ -220,6 +220,18 @@
 				</div>
 			</div>
 		</section>
+		<section id="sensibilidad" class="Page">
+			<div class="container Main">
+				<p class="text-center general-title" data-lang="calibracion"></p>
+				<p class="text-center" data-lang="camine_pasos"></p>
+				<div class="sensibilidad-pasos">0</div>
+				<input type="range" id="sensible" min="0" max="30" class="sens-ini" />
+				<div class="text-center">
+					<span class="btn btn-action sens-ini" onclick="steps('stepsConf');" data-lang="iniciar"></span>
+					<span id="sensEnd" class="btn btn-danger oculto" onclick="stepsConfStop();" data-lang="detener"></span>
+				</div>
+			</div>
+		</section>
 		<section id="config" class="Page">
 			<div class="container Main">
 				<p class="text-center general-title" data-lang="config"></p>
@@ -242,27 +254,6 @@
 					<span class="icon icon-hearth"> </span> <span>No HRM connected</span>
 				</div>
 				<div>&nbsp;</div>
-				<select id="sensible" class="form-control">
-					<option value="0"> 0 </option>
-					<option value="0.1"> 0.1 </option>
-					<option value="0.2"> 0.2 </option>
-					<option value="0.4"> 0.4 </option>
-					<option value="0.6"> 0.6 </option>
-					<option value="0.8"> 0.8 </option>
-					<option value="1" selected="selected"> 1 </option>
-					<option value="1.2"> 1.2 </option>
-					<option value="1.4"> 1.4 </option>
-					<option value="1.6"> 1.6 </option>
-					<option value="1.8"> 1.8 </option>
-					<option value="2"> 2 </option>
-					<option value="2.2"> 2.2 </option>
-					<option value="2.4"> 2.4 </option>
-					<option value="2.6"> 2.6 </option>
-					<option value="2.8"> 2.8 </option>
-					<option value="3"> 3 </option>
-					<option value="4"> 4 </option>
-					<option value="5"> 5 </option>
-				</select>
 				<div class="text-center">
 					<span class="btn btn-primary" onclick="principal();" data-lang="start_now"></span>
 				</div>
@@ -329,29 +320,38 @@
 				<div class="swiper-wrapper">
 					<div class="swiper-slide">
 						<div class="container Main">
-							<div>
-								<div class="ppal-clock"> 00:00 </div>
+							<div class="ppal-container">
+								<div class="row row2 ppal-deta">
+									<div class="col border-right border-bottom">
+										<div class="ppal-deta-tit" data-lang="pulso"></div>
+										<div class="ppal-deta-img"> <img src="img/hearth_icon.png" /> </div>
+										<div class="ppal-deta-num PPM"> 0 </div>
+									</div>
+									<div class="col border-bottom">
+										<div class="ppal-deta-tit" data-lang="pasos"></div>
+										<div class="ppal-deta-img"> <img src="img/step_icon.png" /> </div>
+										<div class="ppal-deta-num PASOS"> 0 </div>
+									</div>
+									<div class="col border-right">
+										<div class="ppal-deta-tit" data-lang="distancia"></div>
+										<div class="ppal-deta-img"> <img src="img/distance_icon.png" /> </div>
+										<div class="ppal-deta-num DISTA"> 0 </div>
+									</div>
+									<div class="col">
+										<div class="ppal-deta-tit" data-lang="calorias"></div>
+										<div class="ppal-deta-img"> <img src="img/calories_icon.png" /> </div>
+										<div class="ppal-deta-num CALOR"> 0 </div>
+									</div>
+								</div>
 							</div>
-							<div class="row row2 ppal-deta">
-								<div class="col">
-									<div class="ppal-deta-tit" data-lang="pulso"></div>
-									<div class="ppal-deta-num PPM"> 0 </div>
-								</div>
-								<div class="col">
-									<div class="ppal-deta-tit" data-lang="pasos"></div>
-									<div class="ppal-deta-num PASOS"> 0 </div>
-								</div>
-								<div class="col">
-									<div class="ppal-deta-tit" data-lang="distancia"></div>
-									<div class="ppal-deta-num DISTA"> 0 </div>
-								</div>
-								<div class="col">
-									<div class="ppal-deta-tit" data-lang="calorias"></div>
-									<div class="ppal-deta-num CALOR"> 0 </div>
-								</div>
+							<div>&nbsp;</div>
+							<div class="config-cont">
+								<p class="text-center" data-lang="tiempo"></p>
+								<div class="ppal-clock"> 00 : 00 </div>
 							</div>
-							<div>
-								<span id="BtnPausar" class="btn btn-info" onclick="pause();" data-lang="pausar"></span>
+							<div>&nbsp;</div>
+							<div class="text-center">
+								<span id="BtnPausar" class="btn btn-action" onclick="pause();" data-lang="pausar"></span>
 								<span id="BtnDetener" class="btn btn-danger oculto" onclick="stop();" data-lang="detener"></span>
 							</div>
 						</div>
@@ -444,6 +444,18 @@
 				<div>&nbsp;</div>
 				<div class="text-center">
 					<span class="btnSave btn btn-action btn-block" onclick="$('#PickPeso').removeClass('toCenter');"></span>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section id="PickSensible" class="popup-cont Page toLeft">
+		<div class="popup-int">
+			<div class="popup-content">
+				<p class="textSensible text-center"></p>
+				<div>&nbsp;</div>
+				<div class="text-center">
+					<span class="btnSave btn btn-action" onclick="stepsConfStop('save');"></span>
+					<span class="btnVolv btn btn-danger" onclick="stepsConfStop('reset');"></span>
 				</div>
 			</div>
 		</div>
