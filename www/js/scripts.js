@@ -1463,13 +1463,13 @@ function checkTime(i) {
 }
 function steps(func){
 	
-	if(func == 'stepsConf'){
+	if(func != undefined){
 		$('.sens-ini').addClass('oculto');
 		$('#sensEnd').removeClass('oculto');
 	}
 	
 	var options = { frequency: ACCELTIMEOUT },
-		funcion = (func)? func : stepsSuccess;
+		funcion = (func != undefined)? func : stepsSuccess;
 	SES['StepID'] = navigator.accelerometer.watchAcceleration(funcion, function(){
 	  //error
 	}, options);
