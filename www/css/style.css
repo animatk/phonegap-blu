@@ -3,6 +3,9 @@
 *{ -webkit-tap-highlight-color: rgba(0, 0, 0, 0); -webkit-user-select: none; box-sizing: border-box; margin:0; padding:0; border:0; outline:0; zoom:1; font-size:100%; vertical-align:baseline; list-style:none; text-decoration:none; clear:none;} 
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { display:block;} 
 
+/* 
+	{ 'd':'nexus5', 'h':'567' }
+*/
 
 @font-face {
     font-family: 'ttw';
@@ -162,7 +165,7 @@ img{vertical-align:middle;}
    -webkit-transform: translate3d(100%, 0, 0);
 		   transform: translate3d(100%, 0, 0);
 	/*ios native bouncing*/
-	overflow-y: auto;
+	overflow-y: auto !important;
 	-webkit-overflow-scrolling: touch;   
 }
 .toLeft {
@@ -283,8 +286,6 @@ header .btn{
 
 
 .btn-iniciar{
-	width: 150px;
-	height: 150px;
 	border-radius: 500px;
 	font-size: 35px;
 	padding-top: 53px;
@@ -514,8 +515,6 @@ header .btn{
 /* perfil */
 .perfil-photo{
 	display: inline-block;
-	width: 100px;
-	height: 100px;
 	border-radius: 500px;
 	background-color: #ccc;
 	background-size: cover;
@@ -533,12 +532,17 @@ header .btn{
 .border-bottom{
 	border-bottom: 2px ridge #5C5C5C;
 }
+.border-top{
+	border-top: 2px ridge #5C5C5C;
+}
 .ppal-clock{
 	text-align: center;
 	font-size: 40px;
 	font-weight: 700;
-	font-style: italic;
 	line-height: 30px;
+}
+.ppal-clock span{
+	color: #ccc;
 }
 
 .ppal-deta{
@@ -550,11 +554,11 @@ header .btn{
 }
 .ppal-deta-img{
 	text-align: center;
-	padding: 4px;
+	padding: 8px;
 	display: none;
 }
 .ppal-deta-img img{
-	height: 20px;
+	height: 26px;
 }
 .ppal-deta-tit,
 .ppal-deta-num{
@@ -566,9 +570,31 @@ header .btn{
 }
 .ppal-deta-num{
 	color: #fff;
-	font-size: 38px;
+	font-size: 40px;
 	font-style: italic;
 	font-weight: 700;
+	line-height: 30px;
+}
+
+.ppal-icon{
+	display: block;
+	padding: 3px;
+	text-align: center;
+	padding-top: 30px;
+	background-size: 40%;
+	background-repeat: no-repeat;
+	background-position: center top;
+	font-style: italic;
+}
+
+.ppal-icon-music{
+	background-image: url(../img/music_icon.png);
+}
+.ppal-icon-map{
+	background-image: url(../img/map_icon.png);
+}
+.ppal-icon-share{
+	background-image: url(../img/share_icon.png);
 }
 
 .map-protection{
@@ -844,58 +870,9 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 /* end icons */
 
 
-
-@media all and (min-width: 325px){
-	html, body{
-		font-size: 16px;
-	}
-	.btn{
-		padding: 12px 20px;
-	}
-	.btn-icon{
-		padding-left: 60px;
-	}
-	.btn-icon:before{
-		width: 46px;
-	}
-	.login-logo img{
-		max-width: 188px;
-	}
-	.btn-block{
-		max-width: 300px;
-	}
-}
-
-@media all and (min-width: 600px){
-	.container{
-		width: 380px;
-	}
-
-}
-
-@media all and (min-height: 650px){
-
-	.login-logo{
-		padding-bottom: 40px;
-	}
-
-}
-
-
-
 /*
  * Swiper 2.7.6
- * Mobile touch slider and framework with hardware accelerated transitions
- *
  * http://www.idangero.us/sliders/swiper/
- *
- * Copyright 2010-2015, Vladimir Kharlampidi
- * The iDangero.us
- * http://www.idangero.us/
- *
- * Licensed under GPL & MIT
- *
- * Released on: February 11, 2015
 */
 /* ===============================================================
 Basic Swiper Styles 
@@ -1000,26 +977,29 @@ Pagination Styles
 	padding: 20px;
 	padding-top: 0px;
 }
-.user_inicio{
+
+
+.user_inicio {
 	margin-top: -50px;
-	margin-bottom: 20px;
+	margin-bottom: 5px;
 }
+
 .user_inicio h2{
 	font-size: 24px;
 	font-weight: normal;
 }
 .user_inicio .perfil-photo{
 	background-color: transparent;	
-	margin-top: 10px;
+	width: 77px;
+	height: 77px;
+	margin-top: 7px;
 }
 .user_inicio .perfil-photo-wrapper{
 	border-radius: 500px;
 	background-color: #transparent;
 	background-image:  url("../img/profile_img_bg.png");
 	background-size:cover;
-	width:50%;
-	max-width: 120px;
-	max-height: 120px;
+	width: 90px;
 	margin: auto;
 	float: none;
 	display: inline-block;
@@ -1039,78 +1019,154 @@ Pagination Styles
 }
 .btn_title{
 	width: 100%;
-	float: left;
 	font-style: italic;
 	font-size: 20px;
 	line-height: 20px;
 }
 .btn_iniciar_wrapper{
-	margin-bottom: -100px;
+	margin-bottom: -70px;
 }
 .btn-iniciar{
 	background-color:transparent;
 	background-image:  url("../img/btn_iniciar.png");
 	background-size: contain;
 	border: none;
+	width: 100px;
+	height: 100px;
 }
 .btn-estadisticas{
 	border:none;
 	padding: 0;
+	min-height: 50px;
 }
-.btn-estadisticas .icon{
-	width: auto;
-	height: auto;
-	float: left;
-	background: none;
-	max-width: 40px;
-	max-height: 40px;
-	margin-top: 20px;
-}
-.btn-estadisticas .icon img{
-	max-width: 30px;
-	max-height: 30px;
-}
+
 .btn-estadisticas .num{
-	font-size: 39px;
 	margin: 0;
 	padding: 0;
+	font-size: 30px;
 	margin-left: 0px;
 	font-weight: bold;
 	font-style: italic;
 }
-@media all and (max-height: 650px){
-	.user_inicio {
-		margin-top: -50px;
-		margin-bottom: 5px;
+
+.est-icon{
+	padding-left: 45px !important;
+	text-align: left;
+	background-repeat: no-repeat;
+	background-size: 30%;
+	background-position: center left;
+}
+.est-icon-hearth{
+	background-image: url(../img/hearth_icon.png);
+}
+.est-icon-step{
+	background-image: url(../img/step_icon.png);
+}
+.est-icon-distance{
+	background-image: url(../img/distance_icon.png);
+}
+.est-icon-calories{
+	background-image: url(../img/calories_icon.png);
+}
+
+@media all and (min-width: 376px){
+	.container{
+		width: 380px;
 	}
-	.user_inicio .perfil-photo-wrapper{
-		width: 90px;
+}
+
+@media all and (min-height: 481px){
+	/* mas alto que iphone 4 */
+	html, body{
+		font-size: 14px;
 	}
-	.perfil-photo{
-		width: 77px;
-		height: 77px;
-		margin-top: 7px !important;
+	.ppal-deta-img{
+		display: block;
 	}
+	
+	.perfil-nombre,
 	.btn-estadisticas{
-		min-height: 50px;
+		padding-top: 10px;
+		padding-bottom: 15px;
 	}
-	.btn-estadisticas .icon{
-		max-width: 20px;
-		max-height: 20px;
-		margin-top: 15px;
+}
+
+@media all and (min-height: 569px){
+	/* mas alto que iphone 5 */
+	html, body{
+		font-size: 16px;
 	}
-	.btn-estadisticas .icon img{
-		max-width: 20px;
-		max-height: 20px;
+	.btn{
+		padding: 12px 20px;
 	}
-	.btn-estadisticas .num{
-		font-size: 30px;
+	.btn-icon{
+		padding-left: 60px;
+	}
+	.btn-icon:before{
+		width: 46px;
+	}
+	.login-logo img{
+		max-width: 188px;
+	}
+	.btn-block{
+		max-width: 300px;
+	}
+	.ppal-deta-num,
+	.ppal-clock{
+		line-height: 40px;
+	}
+	
+	.user_inicio .perfil-photo-wrapper{
+		width: 50%;
+		max-width: 100px;
+		max-height: 100px;
+	}
+	.user_inicio .perfil-photo{
+		width: 85px;
+		height: 85px;
+		margin-top: 8px;
 	}
 	.btn_iniciar_wrapper{
-		margin-bottom: -70px;
+		margin-bottom: -80px;
 	}
 	.btn-iniciar{
+		width: 130px;
+		height: 130px;
+	}
+}
+
+@media all and (min-height: 650px){
+	.login-logo{
+		padding-bottom: 40px;
+	}
+}
+
+@media all and (min-height: 668px){
+	.user_inicio{
+		margin-top: -50px;
+		margin-bottom: 20px;
+	}
+	.user_inicio .perfil-photo-wrapper{
+		width: 50%;
+		max-width: 120px;
+		max-height: 120px;
+	}
+	.user_inicio .perfil-photo{
 		width: 100px;
 		height: 100px;
+		margin-top: 10px;
+	}
+	.btn-estadisticas .num{
+		font-size: 39px;
+	}
+	.est-icon{
+		padding-left: 55px !important;
+	}
+	.btn_iniciar_wrapper{
+		margin-bottom: -100px;
+	}
+	.btn-iniciar{
+		width: 150px;
+		height: 150px;
 	}
 }
