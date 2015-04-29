@@ -1514,7 +1514,7 @@ function stepsSuccess(a){
 	, y = a.y
 	, z = a.z
 	, m = parseFloat(((x +y +z)/3).toFixed(1))
-	, s = parseFloat($('#sensible').val());
+	, s = parseFloat(SES['sens']);
 
 	if(ACCE > (m + s) || ACCE < (m - s)){
 		$('#BtnPausar').removeClass('oculto');
