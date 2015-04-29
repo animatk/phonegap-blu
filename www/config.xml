@@ -16,6 +16,7 @@
 	
 	<preference name="webviewbounce" value="false" />
 	<preference name="DisallowOverscroll" value="true" />
+	<preference name="Orientation" value="portrait" />
 	<preference name="permissions" value="none"/>
 	<!--feature name="http://api.phonegap.com/1.0/network"/-->
 	
@@ -29,8 +30,7 @@
 	<gap:plugin name="de.appplant.cordova.plugin.background-mode" version="0.6.4" />
 	<gap:plugin name="org.li8.inappbrowser" version="0.1" />
 	<gap:plugin name="org.apache.cordova.network-information" version="0.2.12" />
-	
-	
+
 	<!-- Define app icon for each platform. -->
 	<!--icon src="icon.png" />
 	<icon src="res/icon/icon.png" gap:platform="android" gap:density="ldpi" />

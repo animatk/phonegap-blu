@@ -223,7 +223,7 @@
 				<div class="sensibilidad-pasos">0</div>
 				<input type="range" id="sensible" min="0" max="30" class="sens-ini" />
 				<div class="text-center">
-					<span class="btn btn-action sens-ini" onclick="steps(stepsConf);" data-lang="iniciar"></span>
+					<span class="btn btn-action sens-ini" onclick="steps('stepsConf');" data-lang="iniciar"></span>
 					<span id="sensEnd" class="btn btn-danger oculto" onclick="stepsConfStop();" data-lang="detener"></span>
 				</div>
 			</div>
@@ -343,7 +343,7 @@
 							<div>&nbsp;</div>
 							<div class="ppal-deta">
 								<p class="text-center" data-lang="tiempo"></p>
-								<div class="ppal-clock"> <span class="h">00</span> : <span class="m">00</span> : <span class="s">00</span> </div>
+								<div class="ppal-clock"> <span class="h">00</span> : <span class="m">00</span> : <span class="s act">00</span> </div>
 								<div class="border-bottom">&nbsp;</div>
 								<div class="ppal-container">
 									<div class="row row3">

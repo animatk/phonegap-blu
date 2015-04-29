@@ -1448,13 +1448,17 @@ function initClock(obj, segundos) {
     dif = t2-t1;
     SECOND = parseInt((dif/1000) + segundos_mas);
     var h = parseInt( SECOND / 3600 ) % 24,
-		m = checkTime(parseInt( SECOND / 60 ) % 60),
+		m = parseInt( SECOND / 60 ) % 60,
 		s = checkTime(parseInt( SECOND % 60 ));        
     if( h > 0 ){
-        var h = checkTime(h);
-		t = h+" : "+m+" : "+s;
+        h = checkTime(h);
+		m = checkTime(m);
+		t = '<span class="act">'+h+'</span> : <span class="act">'+m+'</span> : <span class="act">'+s+'</span>';
+    }else if( m > 0){
+		m = checkTime(m);
+        t = '<span>00</span> : <span class="act">'+m+'</span> : <span class="act">'+s+'</span>';
     }else{
-        t = m+" : "+s;
+        t = '<span>00</span> : <span>00</span> : <span class="act">'+s+'</span>';
     } 
 	$('.ppal-clock').html( t );	
 }
@@ -1464,16 +1468,16 @@ function checkTime(i) {
 }
 function steps(func){
 	
-	if(func != undefined){
+
+	var options = { frequency: ACCELTIMEOUT };
+	
+	if(func == 'stepsConf'){
 		$('.sens-ini').addClass('oculto');
 		$('#sensEnd').removeClass('oculto');
+		SES['StepID'] = navigator.accelerometer.watchAcceleration(stepsConf, function(){}, options);
+	}else{
+		SES['StepID'] = navigator.accelerometer.watchAcceleration(stepsSuccess, function(){}, options);
 	}
-	
-	var options = { frequency: ACCELTIMEOUT },
-		funcion = (func != undefined)? func : stepsSuccess;
-	SES['StepID'] = navigator.accelerometer.watchAcceleration(funcion, function(){
-	  //error
-	}, options);
 	
 	if(BG == null){
 		cordova.plugins.backgroundMode.setDefaults({ 
@@ -1491,6 +1495,10 @@ function stopsteps() {
 	if(SES['StepID']){
 		navigator.accelerometer.clearWatch(SES['StepID']);
 		SES.removeItem('StepID');
+	}
+	if(BG != null){
+		cordova.plugins.backgroundMode.disable();
+		BG = null;
 	}
 }
 function stepsSuccess(a){
@@ -1712,12 +1720,7 @@ function stop(){
 	SES.removeItem('steps');
 	SES.removeItem('velocidad');
 	SES.removeItem('BG');
-
 	
-	if(BG != null){
-		cordova.plugins.backgroundMode.disable();
-		BG = null;
-	}
 	$('.ppal-clock').html('00:00');
 	$('.PPM, .PASOS, .DISTA, .CALOR').html('0');
 	

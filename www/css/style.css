@@ -542,7 +542,10 @@ header .btn{
 	line-height: 30px;
 }
 .ppal-clock span{
-	color: #ccc;
+	color: #4e4a58;
+}
+.ppal-clock .act{
+	color: #fff;
 }
 
 .ppal-deta{
