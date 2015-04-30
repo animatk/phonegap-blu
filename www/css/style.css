@@ -247,7 +247,6 @@ header .btn{
 .btn-block{
 	width: 100%;
 	display: inline-block;
-	max-width: 200px;
 }
 
 .btn-info,
@@ -289,6 +288,65 @@ header .btn{
 	border-radius: 500px;
 	font-size: 35px;
 	padding-top: 53px;
+	background-color:transparent;
+	background-image: url("../img/btn_iniciar.png");
+	background-size: contain;
+	border: none;
+	width: 100px;
+	height: 100px;
+}
+
+.boton-login{
+	padding: 0;
+	font-size: inherit;
+	background-image: url(../img/btn_login.png);
+}
+
+
+@-webkit-keyframes wavesAnimation {
+	0% {
+		background-position-x: 46px, 100px;
+	}
+	100% {
+		background-position-x: 25px, 52px;
+	}
+}
+
+.boton-login span{
+	font-size: 10px;
+	display: inline-block;
+	width: 70px;
+	color: #fff;
+	height: 70px;
+	padding-top: 31px;
+	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+	border-radius: 500px;
+	background-size: 250%;
+	background-repeat: repeat-x;
+	background-color: #63e05a;
+}
+
+.boton-login span.uno,
+.boton-login span.dos,
+.boton-login span.tres,
+.boton-login span.cuatro{
+	background-color: #282c1b;
+	background-position-y: 13px, 16px;
+	background-image: url(../img/bg-log-01.png), url(../img/bg-log-02.png);
+	-webkit-animation: wavesAnimation 3s infinite linear alternate;
+}
+
+.boton-login span.uno{
+	background-position-y: 40px, 46px;
+}
+.boton-login span.dos{
+	background-position-y: 20px, 26px;
+}
+.boton-login span.tres{
+	background-position-y: 8px, 16px;
+}
+.boton-login span.cuatro{
+	background-position-y: 13px, 16px;
 }
 
 .btn-estadisticas{
@@ -317,7 +375,7 @@ header .btn{
 	background: #32497a;
 	font-weight: bold;
 	text-shadow: 2px 2px 0 #274174;
-	box-shadow: 0 37px 20px -13px #567dc8 inset, 0 0 0 5px rgba(0,0,0,.2);
+	box-shadow: 0 37px 20px -13px #567dc8 inset;
 }
 
 .btn-icon{
@@ -398,6 +456,9 @@ header .btn{
 #menu{ z-index: 3; background: none; }
 #login .Main{
 	padding-top: 6px;
+}
+#login .container{
+	width: 80%;
 }
 .ios-device #login .Main{
 	padding-top: 25px;
@@ -696,14 +757,29 @@ textarea.form-control{
 .form-control.error{
 	color: #ccc;
 	background: transparent;
-	border-bottom: 1px solid #D19393;
-	box-shadow: 0 -30px 15px -10px rgba(255, 0, 0, 0.1) inset;
+	border-bottom: 1px solid #5de252;
+	box-shadow: 0 -30px 15px -10px rgba(93, 226, 82, 0.17) inset;
 	color: #D19393;
 }
 textarea.form-control{
 	min-height: 180px;
 	resize: vertical;
 }
+
+.input-center,
+.input-center.error{
+	color: #fff;
+	text-align: center;
+	font-size: 30px;
+	font-style: italic;
+	font-weight: 700;
+	padding: 5px;
+	border: 1px solid #2b282f;
+	border-top: 2px solid #171619;
+	border-bottom: 2px solid #4d4956;
+	box-shadow: none;
+}
+
 
 input[type='range'] {
 	-webkit-appearance: none;
@@ -733,7 +809,13 @@ input[type=range]:focus::-webkit-slider-runnable-track {
   background: #ac51b5;
 }
 
-
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0px 1000px #312e37 inset;
+	-webkit-text-fill-color: #fff !important;
+}
 
 /* ak-tooltip */
 .ak-tooltip{
@@ -1028,14 +1110,7 @@ Pagination Styles
 .btn_iniciar_wrapper{
 	margin-bottom: -70px;
 }
-.btn-iniciar{
-	background-color:transparent;
-	background-image:  url("../img/btn_iniciar.png");
-	background-size: contain;
-	border: none;
-	width: 100px;
-	height: 100px;
-}
+
 .btn-estadisticas{
 	border:none;
 	padding: 0;
@@ -1072,8 +1147,9 @@ Pagination Styles
 }
 
 @media all and (min-width: 376px){
-	.container{
-		width: 380px;
+	.container,
+	#login .container{
+		width: 330px;
 	}
 }
 
@@ -1082,14 +1158,35 @@ Pagination Styles
 	html, body{
 		font-size: 14px;
 	}
+
+	#login .Main,
+	.ios-device #login .Main{
+		padding-top: 40px;
+	}
+
+	.login-logo img{
+		max-width: 170px;
+	}
+
 	.ppal-deta-img{
 		display: block;
 	}
 	
 	.perfil-nombre,
 	.btn-estadisticas{
-		padding-top: 10px;
-		padding-bottom: 15px;
+		padding-top: 5px;
+		padding-bottom: 10px;
+	}
+	
+	.btn-iniciar{
+		width: 130px;
+		height: 130px;
+	}
+	.boton-login span{
+		width: 84px;
+		height: 84px;
+		font-size: 13px;
+		padding-top: 34px;
 	}
 }
 
@@ -1110,9 +1207,6 @@ Pagination Styles
 	.login-logo img{
 		max-width: 188px;
 	}
-	.btn-block{
-		max-width: 300px;
-	}
 	.ppal-deta-num,
 	.ppal-clock{
 		line-height: 40px;
@@ -1132,15 +1226,23 @@ Pagination Styles
 		margin-bottom: -80px;
 	}
 	.btn-iniciar{
-		width: 130px;
-		height: 130px;
+		width: 150px;
+		height: 150px;
 	}
+	.boton-login span{
+		width: 100px;
+		height: 100px;
+		font-size: 16px;
+		padding-top: 44px;	
+	}
+	
 }
 
 @media all and (min-height: 650px){
 	.login-logo{
 		padding-bottom: 40px;
 	}
+	
 }
 
 @media all and (min-height: 668px){
@@ -1166,9 +1268,5 @@ Pagination Styles
 	}
 	.btn_iniciar_wrapper{
 		margin-bottom: -100px;
-	}
-	.btn-iniciar{
-		width: 150px;
-		height: 150px;
 	}
 }

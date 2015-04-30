@@ -912,130 +912,45 @@ function form_paso_uno(form){
 }
 function show_paso_dos(back, unid){
 	var und = unid || 'M'
-		,Ies1 = $('input[name=estatura]')
+		,Ies1 = $('select[name=estatura]')
 		,Tes1 = $('#textEstatura')
-		,Ipe = $('input[name=peso]')
-		,Tpe = $('#textPeso')
-		,changeEstatura = function(s){
-			var v1 = $(pkEstUno.slides[pkEstUno.activeIndex]).attr('data-val'),
-				v2 = $(pkEstDos.slides[pkEstDos.activeIndex]).attr('data-val');
-			//	
-			if(v1 != "" && v2 != ""){
-				Ies1.val(v1+v2);
-				var tes = (v1.indexOf('.') < 0)? v1.replace(' ',"' ")+v2+'"': v1+v2;
-				Tes1.text(tes);
-			}else{
-				Ies1.val("");
-				Tes1.text(0);
-			}
-		//	pkEstUno.slideTo(pkEstUno.activeIndex);
-		//	pkEstDos.slideTo(pkEstDos.activeIndex);
-		};
+		,Ipe = $('select[name=peso]')
+		,Tpe = $('#textPeso');
 		
 	$('.btnSave').text(language.save);
 	
-	var es1 = ['<div class="swiper-slide" data-idx="0" data-val="">'+language.mts+'</div>'],
-		es2 = ['<div class="swiper-slide" data-idx="0" data-val="">'+language.centimetros+'</div>'],
-		pes = ['<div class="swiper-slide" data-idx="0" data-val="">'+language.kgs+'</div>'];
+	var es1 = '<option value="">'+language.centimetros+'</option>',
+		pes = '<option value="">'+language.kgs+'</option>';
 
 	if(und == 'E'){
-		es1 = ['<div class="swiper-slide" data-idx="0" data-val="">'+language.feet+'</div>'],
-		es2 = ['<div class="swiper-slide" data-idx="0" data-val="">'+language.inches+'</div>'],
-		pes = ['<div class="swiper-slide" data-idx="0" data-val="">'+language.lbs+'</div>'];
-		var idx=1;
-		for(var i=4; i<8; i++){
-			es1.push('<div class="swiper-slide" data-idx="'+(idx++)+'" data-val="'+i+' "> '+i+'\' </div>');
-		}	
-		idx=1;
-		for(var k=0; k<12; k++){
-			es2.push('<div class="swiper-slide" data-idx="'+(idx++)+'" data-val="'+k+'"> '+k+'" </div>');
+		es1 = '<option value="">'+language.feet+'</option>',
+		pes = '<option value="">'+language.lbs+'</option>';
+
+		for(var i=40; i<80; i++){
+			es1 += '<option value="'+(i/10)+'"> '+(i/10).toFixed+' </option>';
 		}
-		idx=1;
 		for(var i=22; i<401; i++){
-			pes.push('<div class="swiper-slide" data-idx="'+(idx++)+'" data-val="'+i+'"> '+i+' </div>');
+			pes += '<option value="'+i+'"> '+i+' </option>';
 		}
-		$('#symbolEstatura').text(language.ftin);
+		$('#symbolEstatura').text(language.feet);
 		$('#symbolPeso').text(language.lbs);
 		$('#textUnids').text(language.eng);
 	}else{
-		var idx=1;
-		for(var i=1; i<3; i++){
-			es1.push('<div class="swiper-slide" data-idx="'+(idx++)+'" data-val="'+i+'."> '+i+'. </div>');
+		for(var i=100; i<181; i++){
+			es1 += '<option value="'+i+'"> '+i+' </option>';
 		}
-		idx=1;
-		for(var i=0; i<100; i++){
-			es2.push('<div class="swiper-slide" data-idx="'+(idx++)+'" data-val="'+checkTime(i)+'"> '+checkTime(i)+' </div>');
-		}
-		idx=1;
 		for(var i=22; i<181; i++){
-			pes.push('<div class="swiper-slide" data-idx="'+(idx++)+'" data-val="'+i+'"> '+i+' </div>');
+			pes +='<option value="'+i+'"> '+i+' </option>';
 		}
-		$('#symbolEstatura').text(language.mts);
+		$('#symbolEstatura').text(language.cms);
 		$('#symbolPeso').text(language.kgs);
 		$('#textUnids').text('Mts');
 	}
 	
-	if(pkEstUno == null){
-		pkEstUno = new Swiper ('#pkEstUno', {
-			direction: 'vertical'
-			,loop: false
-		//	,freeMode: true
-			,slidesPerView: 5
-			,centeredSlides: true
-		//	,onTouchEnd : changeEstatura
-			,onSlideChangeEnd : changeEstatura
-		});
-	}else{
-		pkEstUno.removeAllSlides();
-	}
-	
-	pkEstUno.appendSlide(es1);
-	pkEstUno.slideTo(0);
-	
-	if(pkEstDos	== null){
-		pkEstDos = new Swiper ('#pkEstDos', {
-			direction: 'vertical'
-			,loop: false
-		//	,freeMode: true
-			,slidesPerView: 5
-			,centeredSlides: true
-		//	,onTouchEnd : changeEstatura
-			,onSlideChangeEnd : changeEstatura
-		});
-	}else{
-		pkEstDos.removeAllSlides();
-	}
-	
-	pkEstDos.appendSlide(es2);
-	pkEstDos.slideTo(0);
-	
-	var changePeso = function(s){
-		var v = $(pkPeso.slides[pkPeso.activeIndex]).attr('data-val');
-		Ipe.val(v);
-		var tpe = (v=="")? 0: v;
-		Tpe.text(tpe);
-	//	pkPeso.slideTo(pkPeso.activeIndex);
-	};
-	
-	if(pkPeso == null){
-		pkPeso = new Swiper ('#pkPeso', {
-			direction: 'vertical'
-			,loop: false
-		//	,freeMode: true
-			,slidesPerView: 5
-			,centeredSlides: true
-		//	,onTouchEnd : changePeso
-			,onSlideChangeEnd : changePeso
-		});
-	}else{
-		pkPeso.removeAllSlides();
-	}
-	
-	pkPeso.appendSlide(pes);
-	pkPeso.slideTo(0);
-	
-	Ies1.attr('placeholder', language.estatura);
-	Ipe.attr('placeholder', language.peso);
+	Ies1.html(es1).attr('placeholder', language.estatura);
+	Ipe.html(pes).attr('placeholder', language.peso);
+	Tes1.html(0);
+	Tpe.html(0);
 	
 	if(back === false){
 		return false;
@@ -1044,34 +959,16 @@ function show_paso_dos(back, unid){
 	if(SES['perfil']){
 		var p = JSON.parse(SES['perfil']);
 		if(p.unit != undefined && p.unit != null && p.unit != "" ){
+		
 			if(und != p.unit){
 				show_paso_dos("", p.unit);
 				return false;
 			}
-			var h=0,
-				s='.';
 			
-			if(p.unit == 'E'){
-				s=' ';
-				h = p.height.split(s);
-			}else{
-				h = p.height.split(s);
-			}
-			
-			var ix1 = $('#pkEstUno .swiper-slide[data-val="'+h[0]+s+'"]').data('idx'),
-				ix2 = $('#pkEstDos .swiper-slide[data-val="'+h[1]+'"]').data('idx'),	
-				ps1 = $('#pkPeso .swiper-slide[data-val="'+p.weight+'"]').data('idx');	
-				
-			pkEstUno.slideTo(ix1);
-			pkEstDos.slideTo(ix2);
-			Ies1.val(h[0]+s+h[1]);
-			
-			var tes = (s == '.')? h[0]+"' "+s+h[1]+'"': h[0]+s+h[1];
-			Tes1.text(tes);
-			
+			Ies1.val(p.height);
 			Ipe.val(p.weight);
-			Tpe.text(p.weight);
-			pkPeso.slideTo(ps1);
+			Tes1.html(p.height);
+			Tpe.html(p.weight);
 			
 			$('select[name=unidad_medida]').val(p.unit);
 		}
