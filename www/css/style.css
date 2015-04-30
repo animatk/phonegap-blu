@@ -305,7 +305,7 @@ header .btn{
 
 @-webkit-keyframes wavesAnimation {
 	0% {
-		background-position-x: 46px, 100px;
+		background-position-x: 60px, 130px;
 	}
 	100% {
 		background-position-x: 25px, 52px;
@@ -333,7 +333,7 @@ header .btn{
 	background-color: #282c1b;
 	background-position-y: 13px, 16px;
 	background-image: url(../img/bg-log-01.png), url(../img/bg-log-02.png);
-	-webkit-animation: wavesAnimation 3s infinite linear alternate;
+	-webkit-animation: wavesAnimation 2s infinite linear alternate;
 }
 
 .boton-login span.uno{

@@ -927,7 +927,7 @@ function show_paso_dos(back, unid){
 		pes = '<option value="">'+language.lbs+'</option>';
 
 		for(var i=40; i<80; i++){
-			es1 += '<option value="'+(i/10)+'"> '+(i/10).toFixed+' </option>';
+			es1 += '<option value="'+(i/10).toFixed(1)+'"> '+(i/10).toFixed(1)+' </option>';
 		}
 		for(var i=22; i<401; i++){
 			pes += '<option value="'+i+'"> '+i+' </option>';
