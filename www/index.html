@@ -323,66 +323,54 @@
 				</div>
 		</section>
 		<section id="principal" class="Page">
-			<div class="swiper-container">
-				<div class="swiper-wrapper">
-					<div class="swiper-slide">
-						<div class="container Main">
-							<div class="ppal-container">
-								<div class="row row2 ppal-deta">
-									<div class="col border-right border-bottom">
-										<div class="ppal-deta-tit" data-lang="pulso"></div>
-										<div class="ppal-deta-img"> <img src="img/hearth_icon.png" /> </div>
-										<div class="ppal-deta-num PPM"> 0 </div>
-									</div>
-									<div class="col border-bottom">
-										<div class="ppal-deta-tit" data-lang="pasos"></div>
-										<div class="ppal-deta-img"> <img src="img/step_icon.png" /> </div>
-										<div class="ppal-deta-num PASOS"> 0 </div>
-									</div>
-									<div class="col border-right">
-										<div class="ppal-deta-tit" data-lang="distancia"></div>
-										<div class="ppal-deta-img"> <img src="img/distance_icon.png" /> </div>
-										<div class="ppal-deta-num DISTA"> 0 </div>
-									</div>
-									<div class="col">
-										<div class="ppal-deta-tit" data-lang="calorias"></div>
-										<div class="ppal-deta-img"> <img src="img/calories_icon.png" /> </div>
-										<div class="ppal-deta-num CALOR"> 0 </div>
-									</div>
-								</div>
+			<div class="container Main">
+				<div class="ppal-container">
+					<div class="row row2 ppal-deta">
+						<div class="col border-right border-bottom">
+							<div class="ppal-deta-tit" data-lang="pulso"></div>
+							<div class="ppal-deta-img"> <img src="img/hearth_icon.png" /> </div>
+							<div class="ppal-deta-num PPM"> 0 </div>
+						</div>
+						<div class="col border-bottom">
+							<div class="ppal-deta-tit" data-lang="pasos"></div>
+							<div class="ppal-deta-img"> <img src="img/step_icon.png" /> </div>
+							<div class="ppal-deta-num PASOS"> 0 </div>
+						</div>
+						<div class="col border-right">
+							<div class="ppal-deta-tit" data-lang="distancia"></div>
+							<div class="ppal-deta-img"> <img src="img/distance_icon.png" /> </div>
+							<div class="ppal-deta-num DISTA"> 0 </div>
+						</div>
+						<div class="col">
+							<div class="ppal-deta-tit" data-lang="calorias"></div>
+							<div class="ppal-deta-img"> <img src="img/calories_icon.png" /> </div>
+							<div class="ppal-deta-num CALOR"> 0 </div>
+						</div>
+					</div>
+				</div>
+				<div>&nbsp;</div>
+				<div class="ppal-deta">
+					<p class="text-center" data-lang="tiempo"></p>
+					<div class="ppal-clock"> <span class="h">00</span> : <span class="m">00</span> : <span class="s act">00</span> </div>
+					<div class="border-bottom">&nbsp;</div>
+					<div class="ppal-container">
+						<div class="row row3">
+							<div class="col border-right">
+								<span class="ppal-icon ppal-icon-music" data-lang="musica"></span>
 							</div>
-							<div>&nbsp;</div>
-							<div class="ppal-deta">
-								<p class="text-center" data-lang="tiempo"></p>
-								<div class="ppal-clock"> <span class="h">00</span> : <span class="m">00</span> : <span class="s act">00</span> </div>
-								<div class="border-bottom">&nbsp;</div>
-								<div class="ppal-container">
-									<div class="row row3">
-										<div class="col border-right">
-											<span class="ppal-icon ppal-icon-music" data-lang="musica"></span>
-										</div>
-										<div class="col border-right">
-											<span class="ppal-icon ppal-icon-map" data-lang="mapa"></span>
-										</div>
-										<div class="col">
-											<span class="ppal-icon ppal-icon-share" data-lang="compartir"></span>
-										</div>
-									</div>
-								</div>
+							<div class="col border-right">
+								<span class="ppal-icon ppal-icon-map" onclick="show_map({to:'show_principal();'});" data-lang="mapa"></span>
 							</div>
-							<div>&nbsp;</div>
-							<div class="text-center">
-								<span id="BtnPausar" class="btn btn-action" onclick="pause();" data-lang="pausar"></span>
-								<span id="BtnDetener" class="btn btn-danger oculto" onclick="stop();" data-lang="detener"></span>
+							<div class="col">
+								<span class="ppal-icon ppal-icon-share" data-lang="compartir"></span>
 							</div>
 						</div>
 					</div>
-					<div class="swiper-slide">
-						<div class="map-protection"></div>
-						<div id="map-canvas">
-							<!--google maps-->
-						</div>
-					</div>
+				</div>
+				<div>&nbsp;</div>
+				<div class="text-center">
+					<span id="BtnPausar" class="btn btn-action" onclick="pause();" data-lang="pausar"></span>
+					<span id="BtnDetener" class="btn btn-danger oculto" onclick="stop();" data-lang="detener"></span>
 				</div>
 			</div>
 		</section>
@@ -401,7 +389,10 @@
 		</section>
 		<section id="mapa" class="Page">
 			<div class="container Main">
-				Mapa
+				<p class="text-center general-title" data-lang="mapa"></p>
+				<div id="map-canvas">
+					
+				</div>
 			</div>
 		</section>
 		<section id="player" class="Page">
@@ -426,8 +417,8 @@
 	</style>
 	<!--form onsubmit="javascript:eval($(this).find('input').val()); return false;">
 	<input style="font-size: 8px; position: fixed; bottom: 40px; width: 100%; z-index: 9999; margin: 0; padding: 3px;" class="form-control">
-	</form>
-	<div id="mensajes" style="height:40px; z-index: 99999; position: fixed; display: block; width: 100%; overflow: hidden; overflow-y: auto; bottom:0; left:0; color: #666; background: #000; font-size: 8px; border-top: 1px solid #333;"></div-->
+	</form-->
+	<div id="mensajes" style="height:40px; z-index: 99999; position: fixed; display: block; width: 100%; overflow: hidden; overflow-y: auto; bottom:0; left:0; color: #666; background: #000; font-size: 8px; border-top: 1px solid #333;"></div>
 	<section id="PickSensible" class="popup-cont Page toLeft">
 		<div class="popup-int">
 			<div class="popup-content">
