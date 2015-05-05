@@ -1436,6 +1436,13 @@ function stopsteps() {
 		BG = null;
 	}
 }
+function compassSuccess(heading){
+	//
+	$('.compass-int').css('-webkit-transform','rotate('+heading.magneticHeading+'deg)');
+}
+function compassError(){
+	//
+}
 function stepsSuccess(a){
 	if(ACTIVITYTYPE == 1){
 		loadMapa();
@@ -1450,6 +1457,9 @@ function stepsSuccess(a){
 	, z = a.z
 	, m = parseFloat(((x +y +z)/3).toFixed(1))
 	, s = parseFloat(SES['sens']);
+	
+	//map compass
+	navigator.compass.getCurrentHeading(compassSuccess, compassError);
 
 	if(ACCE > (m + s) || ACCE < (m - s)){
 		$('#BtnPausar').removeClass('oculto');
@@ -1662,7 +1672,7 @@ function stop(){
 	SES.removeItem('velocidad');
 	SES.removeItem('BG');
 	
-	$('.ppal-clock').html('00:00');
+	$('.ppal-clock').html('<span class="h">00</span> : <span class="m">00</span> : <span class="s act">00</span>');
 	$('.PPM, .PASOS, .DISTA, .CALOR').html('0');
 	
 	ak_navigate('#stop');

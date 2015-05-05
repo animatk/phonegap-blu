@@ -674,8 +674,29 @@ header .btn{
 	width: 100%;
 	height: 200px;
 	background: #ccc;
-	margin: 10px 0 50px;
 }
+.map-info{
+	font-size: 14px;
+	line-height: 30px;
+	font-weight: 700;
+}
+.compass,
+.compass-int{
+	height: 70px;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: auto 100%;
+}
+.compass{
+	background-image: url(../img/compass-bg.png);
+	margin-top: -35px;
+	z-index: 9;
+	position: relative;
+}
+.compass-int{
+	background-image: url(../img/compass-top.png);
+}
+
 /* end principal */
 
 /* columnas */
