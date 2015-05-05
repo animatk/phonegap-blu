@@ -1486,13 +1486,9 @@ function stepsSuccess(a){
 
 		if(ALT == null){
 			if(PERFIL.unit == 'E'){
-				var a = PERFIL.height.split(' '),
-					a1= parseInt(a[0]),
-					a2= parseInt(a[1]);
-				
-				ALT = ((((a1*12)+a2)*2.54)/100).toFixed(2);
+				ALT = (parseInt(PERFIL.height)* 0.3048).toFixed(2);
 			}else{
-				ALT = parseFloat(PERFIL.height).toFixed(2);
+				ALT = (parseInt(PERFIL.height)/100).toFixed(2);
 			}
 		}	
 		var pulgadas = ALT * metro;
@@ -1660,6 +1656,7 @@ function stop(){
 	LON = 0; //map longitude
 	ICO = null; //icon map	
 	StopAcc = true;
+	PERFIL = null;
 
 	SES.removeItem('steps');
 	SES.removeItem('velocidad');
