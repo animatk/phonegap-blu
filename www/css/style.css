@@ -676,20 +676,21 @@ header .btn{
 	background: #ccc;
 }
 .map-info-cont{
-	width: 80%;
+	width: 90%;
 	margin: 0 auto;
 }
 .map-info{
 	font-size: 14px;
 	line-height: 30px;
 	font-weight: 700;
-	padding-left: 30px;
-	background: no-repeat center left;
+	padding-left: 25px;
+	background: no-repeat 6px center;
 	background-size: auto 40%;
 	text-align: left;
+	margin-left: 10px;
 }
 .map-info.ppal-clock{
-	background-image: url(../img/hearth_icon.png);
+	background-image: url(../img/clock_icon.png);
 }
 .map-info.PPM{
 	background-image: url(../img/hearth_icon.png);
@@ -699,6 +700,15 @@ header .btn{
 }
 .map-info.CALOR{
 	background-image: url(../img/calories_icon.png);
+}
+.map-info.CLIMA{
+	background-image: url(../img/weather_icon.png);
+}
+.map-info.PASOS{
+	background-image: url(../img/step_icon.png);
+}
+.map-info.CALENDAR{
+	background-image: url(../img/calendar_icon.png);
 }
 
 .compass,
@@ -1259,6 +1269,10 @@ Pagination Styles
 	.ppal-clock,
 	.map-info{
 		line-height: 40px;
+	}
+	
+	.map-info{
+		padding-left: 30px;
 	}
 	
 	.user_inicio .perfil-photo-wrapper{
