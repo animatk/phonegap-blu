@@ -1763,7 +1763,7 @@ function guardar(resp){
 		}
 		SES.removeItem('actividad');
 	}
-	$('.toCenter, .toLeft, .toRight').not('#menu').removeClass('toCenter toLeft toRight');
+	$('.toCenter, .toLeft, .toRight').not('#menu, #PickSensible').removeClass('toCenter toLeft toRight');
     show_inicio();
 }
 /*! end principal */
