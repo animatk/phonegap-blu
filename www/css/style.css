@@ -33,8 +33,9 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 html{ 
-    overflow-x:hidden; 
-    background:#37343e /*url(../images/image.jpg) no-repeat center top*/; 
+    overflow-x:hidden;
+	background:#37343e url(../res/screen/screen.png) no-repeat center top;
+	background-size: cover;
 } 
 body{ 
     min-width: 320px;
@@ -149,6 +150,7 @@ img{vertical-align:middle;}
 	height: 100%;
 	position: absolute;
 	overflow: hidden;
+	background: url(../img/loader-mini.gif) no-repeat center;
 }
 
 .Page {
@@ -464,7 +466,7 @@ header .btn{
 	padding-top: 25px;
 }
 #login{
-	background: url(../res/screen/screen.jpg) no-repeat center top;
+	background: url(../res/screen/screen.png) no-repeat center top;
 	background-size: cover;
 	
 }

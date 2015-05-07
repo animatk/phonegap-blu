@@ -576,10 +576,10 @@ function show_inicio(from){
 			}
             var metro = 39.370;
             var metros = dis/metro;
-            dis = metros.toFixed(1) + ' m'
+            dis = metros.toFixed(1) + '<span class="deta-light">mt</span>'
             if( metros > 1000 ){
                 dis = metros/1000;
-                dis = dis.toFixed(2) + ' k'
+                dis = dis.toFixed(2) + '<span class="deta-light">km</span>'
             }
 			
             $('#esta-pas .num').html(pas);
@@ -1484,7 +1484,7 @@ function stopsteps() {
 }
 function compassSuccess(heading){
 	//
-	$('.compass-int').css('-webkit-transform','rotate('+(360 - heading.magneticHeading)+'deg)');
+	$('.compass-int').css('-webkit-transform','rotate(-'+heading.magneticHeading+'deg)');
 }
 function compassError(){
 	//
