@@ -100,7 +100,7 @@
 				</div>
 				<div>&nbsp;</div>
 				<form onsubmit="return login(this); return false;">
-					<input name="correo" class="form-control required email btn-icon btn-icon-mail" />
+					<input name="correo" type="email" class="form-control required email btn-icon btn-icon-mail" />
 					<input name="contrasena" type="password" class="form-control required btn-icon btn-icon-lock" />
 					<span onclick="botonRestore();" data-lang="olvide_contrasena"></span>
 					<div>&nbsp;</div>
@@ -203,7 +203,7 @@
 				<div class="config-cont">
 					<p class="text-center general-title" data-lang="info_acces"></p>
 					<form onsubmit="return form_paso_tres(this); return false;">			
-						<input name="correo" class="form-control input-center required email" />
+						<input name="correo" type="email" class="form-control input-center required email" />
 						<input name="contrasena" type="password" class="form-control input-center required"/>
 						<!--input name="calibrador" type="range" min="0" max="30" value="6" step="1" /-->
 						<!--div>&nbsp;</div>
@@ -390,7 +390,7 @@
 		<section id="mapa" class="Page">
 			<div class="container Main">
 				<p class="text-center general-title" data-lang="mapa"></p>
-				<div class="row">
+				<div class="row map-info-cont">
 					<div class="col40">	
 						<div class="map-info ppal-clock"> <span class="h">00</span> : <span class="m">00</span> : <span class="s act">00</span> </div>
 					</div>

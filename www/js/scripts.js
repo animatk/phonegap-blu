@@ -682,6 +682,7 @@ function ak_navigate(to, back){
 		var fx = (to.hasClass('toLeft'))? 'toRight' : 'toLeft';
 		from.removeClass('toCenter toLeft toRight');
 		from.addClass(fx);
+		$('#menu').addClass('toLeft');
 	}
 	to.removeClass('toCenter toLeft toRight');
 	to.addClass('toCenter');
@@ -1199,6 +1200,41 @@ function show_sensibilidad(back){
 			percent = Math.ceil(((sens - 0) / (30-0)) * 100);
 		$('#sensible').val( sens ).css('background', '-webkit-linear-gradient(left, #5de252 0%, #5de252 ' + percent + '%, #212024 ' + percent + '%)');
 	}
+	
+	var range = $('#sensible')
+		,inival = range.val() 
+		,tocero = setInterval(function() {
+			var to = parseInt(range.val()) - 1;
+			console.log(to);
+			range.val(to); 
+			var percent = Math.ceil(((to - 0) / (30-0)) * 100);
+			$('#sensible').css('background', '-webkit-linear-gradient(left, #5de252 0%, #5de252 ' + percent + '%, #212024 ' + percent + '%)');
+			if(to<=0){
+				clearInterval(tocero);
+			var	tocien = setInterval(function() {
+					var to = parseInt(range.val()) + 1;
+					console.log(to);
+					range.val(to); 
+					var percent = Math.ceil(((to - 0) / (30-0)) * 100);
+					$('#sensible').css('background', '-webkit-linear-gradient(left, #5de252 0%, #5de252 ' + percent + '%, #212024 ' + percent + '%)');
+					if(to>=30){
+						clearInterval(tocien);
+						
+					var	toini = setInterval(function() {
+							var to = parseInt(range.val()) - 1;
+							console.log(to);
+							range.val(to); 
+							var percent = Math.ceil(((to - 0) / (30-0)) * 100);
+							$('#sensible').css('background', '-webkit-linear-gradient(left, #5de252 0%, #5de252 ' + percent + '%, #212024 ' + percent + '%)');
+							if(to<=inival){
+								clearInterval(toini);
+								range.val(inival); 
+							}
+						}, 20);			
+					}
+				}, 20);		
+			}
+		}, 20);
 }
 function stepsConf(a){
 	var x = a.x
@@ -1703,7 +1739,7 @@ function stop(){
 	SES.removeItem('steps');
 	SES.removeItem('velocidad');
 	SES.removeItem('BG');
-	
+
 	$('.ppal-clock').html('<span class="h">00</span> : <span class="m">00</span> : <span class="s act">00</span>');
 	$('.PPM, .PASOS, .DISTA, .CALOR').html('0');
 	
@@ -1727,7 +1763,7 @@ function guardar(resp){
 		}
 		SES.removeItem('actividad');
 	}
-	
+	$('.toCenter, .toLeft, .toRight').not('#menu').removeClass('toCenter toLeft toRight');
     show_inicio();
 }
 /*! end principal */
