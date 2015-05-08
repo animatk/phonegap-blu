@@ -1487,7 +1487,7 @@ function stopsteps() {
 }
 function compassSuccess(heading){
 	//
-	$('.compass-int').css('-webkit-transform','rotate(-'+heading.magneticHeading+'deg)');
+	$('.compass-int').css('-webkit-transform','rotate(-'+(180 - heading.magneticHeading)+'deg)');
 }
 function compassError(){
 	//
