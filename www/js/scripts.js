@@ -440,8 +440,8 @@ function isOnLine(){
 /*! Onload Phonegap Event*/
 document.addEventListener("deviceready", DeviceReady, false);
 function DeviceReady(){
+	screen.lockOrientation('portrait');
 	isPhonegap = true;
-	
 	var menu = $('#menu .menu-lateral').get(0);
 	swipeHorz( menu, function(dir, dis){
 		if( dir == 'left' &&  dis < '-100' ){
@@ -1065,13 +1065,16 @@ function form_paso_dos(form){
 				sdata.estatura = data.estatura;
 				sdata.peso = data.peso;
 				sdata.unit = data.unidad_medida;
-			
+				
+				$('body').prepend('<div id="cortina"></div>');
+				
 				post(SITE+'main/register/'+chain, sdata, function(obj){
 					if(obj.success === false){
 						alert(language.err[obj.message]);
 					}else{
 						iniciar();
 					}
+					$('#cortina').remove();
 				});
 			}else{
 				show_paso_tres();
