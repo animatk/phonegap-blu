@@ -1185,7 +1185,9 @@ function restore(form){
 /*! Congiguracion */
 function show_config(back){
 	if(SES['sens']){
-		navigator.compass.getCurrentHeading(compassSuccess, compassError);
+		if(isPhonegap){
+			navigator.compass.getCurrentHeading(compassSuccess, compassError);
+		}
 		ak_navigate('#config', back); 
 	}else{
 		show_sensibilidad(back);
@@ -1487,8 +1489,11 @@ function stopsteps() {
 	}
 }
 function compassSuccess(heading){
-	//
-	$('.compass-int').css('-webkit-transform','rotate('+((heading.magneticHeading * -1) - 180)+'deg)');
+	var num = heading.magneticHeading;
+	if(num < 179.99){
+		num = num + 359.99;
+	}
+	$('.compass-int').css('-webkit-transform','rotate(-'+(num)+'deg)');
 }
 function compassError(){
 	//
