@@ -442,10 +442,11 @@ document.addEventListener("deviceready", DeviceReady, false);
 function DeviceReady(){
 	screen.lockOrientation('portrait');
 	isPhonegap = true;
+	
 	var menu = $('#menu .menu-lateral').get(0);
 	swipeHorz( menu, function(dir, dis){
 		if( dir == 'left' &&  dis < '-100' ){
-			 $('#menu').removeClass('toCenter');
+			$('body').removeClass('menu-open');
 		}
 	});
 	
@@ -476,7 +477,6 @@ function worker(obj, fun){
 	}
 }
 function iniciar(){
-
 	Chart.defaults.global.animation= false;
 	Chart.defaults.global.scaleLineColor= "rgba(255,255,255,.5)";
 	Chart.defaults.global.scaleFontColor= "rgba(255,255,255,.5)";
@@ -682,7 +682,8 @@ function ak_navigate(to, back){
 		var fx = (to.hasClass('toLeft'))? 'toRight' : 'toLeft';
 		from.removeClass('toCenter toLeft toRight');
 		from.addClass(fx);
-		$('#menu').addClass('toLeft');
+		$('body').removeClass('menu-open');
+		
 	}
 	to.removeClass('toCenter toLeft toRight');
 	to.addClass('toCenter');
@@ -1772,7 +1773,7 @@ function guardar(resp){
 		}
 		SES.removeItem('actividad');
 	}
-	$('.toCenter, .toLeft, .toRight').not('#menu, #PickSensible').removeClass('toCenter toLeft toRight');
+	$('.toCenter, .toLeft, .toRight').not('#PickSensible').removeClass('toCenter toLeft toRight');
     show_inicio();
 }
 /*! end principal */

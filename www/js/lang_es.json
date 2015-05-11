@@ -84,6 +84,7 @@
 	,"camine_pasos": "Prueba mover la barra deslizante y pulza iniciar, camina 20 pasos para justar la sensibilidad."
 	,"sensible": "Haz caminado un total de ? pasos, si el valor es correcto pulsa Guardar, de lo contrario pulsa Volver y vuelve a intentarlo."
 	,"config":"Configurar"
+	,"configuration":"Configuración"
 	,"lugar_actividad":"Lugar de la actividad"
 	,"en_calle":"En Calle"
 	,"en_interior":"En Interior"

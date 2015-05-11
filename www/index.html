@@ -16,7 +16,7 @@
 			<div class="container">
 				<div class="row">
 					<div class="col col30">
-						<span id="btnMenu" onclick="$('#menu').toggleClass('toCenter');" class="btn btn-hambur oculto"> 
+						<span id="btnMenu" onclick="$('body').toggleClass('menu-open');" class="btn btn-hambur oculto"> 
 							<span> </span>
 							<span> </span>
 							<span> </span>
@@ -32,16 +32,15 @@
 				</div>
 			</div>
 		</header>
-		<section id="menu" class="Page toLeft">
+		<div id="menu">
 			<div class="menu-lateral">
-				<div class="container">
-					<span onclick="show_perfil();" data-lang="perfil"></span>
-					<span onclick="CerrarSesion();" data-lang="cerrar_sesion"></span>
-					<span onclick="show_sensibilidad({to:'show_inicio();'});" data-lang="sensibilidad"></span>
-				</div>
+				<span class="user" onclick="show_perfil();" data-lang="perfil"></span>
+				<span class="music" onclick="" data-lang="musica"></span>
+				<span class="config" onclick="show_sensibilidad({to:'show_inicio();'});" data-lang="configuration"></span>
+				<span class="logout" onclick="CerrarSesion();" data-lang="cerrar_sesion"></span>
 			</div>
-			<div class="menu-back" onclick="$('#menu').removeClass('toCenter');"></div>
-		</section>
+			<div class="menu-back" onclick="$('body').removeClass('menu-open');"></div>
+		</div>
 		<section id="inicio" class="Page">
 			<div class="container Main">
 				<div class="wrapper_inicio">

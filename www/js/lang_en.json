@@ -84,6 +84,7 @@
 	,"camine_pasos": "Move the slider, <br/>walk 20 steps for set the device."
 	,"sensible": "Haz caminado un total de ? pasos, si el valor mostrado en el dispositivo es correcto pulsa aceptar, de lo contrario pulsa calcelar y vuelve a intentarlo."
 	,"config":"Config"
+	,"configuration":"Configuration"
 	,"lugar_actividad":"The activity place"
 	,"en_calle":"Outdoor"
 	,"en_interior":"Indoor"

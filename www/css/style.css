@@ -153,6 +153,7 @@ img{vertical-align:middle;}
 	background: url(../img/loader-mini.gif) no-repeat center;
 }
 
+#menu,
 .Page {
    top: 0; 
    left: 0; 
@@ -170,11 +171,16 @@ img{vertical-align:middle;}
 	overflow-y: auto !important;
 	-webkit-overflow-scrolling: touch;   
 }
+.menu-open .Page{
+	-webkit-filter: blur(5px);
+}
+#menu,
 .toLeft {
 	z-index: 1;
     -webkit-transform: translate3d(-100%, 0, 0);
 		    transform: translate3d(-100%, 0, 0);
 }
+.menu-open #menu,
 .toCenter {
 	z-index: 2;
     -webkit-transform: translate3d(0, 0, 0);
@@ -414,11 +420,11 @@ header .btn{
 
 .menu-lateral{
 	left: 0;
-	width: 80%;
+	width: 140px;
 	height: 100%;
 	max-width: 280px;
 	padding-top: 60px;
-	padding-bottom: 40px;
+	padding-bottom: 20px;
 	position: absolute;
 	background: #24212C;
 	overflow-y: auto;
@@ -431,6 +437,22 @@ header .btn{
 	padding: 8px 15px;
 	border-bottom: 2px groove rgba(87, 87, 87, 0.6);
 	text-decoration: none;
+	padding-top: 60px;
+	text-align: center;
+	background: no-repeat center 11px;
+	background-size: auto 50%;
+}
+.menu-lateral span.user{
+	background-image: url(../img/user_icon.png);
+}
+.menu-lateral span.music{
+	background-image: url(../img/music_icon.png);
+}
+.menu-lateral span.config{
+	background-image: url(../img/config_icon.png);
+}
+.menu-lateral span.logout{
+	background-image: url(../img/logout_icon.png);
 }
 
 .menu-back{
@@ -455,7 +477,7 @@ header .btn{
 	font-size: 1.3em;
 } 
 
-#menu{ z-index: 3; background: none; }
+#menu{ z-index: 3 !important; background: none; }
 #login .Main{
 	padding-top: 6px;
 }
