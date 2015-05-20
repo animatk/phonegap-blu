@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Siluet Control</title>
+    <title>sforza</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, user-scalable=no" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
@@ -10,7 +10,7 @@
     <script type="text/javascript" src="js/openfb.js"></script>
     <script type="text/javascript" src="js/scripts.js"></script>
   </head>
-  <body>
+  <body onload="iniciar();">
 	<section class="Canvas">
 		<header class="noshow">
 			<div class="container">
@@ -373,19 +373,6 @@
 				</div>
 			</div>
 		</section>
-		<section id="stop" class="Page">
-			<div class="container Main">
-				<h2 data-lang="save_activity"></h2>
-				<div class="row row2 ppal-deta">
-					<div class="col text-center">
-						<span class="btn btn-danger" onclick="if(confirm(language.realy_discard)){ guardar('NO');}" data-lang="discard"></span>
-					</div>
-					<div class="col text-center">
-						<span class="btn btn-info" onclick="guardar('SI');" data-lang="save"></span>
-					</div>
-				</div>
-			</div>
-		</section>
 		<section id="mapa" class="Page">
 			<div class="container Main">
 				<p class="text-center general-title" data-lang="mapa"></p>
@@ -413,7 +400,7 @@
 				</div>
 				<div class="">
 					<div class="col70">
-						<canvas id="myChart" width="300" height="100"></canvas>
+						<div id="myCanvas" style="width:100%; height:90px;"></div>
 					</div>
 					<div class="col30 map-info-bottom">
 						<div class="map-info CLIMA">0</div>
@@ -447,14 +434,14 @@
 	<input style="font-size: 8px; position: fixed; bottom: 40px; width: 100%; z-index: 9999; margin: 0; padding: 3px;" class="form-control">
 	</form>
 	<div id="mensajes" style="height:40px; z-index: 99999; position: fixed; display: block; width: 100%; overflow: hidden; overflow-y: auto; bottom:0; left:0; color: #666; background: #000; font-size: 8px; border-top: 1px solid #333;"></div-->
-	<section id="PickSensible" class="popup-cont Page toLeft">
+	<section id="PopAlert" class="popup-cont Page toLeft">
 		<div class="popup-int">
 			<div class="popup-content">
-				<p class="textSensible text-center"></p>
+				<p class="textPop text-center"></p>
 				<div>&nbsp;</div>
 				<div class="text-center">
-					<span class="btnSave btn btn-action" onclick="stepsConfStop('save');"></span>
-					<span class="btnVolv btn btn-danger" onclick="stepsConfStop('reset');"></span>
+					<span class="btnSave btn btn-action"></span>
+					<span class="btnVolv btn btn-action"></span>
 				</div>
 			</div>
 		</div>
