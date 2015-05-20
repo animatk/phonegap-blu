@@ -558,6 +558,72 @@ header .btn{
 	text-align: center;
 	font-size: 125px;
 }
+#terminos{ text-align: justify; }
+#terminos h3{ font-size: 1.2em; }
+#terminos a{ color: #63e05a; }
+.form-terms{
+	font-size: 1.2em;
+}
+.form-terms a{
+	color: #63e05a;
+}
+
+#estadisticas img{
+	margin: 0 auto;
+	display: block;
+}
+	
+#estadisticas h2{
+	font-size: 40px;
+}
+	
+#estadisticas .periodo{
+	margin:0;
+	padding: 7px;
+	box-shadow: inset  0 1px 3px rgba(0,0,0,.5);
+	border-bottom: 1px solid #444;
+	margin-bottom: 20px;
+}
+	
+#estadisticas .periodo li:first-child{
+	margin-left: 0;
+	border-left: 0;
+}
+	
+#estadisticas .periodo li:last-child{
+	border-right: 0;
+}
+	
+#estadisticas .periodo li{
+	display: block;
+	width: 33.33%;
+	padding: 8px;
+	list-style: none;
+	background: #232126;
+	text-align: center;
+	margin: 0;
+	border-right:1px solid #333;
+	border-left: 1px solid #3A3A3A;
+	font-weight: bold;
+	font-size: 14px;
+ 
+	box-sizing: border-box;
+	float: left;
+ }
+#estadisticas .periodo li.active{
+	background: #63e05a;
+	-webkit-transition:all 2s;
+}
+	
+	#estadisticas .grafica{
+		height: 130px;
+		width: 100%;
+		background: none;
+	}
+.canvasjs-chart-credit{
+	display: none !important;
+}
+
 /* end secciones */
 /* dispositivos */
 .disp-find{
@@ -725,13 +791,15 @@ header .btn{
 
 .compass,
 .compass-int{
-	width: 70px;
 	height: 70px;
 	margin: 0 auto;
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: auto 100%;
 	-webkit-transition: 1s ease-out;
+}
+.compass-int{
+	width: 70px;
 }
 .compass{
 	background-image: url(../img/compass-bg.png);
@@ -1280,6 +1348,11 @@ Pagination Styles
 		font-size: 13px;
 		padding-top: 34px;
 	}
+	.config-item,
+	.input-center{
+		margin-top: 6px;
+		margin-bottom: 25px;
+	}
 }
 
 @media all and (min-height: 569px){
@@ -1332,7 +1405,11 @@ Pagination Styles
 		font-size: 16px;
 		padding-top: 44px;	
 	}
-	
+	.config-item,
+	.input-center{
+		margin-top: 20px;
+		margin-bottom: 40px;
+	}
 }
 
 @media all and (min-height: 650px){

@@ -1812,6 +1812,64 @@ function guardar(resp){
 	$('#PopAlert').removeClass('toCenter');
     show_inicio();
 }
+function estadisticas(tipo){
+	 CanvasJS.addColorSet("orange", ["#DB4A08" ]);
+    var chart = new CanvasJS.Chart("chartContainer", {      
+        axisX: {
+                gridColor: '#37343e',
+                lineColor: '#37343e',
+                tickColor: '#37343e',
+                tickThickness: 0,
+                lineThickness: 0,
+                gridThickness: 0,
+                labelFontSize: 12
+            },
+            axisY: {
+                gridColor: '#37343e',
+                lineColor: '#37343e',
+                tickColor: '#37343e',
+                tickThickness: 0,
+                lineThickness: 0,
+                gridThickness: 0,
+                labelFontSize: 1,
+      },
+      animationEnabled: true,
+      backgroundColor: "#37343E",
+      colorSet:  "orange",
+      data: [{ 
+         type: "stackedColumn100",
+         dataPoints: [
+         { x: 1, y: 10 },
+         { x: 2, y: 20 },
+         { x: 3, y: 30 },                                    
+         { x: 4, y: 40 },
+         { x: 5, y: 50 },
+         { x: 6, y: 60 },
+         { x: 7, y: 70 },                                    
+         { x: 8, y: 80 },
+         { x: 9, y: 90 }
+         ]
+       },{ 
+         type: "stackedColumn100",
+         color:"#201E23",
+         dataPoints: [
+         { x: 1, y: 90 },
+         { x: 2, y: 80 },
+         { x: 3, y: 70 },                                    
+         { x: 4, y: 60 },
+         { x: 5, y: 50 },
+         { x: 6, y: 40 },
+         { x: 7, y: 30 },                                    
+         { x: 8, y: 20 },
+         { x: 9, y: 10 }
+         ]
+       }]
+     });
+    chart.render();
+	
+	ak_navigate('#estadisticas', {to: 'show_inicio();'});
+	
+}
 /*! end principal */
 /*! map */
 function map_init(){
