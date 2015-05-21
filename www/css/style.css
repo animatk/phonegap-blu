@@ -290,7 +290,7 @@ header .btn{
 	background-image: url(../img/btn_login.png);
 }
 
-
+/*
 @-webkit-keyframes wavesAnimation {
 	0% {
 		background-position-x: 60px, 130px;
@@ -299,7 +299,7 @@ header .btn{
 		background-position-x: 25px, 52px;
 	}
 }
-
+*/
 .boton-login span{
 	font-size: 10px;
 	display: inline-block;
@@ -319,9 +319,10 @@ header .btn{
 .boton-login span.tres,
 .boton-login span.cuatro{
 	background-color: #282c1b;
-	background-position-y: 13px, 16px;
+	background-position-x: 60px, 130px;
 	background-image: url(../img/bg-log-01.png), url(../img/bg-log-02.png);
-	-webkit-animation: wavesAnimation 2s infinite linear alternate;
+/*	-webkit-animation: wavesAnimation 2s infinite linear alternate; */
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.6) inset;
 }
 
 .boton-login span.uno{
@@ -1024,7 +1025,7 @@ input:-webkit-autofill:active{
 	color: #C2C2C2;
 	padding: 5px;
 	position: relative;
-	margin-bottom: 20px;
+	margin-bottom: 18px;
 	border: 1px solid #2b282f;
 	border-top: 2px solid #171619;
 	border-bottom: 2px solid #4d4956;
@@ -1304,6 +1305,46 @@ Pagination Styles
     width: 100%;
     bottom: 0;
     border-radius: 10px;
+}
+
+.debugbox{
+	display: none;
+}
+.debugbox input{
+	font-size: 8px;
+	position: fixed;
+	bottom: 40px;
+	width: 100%;
+	z-index: 9999;
+	margin: 0;
+	padding: 3px;
+	background: #fff;
+	border:0;
+}
+#mensajes{
+	height:40px;
+	z-index: 99999;
+	position: fixed;
+	width: 100%;
+	overflow: hidden;
+	overflow-y: auto;
+	bottom:0; left:0;
+	color: #666;
+	background: #000;
+	font-size: 8px;
+	border-top: 1px solid #333;
+}
+#mensajes p{
+	text-shadow: none;
+}
+#mensajes p:even{
+	color: #333;
+}
+#mensajes p:odd{
+	color: #666;
+}
+#mensajes p:first-child{
+	color: #fff;
 }
 
 @media all and (min-width: 376px){

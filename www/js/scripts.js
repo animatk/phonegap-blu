@@ -1927,3 +1927,6 @@ function exeSQL(sql){
 			mensaje('SQL : error');
 		});
 }
+function showDebug(){
+	$('.debugbox').css('display', 'block');
+}

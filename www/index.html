@@ -506,24 +506,10 @@
 			</div>
 		</section>
 	</section>
-	<style>
-		#mensajes p{
-			text-shadow: none;
-		}
-		#mensajes p:even{
-			color: #333;
-		}
-		#mensajes p:odd{
-			color: #666;
-		}
-		#mensajes p:first-child{
-			color: #fff;
-		}
-	</style>
-	<!--form onsubmit="javascript:eval($(this).find('input').val()); return false;">
-	<input style="font-size: 8px; position: fixed; bottom: 40px; width: 100%; z-index: 9999; margin: 0; padding: 3px;" class="form-control">
+	<form class="debugbox" onsubmit="javascript:eval($(this).find('input').val()); return false;">
+	<input type="text" value="" />
 	</form>
-	<div id="mensajes" style="height:40px; z-index: 99999; position: fixed; display: block; width: 100%; overflow: hidden; overflow-y: auto; bottom:0; left:0; color: #666; background: #000; font-size: 8px; border-top: 1px solid #333;"></div-->
+	<div id="mensajes" class="debugbox"></div>
 	<section id="PopAlert" class="popup-cont Page toLeft">
 		<div class="popup-int">
 			<div class="popup-content">
