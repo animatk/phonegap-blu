@@ -432,9 +432,19 @@ function isDevice(){
 }
 function isOnLine(){
 	if(isPhonegap){
-		return navigator.connection.type;
+		var networkState = navigator.connection.type;
+		var states = {};
+		states[Connection.UNKNOWN]  = 'des';
+		states[Connection.ETHERNET] = 'net';
+		states[Connection.WIFI]     = 'wifi';
+		states[Connection.CELL_2G]  = '2g';
+		states[Connection.CELL_3G]  = '3g';
+		states[Connection.CELL_4G]  = '4g';
+		states[Connection.NONE]     = 'none';
+		return states[networkState];
 	}else{
-		return navigator.onLine;
+		var status = (navigator.onLine)? 'yeap': 'none';
+		return status;
 	}
 }
 /*! Onload Phonegap Event*/
@@ -457,6 +467,7 @@ function DeviceReady(){
 	}else{
 		iniciar();
 	}
+	mensaje('estado de la red : '+isOnLine() );
 	if(isOnLine() != 'none' && SES['chain']){
 		worker({fun: 'sincronizar', url: SITE, chain: SES['chain'] }, function(data){ mensaje(data) });
 	}
@@ -464,6 +475,7 @@ function DeviceReady(){
 }
 document.addEventListener('backbutton', function(e){}, false);
 function worker(obj, fun){
+	mensaje('se inicia el worker');
 	if(sync == null){
 		sync = new Worker('js/sync.js');
 		sync.addEventListener('message', function(e) {
@@ -1871,6 +1883,12 @@ function estadisticas(tipo){
 	
 }
 /*! end principal */
+/*! configuracion */
+function show_configuracion(back){
+	//
+	ak_navigate('#configuracion', back);
+}
+/*! end configuracion */
 /*! map */
 function map_init(){
 	var styles = [{	
