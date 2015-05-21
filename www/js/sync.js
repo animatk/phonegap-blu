@@ -100,7 +100,6 @@ function sincronizar(obj){
 	var func = obj.res;
 	
 	func('se inicia la sincronizacion');
-	
 	webdb.executeSql('CREATE TABLE IF NOT EXISTS actividad (ID INTEGER PRIMARY KEY ASC, chain TEXT, json TEXT, sync TEXT, data TEXT)', [],
 	function(tx, r){},
 	function(tx, e){});
@@ -114,8 +113,7 @@ function sincronizar(obj){
 			var row = rows.item(i);
 			items.push(row);
 		}
-		func('se envia al servidor un total de : '+tot ); 
-		if(items.length > 0){
+			func('se envia al servidor un total de : '+tot ); 
 			ajax({
 				url: obj.url+'input/verificar'
 				,method: 'POST'
@@ -141,7 +139,6 @@ function sincronizar(obj){
 				//	func(JSON.stringify(error));
 				}
 			});
-		}
 	},
 	function(tx, e){});
 }
