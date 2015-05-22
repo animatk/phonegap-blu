@@ -652,6 +652,16 @@ header .btn{
 	background-position: center;
 	background-repeat: no-repeat;
 }
+.perfil-info{
+	text-align: center;
+	background: #434049;
+	padding: 8px 0;
+}
+.perfil-info img{
+	height: 35px;
+	display: block;
+	margin: 0 auto;
+}
 /* end perfil */
 /* principal */
 .ppal-container{
@@ -1204,10 +1214,16 @@ Pagination Styles
 	margin-top: -50px;
 	margin-bottom: 5px;
 }
-
+#perfil .user_inicio{
+	margin-top: 0;
+	background-color: #252428;
+	padding: 6px 0;
+	margin-bottom: 0;
+}
 .user_inicio h2{
-	font-size: 24px;
+	font-size: 20px;
 	font-weight: normal;
+	padding-bottom: 8px;
 }
 .user_inicio .perfil-photo{
 	background-color: transparent;	
@@ -1378,7 +1394,9 @@ Pagination Styles
 		padding-top: 5px;
 		padding-bottom: 10px;
 	}
-	
+	.user_inicio h2{
+		font-size: 24px;
+	}
 	.btn-iniciar{
 		width: 130px;
 		height: 130px;

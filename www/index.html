@@ -48,7 +48,7 @@
 						<div class="col text-center user_inicio">
 							<div class="perfil-photo-wrapper">
 								<span class="perfil-photo text-center" style="background-image:url(img/perfil-man.jpg);"></span>
-								<div class="edit_porfile_button"></div>
+								<div class="edit_porfile_button" onclick="show_perfil();"></div>
 							</div>
 							<h2 class="perfil-nombre"></h2>
 						</div>
@@ -291,33 +291,43 @@
 		</section>	
 		<section id="perfil" class="Page">
 				<div class="container Main">
+					<p class="text-center general-title" data-lang="perfil"></p>
+					<div class="row text-center user_inicio">
+						<div class="perfil-photo-wrapper">
+							<span class="perfil-photo text-center" style="background-image:url(img/perfil-man.jpg);"></span>
+							<div class="edit_porfile_button" onclick="show_perfil();"></div>
+						</div>
+						<h2 class="perfil-nombre"></h2>
+					</div>
+			
+					<div class="row row3 perfil-info">
+						<div class="col">
+							<img src="img/edad_icon.png" />
+							<span class="perfil-edad"></span>
+						</div>
+						<div class="col">
+							<img src="img/estatura_icon.png" />
+							<span class="perfil-estatura"></span>
+						</div>
+						<div class="col">
+							<img src="img/peso_icon.png" />
+							<span class="perfil-peso"></span>
+						</div>
+					</div>
 					<div class="row">
-						<div class="col col40 text-center">
-							<span class="perfil-photo text-center" style="background-image:url(img/perfil-man.jpg);">
-								<!--foto perfil-->
-							</span>
+						<div class="col col40">
+							uno
 						</div>
 						<div class="col col60">
-							<h2 class="perfil-nombre"></h2>
-							<div class="perfil-genero"></div>
+							dos
 						</div>
 					</div>
-					<div>
-						<span data-lang="edad"></span> <span class="perfil-edad"></span>
-					</div>
-					<div>
-						<span data-lang="estatura"></span> <span class="perfil-estatura"></span>
-					</div>
-					<div>
-						<span data-lang="peso"></span> <span class="perfil-peso"></span>
-					</div>
-					<div>&nbsp;</div>
-					<div class="text-center" id="fbConnect">
+					<!--div class="text-center" id="fbConnect">
 						<span class="btn btn-facebook btn-block btn-icon btn-icon-fb" onclick="fbLogin();" data-lang="RegOnFb"></span>
 						<div>&nbsp;</div>
-					</div>
+					</div-->
 					<div class="text-center">
-						<span id="btnWizard" class="btn btn-info" onclick="show_paso_uno({to:'show_perfil({to:\'show_inicio();\'});'});"> Editar Perfil </span>
+						<span id="btnWizard" class="btn btn-action" onclick="show_paso_uno({to:'show_perfil({to:\'show_inicio();\'});'});"> Editar Perfil </span>
 					</div>
 				</div>
 		</section>
