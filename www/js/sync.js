@@ -108,11 +108,11 @@ function sincronizar(obj){
 	function(tx, r){
 		var rows = r.rows,
 			items = [],
-			tot = rows.length;
-		for(var i=0; i<tot; i++){
-			var row = rows.item(i);
-			items.push(row);
-		}
+			tot = rows.length || 0;
+			for(var i=0; i<tot; i++){
+				var row = rows.item(i);
+				items.push(row);
+			}
 			func('se envia al servidor un total de : '+tot ); 
 			ajax({
 				url: obj.url+'input/verificar'
