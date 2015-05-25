@@ -905,6 +905,45 @@ function show_perfil(nav){
 		ak_navigate('#perfil', {to:'show_inicio();'});
 	}
 }
+function inputImage(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        var img = new Image();
+
+        img.onload = function (e) {
+            
+            // create an off-screen canvas
+            var canvas = document.createElement('canvas'),
+                ctx = canvas.getContext('2d');
+
+            // set its dimension to target size
+            var ancho = this.width;
+            var alto = this.height;
+            
+            var percentage = 128 / ancho;
+            var alto = alto * percentage;
+            var height = alto;
+            //
+            canvas.width = 128;
+            canvas.height = height;
+            
+
+            // draw source image into the off-screen canvas:
+            ctx.drawImage(this, 0, 0, 128, height);
+
+            // encode image to data-uri with base64 version of compressed image
+            var img = canvas.toDataURL();
+            
+            $('.fotoPerfil').css( 'background-image', 'url('+img+')' );
+            $('input[name=img]').val( img );
+        };
+
+        reader.onload = function (e) {
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
 function cal_edad(data){
 	var res = new Date() - new Date(data);
 	var edad = (res / (1000 * 60 * 60 * 24 * 365));
@@ -956,6 +995,7 @@ function form_paso_uno(form){
 			if(SES['perfil']){
 				udata = JSON.parse(SES['perfil']);
 			}
+			udata.img = data.img;
 			udata.gender = data.genero;
 			udata.name = data.nombre;
 			udata.birthdate = data.edad;

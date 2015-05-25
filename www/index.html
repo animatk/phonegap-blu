@@ -128,8 +128,15 @@
 		<section id="registro" class="Page">
 			<div class="container Main">
 				<div class="config-cont">
-					<p class="text-center general-title" data-lang="info_general"></p>
 					<form onsubmit="return form_paso_uno(this); return false;">
+                        <div class="row text-center user_inicio">
+                            <div class="perfil-photo-wrapper">
+                                <span class="fotoPerfil perfil-photo text-center" onclick="$('#imgupload').click();" style="background-image:url(img/upload_photo.png);"></span>
+                                <input onchange="inputImage(this);" type="file" id="imgupload" class="oculto" accept="image/gif, image/jpeg, image/png" />
+                                <input type="text" name="img" class="oculto" />
+                            </div>
+                        </div>
+                        <div>&nbsp;</div>
 						<input name="nombre" class="form-control input-center required" />
 						<select name="genero" class="form-control required oculto">
 							<option value="F" data-lang="femenino"></option>
@@ -314,12 +321,14 @@
 							<span class="perfil-peso"></span>
 						</div>
 					</div>
-					<div class="row">
-						<div class="col col40">
-							uno
+					<div class="row imc red">
+						<div class="col col50">
+							<span class="imc-bg"></span>
 						</div>
-						<div class="col col60">
-							dos
+						<div class="col col50 imc-dt">
+							<div class="imc-title" data-lang="suimc"></div>
+							<div class="imc-data">00.0</div>
+							<div class="imc-info">Tiene <span>SOBREPESO LEVE</span></div>
 						</div>
 					</div>
 					<!--div class="text-center" id="fbConnect">
@@ -327,7 +336,7 @@
 						<div>&nbsp;</div>
 					</div-->
 					<div class="text-center">
-						<span id="btnWizard" class="btn btn-action" onclick="show_paso_uno({to:'show_perfil({to:\'show_inicio();\'});'});"> Editar Perfil </span>
+						<span id="btnWizard" class="btn btn-action btn-block" onclick="show_paso_uno({to:'show_perfil({to:\'show_inicio();\'});'});" data-lang="edit_profile"></span>
 					</div>
 				</div>
 		</section>
@@ -446,77 +455,41 @@
 		<section id="terminos" class="Page">
 			<div class="container Main">
 				<h3>POLITICA DE PRIVACIDAD Y TERMINOS DE USO</h3>
-				<p>&nbsp;</p>
 				<p>AL VER Y ACCEDER A ESTE SITIO <a href="http://www.sforza.co">WWW.SFORZA.CO</a> &Oacute; <a href="http://www.sforza.com.co">WWW.SFORZA.COM.CO</a> O COMPRAR CUALQUIERA DE LOS PRODUCTOS DISPONIBLES A TRAV&Eacute;S DEL SITIO, DECLARA QUE HA LE&Iacute;DO Y ENTIENDE ESTA POL&Iacute;TICA DE PRIVACIDAD COMPLETA Y ACEPTA TODOS LOS T&Eacute;RMINOS DE ESTA POL&Iacute;TICA DE PRIVACIDAD. SI NO ACEPTA ESTA POL&Iacute;TICA DE PRIVACIDAD EN SU TOTALIDAD, POR FAVOR DESISTA DE ACCEDER A ESTE SITIO WEB Y/O APPLICACION MOVIL.</p>
-				<p>&nbsp;</p>
 				<p>Los t&eacute;rminos y las condiciones que rigen su uso de este sitio est&aacute;n incluidos en un acuerdo separado de t&eacute;rminos de uso, disponible en <a href="http://www.jawbone.com/legal/terms">http://www.sforza.co/terminosdeuso</a>.</p>
-				<p>&nbsp;</p>
 				<p>VARBO LTDA respeta la privacidad de los visitantes del sitio. Esta pol&iacute;tica de privacidad de Sforza entre usted y nosotros est&aacute; dise&ntilde;ada para informarle sobre nuestras pol&iacute;ticas y pr&aacute;cticas con respecto a la recopilaci&oacute;n, el uso y la divulgaci&oacute;n de informaci&oacute;n personal e informaci&oacute;n an&oacute;nima que usted nos env&iacute;a a trav&eacute;s del sitio.</p>
-				<p>&nbsp;</p>
 				<p>La "informaci&oacute;n personal" es informaci&oacute;n sobre usted mediante la que se lo puede identificar, como su nombre, domicilio, direcci&oacute;n de correo electr&oacute;nico o n&uacute;mero de tel&eacute;fono, informaci&oacute;n de pago y facturaci&oacute;n, as&iacute; como otra informaci&oacute;n que no sea p&uacute;blica y que est&eacute; relacionada con lo mencionado anteriormente. "Informaci&oacute;n an&oacute;nima" significa informaci&oacute;n que no est&aacute; relacionada o vinculada con su informaci&oacute;n personal. La informaci&oacute;n an&oacute;nima no permite la identificaci&oacute;n de personas en forma individual.</p>
-				<p>&nbsp;</p>
 				<h3>Consentimiento del usuario</h3>
-				<p>&nbsp;</p>
 				<p>Al enviar informaci&oacute;n personal a trav&eacute;s del sitio, usted acepta los t&eacute;rminos de esta pol&iacute;tica de privacidad y accede expresamente al procesamiento de su informaci&oacute;n personal de acuerdo con esta pol&iacute;tica de privacidad. Nosotros podremos procesar su informaci&oacute;n personal en el pa&iacute;s en el que se recopil&oacute;, as&iacute; como en otros pa&iacute;ses (incluido Colombia y Estados Unidos) donde las leyes sobre el procesamiento de la informaci&oacute;n pueden ser menos estrictas que las leyes en su pa&iacute;s.</p>
-				<p>&nbsp;</p>
 				<h3>Recopilaci&oacute;n de informaci&oacute;n personal</h3>
-				<p>&nbsp;</p>
 				<p>La informaci&oacute;n personal que reunimos de usted nos ayuda a aprender sobre nuestros visitantes del sitio, nuestros clientes y clientes potenciales. Usamos esta informaci&oacute;n para adaptar mejor las caracter&iacute;sticas, el desempe&ntilde;o y el soporte de nuestros productos y servicios, para ofrecerle m&aacute;s informaci&oacute;n y oportunidades y para informarle sobre cambios en esta pol&iacute;tica de privacidad (y los t&eacute;rminos de uso del sitio).</p>
-				<p>&nbsp;</p>
 				<h3>Compras de productos</h3>
-				<p>&nbsp;</p>
 				<p>Si compra un producto Sforza&reg; u otro producto a trav&eacute;s de este sitio, recopilamos su informaci&oacute;n personal necesaria para realizar la transacci&oacute;n de venta y usamos la informaci&oacute;n para procesar su pago y enviarle el producto que compr&oacute;.</p>
-				<p>&nbsp;</p>
 				<h3>Informaci&oacute;n de pago</h3>
-				<p>&nbsp;</p>
 				<p>Si env&iacute;a informaci&oacute;n de pago a trav&eacute;s de este sitio, recopilamos su informaci&oacute;n de pago a fin de permitirle pagar los productos que compra a trav&eacute;s del sitio. Para realizar pagos a trav&eacute;s del sitio deber&aacute; proporcionarnos (o proporcionar a nuestros proveedores terceros de servicios de pago) un n&uacute;mero de tarjeta de cr&eacute;dito v&aacute;lido e informaci&oacute;n de pago relacionada al momento en que deba realizar dichos pagos, incluidos los siguientes datos: (i) Su nombre tal como aparece en la tarjeta, (ii) el tipo de tarjeta de cr&eacute;dito, (iii) la fecha de vencimiento de la tarjeta de cr&eacute;dito y (iv) los n&uacute;meros o c&oacute;digos de activaci&oacute;n necesarios para aplicar un cargo a su tarjeta. Est&aacute; de acuerdo con que no se requiere ning&uacute;n aviso o consentimiento adicional antes de que nosotros (o nuestros proveedores terceros de servicios de pago) facturemos a su tarjeta de cr&eacute;dito que nos proporcion&oacute; todos los montos adeudados y pagaderos. Al proporcionarnos a nosotros o a nuestros proveedores terceros de servicios de pago el n&uacute;mero de su tarjeta de cr&eacute;dito e informaci&oacute;n de pago relacionada, acepta expresamente que nosotros o nuestros proveedores terceros de servicios de pago estamos autorizados a facturar inmediatamente a su cuenta todos los costos y cargos adeudados y pagaderos a nosotros como resultado de sus actividades en el sitio que requieren un pago. Acepta notificarnos inmediatamente sobre cualquier cambio en su direcci&oacute;n de facturaci&oacute;n o la tarjeta de cr&eacute;dito usada para el pago por en virtud de este. Usamos empresas terceras de procesamiento (incluidas empresas de procesamiento de tarjetas de cr&eacute;dito) para la facturaci&oacute;n y los pagos. Estos terceros pueden almacenar o conservar ciertos datos de su informaci&oacute;n personal (seg&uacute;n lo definido en la pol&iacute;tica de privacidad) que sean necesarios para procesar dichos pagos. Estos terceros no tienen ning&uacute;n derecho de usar la informaci&oacute;n personal que nosotros les proporcionamos m&aacute;s all&aacute; de lo que sea necesario para ayudarnos en el procesamiento de los pagos.</p>
-				<p>&nbsp;</p>
 				<h3>Informaci&oacute;n personal que nos proporciona</h3>
-				<p>&nbsp;</p>
 				<p>Recopilamos la informaci&oacute;n personal que usted nos env&iacute;a voluntariamente a trav&eacute;s del sitio.</p>
-				<p>&nbsp;</p>
 				<p>Si compra un producto a trav&eacute;s del sitio, recopilamos la siguiente informaci&oacute;n que usted nos proporciona: su nombre y apellido, direcci&oacute;n de correo electr&oacute;nico, domicilio postal y direcci&oacute;n de facturaci&oacute;n, si es diferente al domicilio postal.</p>
-				<p>&nbsp;</p>
 				<p>Cuando se comunique con nosotros mediante un correo electr&oacute;nico, recopilaremos su nombre, su direcci&oacute;n de correo electr&oacute;nico y la informaci&oacute;n incluida en el correo electr&oacute;nico que usted nos env&iacute;a.</p>
-				<p>&nbsp;</p>
 				<h3>Uso de la informaci&oacute;n</h3>
-				<p>&nbsp;</p>
 				<p>Podremos crear registros de informaci&oacute;n an&oacute;nima a partir de informaci&oacute;n personal al excluir informaci&oacute;n (como su nombre) que permite identificarlo en forma particular. Podremos usar esta informaci&oacute;n an&oacute;nima para analizar patrones de solicitud y patrones de uso, de modo que podamos mejorar nuestros productos y servicios. Nos reservamos el derecho de usar y divulgar informaci&oacute;n an&oacute;nima a terceros a nuestro criterio, inclusive para an&aacute;lisis comerciales internos, y de proporcionar datos demogr&aacute;ficos globales a nuestros diferentes socios.</p>
-				<p>&nbsp;</p>
 				<p>Informaci&oacute;n personal recopilada a trav&eacute;s de la venta de nuestros productos</p>
-				<p>&nbsp;</p>
 				<p>Si compra alguno de nuestros productos disponibles a trav&eacute;s de nuestro sitio, podr&aacute; estar sujeto a t&eacute;rminos y condiciones de venta adicionales o a las licencias seg&uacute;n las que tiene derecho a usar el software integrado en dichos productos, si hubiera alguno. Estos t&eacute;rminos y condiciones adicionales o licencias regir&aacute;n sus derechos en dichos productos y para estos.</p>
-				<p>&nbsp;</p>
 				<h3>Divulgaci&oacute;n de informaci&oacute;n personal</h3>
-				<p>&nbsp;</p>
 				<p>A excepci&oacute;n de que se mencione lo contrario en esta pol&iacute;tica de privacidad, generalmente, no comercializamos, alquilamos ni compartimos su informaci&oacute;n personal con terceros y no divulgaremos informaci&oacute;n de facturaci&oacute;n a menos que usted nos lo solicite.</p>
-				<p>&nbsp;</p>
 				<p>No obstante, podremos compartir su informaci&oacute;n personal con terceros para procesar pagos o para proporcionarle acceso al sitio. Estos terceros no deben usar su informaci&oacute;n personal para otro fin que no sea prestar los servicios que les solicitamos y est&aacute;n obligados a cumplir con acuerdos de confidencialidad con respecto a c&oacute;mo usan su informaci&oacute;n personal. Usted acepta expresamente el intercambio de su informaci&oacute;n personal con nuestros contratistas y proveedores terceros de servicios con el &uacute;nico fin de proporcionarle nuestros productos y servicios.</p>
-				<p>&nbsp;</p>
 				<p>Independientemente de las opciones que elija con relaci&oacute;n a su informaci&oacute;n personal (seg&uacute;n lo descrito a continuaci&oacute;n), podremos divulgar su informaci&oacute;n personal (1) si creemos de buena fe que dicha divulgaci&oacute;n es necesaria para (a) cumplir con las leyes relevantes o para responder a &oacute;rdenes judiciales, o (b) proteger y defender nuestros derechos o nuestra propiedad o los de terceros; o (2) en relaci&oacute;n con la investigaci&oacute;n y la prevenci&oacute;n del fraude.</p>
-				<p>&nbsp;</p>
 				<h3>Nuestros sitios</h3>
-				<p>&nbsp;</p>
 				<p>La incorporaci&oacute;n de un enlace a otro sitio o ubicaci&oacute;n es para su comodidad y no significa que avalamos a ese sitio web o ubicaci&oacute;n ni a sus contenidos. No tenemos control sobre estos sitios web externos ni su contenido, no los revisamos y no podemos ser responsables de estos. Tenga en cuenta que los t&eacute;rminos de nuestra pol&iacute;tica de privacidad no se aplican a estos sitios web externos.</p>
-				<p>&nbsp;</p>
 				<h3>Seguridad</h3>
-				<p>&nbsp;</p>
 				<p>Realizamos esfuerzos comercialmente razonables para proteger la seguridad de su informaci&oacute;n personal mediante el uso de tecnolog&iacute;as y procedimientos de seguridad est&aacute;ndar de la industria para ayudar a proteger su informaci&oacute;n personal frente al acceso, al uso o la divulgaci&oacute;n no autorizados. Protegemos la seguridad de los datos que nos env&iacute;a con procesos f&iacute;sicos, electr&oacute;nicos y gerenciales. Le recomendamos que tome las precauciones necesarias para proteger su informaci&oacute;n personal cuando est&aacute; en Internet. Una forma en la que lo puede hacer es asegurarse de usar un navegador web seguro. Nuestro sitio de comercio electr&oacute;nico usa el cifrado est&aacute;ndar de la industria de capa de sockets seguros (SSL) en todas las p&aacute;ginas de comercio electr&oacute;nico en que usted env&iacute;a informaci&oacute;n personal. Por favor aseg&uacute;rese de usar la &uacute;ltima versi&oacute;n de un navegador con SSL. Le recomendamos usar Internet Explorer 4.0 o posterior, Netscape 4.0 o posterior y la &uacute;ltima versi&oacute;n de Safari. Esto proteger&aacute; mejor la confidencialidad de su informaci&oacute;n personal, que incluye la informaci&oacute;n de su tarjeta de cr&eacute;dito, mientras se la transmite por Internet.</p>
-				<p>&nbsp;</p>
 				<p>Salvo que se lo estipule en otra parte de esta pol&iacute;tica de privacidad, limitamos el acceso a la informaci&oacute;n personal en bases de datos electr&oacute;nicas a aquellas personas (incluidos empleados y contratistas) de nuestra organizaci&oacute;n que tienen la necesidad comercial de dicho acceso.</p>
-				<p>&nbsp;</p>
 				<p>Aunque hemos tomado medidas para proteger su informaci&oacute;n personal para que personas no autorizadas no la intercepten, no accedan a ella, no la utilicen o no la divulguen, debe saber que no podemos eliminar por completo los riesgos de seguridad asociados con la informaci&oacute;n personal.</p>
-				<p>&nbsp;</p>
 				<h3>Contacto</h3>
-				<p>&nbsp;</p>
 				<p>Si tiene alguna pregunta o inquietud sobre esta pol&iacute;tica de privacidad, comun&iacute;quese con nosotros a varbo@siluet.com.co</p>
-				<p>&nbsp;</p>
 				<h3>Actualizaciones de la pol&iacute;tica de privacidad</h3>
-				<p>&nbsp;</p>
 				<p>Esta pol&iacute;tica de privacidad est&aacute; sujeta a revisiones en cualquier momento y a nuestro criterio. Le notificaremos de los cambios materiales en esta pol&iacute;tica de privacidad a trav&eacute;s de la direcci&oacute;n de correo electr&oacute;nico que usted nos proporciona, y publicaremos en este sitio todos los cambios que se realicen a esta pol&iacute;tica de privacidad. Sin embargo, le recomendamos que lea esta pol&iacute;tica de privacidad cada vez que use nuestro sitio web, en caso de que no haya le&iacute;do nuestro aviso de cambios en la pol&iacute;tica de privacidad. Si se opone a cualquier cambio, debe dejar de usar el sitio inmediatamente. Si contin&uacute;a usando el sitio despu&eacute;s del aviso de dichos cambios, esto indicar&aacute; que est&aacute; al tanto de dichos cambios y que acepta estar obligado a cumplir los t&eacute;rminos y las condiciones de dichos cambios.</p>
-				<p>&nbsp;</p>
 				<h3>Aplicaciones de terceros</h3>
-				<p>&nbsp;</p>
 				<p>Este producto usa SPOTIFY pero no est&aacute; endosado, certificado o aprobado de ninguna manera por Spotify. La marca Spotify es parte del Grupo Spotify.</p>
 			</div>
 		</section>
