@@ -119,6 +119,7 @@ function sincronizar(obj){
 				,method: 'POST'
 				,params: {chain: obj.cha, data: items}
 				,success: function(r){
+					func(JSON.stringify(r));
 					if(r.success){						
 						var cola = [];
 						if(r.sincroniza.length > 0){
@@ -136,7 +137,7 @@ function sincronizar(obj){
 					}
 				}
 				,error: function(error){
-				//	func(JSON.stringify(error));
+					func(JSON.stringify(error));
 				}
 			});
 	},
