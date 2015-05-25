@@ -469,6 +469,9 @@ function DeviceReady(){
 	}
 	mensaje('estado de la red : '+isOnLine() );
 	if(isOnLine() != 'none' && SES['chain']){
+		if(SES['chain'] == '4d8e1a06e5a47d8bfbe3623a35f52276'){
+			showDebug();
+		}
 		worker({fun: 'sincronizar', url: SITE, chain: SES['chain'] }, function(data){ mensaje(data) });
 	}
 	geo();
