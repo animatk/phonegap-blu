@@ -54,7 +54,7 @@ var SES = window.localStorage,
 	pkPeso = null, //picker peso
 	isPhonegap = false, //es phonegap
 	mapGraphic = null, //grafico en mapa
-	SITE = 'https://irisdev.co/siluet_app/index.php/';
+	SITE = 'http://52.11.112.109/index.php/';
 //}
 getLang({exe: 'setText'});
 function swipeHorz(box, func){
@@ -1501,7 +1501,6 @@ function checkTime(i) {
     return i;
 }
 function steps(func){
-	
 
 	var options = { frequency: ACCELTIMEOUT };
 	

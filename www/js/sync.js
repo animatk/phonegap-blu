@@ -139,7 +139,7 @@ function sincronizar(obj){
 				,error: function(error){
 					func(JSON.stringify(error));
 				}
-			});
+			}); 
 	},
 	function(tx, e){});
 }
