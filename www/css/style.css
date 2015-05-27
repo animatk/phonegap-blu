@@ -883,6 +883,10 @@ header .btn{
 	height: 200px;
 	background: #ccc;
 }
+
+#myCanvas{
+	height: 90px;
+}
 .map-info-cont{
 	background-color: #403B4C;
 }
@@ -903,6 +907,10 @@ header .btn{
 .map-info-bottom .map-info{
 	background-color: #232227;
 	margin-right: -15px;
+	background-position: 6px center;
+	border-bottom: 2px groove rgba(71, 71, 71, 0.42);
+	padding-left: 34px;
+	font-size: 1.0em;
 }
 
 .map-info.ppal-clock{
@@ -1556,6 +1564,9 @@ Pagination Styles
 	#m-canvas, 
 	#map-canvas{
 		height: 330px;
+	}
+	#myCanvas{
+		height: 125px;
 	}
 }
 
