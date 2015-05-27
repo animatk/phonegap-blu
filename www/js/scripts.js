@@ -1638,6 +1638,7 @@ function stepsSuccess(a){
 			if(DISTA > LASTTTACK+(39.370*10)){
 				if(trackActivity()){
 					LASTTTACK = DISTA;
+					loadMapa();
 				}
 			}
 			$(".DISTA").html( mostrar );
