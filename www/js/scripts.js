@@ -464,7 +464,6 @@ function DeviceReady(){
 		pause(function(){
 			stopgeo(function(){
 				geo();
-				loadMapa();
 				principal();
 			});
 		});
@@ -1243,7 +1242,6 @@ function show_config(back){
 //	if(SES['sens']){
 		stopgeo(function(){
 			geo();
-			loadMapa();
 		});
 		if(isPhonegap){
 			navigator.compass.getCurrentHeading(compassSuccess, compassError);
@@ -1431,9 +1429,7 @@ function trackActivity(){
 		actividad[curIndex].ppm = PPM;
 		//
 		SES['actividad'] = JSON.stringify(actividad);
-		if(ACTIVITYTYPE == 1){
-			loadMapa();
-		}
+		
 		return true;
 	}
 	return false;
@@ -1696,8 +1692,8 @@ function stopgeo(call){
 	}
 }
 function geoSuccess(position){
-	LAT = position.coords.latitude.toFixed(D);
-	LON = position.coords.longitude.toFixed(D);
+	LAT = parseFloat(position.coords.latitude.toFixed(D));
+	LON = parseFloat(position.coords.longitude.toFixed(D));
 	//
 	mensaje("GEO Lat: "+LAT+" Lon: "+LON);
 }
