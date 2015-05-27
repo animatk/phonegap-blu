@@ -464,6 +464,7 @@ function DeviceReady(){
 		pause(function(){
 			stopgeo(function(){
 				geo();
+				loadMapa();
 				principal();
 			});
 		});
@@ -1245,6 +1246,7 @@ function show_config(back){
 //	if(SES['sens']){
 		stopgeo(function(){
 			geo();
+			loadMapa();
 		});
 		if(isPhonegap){
 			navigator.compass.getCurrentHeading(compassSuccess, compassError);
@@ -1834,8 +1836,10 @@ function stop(){
 	stopsteps();
 	stopgeo();
 	//remove poliline google maps
-	MAPLINE.setMap(null);
-	ICO.setPosition(null);
+	if(MAPLINE != null){
+		MAPLINE.setMap(null);
+		ICO.setPosition(null);
+	}
 	PPM = 0;
 	STEP = 0;
 	LASTTTACK = 0; //ultimo registro tomado
