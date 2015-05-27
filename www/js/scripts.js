@@ -472,10 +472,7 @@ function DeviceReady(){
 			showDebug();
 		}
 		worker({fun: 'sincronizar', url: SITE, chain: SES['chain'] }, function(data){ mensaje(data) });
-	}
-	stopgeo(function(){
-		geo();
-	});	
+	}	
 }
 document.addEventListener('backbutton', function(e){}, false);
 function worker(obj, fun){
@@ -1241,14 +1238,17 @@ function restore(form){
 /*! end restore */
 /*! Congiguracion */
 function show_config(back){
-	if(SES['sens']){
+//	if(SES['sens']){
+		stopgeo(function(){
+			geo();
+		});
 		if(isPhonegap){
 			navigator.compass.getCurrentHeading(compassSuccess, compassError);
 		}
 		ak_navigate('#config', back); 
-	}else{
-		show_sensibilidad(back);
-	}
+//	}else{
+//		show_sensibilidad(back);
+//	}
 }
 function show_sensibilidad(back){
 	ak_navigate('#sensibilidad', back);
@@ -1501,7 +1501,7 @@ function checkTime(i) {
     return i;
 }
 function steps(func){
-
+	console.log('entro a steps');
 	var options = { frequency: ACCELTIMEOUT };
 	
 	if(func == 'stepsConf'){
@@ -1531,7 +1531,10 @@ function stopsteps(call) {
 		SES.removeItem('BG');
 	}
 	if(call != undefined){
-		call();
+		var fun = call;
+		setTimeout(function(){
+			fun();
+		}, 500);
 	}
 }
 function compassSuccess(heading){
@@ -1681,11 +1684,14 @@ function geo(){
 }
 function stopgeo(call){
 	if(SES['GeoID']){
-		geolocation.clearWatch(SES['GeoID']);
+		navigator.geolocation.clearWatch(SES['GeoID']);
 		SES.removeItem('GeoID');
 	}
 	if(call != undefined){
-		call();
+		var fun = call;
+		setTimeout(function(){
+			fun();
+		}, 500);
 	}
 }
 function geoSuccess(position){
@@ -1763,41 +1769,47 @@ function show_map(back){
 }
 function loadMapa(){
 	if(MAP != null){
-		var latlng = new google.maps.LatLng( LAT, LON );
-		
-		if(ICO != null){
-			ICO.setPosition(latlng);
-		}else{
-			ICO = new google.maps.Marker({
-			  position: latlng,
-			  icon: {
-				path: google.maps.SymbolPath.CIRCLE,
-				scale: 6,
-				strokeColor: '#63e05a'
-			  },
-			  map: MAP
-			});
+		if(MAP != 'callmap'){
+			
+			var latlng = new google.maps.LatLng( LAT, LON );
+			
+			if(ICO != null){
+				ICO.setPosition(latlng);
+			}else{
+				ICO = new google.maps.Marker({
+				  position: latlng,
+				  icon: {
+					path: google.maps.SymbolPath.CIRCLE,
+					scale: 6,
+					strokeColor: '#63e05a'
+				  },
+				  map: MAP
+				});
+			}
+			
+			if(MAPLINE != null){
+				var path = MAPLINE.getPath();
+				path.push(latlng);
+			}else{
+				var polyOptions = {
+					strokeColor: '#D7EC3A',
+					strokeOpacity: 1,
+					strokeWeight: 8
+				};
+				MAPLINE = new google.maps.Polyline(polyOptions);
+				MAPLINE.setMap(MAP);
+			}
+			MAP.setCenter(latlng);
 		}
 		
-		if(MAPLINE != null){
-			var path = MAPLINE.getPath();
-			path.push(latlng);
-		}else{
-			var polyOptions = {
-				strokeColor: '#D7EC3A',
-				strokeOpacity: 1,
-				strokeWeight: 8
-			};
-			MAPLINE = new google.maps.Polyline(polyOptions);
-			MAPLINE.setMap(MAP);
-		}
-		
-		MAP.setCenter(latlng);
 	}else{
-		if(isOnLine() != 'none' && MAP == null){
-			loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyAihfNS3dpn6vB16RXRREYAy9jXEf63yUE&callback=map_init', function(){
-			//	
-			});
+		if(isOnLine() != 'none'){
+			if(MAP == null){
+				MAP = 'callmap';
+				loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyAihfNS3dpn6vB16RXRREYAy9jXEf63yUE&callback=map_init', function(){
+				//	
+				});
+			}
 		}
 	}
 }
@@ -1812,6 +1824,7 @@ function pause(call){
 }
 function stop(){
 	stopsteps();
+	stopgeo();
 	PPM = 0;
 	STEP = 0;
 	LASTTTACK = 0; //ultimo registro tomado
@@ -1825,9 +1838,6 @@ function stop(){
 	ACCE = 0; //ACCELERATION
 	PAUSED = true; //status of activity
 	MAPLINE = null; //linea de recorrido
-	MAP = null; //map google
-	LAT = 0; //map latitude
-	LON = 0; //map longitude
 	ICO = null; //icon map	
 	StopAcc = true;
 	PERFIL = null;
@@ -1940,7 +1950,7 @@ function map_init(){
 			"elementType": "all",
 			"stylers": [
 				{"saturation": -100},
-				{"gamma": 0.5}
+				{"gamma": 0.35}
 			]
 		}];
 	
