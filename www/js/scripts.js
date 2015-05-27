@@ -1513,10 +1513,12 @@ function steps(func){
 	}
 	
 	if(!SES['BG']){
-		cordova.plugins.backgroundMode.setDefaults({ 
-			title: language.sforza_exe 
-			,text: language.cal_time
-		});
+		if(isDevice() == 'Android'){
+			cordova.plugins.backgroundMode.setDefaults({ 
+				title: language.sforza_exe 
+				,text: language.cal_time
+			});
+		}
 		cordova.plugins.backgroundMode.enable();
 		SES['BG'] = 'run';
 	}
