@@ -471,7 +471,6 @@ function DeviceReady(){
 	}else{
 		iniciar();
 	}
-	mensaje('estado de la red : '+isOnLine() );
 	if(isOnLine() != 'none' && SES['chain']){
 		if(SES['chain'] == '4d8e1a06e5a47d8bfbe3623a35f52276'){
 			showDebug();
@@ -481,7 +480,6 @@ function DeviceReady(){
 }
 document.addEventListener('backbutton', function(e){}, false);
 function worker(obj, fun){
-	mensaje('se inicia el worker');
 	if(sync == null){
 		sync = new Worker('js/sync.js');
 		sync.addEventListener('message', function(e) {
@@ -800,7 +798,6 @@ function fbLogin(){
 									alert(language.err[obj.message]);
 								}else{
 									var udata = {};
-									mensaje(JSON.stringify(obj));
 									udata.gender = data.genero;
 									udata.name = data.nombre;
 									udata.terms = data.terminos;
@@ -1509,7 +1506,7 @@ function checkTime(i) {
     return i;
 }
 function steps(func){
-	console.log('entro a steps');
+	mensaje('entro a steps');
 	var options = { frequency: ACCELTIMEOUT };
 	
 	if(func == 'stepsConf'){
@@ -1520,13 +1517,12 @@ function steps(func){
 		SES['StepID'] = navigator.accelerometer.watchAcceleration(stepsSuccess, function(){}, options);
 	}
 	
-	if(!SES['BG']){
+	if(cordova.plugins.backgroundMode.isEnabled() === false){
 		cordova.plugins.backgroundMode.setDefaults({ 
 			title: language.sforza_exe 
 			,text: language.cal_time
 		});
 		cordova.plugins.backgroundMode.enable();
-		SES['BG'] = 'run';
 	}
 }
 function stopsteps(call) {
@@ -1534,9 +1530,8 @@ function stopsteps(call) {
 		navigator.accelerometer.clearWatch(SES['StepID']);
 		SES.removeItem('StepID');
 	}
-	if(SES['BG']){
+	if(cordova.plugins.backgroundMode.isEnabled() === true){
 		cordova.plugins.backgroundMode.disable();
-		SES.removeItem('BG');
 	}
 	if(call != undefined){
 		var fun = call;
@@ -1556,8 +1551,8 @@ function compassError(){
 	//
 }
 function stepsSuccess(a){
+	mensaje('step success');
 	if(StopAcc){
-		mensaje(msj);
 		return false;
 	}
 	if(!SES['sens']){
@@ -1664,14 +1659,12 @@ function stepsSuccess(a){
 			CALO = (efficiencia * PES * ((metros/1000)/milla)).toFixed(1);
 			$('.CALOR').html( CALO );
 			
-			mensaje('Alt: '+ALT+' Pes: '+PES);
 		}
 		$('.PASOS').html( STEP );
 		initClock();
 		PauseSens = 0;
 	}else{
 		if(!PAUSED && PauseSens >= 3){
-			mensaje('pAUSE');
 			pause();
 		}
 		PauseSens = PauseSens+1;
@@ -1811,7 +1804,6 @@ function loadMapa(){
 				MAP.setCenter(latlng);
 			}
 		}
-		
 	}else{
 		if(isOnLine() != 'none'){
 			if(MAP == null){
@@ -1857,6 +1849,9 @@ function stop(){
 	StopAcc = true;
 	PERFIL = null;
 	mapGraphic = null;
+	if(MAP == 'callmap'){
+		MAP = null;
+	}
 
 	SES.removeItem('steps');
 	SES.removeItem('velocidad');
