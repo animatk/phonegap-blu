@@ -1513,12 +1513,13 @@ function steps(func){
 		SES['StepID'] = navigator.accelerometer.watchAcceleration(stepsSuccess, function(){}, options);
 	}
 	
-	if(cordova.plugins.backgroundMode.isEnabled() === false){
+	if(!SES['BG']){
 		cordova.plugins.backgroundMode.setDefaults({ 
 			title: language.sforza_exe 
 			,text: language.cal_time
 		});
 		cordova.plugins.backgroundMode.enable();
+		SES['BG'] = 'run';
 	}
 }
 function stopsteps(call) {
@@ -1526,8 +1527,9 @@ function stopsteps(call) {
 		navigator.accelerometer.clearWatch(SES['StepID']);
 		SES.removeItem('StepID');
 	}
-	if(cordova.plugins.backgroundMode.isEnabled() === true){
+	if(SES['BG']){
 		cordova.plugins.backgroundMode.disable();
+		SES.removeItem('BG');
 	}
 	if(call != undefined){
 		var fun = call;
