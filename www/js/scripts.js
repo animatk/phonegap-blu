@@ -1534,8 +1534,10 @@ function steps(func){
 				title: language.sforza_exe 
 				,text: language.cal_time
 			});
+			cordova.plugins.backgroundMode.enable();
+		}else{
+			window.plugins.BackgroundJS.LockBackgroundTime(function(){}, function(msg){});
 		}
-		cordova.plugins.backgroundMode.enable();
 		SES['BG'] = 'run';
 	}
 }
@@ -1545,7 +1547,11 @@ function stopsteps(call) {
 		SES.removeItem('StepID');
 	}
 	if(SES['BG']){
-		cordova.plugins.backgroundMode.disable();
+		if(isDevice() == 'Android'){
+			cordova.plugins.backgroundMode.disable();
+		}else{
+			window.plugins.BackgroundJS.UnlockBackgroundTime(function(){}, function(msg){});
+		}
 		SES.removeItem('BG');
 	}
 	if(call != undefined){
