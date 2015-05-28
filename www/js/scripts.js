@@ -1418,6 +1418,7 @@ function addDisp(name, address){
 		return false;
 	}else{
 		if(item.hasClass('active')){
+			mensaje('desactivar');
 			disconnect();
 		}else{
 			mensaje("Funcion addDisp llamada con: "+name+' y '+ address );

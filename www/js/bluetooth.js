@@ -325,11 +325,16 @@ function mensaje(msj){
 function addClassHRM(){
 	if(DEVICE != 0){
 		$('#botonDisp').attr('data-add', DEVICE);
-		$('div[data-add="'+DEVICE+'"]').find('.switch').removeClass('load').addClass('active');
+		var item = $('div[data-add="'+DEVICE+'"]').find('.switch');
+		item.removeClass('load').addClass('active');
+		$('.disp-item .switch').not(item).addClass('inactive');
 	}
 }
 function removeClassHRM(){
-	$('div[data-add="'+DEVICE+'"]').removeClass('activo').attr('data-add', "");
+	var item = $('div[data-add="'+DEVICE+'"]').find('.switch');
+		item.removeClass('active');
+		
+	$('.disp-item .switch').removeClass('inactive');	
 }
 
 
