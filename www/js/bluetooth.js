@@ -177,7 +177,7 @@ function addDevice(address, name){
 		if(item.length == 0){
 			
 			var html = '<div class="disp-item"><span>'+name+'</span>'+
-				'<span class="switch" click="addDisp(\''+name+'\', \''+ address +'\');" value="" /></div>';
+				'<span class="switch" onclick="addDisp(\''+name+'\', \''+ address +'\');" value="" /></div>';
 			
 			var it = $(html);
 			it.attr('data-add', address);

@@ -1384,7 +1384,7 @@ function listarDispositivos(){
 	if( tot > 0){
 		for(var i=0; i<tot; i++){
 			var obj = dispositivos[i];
-			output += '<div data-add="'+obj.address+'" class="disp-item btn btn-default" onclick="addDisp(\''+obj.name+'\', \''+obj.address+'\'); "> '+obj.name+' </div>';
+			output += '<div data-add="'+obj.address+'" class="disp-item"> <span>'+obj.name+'</span> <span class="switch" onclick="addDisp(\''+obj.name+'\', \''+obj.address+'\'); "></span> </div>';
 		}
 			
 	}else{
