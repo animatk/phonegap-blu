@@ -34,6 +34,24 @@
 		,"Noviembre"
 		,"Diciembre"
 	]
+	,"dias": [
+		"Lun"
+		,"Mar"
+		,"Mie"
+		,"Jue"
+		,"Vie"
+		,"Sab"
+		,"Dom"
+	]
+	,"diaslg": [
+		"Lunes"
+		,"Martes"
+		,"Miercoles"
+		,"Jueves"
+		,"Viernes"
+		,"Sabado"
+		,"Domingo"
+	]
 	,"info_general": "Info General"
 	,"gender": "Genero"
 	,"masculino": "Masculino"

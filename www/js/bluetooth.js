@@ -36,7 +36,6 @@ function initializeSuccess(obj)
   if (obj.status == "enabled")
   {
   	isEnabled();
-	mensaje("inicializado correctamente. habilitara el dispositivo.");
   }
   else
   {
@@ -61,6 +60,11 @@ function isEnabledSuccess(obj)
   if (obj.isEnabled)
   {
     if(DEVICE != 0){
+		
+		//desactivar todos los switches que no sen el current
+		var item = $('div[data-add="'+DEVICE+'"]').find('.switch');
+		$('.disp-item .switch').not(item).addClass(inactive);
+		
 		connect( DEVICE );
 	}else{
 		startScan();
@@ -172,16 +176,24 @@ function addDevice(address, name){
 	if(name != undefined){
 		if(item.length == 0){
 			
-			var it = $('<div>');
-			it.text(name);
-			it.addClass('disp-item btn btn-default');
+			var html = '<div class="disp-item"><span>'+name+'</span>'+
+				'<span class="switch" click="addDisp(\''+name+'\', \''+ address +'\');" value="" /></div>';
+			
+			var it = $(html);
 			it.attr('data-add', address);
-			it.attr('onclick', 'addDisp(\''+name+'\', \''+ address +'\');');
 			padre.prepend(it);
 		
 			mensaje("Dispositivo: "+ address +' listado correctamente');
 		}
 	}
+}
+
+function disconnect(){
+	bluetoothle.disconnect(function(){
+		console.log('desconectado');
+	}, function(){
+		console.log('NO desconectado');
+	});
 }
 
 function connect(address)
@@ -313,7 +325,7 @@ function mensaje(msj){
 function addClassHRM(){
 	if(DEVICE != 0){
 		$('#botonDisp').attr('data-add', DEVICE);
-		$('div[data-add="'+DEVICE+'"]').addClass('activo');
+		$('div[data-add="'+DEVICE+'"]').find('.switch').removeClass('load').addClass('active');
 	}
 }
 function removeClassHRM(){

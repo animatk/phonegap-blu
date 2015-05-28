@@ -247,28 +247,27 @@
 		</section>
 		<section id="config" class="Page">
 			<div class="container Main">
-				<p class="text-center general-title" data-lang="config"></p>
-				<div>&nbsp;</div>
-				<div class="row row2">
-					<p class="text-center" data-lang="lugar_actividad"></p>
+				<div class="row row2 config-place">
+					<p class="text-center text-center general-title" data-lang="lugar_actividad"></p>
 					<div class="col text-center">
-						<span id="actividad-1" class="actType btn btn-default btn-success" onclick="tipoActividad(1);" data-lang="en_calle"></span>
+						<span id="actividad-1" class="icon-place icon-outdoor" onclick="tipoActividad(1);" data-lang="en_calle"></span>
 					</div>
 					<div class="col text-center">
-						<span id="actividad-2" class="actType btn btn-default" onclick="tipoActividad(2);" data-lang="en_interior"></span>
+						<span id="actividad-2" class="icon-place icon-indoor" onclick="tipoActividad(2);" data-lang="en_interior"></span>
 					</div>
 				</div>
-				<div>&nbsp;</div>
-				<div>&nbsp;</div>
-				<div class="config-item" onclick="">
-					<span class="icon icon-music"> </span> <span>No music list selected</span>
+				<div class="item-config" onclick="">
+					<span class="icon icon-config icon-music"> </span> <span>No music list selected</span>
 				</div>
-				<div id="botonDisp" class="config-item" onclick="botonDispositivos({to:'show_config({to:\'show_inicio();\', tx: language.cancel});', tx: language.volver});">
-					<span class="icon icon-hearth"> </span> <span>No HRM connected</span>
+				<div id="botonDisp" class="item-config" onclick="botonDispositivos({to:'show_config({to:\'show_inicio();\', tx: language.cancel});', tx: language.volver});">
+					<span class="icon icon-config icon-hearth"> </span> <span>No HRM connected</span>
 				</div>
+				<!--div class="item-config" onclick="">
+					<span class="icon icon-config icon-flag"> </span> <span>Metas</span>
+				</div-->
 				<div>&nbsp;</div>
 				<div class="text-center">
-					<span class="btn btn-primary" onclick="principal();" data-lang="start_now"></span>
+					<span class="btn btn-action btn-block" onclick="principal();" data-lang="start_now"></span>
 				</div>
 			</div>
 		</section>
@@ -277,21 +276,27 @@
 				<p class="text-center general-title" data-lang="disp_hrm"></p>
 				<div>&nbsp;</div>
 				<div id="dispMain">
+					<div class="hrm-item">
+						<span class="icon icon-config icon-mobile"> </span> <span>Dispositivos Confiables</span>
+					</div>
 					<div class="disp-list">
 						<!--listado dispositivos recordados-->
 					</div>
 					<div>&nbsp;</div>
 					<div class="text-center">
-						<span class="btn btn-success" onclick="botonDispositivosFind();" data-lang="disp_find"></span>
+						<span class="btn btn-action btn-block" onclick="botonDispositivosFind();" data-lang="disp_find"></span>
 					</div>
 				</div>
-				<div id="dispFind" class="oculto">
+				<div id="dispFind" class="oculto">					
+					<div class="hrm-item">
+						<span class="icon icon-config icon-mobile"> </span> <span>Dispositivos Disponibles</span>
+					</div>
 					<div class="disp-find">
 						<!--listado dispositivos encontrados-->
 					</div>
 					<div>&nbsp;</div>
 					<div class="text-center">
-						<span class="btn btn-danger" onclick="botonDispositivosCancel();" data-lang="cancel"></span>
+						<span class="btn btn-danger btn-block" onclick="botonDispositivosCancel();" data-lang="cancel"></span>
 					</div>
 				</div>
 			</div>

@@ -689,7 +689,10 @@ header .btn{
 .disp-list .disp-item,
 .disp-find .disp-item{
 	display: block;
+	margin-top: 10px;
 	margin-bottom: 10px;
+	height: 30px;
+	color: #63e05a;
 }
 .disp-list .activo,
 .disp-find .activo{
@@ -1103,6 +1106,18 @@ input:-webkit-autofill:active{
 }
 /* end ak-tooltip */
 
+/* icons */
+.icon{
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	margin-right: 8px;
+	background: #ccc;
+	vertical-align: bottom;
+}
+
+/* end icons */
+
 /* config */
 
 .config-cont{
@@ -1166,20 +1181,127 @@ input:-webkit-autofill:active{
 .config-item .form-control.swho-it{
 	height: 100%;
 }
-/* end config */
 
-/* icons */
-.icon{
-	display: inline-block;
-	width: 16px;
-	height: 16px;
-	margin-right: 8px;
-	background: #ccc;
-	vertical-align: bottom;
+.icon-music{
+	background-image: url(../img/music_icon.png);
+
 }
 
-/* end icons */
+.icon-hearth{
+	background-image: url(../img/hearth_icon.png);	
+}
 
+.icon-flag{
+	background-image: url(../img/flag_icon.png);	
+}
+
+.icon-indoor{
+	background-image: url(../img/indoor_icon.png);	
+}
+
+.icon-indoor-sel{
+	background-image: url(../img/indoor_icon_sel.png);	
+}
+
+.icon-outdoor{
+	background-image: url(../img/outdoor_icon.png);	
+}
+
+.icon-outdoor-sel{
+	background-image: url(../img/outdoor_icon_sel.png);	
+}
+
+.icon-mobile{
+	background-image: url(../img/mobil_icon.png);	
+}
+
+.icon-calib{
+	background-image: url(../img/icon_calib.png);	
+}
+
+.icon-place{
+	background-size: 70px;
+	background-repeat: no-repeat;
+    display: inline-block;
+  	min-height: 100px;
+  	width: 100%;
+  	background-position: center center;
+}
+.icon-config{
+	background-color: transparent;
+  	background-size: 20px;
+  	background-repeat: no-repeat;
+  	width: 20px;
+  	height: 20px;
+}
+.item-config{
+	color:#63e05a;
+	padding: 10px;
+	border-bottom: 1px solid #63e05a;
+}
+
+.icon-configuracion{
+	background-image: url(../img/config_icon.png);	
+	background-color: #232127;
+  	background-size: 70px;
+  	background-repeat: no-repeat;
+  	background-position: center;
+  	width: 100%;
+  	height: 100px;
+  	display: inline-block;
+
+}
+
+.config-place{
+	padding: 20px 5px;
+}
+
+.hrm-item
+{
+	color: white;
+	background-color: #232127;
+	height: 35px;
+	padding: 5px 10px;
+} 
+
+.switch{
+  float: right;
+  display: block;
+  background-color: #232127;
+  width: 60px;
+  height: 30px;
+  border-radius: 50px;
+  padding: 2px;
+  position: relative;
+}
+
+.switch:before{
+	content: " ";
+	display: block;
+	width: 25px;
+	height: 25px;
+	background: #D84A1D;
+	border-radius: 50px;
+	position: absolute;
+	-webkit-transition: .5s all;
+}
+.switch.active:before{
+	background: #63e05a;
+	margin-left: 30px;
+}
+.switch.inactive{
+	background: #2C2A30;
+	margin-left: 0;
+}
+.switch.load:before{
+	background: #2C2A30 url(../img/loader-mini.gif) no-repeat center;
+	margin-left: 0;
+}
+.switch.inactive:before{
+	background: #36343A;
+	margin-left: 0;
+}
+/* end config */
 
 /*
  * Swiper 2.7.6
