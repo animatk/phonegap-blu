@@ -63,7 +63,7 @@ function isEnabledSuccess(obj)
 		
 		//desactivar todos los switches que no sen el current
 		var item = $('div[data-add="'+DEVICE+'"]').find('.switch');
-		$('.disp-item .switch').not(item).addClass(inactive);
+		$('.disp-item .switch').not(item).addClass('inactive');
 		
 		connect( DEVICE );
 	}else{
