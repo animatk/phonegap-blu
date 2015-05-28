@@ -453,6 +453,11 @@ function DeviceReady(){
 	screen.lockOrientation('portrait');
 	isPhonegap = true;
 	
+	if(SES['hrm']){
+		isInitialized(); 
+		DEVICE=SES['hrm'];
+	}
+	
 	var menu = $('#menu .menu-lateral').get(0);
 	swipeHorz( menu, function(dir, dis){
 		if( dir == 'left' &&  dis < '-100' ){
@@ -1392,6 +1397,7 @@ function listarDispositivos(){
 		output += '<div class="text-center">'+language.nodisp+'</div>';
 	}
 	$('.disp-list').html(output);
+	
 }
 function botonDispositivosFind(){
 	$('#dispMain').addClass('oculto');
@@ -1408,32 +1414,38 @@ function botonDispositivosCancel(){
 function addDisp(name, address){
 	stopScan();
 	var item = $('div[data-add="'+address+'"]').find('.switch');
-	if(!item.hasClass('inactive')){
-		item.addClass('load');
-		mensaje("Funcion addDisp llamada con: "+name+' y '+ address );
-		var dispositivos = new Array(),
-		insert = true;
-		if(SES['dispositivos']){
-			dispositivos = JSON.parse( SES['dispositivos'] );
-			var tot = dispositivos.length;
-			for(var i=0; i<tot; i++){
-				var obj = dispositivos[i];
-				if(obj.address == address){
-					insert = false;
-				}}}
-		//si la orden es insertarlo
-		if(insert){
-			dispositivos.push({name: name, address: address});
+	if(item.hasClass('inactive') || item.hasClass('load')){
+		return false;
+	}else{
+		if(item.hasClass('active')){
+			disconnect();
+		}else{
+			mensaje("Funcion addDisp llamada con: "+name+' y '+ address );
+			var dispositivos = new Array(),
+			insert = true;
+			if(SES['dispositivos']){
+				dispositivos = JSON.parse( SES['dispositivos'] );
+				var tot = dispositivos.length;
+				for(var i=0; i<tot; i++){
+					var obj = dispositivos[i];
+					if(obj.address == address){
+						insert = false;
+					}}}
+			//si la orden es insertarlo
+			if(insert){
+				dispositivos.push({name: name, address: address});
+				SES['dispositivos'] = JSON.stringify(dispositivos);
+				listarDispositivos();
+			}
+			//crear o resetear la variable de sesion de dispositivos
+			//conectar al dispositivo
+			isInitialized(); 
+			DEVICE=address;
+			SES['hrm'] = address;
+			$('#dispMain').removeClass('oculto');
+			$('#btn-accion-izq').removeClass('oculto');
+			$('#dispFind').addClass('oculto');
 		}
-		//crear o resetear la variable de sesion de dispositivos
-		SES['dispositivos'] = JSON.stringify(dispositivos);
-		//conectar al dispositivo
-		isInitialized(); 
-		DEVICE=address;
-		$('#dispMain').removeClass('oculto');
-		$('#btn-accion-izq').removeClass('oculto');
-		$('#dispFind').addClass('oculto');
-		listarDispositivos();
 	}
 }
 /*! end dispositivos HRM */

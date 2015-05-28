@@ -63,6 +63,7 @@ function isEnabledSuccess(obj)
 		
 		//desactivar todos los switches que no sen el current
 		var item = $('div[data-add="'+DEVICE+'"]').find('.switch');
+		item.addClass('load');
 		$('.disp-item .switch').not(item).addClass('inactive');
 		
 		connect( DEVICE );
@@ -190,10 +191,9 @@ function addDevice(address, name){
 
 function disconnect(){
 	bluetoothle.disconnect(function(){
-		console.log('desconectado');
-	}, function(){
-		console.log('NO desconectado');
-	});
+		SES.removeItem('hrm');
+		$('.disp-item .switch').removeClass('inactive load, active');
+	}, function(){});
 }
 
 function connect(address)
