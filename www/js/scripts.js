@@ -1546,9 +1546,9 @@ function initClock(obj, segundos) {
     } 
 	$('.ppal-clock').html( t );	
 	
-	if($('.CALENDAR').text() == '0'){
-		$('.CALENDAR').text( language.dias[time_ini.getDay()-1]+' '+time_ini.getDate());
-	}
+//	if($('.CALENDAR').text() == '0'){
+//		$('.CALENDAR').text( language.dias[time_ini.getDay()-1]+' '+time_ini.getDate());
+//	}
 }
 function checkTime(i) {
     if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
