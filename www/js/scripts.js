@@ -480,13 +480,13 @@ function DeviceReady(){
 		if(SES['chain'] == '4d8e1a06e5a47d8bfbe3623a35f52276'){
 			showDebug();
 		}
-		var params = {fun: 'sincronizar', url: SITE, chain: SES['chain'] }, function(data){ mensaje(data) };
+
 		if(SES['synwifi']){
 			if(isOnLine() == 'wifi'){
-				worker(params);
+				worker({fun: 'sincronizar', url: SITE, chain: SES['chain'] }, function(data){ mensaje(data) });
 			}
 		}else{
-			worker(params);
+			worker({fun: 'sincronizar', url: SITE, chain: SES['chain'] }, function(data){ mensaje(data) });
 		}
 	}	
 }
@@ -2040,13 +2040,13 @@ function guardar(resp){
 		}
 		SES.removeItem('actividad');
 		
-		var params = {fun: 'sincronizar', url: SITE, chain: SES['chain'] }, function(data){ mensaje(data) };
+
 		if(SES['synwifi']){
 			if(isOnLine() == 'wifi'){
-				worker(params);
+				worker({fun: 'sincronizar', url: SITE, chain: SES['chain'] }, function(data){ mensaje(data) });
 			}
 		}else{
-			worker(params);
+			worker({fun: 'sincronizar', url: SITE, chain: SES['chain'] }, function(data){ mensaje(data) });
 		}
 	}
 	$('.toCenter, .toLeft, .toRight').not('#PopAlert').removeClass('toCenter toLeft toRight');
