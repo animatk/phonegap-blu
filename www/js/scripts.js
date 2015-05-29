@@ -628,40 +628,20 @@ function show_inicio(from){
 				
 				if( metros > 1000 ){
 					dis = metros/1000;
-					if(dis < 10){
-						dis = dis.toFixed(1) + '<span class="deta-light">km</span>';
-					}else{
-						dis = dis.toFixed(0) + '<span class="deta-light">km</span>';
-					}
+					dis = dis.toFixed(1) + '<span class="deta-light">km</span>';
 				}
 			}else{
-				var dis = (dis / 63360);
-				if(dis < 10){
-					dis = dis.toFixed(1) + '<span class="deta-light">mi</span>';
-				}else{
-					dis = dis.toFixed(0) + '<span class="deta-light">mi</span>';
-				}
+				var dis = (dis / 63360).toFixed(1)+ '<span class="deta-light">mi</span>';
 			}
 
 			var pasos = pas;
 
 			if(cal > 1000){
-				cal = (cal/1000);
-				if(cal < 10){
-					cal = cal.toFixed(1) + '<span class="deta-light">k</span>';
-				}else{
-					cal = cal.toFixed(0) + '<span class="deta-light">k</span>';
-				}
+				cal = (cal/1000).toFixed(1)+'<span class="deta-light">k</span>';
 			}
 			
 			if(pasos > 1000){
-				pasos = (pasos/1000);
-				
-				if(pasos < 10){
-					pasos = pasos.toFixed(1) + '<span class="deta-light">k</span>';
-				}else{
-					pasos = pasos.toFixed(0) + '<span class="deta-light">k</span>';
-				}
+				pasos = (pasos/1000).toFixed(1)+'<span class="deta-light">k</span>';
 			}
 
             $('#esta-pas .num').html(pasos);
