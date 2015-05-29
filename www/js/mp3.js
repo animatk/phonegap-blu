@@ -10,7 +10,7 @@ document.addEventListener("deviceready", onMusicReady, false);
 		$('#mensajes').prepend('<p>'+msj+'</p>');
 	}
 	function onMusicReady() {
-		
+		mensaje("ready music");
 		if (isDevice() == 'Android') {
 			 window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
 		    if(SES.list_to_songs){
@@ -24,12 +24,14 @@ document.addEventListener("deviceready", onMusicReady, false);
 		    	$("#list_to_songs").html("<p>Agregar Canciones para tu lista</p>");
 		    	setTimeout(function(){  open_add_list_modal();}, 3000);
 		    }
+			
+			$('.music_cover').show();
+			$('#list_to_songs').show();
+			$('.add_music').show();
+			$('.commig_soon').hide();
+			
 		}else if (isDevice() != 'Android') {
 			mensaje("ios");
-			$('.music_cover').hide();
-			$('#list_to_songs').hide();
-			$('.add_music').hide();
-			$('.commig_soon').show();
 		}else{
 			mensaje("other");
 			$('.music_cover').hide();
