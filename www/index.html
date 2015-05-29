@@ -5,10 +5,16 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, user-scalable=no" />
     <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="css/music.css" />
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/bluetooth.js"></script>
     <script type="text/javascript" src="js/openfb.js"></script>
     <script type="text/javascript" src="js/scripts.js"></script>
+	<!--musica-->
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/circle-progress.js"></script>
+    <script type="text/javascript" src="js/id3-minimized.js"></script>
+    <script type="text/javascript" src="js/mp3.js"></script>
   </head>
   <body>
 	<section class="Canvas">
@@ -35,7 +41,7 @@
 		<div id="menu">
 			<div class="menu-lateral">
 				<span class="user" onclick="show_perfil();" data-lang="perfil"></span>
-				<span class="music" onclick="" data-lang="musica"></span>
+				<span class="music" onclick="musica({to:'show_inicio();'});" data-lang="musica"></span>
 				<span class="config" onclick="show_configuracion({to:'show_inicio();'});" data-lang="configuration"></span>
 				<span class="logout" onclick="CerrarSesion();" data-lang="cerrar_sesion"></span>
 			</div>
@@ -250,13 +256,13 @@
 				<div class="row row2 config-place">
 					<p class="text-center text-center general-title" data-lang="lugar_actividad"></p>
 					<div class="col text-center">
-						<span id="actividad-1" class="icon-place icon-outdoor" onclick="tipoActividad(1);" data-lang="en_calle"></span>
+						<span id="actividad-1" class="icon-place icon-outdoor-sel" onclick="tipoActividad(1);" data-lang="en_calle"></span>
 					</div>
 					<div class="col text-center">
 						<span id="actividad-2" class="icon-place icon-indoor" onclick="tipoActividad(2);" data-lang="en_interior"></span>
 					</div>
 				</div>
-				<div class="item-config" onclick="">
+				<div class="item-config" onclick="musica({to:'show_config();'});">
 					<span class="icon icon-config icon-music"> </span> <span>No music list selected</span>
 				</div>
 				<div id="botonDisp" class="item-config" onclick="botonDispositivos({to:'show_config({to:\'show_inicio();\', tx: language.cancel});', tx: language.volver});">
@@ -379,7 +385,7 @@
 					<div class="ppal-container">
 						<div class="row row3">
 							<div class="col border-right">
-								<span class="ppal-icon ppal-icon-music" data-lang="musica"></span>
+								<span class="ppal-icon ppal-icon-music" onclick="musica({to:'show_principal();'});" data-lang="musica"></span>
 							</div>
 							<div class="col border-right">
 								<span class="ppal-icon ppal-icon-map" onclick="show_map({to:'show_principal();'});" data-lang="mapa"></span>
@@ -434,9 +440,49 @@
 				</div>
 			</div>
 		</section>
-		<section id="player" class="Page">
-			<div class="container Main">
-				Player
+		<section id="musica" class="Page">
+			<div class="Main_music">
+				<div class="music_cover">
+					<div class="controls">
+				    	<div id="current_song_br"></div>
+				    	<a href="#" class="last_song" onclick="last_song();"><img src="img/last_song.png" class="button_action"/></a>
+				    	<div id="audio_position">
+				    		<div id="circle"></div>
+				    		<div id="audio_current_position"></div>
+				    		<div id="audio_lenght"></div>
+				    		<a href="#" id="play" onclick="playSong('');">	<img src="img/play_song.png" class="button_action"/></a>
+						    <a href="#" id="pause" onclick="pauseSong();">	<img src="img/pause_song.png" class="button_action"/></a>
+				    	</div>
+				    	<a href="#" class="next_song" onclick="next_song();"><img src="img/next_song.png" class="button_action"/></a>
+				    	
+				    	<div class="volume_control">
+				    		<input id="volumen_control" min="0" max="100" type="range" onchange="changeVolumen();"/>
+				    	</div>
+				    </div>
+				    <div class="current_song_name"></div>
+			    </div>
+			    <div id="list_to_songs">
+			    	<p>Cargando Lista..</p>
+			    </div>
+			    <div class="add_music">
+			    	<a href="#!" onclick="open_add_list_modal();" class="add_music_modal"><img src="img/add_list.png"></a>
+			    </div>
+			    <div id="list_music_modal">
+			    	<div class="list_music_modal_content">
+			    		<div class="modal_top">
+			    			<img src="img/close_modal.png" class="close_modal" onclick="closeModalList();"/>
+			    		</div>
+				    	<div id="list_songs">
+				    		<!--<div class="song_list_item"><img src="img/tblr_disc.jpg" /><span class="nameSongToList" >test</span><a ref="#" onclick="addSongToList();" class="addSongIcon"><img src="img/add_list.png"></a></div>-->
+						</div>
+						<div class="notif_popup">Cancion agregada con exito</div>
+					</div>
+			    </div>
+			    <!--<form onsubmit="javascript:eval($(this).find('input').val()); return false;">
+					<input style="font-size: 10px; position: fixed; bottom: 78px; width: 80%; z-index: 9999; margin: 0; padding: 3px;color:#000;" class="form-control">
+				</form>
+				<div id="mensajes" style="height:78px; z-index: 99999; position: fixed; display: block; width: 100%; overflow: hidden; overflow-y: auto; bottom:0; left:0; color: #666; background: #000; font-size: 8px; border-top: 1px solid #333;"></div>
+				-->
 			</div>
 		</section>
 		<section id="configuracion" class="Page">
@@ -449,7 +495,7 @@
 				<div class="item-config" onclick="botonDispositivos({to:'show_configuracion({to:\'show_inicio();\', tx: language.cancel});', tx: language.volver});">
 					<span class="icon icon-config icon-hearth"> </span> <span data-lang="disp_hrm"></span>
 				</div>
-				<div class="item-config">
+				<div class="item-config" onclick="musica({to:'show_configuracion({to:\'show_inicio();\', tx: language.cancel});">
 					<span class="icon icon-config icon-music"> </span> 
 					<span> Musica </span> 
 				</div>

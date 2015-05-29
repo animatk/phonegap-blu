@@ -1702,6 +1702,13 @@ Pagination Styles
 	#myCanvas{
 		height: 125px;
 	}
+
+	.icon-place{
+		background-size: 100px;
+		min-height: 140px;
+		background-position: center 36px;
+		margin-top: 13px;
+	}
 }
 
 @media all and (min-height: 650px){

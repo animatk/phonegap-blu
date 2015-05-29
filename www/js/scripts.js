@@ -504,6 +504,10 @@ function worker(obj, fun){
 		sync.postMessage(JSON.stringify(obj)); 
 	}
 }
+function musica(){
+	ak_navigate('#musica');
+	onMusicReady();
+}
 function iniciar(){
 	if( SES['chain'] ){
 		if( SES['info_basica'] ){
