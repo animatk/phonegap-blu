@@ -1270,6 +1270,9 @@ function show_config(back){
 		if(isPhonegap){
 			navigator.compass.getCurrentHeading(compassSuccess, compassError);
 		}
+		if(isOnLine()!= 'none'){
+			api_clima();
+		}
 		ak_navigate('#config', back); 
 //	}else{
 //		show_sensibilidad(back);
@@ -1704,9 +1707,11 @@ function stepsSuccess(a){
 				}
 			}
 			
-		//	if(DISTA > LASTTTACK+(39.370*50)){
-		//		api_clima();
-		//	}
+			if(DISTA > LASTTTACK+(39.370*50)){
+				if(isOnLine()!= 'none'){
+					api_clima();
+				}
+			}
 			$(".DISTA").html( mostrar );
 			/*! calorias */
 			var efficiencia = 0.6; //promedio de caminar y trotar
@@ -1846,7 +1851,7 @@ function show_map(back){
         mapGraphic.render();
     }
 }
-/*
+
 function api_clima(){
 	if(LAT != 0){
 		$.get('https://query.yahooapis.com/v1/public/yql?q=select yweather:units, item from weather.forecast where woeid in (SELECT woeid FROM geo.placefinder WHERE text="'+LAT+','+LON+'" and gflags="R")&format=json&env=store://datatables.org/alltableswithkeys'
@@ -1863,7 +1868,7 @@ function api_clima(){
 		});
 	}
 }
-*/
+
 function loadMapa(){
 	if(MAP != null){
 		if(MAP != 'callmap'){

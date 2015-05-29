@@ -39,13 +39,15 @@ function initializeSuccess(obj)
   }
   else
   {
-	alert( alerts.error_inicio + ' code : initializeSuccess' );
+	disSuccess();
+	//alert( alerts.error_inicio + ' code : initializeSuccess' );
   }
 }
 
 function initializeError(obj)
 {
-	alert( alerts.error_inicio + ' code : initializeError' );
+	disSuccess();
+	//alert( alerts.error_inicio + ' code : initializeError' );
 }
 
 function isEnabled()
@@ -78,11 +80,13 @@ function isEnabledSuccess(obj)
 		if(confirm(alerts.activar)){
 			enable();
 		}else{
-			alert( alerts.error_inicio + ' code : isEnabledSuccess' );
+			disSuccess();
+			//alert( alerts.error_inicio + ' code : isEnabledSuccess' );
 		}
 	}else{
 		//si es iOS entoces solo envia la alerta de encender el bluetooth
-		alert( alerts.encender_bluetooth );
+		disSuccess();
+		//alert( alerts.encender_bluetooth );
 	}
   }
 }
@@ -101,13 +105,15 @@ function enableSuccess(obj)
   }
   else
   {
-  	alert( alerts.error_inicio + ' code : enableSuccess' );
+  	disSuccess();
+	//alert( alerts.error_inicio + ' code : enableSuccess' );
   }
 }
 
 function enableError(obj)
 {
-	alert( alerts.error_inicio + ' code : enableError' );
+	disSuccess();
+	//alert( alerts.error_inicio + ' code : enableError' );
 }
 
 function startScan()
@@ -135,13 +141,15 @@ function startScanSuccess(obj)
   }
   else
   {
-	alert( alerts.error_scan + ' code : startScanSuccess' );
+	disSuccess();
+	//alert( alerts.error_scan + ' code : startScanSuccess' );
   }
 }
 
 function startScanError(obj)
 {
-  alert( alerts.error_scan + ' code : startScanError' );
+  disSuccess();
+  //alert( alerts.error_scan + ' code : startScanError' );
 }
 
 function stopScan()
@@ -195,7 +203,7 @@ function disconnect(){
 function disSuccess(){
 	mensaje('dis success');
 	SES.removeItem('hrm');
-	$('.disp-item .switch').removeClass('inactive load, active');
+	$('.disp-item .switch').removeClass('inactive load active');
 }
 function disError(){
 	mensaje('dis error');
@@ -226,13 +234,13 @@ function connectSuccess(obj)
   }
   else
   {
-	 alert( alerts.error_conectar + ' code : connectSuccess' );
+	disSuccess();
   }
 }
 
 function connectError(obj)
 {
-  alert( alerts.error_conectar + ' code : connectError' );
+  disSuccess();
 }
 
 function isDiscovered(address)
@@ -273,14 +281,16 @@ function discoverSuccess(obj)
 	}
   else
   {
-  	alert( alerts.error_conectar + ' code : discoverSuccess' );
+  	disSuccess();
+	//alert( alerts.error_conectar + ' code : discoverSuccess' );
 	
   }
 }
 
 function discoverError(obj)
 {
-   alert( alerts.error_conectar + ' code : discoverError' );
+	disSuccess();
+   //alert( alerts.error_conectar + ' code : discoverError' );
 }
 
 function subscribe(address, serviceUuid, characteristicUuid)
@@ -311,15 +321,17 @@ function subscribeSuccess(obj)
 	}
 	else
   {
-	removeClassHRM();  
-  	alert( alerts.error_conectar + ' code : subscribeSuccess' );
+	removeClassHRM(); 
+	disSuccess();
+  //	alert( alerts.error_conectar + ' code : subscribeSuccess' );
   }
 }
 
 function subscribeError(obj)
 {
 	removeClassHRM();  
-	alert( alerts.error_conectar + ' code : subscribeError' );
+	disSuccess();
+	//alert( alerts.error_conectar + ' code : subscribeError' );
 }
 
 function mensaje(msj){
