@@ -179,6 +179,8 @@ img{vertical-align:middle;}
 .container{
 	width: 90%;
 	margin: 0 auto;
+	position: relative;
+	height: 100%;
 }
 
 .row{
@@ -262,12 +264,19 @@ header .logo img{
 	max-width: 140px;
 }
 
+.btn-cont-fixed{
+	position: absolute;
+    bottom: 10px;
+    width: 100%;
+}
 .btn{
 	padding: 10px 20px;
 	display:inline-block;
 	background: none;
 	border: none;
 }
+
+
 
 header .btn{
 	padding: 6px 10px;
@@ -1635,6 +1644,28 @@ Pagination Styles
 	#map-canvas{
 		height: 275px;
 	}
+	
+	.icon-place{
+		background-size: 100px;
+		min-height: 140px;
+		background-position: center 36px;
+		margin-top: 13px;
+	}
+	
+	.perfil-info{
+		padding: 10px 0;
+		font-size: 17px;
+	}
+	.perfil-info img{
+		height: 55px;
+	}
+	.imc .col{
+		padding-top: 20px;
+	}
+	
+	.btn-cont-fixed{
+		bottom: 30px;
+	}
 }
 
 @media all and (min-height: 569px){
@@ -1702,13 +1733,18 @@ Pagination Styles
 	#myCanvas{
 		height: 125px;
 	}
-
-	.icon-place{
-		background-size: 100px;
-		min-height: 140px;
-		background-position: center 36px;
-		margin-top: 13px;
+	
+	.perfil-info{
+		padding: 16px 0;
+		font-size: 20px;
 	}
+	.perfil-info img{
+		height: 60px;
+	}
+	.imc .col{
+		padding-top: 30px;
+	}
+	
 }
 
 @media all and (min-height: 650px){
@@ -1732,9 +1768,6 @@ Pagination Styles
 		width: 100px;
 		height: 100px;
 		margin-top: 10px;
-	}
-	.btn-estadisticas .num{
-		font-size: 39px;
 	}
 	.est-icon{
 		padding-left: 55px !important;
