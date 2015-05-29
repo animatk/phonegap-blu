@@ -10,14 +10,8 @@ document.addEventListener("deviceready", onMusicReady(), false);
 		$('#mensajes').prepend('<p>'+msj+'</p>');
 	}
 	function onMusicReady() {
-		console.log("onMusicReady");
-		var ua = navigator.userAgent;
-		var checker = {
-			iphone: ua.match(/(iPhone|iPod|iPad)/),
-			blackberry: ua.match(/BlackBerry/),
-			android: ua.match(/Android/)
-		};
-		if (checker.android) {
+		
+		if (isDevice() == 'Android') {
 			 window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
 		    if(SES.list_to_songs){
 			    if(SES.list_to_songs.length === 0){
@@ -30,15 +24,13 @@ document.addEventListener("deviceready", onMusicReady(), false);
 		    	$("#list_to_songs").html("<p>Agregar Canciones para tu lista</p>");
 		    	setTimeout(function(){  open_add_list_modal();}, 3000);
 		    }
-		}
-		else if (checker.iphone) {
+		}else if (isDevice() != 'Android') {
 			mensaje("ios");
 			$('.music_cover').hide();
 			$('#list_to_songs').hide();
 			$('.add_music').hide();
 			$('.commig_soon').show();
-		}
-		else{
+		}else{
 			mensaje("other");
 			$('.music_cover').hide();
 			$('#list_to_songs').hide();
