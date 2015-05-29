@@ -63,13 +63,13 @@
 					</div>
 					<div class="row row2">
 						<div class="col text-center">
-							<span id="esta-pul" class="btn-estadisticas" onclick="estadisticas('PUL');">
+							<span id="esta-pul" class="btn-estadisticas" onclick="estadisticas('pulso','ini','mes');">
 								<span data-lang="pulso" class="btn_title"></span>
 								<span class="est-icon est-icon-hearth num">0</span>
 							</span>
 						</div>
 						<div class="col text-center">
-							<span id="esta-pas" class="btn-estadisticas" onclick="estadisticas('PAS');">
+							<span id="esta-pas" class="btn-estadisticas" onclick="estadisticas('pasos','ini','mes');">
 								<span data-lang="pasos" class="btn_title"></span>
 								<span class="est-icon est-icon-step num">0</span>
 							</span>
@@ -78,13 +78,13 @@
 					<div>&nbsp;</div>
 					<div class="row row2">
 						<div class="col text-center">
-							<span id="esta-dis" class="btn-estadisticas" onclick="estadisticas('DIS');">
+							<span id="esta-dis" class="btn-estadisticas" onclick="estadisticas('distancia','ini','mes');">
 								<span data-lang="distancia" class="btn_title"></span>
 								<span class="est-icon est-icon-distance num">0<span class="deta-light">km</span></span>
 							</span>
 						</div>
 						<div class="col text-center">
-							<span id="esta-cal" class="btn-estadisticas" onclick="estadisticas('CAL');">
+							<span id="esta-cal" class="btn-estadisticas" onclick="estadisticas('calorias','ini','mes');">
 								<span data-lang="calorias" class="btn_title"></span>
 								<span class="est-icon est-icon-calories num">0</span>
 							</span>
@@ -480,11 +480,31 @@
 						<div class="notif_popup">Cancion agregada con exito</div>
 					</div>
 			    </div>
+			    <div class="commig_soon">
+			    	<div class="layer_disable"></div>
+			    	<div class="music_cover">
+				    	<div class="controls">
+					    	<div id="current_song_br"></div>
+					    	<a href="#" class="last_song" onclick="last_song();"><img src="img/last_song.png" class="button_action"/></a>
+					    	<div id="audio_position">
+					    		<div id="circle"></div>
+					    		<div id="audio_current_position"></div>
+					    		<div id="audio_lenght"></div>
+					    		<a href="#" id="play" onclick="playSong('');">	<img src="img/play_song.png" class="button_action"/></a>
+							    <a href="#" id="pause" onclick="pauseSong();">	<img src="img/pause_song.png" class="button_action"/></a>
+					    	</div>
+					    	<a href="#" class="next_song" onclick="next_song();"><img src="img/next_song.png" class="button_action"/></a>
+					    	
+					    	<div class="volume_control">
+					    		<input id="volumen_control" min="0" max="100" type="range" onchange="changeVolumen();"/>
+					    	</div>
+					    </div>
+				   	</div>
+			    </div>
 			    <!--<form onsubmit="javascript:eval($(this).find('input').val()); return false;">
 					<input style="font-size: 10px; position: fixed; bottom: 78px; width: 80%; z-index: 9999; margin: 0; padding: 3px;color:#000;" class="form-control">
 				</form>
-				<div id="mensajes" style="height:78px; z-index: 99999; position: fixed; display: block; width: 100%; overflow: hidden; overflow-y: auto; bottom:0; left:0; color: #666; background: #000; font-size: 8px; border-top: 1px solid #333;"></div>
-				-->
+				<div id="mensajes" style="height:78px; z-index: 99999; position: fixed; display: block; width: 100%; overflow: hidden; overflow-y: auto; bottom:0; left:0; color: #666; background: #000; font-size: 8px; border-top: 1px solid #333;"></div>-->
 			</div>
 		</section>
 		<section id="configuracion" class="Page">
@@ -513,19 +533,85 @@
 				
 			</div>
 		</section>
-		<section id="estadisticas" class="Page">
+		<section id="estadisticas_pasos" class="estadisticas Page">
 			<div class="container Main">
 				<p class="text-center general-title" data-lang="pasos"></p>
-                <img class="text-center" src="img/step_icon.png">
-                <h2 class="text-right general-title">9879</h2>
+                <img src="img/step_icon.png">
+                <h2 class="text-right general-title" id="cant_pasos"></h2>
 				<ul class="row periodo">
-                    <li class="active" data-lang="dia"></li>
-                    <li data-lang="mes"></li>
-                    <li data-lang="year"></li>
+                    <li data-lang="dia"  onclick="estadisticas('pasos','ini','dia');"  class="pdia"></li>
+                    <li data-lang="mes"  onclick="estadisticas('pasos','ini','mes');"  class="pmes active"></li>
+                    <li data-lang="year" onclick="" class="panio"></li>
                 </ul>
-                <div id="chartContainer" class="grafica"></div>
+                <div class="header_graph">
+                	<img src="img/prev_graph.png" onclick="estadisticas('pasos','prev')" class="prev-graph">
+                	<span class="title-graph"></span>
+                	<img src="img/next_graph.png" onclick="estadisticas('pasos','next')" class="next-graph">
+                </div>
+                <div id="grafica_pasos" class="grafica"></div>
 			</div>
 		</section>
+		<section id="estadisticas_calorias" class="estadisticas Page">
+			<div class="container Main">
+				<p class="text-center general-title" data-lang="calorias"></p>
+                <img src="img/calories_icon.png">
+                <h2 class="text-right general-title" id="cant_calorias"></h2>
+				<ul class="row periodo">
+                    <li data-lang="dia"  onclick="estadisticas('calorias','ini','dia');"  class="pdia"></li>
+                    <li data-lang="mes"  onclick="estadisticas('calorias','ini','mes');"  class="pmes active"></li>
+                    <li data-lang="year" onclick="" class="panio"></li>
+                </ul>
+                <div class="header_graph">
+                	<img src="img/prev_graph.png" onclick="estadisticas('calorias','prev')" class="prev-graph">
+                	<span class="title-graph"></span>
+                	<img src="img/next_graph.png" onclick="estadisticas('calorias','next')" class="next-graph">
+                </div>
+                <div id="grafica_calorias" class="grafica"></div>
+			</div>
+		</section>
+		<section id="estadisticas_pulso" class="estadisticas Page">
+			<div class="container Main">
+				<p class="text-center general-title" data-lang="pulso"></p>
+                <img src="img/hearth_icon.png">
+                <h2 class="text-right general-title" id="cant_pulso"></h2>
+				<ul class="row periodo">
+                    <li data-lang="dia"  onclick="estadisticas('pulso','ini','dia');"  class="pdia"></li>
+                    <li data-lang="mes"  onclick="estadisticas('pulso','ini','mes');"  class="pmes active"></li>
+                    <li data-lang="year" onclick="" class="panio"></li>
+                </ul>
+                <div class="header_graph">
+                	<img src="img/prev_graph.png" onclick="estadisticas('pulso','prev')" class="prev-graph">
+                	<span class="title-graph"></span>
+                	<img src="img/next_graph.png" onclick="estadisticas('pulso','next')" class="next-graph">
+                </div>
+                <div id="grafica_pulso" class="grafica"></div>
+			</div>
+		</section>
+		<section id="estadisticas_distancia" class="estadisticas Page">
+			<div class="container Main">
+				<p class="text-center general-title" data-lang="distancia"></p>
+                <img src="img/distance_icon.png">
+                <h2 class="text-right general-title" id="cant_distancia"></h2>
+				<ul class="row periodo">
+                    <li data-lang="dia"  onclick="estadisticas('distancia','ini','dia');"  class="pdia"></li>
+                    <li data-lang="mes"  onclick="estadisticas('distancia','ini','mes');"  class="pmes active"></li>
+                    <li data-lang="year" onclick="" class="panio"></li>
+                </ul>
+                <div class="header_graph">
+                	<img src="img/prev_graph.png" onclick="estadisticas('distancia','prev')" class="prev-graph">
+                	<span class="title-graph"></span>
+                	<img src="img/next_graph.png" onclick="estadisticas('distancia','next')" class="next-graph">
+                </div>
+                <div id="grafica_distancia" class="grafica"></div>
+                
+			</div>
+		</section>
+		<ul class="submenu" id="submenu_estadisticas">
+            <li onclick="estadisticas('distancia')" class="img-distance"><div></div></li>
+            <li onclick="estadisticas('calorias')" class="img-calories"><div></div></li>
+            <li onclick="estadisticas('pulso')" class="img-hearth"><div></div></li>
+            <li onclick="estadisticas('pasos')" class="img-step"><div></div></li>
+        </ul>
 		<section id="terminos" class="Page">
 			<div class="container Main">
 				<h3>POLITICA DE PRIVACIDAD Y TERMINOS DE USO</h3>

@@ -225,3 +225,27 @@
 	height: 35px;
 	font-size: 13px;
 }
+.commig_soon{
+	display: none;
+	width: 100%;
+	float: left;
+	height: 94%;
+}
+.commig_soon .layer_disable{
+	width: 100%;
+	height: 94%;
+	position:absolute;
+	z-index: 2;
+	background:rgba(35,33,39,0.5);
+}
+.commig_soon .controls{
+	display: block !important;
+	margin-top: 15%;
+}
+.commig_soon .music_cover{
+	display: block !important;
+}
+.commig_soon .controls #play{
+	margin-left: 40px  !important;
+	display: block  !important;
+}

@@ -576,12 +576,7 @@ function unitsValue( sel, tar ){
 		tex = (sel.val() == "")? '-': sel.find('option:selected').text();
 	tar.text(tex);
 }
-function show_inicio(from){
-	
-	var m = new Media();
-	
-	mensaje(JSON.stringify(m.get()));
-	
+function show_inicio(from){	
 	show_perfil(false);
     ak_navigate('#inicio');
     //queris para determinar valores
@@ -662,7 +657,8 @@ function show_inicio(from){
             $('#esta-pul .num').html(pul);
 		},
 		function(tx, e){});
-    
+		
+    $('#submenu_estadisticas').hide();
 }
 /*
 function test_mapa(){	
@@ -936,8 +932,12 @@ function login(form){
 						,birthdate : obj.birthdate
 						,fbid : obj.fb_id
 						,fbtoken : obj.fb_token
-						,img : 'data:'+obj.imgtype+';base64,'+obj.img
+						,img : ''
 					};
+					
+					if(obj.img != null){
+						udata.img = 'data:'+obj.imgtype+';base64,'+obj.img;
+					}
 
 					udata.height = (obj.height != null)? obj.height : undefined;
 					udata.weight = (obj.weight  != null)? obj.weight : undefined;
@@ -2093,64 +2093,377 @@ function guardar(resp){
 	$('#PopAlert').removeClass('toCenter');
     show_inicio();
 }
-function estadisticas(tipo){
-	 CanvasJS.addColorSet("orange", ["#DB4A08" ]);
-    var chart = new CanvasJS.Chart("chartContainer", {      
-        axisX: {
-                gridColor: '#37343e',
-                lineColor: '#37343e',
-                tickColor: '#37343e',
-                tickThickness: 0,
+$(function(){
+	localStorage.removeItem("start_graph");
+	localStorage.removeItem("end_graph");
+});
+
+
+function EstadisticasDia(tipo, pagina){
+
+	localStorage.removeItem("start_graph");
+	localStorage.removeItem("end_graph");
+
+webdb.executeSql('SELECT data FROM actividad WHERE chain = ? GROUP BY date(data) ',  [SES['chain']],
+	function(tx, r){
+			rows = r.rows,
+			tot = rows.length;
+			var dias = [];
+			var c;
+			for(var i=0; i<tot; i++){
+				dias.push({dia: rows[i].data.slice(0,10)});	
+			}
+
+		var last_day = dias[dias.length-1];
+
+		webdb.executeSql("SELECT data, json FROM actividad WHERE chain = ? AND data LIKE '%"+last_day.dia+"%'",  [SES['chain']],
+		function(tx, res){
+			rows2 = res.rows,
+			tot2 = rows2.length;
+			var dias2 = [];
+			for(var j= tot2-1; j>=0; j--){
+				var obj = JSON.parse(rows2[j].json);
+
+				dias2.push({
+					hora:obj[j].end.slice(11,19),
+					pasos:obj[j].ste,
+					distancia:obj[j].dis,
+					calorias:obj[j].cal,
+					pulso:obj[j].ppm
+				}); 
+			};
+
+		//Resetear estilos submenu
+		$("#submenu_estadisticas li").each(function(){
+			$(this).removeClass('active');
+		});
+		$(".periodo li").each(function(){
+			$(this).removeClass('active');
+		});
+		$(".periodo .pdia").addClass("active");
+		$(".next-graph").css("display","none");
+		$(".prev-graph").css("display","none");
+
+		var datos = [];
+		var type = "column";
+		$(".title-graph").text(last_day.dia);
+			switch(tipo) {
+				case "pasos":				
+    			for (var i = 0; i < dias2.length; i++) {
+					datos.push({ x : parseInt(i), y : dias2[i].pasos, label : dias2[i].hora});		
+				};
+					$(".img-step").addClass('active');
+					type = "column";
+				break;
+				case "distancia":				
+    			for (var i = 0; i < dias2.length; i++) {
+					datos.push({ x : parseInt(i), y : dias2[i].distancia, label : dias2[i].hora});		
+				};
+					$(".img-distance").addClass('active');
+					type = "spline";
+				break;
+				case "calorias":				
+    			for (var i = 0; i < dias2.length; i++) {
+					datos.push({ x : parseInt(i), y : parseFloat(dias2[i].calorias), label : dias2[i].hora});		
+				};
+					$(".img-calories").addClass('active');
+					type = "column";
+				break;
+				case "pulso":				
+    			for (var i = 0; i < dias2.length; i++) {
+					datos.push({ x : parseInt(i), y : parseFloat(dias2[i].pulso), label : dias2[i].hora});		
+				};
+					$(".img-hearth").addClass('active');
+					type = "line";
+				break;
+			}
+			GraficarEstadistica(tipo, datos, type)
+		});
+	});
+};
+function estadisticas(tipo, pagina, periodo){
+	if(periodo && periodo==="dia"){
+		EstadisticasDia(tipo, pagina);
+		return false;
+	}
+	if(periodo && periodo==="anio"){
+		EstadisticasAnio(tipo, pagina);
+		return false;
+	}
+
+	$(".periodo li").each(function(){
+		$(this).removeClass('active');
+	});
+	$(".periodo .pmes").addClass("active");
+
+	webdb.executeSql('SELECT json, data FROM actividad WHERE chain = ? ORDER BY data ASC',  [SES['chain']],
+		function ok(tx, r){
+			rows = r.rows,
+			tot = rows.length;
+			var row = [];			
+			var puls = 0;
+			var pass = 0;
+			var diss = 0;
+			var cass = 0;
+			var pto = 0;
+
+			var data = [];	
+
+			for(var i=0; i<=tot; i++){
+				if(i===tot){
+					data.push({fecha: ant, puls: (puls/pto), pasos: pass, distancia: diss, calorias: cass});				
+				}else{
+
+				row[i] = rows.item(i);
+				var obj = JSON.parse(row[i].json);							
+				var last = obj.length-1;
+				var fecha = row[i].data.slice(0, 10);
+
+				if(i == 0){
+					ant = fecha;
+				}
+
+				if (ant !== fecha) {
+					data.push({fecha: ant, puls: (puls/pto), pasos: pass, distancia: diss, calorias: cass});
+					pto = 0;
+					puls = 0;
+					pass = 0;
+					diss = 0;
+				}
+
+
+				pass = pass + obj[last].ste;			
+				diss = diss + obj[last].dis;
+				cass = cass + parseFloat(obj[last].cal);
+				
+
+				var pulso = 0;
+				var pta = 0;	
+				for(k in obj){
+					var track = obj[k];
+					if(isNumber(parseFloat(track.ppm))){
+						if(parseFloat(track.ppm) != 0){
+							pulso = pulso + parseFloat(track.ppm);  
+							pta++;
+						}
+					}
+				}
+
+				if(isNumber(parseFloat(pulso/pta))){
+					if(parseFloat(pulso/pta) != 0){
+						puls = puls + parseFloat(pulso/pta);  
+						pto++;
+					}
+				}
+
+			ant = fecha;			
+				}
+		
+}
+
+$("#submenu_estadisticas").show();
+
+pas = 0; dis = 0; cal = 0; pul = 0; last = 0; pto = 0; rep = 1;
+fecha = "", date = "", ant = "";
+
+
+if (!SES.start_graph && !SES.end_graph) {
+	SES.start_graph=data.length-1;
+	SES.end_graph=data.length-7;
+};
+
+if (pagina && pagina==="prev") {
+	$(".next-graph").css("opacity","1");
+
+	if (SES.start_graph<=8) {
+		SES.start_graph = 6;		
+	} else {
+		SES.start_graph = parseInt(SES.start_graph)-7;		
+	};
+
+	if (SES.end_graph<7) {
+		SES.end_graph = 0; 
+		$(".prev-graph").css("opacity","0");		
+	}  else {
+		SES.end_graph  = parseInt(SES.end_graph)-7;
+		$(".prev-graph").css("opacity","1");
+	};
+};
+
+if (pagina && pagina==="next") {
+	$(".prev-graph").css("opacity","1");
+	SES.start_graph = parseInt(SES.start_graph)+7;
+	SES.end_graph   = parseInt(SES.end_graph)+7;
+	if (SES.start_graph>=data.length-1) {
+		$(".next-graph").css("opacity","0");
+		SES.start_graph=data.length-1;
+		SES.end_graph=data.length-7;		
+	};
+};
+
+
+var calorias = 0;
+var distancia = 0;
+var pasos = 0;
+var pulso = 0;
+var val = 0;
+
+var med = "";
+var dia = "";
+var type = "";
+var data1 = [];
+var con = 0;
+
+
+//Totales 
+for (var i = 0; i < data.length; i++) {
+	pasos = pasos + data[i].pasos;
+	if(isNumber(parseInt(data[i].distancia))){
+		distancia = distancia + data[i].distancia;
+	};
+	if(isNumber(parseInt(data[i].puls))){
+		pulso = pulso + parseInt(data[i].puls);
+		con++;
+	};
+
+	if(isNumber(data[i].calorias)){
+		calorias = calorias + parseFloat(data[i].calorias);
+	};
+
+};
+
+
+
+//Unidad distancia
+if(PERFIL == null){
+    PERFIL = JSON.parse(SES['perfil']);
+};
+if(PERFIL.unit == 'M'){
+	var metro = 39.370;
+	var metros = distancia/metro;
+	distancia = metros.toFixed(0) + '<span class="deta-light">mt</span>';
+	if( metros > 1000 ){
+		distancia = metros/1000;
+		distancia = distancia.toFixed(2) + '<span class="deta-light">km</span>';
+	};
+}else{
+	distancia = (distancia / 63360).toFixed(1)+ '<span class="deta-light">mi</span>';
+};
+
+
+//Resetear estilos submenu
+$("#submenu_estadisticas li").each(function(){
+	$(this).removeClass('active');
+});
+
+
+//Crear titulo del grafico
+for (var i = parseInt(SES.end_graph)-1; i < parseInt(SES.start_graph); i++) {
+	mes = data[i].fecha.slice(5, 7);
+	for (var j = 0; j < 12; j++) {
+		if(j===parseInt(mes)-1){
+			$(".title-graph").text(language.meses[j].slice(0, 3)+" "+data[i].fecha.slice(0, 4));
+		};
+	};
+};
+
+
+
+switch(tipo) {
+case "pasos":
+    for (var i = parseInt(SES.start_graph); i >= parseInt(SES.end_graph); i--) {
+		dia = data[i].fecha.slice(8, 10);
+		data1.push({ x : parseInt(i), y : data[i].pasos, label : dia});		
+	};
+	$('#cant_pasos').text(pasos);
+	$(".img-step").addClass('active');
+	type = "column";
+break;
+
+
+case "distancia":
+	for (var i = parseInt(SES.start_graph); i >= parseInt(SES.end_graph); i--) {		
+		dia = data[i].fecha.slice(8, 10);		
+		if (PERFIL.unit==="M") { val = 39370; } else { val = 63360; };
+		var c = data[i].distancia;
+		if (isNaN(data[i].distancia)) { c = 0; };
+		c = c/val;
+		data1.push({ x : parseInt(i), y : parseFloat(c.toFixed(2)), label : dia });
+	};
+	$('#cant_distancia').html(distancia);
+	$(".img-distance").addClass('active');
+	type = "spline";
+break;
+
+case "pulso":
+    for (var i = parseInt(SES.start_graph); i >= parseInt(SES.end_graph); i--) {  			
+		dia = data[i].fecha.slice(8, 10);
+		var c = data[i].puls;
+		if (isNaN(data[i].puls)) {
+			c = 0;
+		};
+		data1.push({ x : parseInt(i), y : parseFloat(c), label : dia });
+	};
+	$('#cant_pulso').text(pulso/con);
+	$(".img-hearth").addClass('active');
+	type = "line";
+break;
+
+case "calorias":
+    for (var i = parseInt(SES.start_graph); i >= parseInt(SES.end_graph); i--) {		
+		dia = data[i].fecha.slice(8, 10);
+		var c = data[i].calorias;
+		if (isNaN(data[i].calorias)) {
+			c = 0;
+		};
+		data1.push({ x : parseInt(i), y : parseFloat(c), label : dia });
+	};
+	$('#cant_calorias').text(calorias.toFixed(1));
+	$(".img-calories").addClass('active');
+	type = "column";
+break;
+}//switch
+
+GraficarEstadistica(tipo, data1, type);
+ 
+},
+function fail(tx, e){
+	console.log('fail');
+});
+
+}
+function GraficarEstadistica(tipo, data, type){
+	CanvasJS.addColorSet("orange", ["#DB4A08" ]);
+    var chart = new CanvasJS.Chart("grafica_"+tipo, { 
+        axisX: { gridColor: '#37343e',
+        		 lineColor: '#48464E',
+        		 tickColor: '#37343e',
+        		 tickThickness: 0,
+        		 lineThickness: 1,
+        		 gridThickness: 0,
+        		 labelFontSize: 10
+        		},
+        axisY: { gridColor: '#37343e',
+        		 lineColor: '#37343e',
+        		 tickColor: '#37343e',
+        		 tickThickness: 0,
                 lineThickness: 0,
                 gridThickness: 0,
-                labelFontSize: 12
-            },
-            axisY: {
-                gridColor: '#37343e',
-                lineColor: '#37343e',
-                tickColor: '#37343e',
-                tickThickness: 0,
-                lineThickness: 0,
-                gridThickness: 0,
-                labelFontSize: 1,
-      },
+                labelFontSize: 1
+            	},
       animationEnabled: true,
       backgroundColor: "#37343E",
       colorSet:  "orange",
       data: [{ 
-         type: "stackedColumn100",
-         dataPoints: [
-         { x: 1, y: 10 },
-         { x: 2, y: 20 },
-         { x: 3, y: 30 },                                    
-         { x: 4, y: 40 },
-         { x: 5, y: 50 },
-         { x: 6, y: 60 },
-         { x: 7, y: 70 },                                    
-         { x: 8, y: 80 },
-         { x: 9, y: 90 }
-         ]
-       },{ 
-         type: "stackedColumn100",
-         color:"#201E23",
-         dataPoints: [
-         { x: 1, y: 90 },
-         { x: 2, y: 80 },
-         { x: 3, y: 70 },                                    
-         { x: 4, y: 60 },
-         { x: 5, y: 50 },
-         { x: 6, y: 40 },
-         { x: 7, y: 30 },                                    
-         { x: 8, y: 20 },
-         { x: 9, y: 10 }
-         ]
+         type: type,
+         dataPoints: data
        }]
      });
     chart.render();
-	
-	ak_navigate('#estadisticas', {to: 'show_inicio();'});
-	
+
+    ak_navigate('#estadisticas_'+tipo, {to: 'show_inicio();'});
 }
+
 /*! end principal */
 /*! configuracion */
 function show_configuracion(back){

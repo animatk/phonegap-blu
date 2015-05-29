@@ -10,29 +10,57 @@ document.addEventListener("deviceready", onMusicReady(), false);
 		$('#mensajes').prepend('<p>'+msj+'</p>');
 	}
 	function onMusicReady() {
-	    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
-	    if(SES.list_to_songs){
-	    	console.log("SES.list_to_songs.length");
-	    	console.log(SES.list_to_songs.length);
-		    if(SES.list_to_songs.length === 0){
-				$("#list_to_songs").html("<p>Agregar Canciones para tu lista</p>");
-				setTimeout(function(){  open_add_list_modal();}, 3000);
+		console.log("onMusicReady");
+		var ua = navigator.userAgent;
+		var checker = {
+			iphone: ua.match(/(iPhone|iPod|iPad)/),
+			blackberry: ua.match(/BlackBerry/),
+			android: ua.match(/Android/)
+		};
+		if (checker.android) {
+			 window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
+		    if(SES.list_to_songs){
+			    if(SES.list_to_songs.length === 0){
+					$("#list_to_songs").html("<p>Agregar Canciones para tu lista</p>");
+					setTimeout(function(){  open_add_list_modal();}, 3000);
+			    }else{
+			    	getMyList();
+			    }
 		    }else{
-		    	getMyList();
+		    	$("#list_to_songs").html("<p>Agregar Canciones para tu lista</p>");
+		    	setTimeout(function(){  open_add_list_modal();}, 3000);
 		    }
-	    }else{
-	    	$("#list_to_songs").html("<p>Agregar Canciones para tu lista</p>");
-	    	setTimeout(function(){  open_add_list_modal();}, 3000);
-	    }
+		}
+		else if (checker.iphone) {
+			mensaje("ios");
+			$('.music_cover').hide();
+			$('#list_to_songs').hide();
+			$('.add_music').hide();
+			$('.commig_soon').show();
+		}
+		else{
+			mensaje("other");
+			$('.music_cover').hide();
+			$('#list_to_songs').hide();
+			$('.add_music').hide();
+			$('.commig_soon').show();
+		}
+		
 	}
 	function onFileSystemSuccess(fileSystem) {
-	    fileSystem.root.getDirectory("Music", {create: false, exclusive: false}, getDirSuccess, fail);
+		console.log("onFileSystemSuccess");
+	    fileSystem.root.getDirectory("Music" , {create: false, exclusive: false}, getDirSuccess, fail);
 	}
 	function fail(evt) {
-		mensaje("fail meta");
-        mensaje("fail: "+evt.target.error.code);
+		console.log("fail: ");
+		console.log(evt);
+		mensaje("fail");
+        mensaje(evt.target.error.code);
     }
 	function getDirSuccess(dirEntry) {
+		console.log("getDirSuccess");
+		mensaje("getDirSuccess");
+		console.log(dirEntry);
 	    // Get a directory reader
 	    var directoryReader = dirEntry.createReader();
 	    // Get a list of all the entries in the directory
@@ -71,7 +99,9 @@ document.addEventListener("deviceready", onMusicReady(), false);
 	    	}
 	    }
 	    $('.controls').show();
-	    $('#play').show();
+	    if (!mus_media) {
+            $('#play').show();
+        }
 	}
 	
 	var mus_media = null;
