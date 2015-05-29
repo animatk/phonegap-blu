@@ -190,12 +190,16 @@ function addDevice(address, name){
 }
 
 function disconnect(){
-	bluetoothle.disconnect(function(){
-		SES.removeItem('hrm');
-		$('.disp-item .switch').removeClass('inactive load, active');
-	}, function(){});
+	bluetoothle.disconnect(disSuccess, disError);
 }
-
+function disSuccess(){
+	mensaje('dis success');
+	SES.removeItem('hrm');
+	$('.disp-item .switch').removeClass('inactive load, active');
+}
+function disError(){
+	mensaje('dis error');
+}
 function connect(address)
 {
   mensaje("se va a conectar al dispositivo: "+address);
