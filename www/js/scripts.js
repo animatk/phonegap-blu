@@ -504,8 +504,8 @@ function worker(obj, fun){
 		sync.postMessage(JSON.stringify(obj)); 
 	}
 }
-function musica(){
-	ak_navigate('#musica');
+function musica(back){
+	ak_navigate('#musica', back);
 	onMusicReady();
 }
 function iniciar(){
