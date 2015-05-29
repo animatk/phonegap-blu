@@ -137,7 +137,7 @@
 					<form onsubmit="return form_paso_uno(this); return false;">
                         <div class="row text-center user_inicio">
                             <div class="perfil-photo-wrapper">
-                                <span class="fotoPerfil perfil-photo text-center" onclick="$('#imgupload').click();" style="background-image:url(img/upload_photo.png);"></span>
+                                <span class="fotoPerfil perfil-photo text-center" onclick="$('#imgupload').click();" style="background-image:url(img/upload_photo.jpg);"></span>
                                 <input onchange="inputImage(this);" type="file" id="imgupload" class="oculto" accept="image/gif, image/jpeg, image/png" />
                                 <input type="text" name="img" class="oculto" />
                             </div>
@@ -262,7 +262,7 @@
 						<span id="actividad-2" class="icon-place icon-indoor" onclick="tipoActividad(2);" data-lang="en_interior"></span>
 					</div>
 				</div>
-				<div class="item-config" onclick="musica({to:'show_config();'});">
+				<div class="item-config" onclick="musica({to:'show_config({to:\'show_inicio();\', tx: language.cancel});'});">
 					<span class="icon icon-config icon-music"> </span> <span>No music list selected</span>
 				</div>
 				<div id="botonDisp" class="item-config" onclick="botonDispositivos({to:'show_config({to:\'show_inicio();\', tx: language.cancel});', tx: language.volver});">
@@ -492,10 +492,10 @@
 				<div class="item-config" onclick="show_sensibilidad({to: 'show_configuracion({to:\'show_inicio();\'});'});">
 					<span class="icon icon-config icon-step"> </span> <span data-lang="senstep"></span>
 				</div>
-				<div class="item-config" onclick="botonDispositivos({to:'show_configuracion({to:\'show_inicio();\', tx: language.cancel});', tx: language.volver});">
+				<div class="item-config" onclick="botonDispositivos({to:'show_configuracion({to:\'show_inicio();\'});', tx: language.volver});">
 					<span class="icon icon-config icon-hearth"> </span> <span data-lang="disp_hrm"></span>
 				</div>
-				<div class="item-config" onclick="musica({to:'show_configuracion({to:\'show_inicio();\', tx: language.cancel});">
+				<div class="item-config" onclick="musica({to:'show_configuracion({to:\'show_inicio();\'});'});">
 					<span class="icon icon-config icon-music"> </span> 
 					<span> Musica </span> 
 				</div>

@@ -1232,12 +1232,13 @@ input:-webkit-autofill:active{
 }
 
 .icon-place{
-	background-size: 70px;
 	background-repeat: no-repeat;
     display: inline-block;
-  	min-height: 100px;
   	width: 100%;
-  	background-position: center center;
+	background-size: 72px;
+	min-height: 99px;
+	background-position: center 32px;
+	margin-top: 13px;
 }
 .icon-config{
 	background-color: transparent;

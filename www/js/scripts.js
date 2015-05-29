@@ -625,6 +625,8 @@ function show_inicio(from){
 				}
 			}
 			
+			
+			
 			if(PERFIL.unit == 'M'){
 				var metro = 39.370;
 				var metros = dis/metro;
@@ -651,7 +653,8 @@ function show_inicio(from){
             $('#esta-pas .num').html(pasos);
             $('#esta-dis .num').html(dis);
             $('#esta-cal .num').html(cal);
-            $('#esta-pul .num').html((pul/pto).toFixed(0));
+			pul = (pul > 0)? (pul/pto).toFixed(0):0;
+            $('#esta-pul .num').html(pul);
 		},
 		function(tx, e){});
     
@@ -928,6 +931,7 @@ function login(form){
 						,birthdate : obj.birthdate
 						,fbid : obj.fb_id
 						,fbtoken : obj.fb_token
+						,img : 'data:'+obj.imgtype+';base64,'+obj.img
 					};
 
 					udata.height = (obj.height != null)? obj.height : undefined;
@@ -965,7 +969,9 @@ function show_perfil(nav){
 			foto = 'https://graph.facebook.com/'+PERFIL.fbid+'/picture?width=120&height=120';
 			$('#fbConnect').addClass('oculto');
 		}else{
-			if(PERFIL.gender == 'F'){
+			if(PERFIL.img != ''){
+				foto = PERFIL.img;
+			}else{
 				foto = 'img/perfil-woman.jpg';
 			}
 		}
@@ -1196,6 +1202,17 @@ function form_paso_dos(form){
 				sdata.estatura = data.estatura;
 				sdata.peso = data.peso;
 				sdata.unit = data.unidad_medida;
+				//
+				var c = udata.img.indexOf(",");
+				var type = udata.img.slice(0, c+1);
+				var p = type.indexOf(";");
+				type = type.slice(0, p);
+				var t = type.indexOf(":");
+				type = type.slice(t+1);
+				
+				var img = udata.img.slice(c+1);
+				sdata.imgtype = type;
+				sdata.img = img;
 				
 				$('body').prepend('<div id="cortina"></div>');
 				
@@ -1248,11 +1265,23 @@ function form_paso_tres(form){
 			sdata.terminos = 'SI';
 			sdata.unit = udata.unit;
 			//
+			var c = udata.img.indexOf(",");
+			var type = udata.img.slice(0, c+1);
+			var p = type.indexOf(";");
+			type = type.slice(0, p);
+			var t = type.indexOf(":");
+			type = type.slice(t+1);
+			
+			sdata.imgtype = type;
+			sdata.img = img;
+			//
 			if(isOnLine() != 'none'){
 				var chain = "";
 				if(SES['chain']){
 					chain = SES['chain']; 
 				}
+				$('body').prepend('<div id="cortina"></div>');
+				
 				post(SITE+'main/register/'+chain, sdata, function(obj){
 					if(obj.success === false){
 						alert(language.err[obj.message]);
@@ -1265,6 +1294,8 @@ function form_paso_tres(form){
 						}
 						iniciar();
 					}
+					
+					$('#cortina').remove();
 				});
 			}else{
 				alert(language.reg_nonet);
