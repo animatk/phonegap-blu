@@ -1184,7 +1184,10 @@ input:-webkit-autofill:active{
 
 .icon-music{
 	background-image: url(../img/music_icon.png);
+}
 
+.icon-step{
+	background-image: url(../img/step_icon.png);
 }
 
 .icon-hearth{
@@ -1238,6 +1241,11 @@ input:-webkit-autofill:active{
 	color:#63e05a;
 	padding: 10px;
 	border-bottom: 1px solid #63e05a;
+	clear: both;
+}
+
+.item-config .switch{
+	margin-top: -4px;
 }
 
 .icon-configuracion{

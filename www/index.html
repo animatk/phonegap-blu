@@ -296,7 +296,7 @@
 					</div>
 					<div>&nbsp;</div>
 					<div class="text-center">
-						<span class="btn btn-danger btn-block" onclick="botonDispositivosCancel();" data-lang="cancel"></span>
+						<span class="icon icon-config icon-mobile"> </span> <span class="btn btn-danger btn-block" onclick="botonDispositivosCancel();" data-lang="cancel"></span>
 					</div>
 				</div>
 			</div>
@@ -441,7 +441,28 @@
 		</section>
 		<section id="configuracion" class="Page">
 			<div class="container Main">
-				hola
+				<p class="text-center general-title" data-lang="configuration"></p>
+				<div>&nbsp;</div>
+				<div class="item-config" onclick="show_sensibilidad({to: 'show_configuracion({to:\'show_inicio();\'});'});">
+					<span class="icon icon-config icon-step"> </span> <span data-lang="senstep"></span>
+				</div>
+				<div class="item-config" onclick="botonDispositivos({to:'show_configuracion({to:\'show_inicio();\', tx: language.cancel});', tx: language.volver});">
+					<span class="icon icon-config icon-hearth"> </span> <span data-lang="disp_hrm"></span>
+				</div>
+				<div class="item-config">
+					<span class="icon icon-config icon-music"> </span> 
+					<span> Musica </span> 
+				</div>
+				<div class="item-config">
+					<span class="icon icon-config icon-hearth"> </span> 
+					<span>Sincronizar solo por wifi </span> 
+					<span id="switchWifi" class="switch" onclick="switch_wifi(this);"></span>
+				</div>
+				<div>&nbsp;</div>
+				<div class="text-center">
+					<span class="btn btn-facebook btn-block btn-icon btn-icon-fb" onclick="fbLogin();" data-lang="RegOnFb"></span>
+				</div>
+				
 			</div>
 		</section>
 		<section id="estadisticas" class="Page">

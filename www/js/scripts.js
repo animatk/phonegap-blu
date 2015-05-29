@@ -57,6 +57,7 @@ var SES = window.localStorage,
 	SITE = 'http://52.11.112.109/index.php/';
 //}
 getLang({exe: 'setText'});
+
 function swipeHorz(box, func){
 	var startx = 0, dist = 0;
 	//
@@ -479,7 +480,14 @@ function DeviceReady(){
 		if(SES['chain'] == '4d8e1a06e5a47d8bfbe3623a35f52276'){
 			showDebug();
 		}
-		worker({fun: 'sincronizar', url: SITE, chain: SES['chain'] }, function(data){ mensaje(data) });
+		var params = {fun: 'sincronizar', url: SITE, chain: SES['chain'] }, function(data){ mensaje(data) };
+		if(SES['synwifi']){
+			if(isOnLine() == 'wifi'){
+				worker(params);
+			}
+		}else{
+			worker(params);
+		}
 	}	
 }
 document.addEventListener('backbutton', function(e){}, false);
@@ -592,9 +600,22 @@ function show_inicio(from){
 					cal = cal + parseFloat(ult.cal);  
 				}
 				
-				if(isNumber(parseFloat(ult.ppm))){
-					if(parseFloat(ult.ppm) != 0){
-						pul = pul + parseFloat(ult.ppm);  
+				var pulso = 0;
+				var pta = 0;
+				for(i in act){
+					var obj = act[i];
+					if(isNumber(parseFloat(obj.ppm))){
+						if(parseFloat(obj.ppm) != 0){
+							pulso = pulso + parseFloat(obj.ppm);  
+							pta++;
+						}
+					}
+
+				}
+
+				if(isNumber(parseFloat(pulso/pta))){
+					if(parseFloat(pulso/pta) != 0){
+						pul = pul + parseFloat(pulso/pta);  
 						pto++;
 					}
 				}
@@ -631,7 +652,7 @@ function show_inicio(from){
 		function(tx, e){});
     
 }
-
+/*
 function test_mapa(){	
 	loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyAihfNS3dpn6vB16RXRREYAy9jXEf63yUE&callback=initialize', function(){
 	//	
@@ -723,6 +744,7 @@ function initialize() {
 	//	}
 	}
  }
+ */
 function ak_navigate(to, back){
 	if(isDevice() != 'Android'){
 		$('body').addClass('ios-device');
@@ -1372,7 +1394,7 @@ function stepsConfStop(action){
 		
 		if(action == 'save'){
 			SES['sens'] = parseInt($('#sensible').val()) / 10;
-			show_config({to:'show_inicio();', tx: language.cancel});
+			show_configuracion({to:'show_inicio();'});
 		}
 
 		STEP = 0;
@@ -1723,6 +1745,10 @@ function stepsSuccess(a){
 			var metros = pulgadas/metro;
 			var mostrar = metros.toFixed(0) + '<span class="deta-light">mt</span>';
 			
+			if(PERFIL == null){
+				PERFIL = JSON.parse(SES['perfil']);
+			}
+			
 			if(PERFIL.unit == 'M'){
 				if( metros > 1000 ){
 					mostrar = metros/1000;
@@ -2013,6 +2039,15 @@ function guardar(resp){
 				function(tx, e){});
 		}
 		SES.removeItem('actividad');
+		
+		var params = {fun: 'sincronizar', url: SITE, chain: SES['chain'] }, function(data){ mensaje(data) };
+		if(SES['synwifi']){
+			if(isOnLine() == 'wifi'){
+				worker(params);
+			}
+		}else{
+			worker(params);
+		}
 	}
 	$('.toCenter, .toLeft, .toRight').not('#PopAlert').removeClass('toCenter toLeft toRight');
 	$('#PopAlert').removeClass('toCenter');
@@ -2080,7 +2115,20 @@ function estadisticas(tipo){
 /*! configuracion */
 function show_configuracion(back){
 	//
+	if(SES['synwifi']){
+		$('#switchWifi').addClass('active');
+	}
 	ak_navigate('#configuracion', back);
+}
+
+function switch_wifi(elm){
+	if($(elm).hasClass('active')){
+		$(elm).removeClass('active');
+		SES.removeItem('synwifi');
+	}else{
+		SES['synwifi'] = 'Y';
+		$(elm).addClass('active');
+	}
 }
 /*! end configuracion */
 /*! map */
@@ -2141,201 +2189,4 @@ function exeSQL(sql){
 }
 function showDebug(){
 	$('.debugbox').css('display', 'block');
-}
-
-
-
-//simple XHR request in pure JavaScript
-function ajax(obj) {
-	var xhr;
- 
-	if(typeof XMLHttpRequest !== 'undefined') xhr = new XMLHttpRequest();
-	else {
-		var versions = ["MSXML2.XmlHttp.5.0", 
-			 	"MSXML2.XmlHttp.4.0",
-			 	"MSXML2.XmlHttp.3.0", 
-			 	"MSXML2.XmlHttp.2.0",
-			 	"Microsoft.XmlHttp"]
- 
-		for(var i = 0, len = versions.length; i < len; i++) {
-		try {
-			xhr = new ActiveXObject(versions[i]);
-			break;
-		}
-			catch(e){}
-		} // end for
-	}
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState === 4) {
-			if (xhr.status === 200) {
-				if (obj.success) obj.success(JSON.parse(xhr.responseText));
-			} else {
-				var error = xhr.responseText ? JSON.parse(xhr.responseText).error : {message: 'An error has occurred'};
-				if (obj.error) obj.error(error);
-			}
-		}
-	}
-	var method = obj.method || 'GET';
-	//
-	xhr.open(method, obj.url, true);
-	xhr.responseType = 'application/json';
-	xhr.crossDomain = true;
-	//
-	if(obj.params){
-		//POST
-		var str = JSON.stringify(obj.params);
-		xhr.setRequestHeader("Content-type", "application/json");
-		xhr.send(str);
-	}else{
-		xhr.send();
-	}
-}
-function sincronizar(obj){
-	var func = obj.res;
-	
-	func('se inicia la sincronizacion');
-	webdb.executeSql('CREATE TABLE IF NOT EXISTS actividad (ID INTEGER PRIMARY KEY ASC, chain TEXT, json TEXT, sync TEXT, data TEXT)', [],
-	function(tx, r){},
-	function(tx, e){});
-	
-	webdb.executeSql('SELECT ID, sync FROM actividad', [],
-	function(tx, r){
-		var rows = r.rows,
-			items = [],
-			tot = rows.length || 0;
-			for(var i=0; i<tot; i++){
-				var row = rows.item(i);
-				items.push(row);
-			}
-			func('se envia al servidor un total de : '+tot ); 
-			ajax({
-				url: obj.url+'input/verificar'
-				,method: 'POST'
-				,params: {chain: obj.cha, data: items}
-				,success: function(r){
-					func(JSON.stringify(r));
-					if(r.success){						
-						var cola = [];
-						if(r.sincroniza.length > 0){
-							cola.push(r.sincroniza);
-						}
-						if(r.subir.length > 0){
-							cola.push(r.subir);
-						}
-						if(r.bajar.length > 0){
-							cola.push(r.bajar);
-						}
-						if(cola.length > 0){
-							subir_bajar(0, 0, cola, func, obj.url, obj.cha);
-						}
-					}
-				}
-				,error: function(error){
-					func(JSON.stringify(error));
-				}
-			}); 
-	},
-	function(tx, e){});
-}
-function subir_bajar(key_actual, key_cola, arr, func, url, chain){
-	var arrgeglo = arr[key_cola];
-	if(arrgeglo[key_actual] == undefined){
-		if(key_cola < arr.length){
-			setTimeout(function(){
-				subir_bajar(0, key_cola+1, arr, func, url, chain);
-			}, 200);
-		}
-		return false;
-	}
-	var id = arrgeglo[key_actual];
-	if(id.length != 32){
-		webdb.executeSql('SELECT * FROM actividad WHERE ID = ?', [id],
-		function(tx, r){
-			var rows = r.rows,
-				tot = rows.length;
-			for(var i=0; i<tot; i++){
-				var row = rows.item(i);
-				ajax({
-					url: url+'input/index'
-					,method : 'POST'
-					,params : { 
-						chain: row.chain
-						,json: row.json 
-						,data: row.data 
-					}
-					,success: function(data){
-						if(data.success){
-							func('se subio : '+row.ID ); 
-							webdb.executeSql('UPDATE actividad SET sync=? WHERE ID = ?', [data.sync, row.ID],
-							function(tx, r){
-								setTimeout(function(){
-									subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
-								}, 200);
-							},
-							function(tx, e){});
-						}
-					}
-				});
-			}
-		},
-		function(tx, e){});
-	}else{
-		//puede ser subir o bajar para saberlo hay que buscarlo en local
-		//si existe hay que subirlo y si no existe hay que bajarlo
-		webdb.executeSql('SELECT * FROM actividad WHERE chain = ? AND sync = ?', [chain, id],
-		function(tx, r){
-			var rows = r.rows,
-				tot = rows.length;
-			if(tot > 0){				
-				for(var i=0; i<tot; i++){
-					var row = rows.item(i);
-					ajax({
-						url: url+'input/index/'+id
-						,method : 'POST'
-						,params : { 
-							chain: row.chain
-							,json: row.json 
-							,data: row.data 
-						}
-						,success: function(data){
-							if(data.success){
-								func('se sincronizo : '+id ); 
-								setTimeout(function(){
-									subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
-								}, 200);
-							}
-						}
-					});	
-				}
-			}else{
-				ajax({
-					url: url+'input/bajar/'+chain+'/'+id
-					,method : 'GET'
-					,success: function(r){
-						if(r.success){
-							var act = r.data,
-								tot = act.length,
-								fecha = act[0].ini;
-								
-							webdb.executeSql('INSERT INTO actividad (chain, json, sync, data) VALUES (?,?,?,?)'
-							,[ chain, JSON.stringify(act), id, fecha]
-							,function(tx, r){
-								func('se bajo : '+id ); 
-								setTimeout(function(){
-									subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
-								}, 200);
-							}
-							,function(tx, e){});
-						}else{
-							setTimeout(function(){
-								subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
-							}, 200);
-						}
-					}
-				});	
-				
-			}
-		},
-		function(tx, e){});
-	}
 }
