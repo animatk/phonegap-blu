@@ -587,20 +587,44 @@ function show_inicio(from){
 					dis = dis + parseFloat(ult.dis);
 				}
                 pas = pas + ult.ste;
-                cal = cal + parseFloat(ult.cal);  
+				if(isNumber(parseFloat(ult.cal))){
+					cal = cal + parseFloat(ult.cal);  
+				}
+				console.log(ult.ppm);
+				if(isNumber(parseFloat(ult.ppm))){
+					pul = pul + parseFloat(ult.ppm);  
+				}
 			}
-            var metro = 39.370;
-            var metros = dis/metro;
-            dis = metros.toFixed(1) + '<span class="deta-light">mt</span>'
-            if( metros > 1000 ){
-                dis = metros/1000;
-                dis = dis.toFixed(2) + '<span class="deta-light">km</span>'
-            }
+           
+		   console.log(pul);
+
+			if(PERFIL.unit == 'M'){
+				var metro = 39.370;
+				var metros = dis/metro;
+				dis = metros.toFixed(0) + '<span class="deta-light">mt</span>';
+				
+				if( metros > 1000 ){
+					dis = metros/1000;
+					dis = dis.toFixed(1) + '<span class="deta-light">km</span>';
+				}
+			}else{
+				var dis = (dis / 63360).toFixed(1)+ '<span class="deta-light">mi</span>';
+			}
+
+			var pasos = pas;
+
+			if(cal > 1000){
+				cal = (cal/1000).toFixed(1)+'<span class="deta-light">k</span>';
+			}
 			
-            $('#esta-pas .num').html(pas);
+			if(pasos > 1000){
+				pasos = (pasos/1000).toFixed(1)+'<span class="deta-light">k</span>';
+			}
+
+            $('#esta-pas .num').html(pasos);
             $('#esta-dis .num').html(dis);
-			cal = (isNumber(cal))? cal.toFixed(1): 0;
             $('#esta-cal .num').html(cal);
+            $('#esta-pul .num').html((pul/tot).toFixed(0));
 		},
 		function(tx, e){});
     
@@ -1693,12 +1717,20 @@ function stepsSuccess(a){
 			DISTA = DISTA + ndista;
 		//	DISTA = (pulgadas * med) * STEP;
 			var pulgadas = DISTA; //pulgadas
+			
 			var metros = pulgadas/metro;
-			var mostrar = metros.toFixed(1) + '<span class="deta-light">mt</span>';
-			if( metros > 1000 ){
-				mostrar = metros/1000;
-				mostrar = metros.toFixed(2) + '<span class="deta-light">km</span>';
+			var mostrar = metros.toFixed(0) + '<span class="deta-light">mt</span>';
+			
+			if(PERFIL.unit == 'M'){
+				if( metros > 1000 ){
+					mostrar = metros/1000;
+					mostrar = metros.toFixed(1) + '<span class="deta-light">km</span>';
+				}
+			}else{
+				var mostrar = (pulgadas / 63360).toFixed(1)+ '<span class="deta-light">mi</span>';
 			}
+			
+			
 			if(DISTA > LASTTTACK+(39.370*10)){
 				if(trackActivity()){
 					LASTTTACK = DISTA;
@@ -1707,11 +1739,6 @@ function stepsSuccess(a){
 				}
 			}
 			
-			if(DISTA > LASTTTACK+(39.370*50)){
-				if(isOnLine()!= 'none'){
-					api_clima();
-				}
-			}
 			$(".DISTA").html( mostrar );
 			/*! calorias */
 			var efficiencia = 0.6; //promedio de caminar y trotar
@@ -1861,7 +1888,7 @@ function api_clima(){
 				PERFIL = JSON.parse(SES['perfil']);
 			}
 			if(PERFIL.unit == 'M'){
-				$('.CLIMA').html((d.query.results.channel.item.condition.temp -32) * 5 / 9+' °C');
+				$('.CLIMA').html(((d.query.results.channel.item.condition.temp -32) * 5 / 9).toFixed(0)+' °C');
 			}else{
 				$('.CLIMA').html(d.query.results.channel.item.condition.temp+' °F');
 			}
