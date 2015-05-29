@@ -577,6 +577,11 @@ function unitsValue( sel, tar ){
 	tar.text(tex);
 }
 function show_inicio(from){
+	
+	var m = new Media();
+	
+	mensaje(JSON.stringify(m.get()));
+	
 	show_perfil(false);
     ak_navigate('#inicio');
     //queris para determinar valores
@@ -2155,7 +2160,6 @@ function show_configuracion(back){
 	}
 	ak_navigate('#configuracion', back);
 }
-
 function switch_wifi(elm){
 	if($(elm).hasClass('active')){
 		$(elm).removeClass('active');
