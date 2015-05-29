@@ -63,13 +63,13 @@
 					</div>
 					<div class="row row2">
 						<div class="col text-center">
-							<span id="esta-pul" class="btn-estadisticas" onclick="estadisticas('pulso','ini','mes');">
+							<span id="esta-pul" class="btn-estadisticas" onclick="estadisticas('pulso','ini','dia');">
 								<span data-lang="pulso" class="btn_title"></span>
 								<span class="est-icon est-icon-hearth num">0</span>
 							</span>
 						</div>
 						<div class="col text-center">
-							<span id="esta-pas" class="btn-estadisticas" onclick="estadisticas('pasos','ini','mes');">
+							<span id="esta-pas" class="btn-estadisticas" onclick="estadisticas('pasos','ini','dia');">
 								<span data-lang="pasos" class="btn_title"></span>
 								<span class="est-icon est-icon-step num">0</span>
 							</span>
@@ -78,13 +78,13 @@
 					<div>&nbsp;</div>
 					<div class="row row2">
 						<div class="col text-center">
-							<span id="esta-dis" class="btn-estadisticas" onclick="estadisticas('distancia','ini','mes');">
+							<span id="esta-dis" class="btn-estadisticas" onclick="estadisticas('distancia','ini','dia');">
 								<span data-lang="distancia" class="btn_title"></span>
 								<span class="est-icon est-icon-distance num">0<span class="deta-light">km</span></span>
 							</span>
 						</div>
 						<div class="col text-center">
-							<span id="esta-cal" class="btn-estadisticas" onclick="estadisticas('calorias','ini','mes');">
+							<span id="esta-cal" class="btn-estadisticas" onclick="estadisticas('calorias','ini','dia');">
 								<span data-lang="calorias" class="btn_title"></span>
 								<span class="est-icon est-icon-calories num">0</span>
 							</span>
@@ -140,8 +140,7 @@
                         <div class="row text-center user_inicio">
                             <div class="perfil-photo-wrapper">
                                 <span class="fotoPerfil perfil-photo text-center" onclick="$('#imgupload').click();" style="background-image:url(img/upload_photo.jpg);"></span>
-                                <input onchange="inputImage(this);" type="file" id="imgupload" class="oculto" accept="audio/mp3" />
-								<!--image/gif, image/jpeg, image/png,-->
+                                <input onchange="inputImage(this);" type="file" id="imgupload" class="oculto" accept="image/gif, image/jpeg, image/png" />
                                 <input type="text" name="img" class="oculto" />
                             </div>
                         </div>

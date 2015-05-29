@@ -696,7 +696,7 @@ function initialize() {
 	
 	var data = [{"ini":"2015-05-28T16:22:28.782Z","lat":4.6705409931,"lon":-74.0556709562,"ppm":97,"end":"2015-05-28T16:22:35.303Z","seg":6,"ste":8,"cal":0,"dis":0},{"ini":"2015-05-28T16:22:35.794Z","lat":4.6705409931,"lon":-74.0556709562,"ppm":106,"end":"2015-05-28T16:22:37.800Z","seg":2,"ste":10,"cal":0,"dis":520.3139199999999},{"ini":"2015-05-28T16:22:38.308Z","lat":4.6705409931,"lon":-74.0556709562,"ppm":106,"end":"2015-05-28T16:22:44.948Z","seg":6,"ste":15,"cal":"0.5","dis":520.3139199999999},{"ini":"2015-05-28T16:22:46.453Z","lat":4.6706007142,"lon":-74.0556738061,"ppm":104,"end":"2015-05-28T16:22:51.476Z","seg":5,"ste":20,"cal":"0.5","dis":520.3139199999999},{"ini":"2015-05-28T16:22:54.479Z","lat":4.670642959,"lon":-74.055698365,"ppm":117,"end":"2015-05-28T16:23:04.531Z","seg":10,"ste":38,"cal":"0.5","dis":1040.6278399999999},{"ini":"2015-05-28T16:23:05.298Z","lat":4.6706676856,"lon":-74.0558059049,"ppm":109,"end":"2015-05-28T16:23:10.309Z","seg":5,"ste":48,"cal":"1.0","dis":1560.9417599999997},{"ini":"2015-05-28T16:23:11.159Z","lat":4.6706676856,"lon":-74.0558059049,"ppm":112,"end":"2015-05-28T16:23:13.649Z","seg":2,"ste":50,"cal":"1.5","dis":1560.9417599999997},{"ini":"2015-05-28T16:23:15.675Z","lat":4.6706571663,"lon":-74.0557613131,"ppm":115,"end":"2015-05-28T16:23:17.692Z","seg":2,"ste":51,"cal":"1.5","dis":1560.9417599999997},{"ini":"2015-05-28T16:23:18.194Z","lat":4.6705933381,"lon":-74.0557235108,"ppm":115,"end":"2015-05-28T16:23:53.388Z","seg":35,"ste":87,"cal":"1.5","dis":1560.9417599999997},{"ini":"2015-05-28T16:23:53.890Z","lat":4.6709337272,"lon":-74.055558974,"ppm":121,"end":"2015-05-28T16:24:05.940Z","seg":12,"ste":107,"cal":"1.9","dis":2226.9435775999996},{"ini":"2015-05-28T16:24:06.439Z","lat":4.6711123036,"lon":-74.05544783,"ppm":122,"end":"2015-05-28T16:24:20.559Z","seg":14,"ste":123,"cal":"2.5","dis":2559.9444863999997},{"ini":"2015-05-28T16:24:21.071Z","lat":4.671348799,"lon":-74.055313468,"ppm":126,"end":"2015-05-28T16:24:24.607Z","seg":3,"ste":126,"cal":"2.5","dis":2559.9444863999997},{"ini":"2015-05-28T16:24:25.626Z","lat":4.6714939736,"lon":-74.05541908,"ppm":127,"end":"2015-05-28T16:24:27.642Z","seg":2,"ste":127,"cal":"2.5","dis":2559.9444863999997},{"ini":"2015-05-28T16:24:28.146Z","lat":4.671504451,"lon":-74.0554695391,"ppm":128,"end":"2015-05-28T16:24:30.651Z","seg":2,"ste":129,"cal":"2.5","dis":2559.9444863999997},{"ini":"2015-05-28T16:24:31.153Z","lat":4.6715135034,"lon":-74.0555157234,"ppm":129,"end":"2015-05-28T16:24:41.218Z","seg":10,"ste":139,"cal":"2.5","dis":2559.9444863999997},{"ini":"2015-05-28T16:24:42.222Z","lat":4.6715906588,"lon":-74.0557310545,"ppm":129,"end":"2015-05-28T16:24:48.253Z","seg":6,"ste":146,"cal":"2.5","dis":2559.9444863999997},{"ini":"2015-05-28T16:24:49.761Z","lat":4.6716562053,"lon":-74.0558137838,"ppm":132,"end":"2015-05-28T16:24:55.295Z","seg":5,"ste":158,"cal":"2.5","dis":3080.2584064},{"ini":"2015-05-28T16:24:55.796Z","lat":4.6717628231,"lon":-74.0558664222,"ppm":129,"end":"2015-05-28T16:25:01.363Z","seg":5,"ste":170,"cal":"3.0","dis":3829.5104512},{"ini":"2015-05-28T16:25:01.868Z","lat":4.6718508331,"lon":-74.0559316334,"ppm":131,"end":"2015-05-28T16:25:07.957Z","seg":6,"ste":181,"cal":"3.8","dis":4459.0902944},{"ini":"2015-05-28T16:25:08.448Z","lat":4.6718881745,"lon":-74.056030456,"ppm":135,"end":"2015-05-28T16:25:13.001Z","seg":4,"ste":191,"cal":"4.4","dis":4979.4042144},{"ini":"2015-05-28T16:25:13.500Z","lat":4.6718811337,"lon":-74.0560763889,"ppm":136,"end":"2015-05-28T16:25:19.093Z","seg":5,"ste":202,"cal":"4.9","dis":5608.9840576},{"ini":"2015-05-28T16:25:19.791Z","lat":4.67193285,"lon":-74.0561783966,"ppm":139,"end":"2015-05-28T16:25:25.483Z","seg":5,"ste":211,"cal":"5.5","dis":6030.438332799999},{"ini":"2015-05-28T16:25:26.054Z","lat":4.6720229555,"lon":-74.0563576017,"ppm":140,"end":"2015-05-28T16:25:32.032Z","seg":5,"ste":223,"cal":"5.9","dis":6779.690377599999},{"ini":"2015-05-28T16:25:32.566Z","lat":4.6721260529,"lon":-74.0565940552,"ppm":144,"end":"2015-05-28T16:25:38.922Z","seg":6,"ste":234,"cal":"6.7","dis":7409.270220799999},{"ini":"2015-05-28T16:25:39.421Z","lat":4.6722176671,"lon":-74.0567158443,"ppm":146,"end":"2015-05-28T16:25:43.944Z","seg":4,"ste":244,"cal":"7.3","dis":7929.584140799999},{"ini":"2015-05-28T16:25:44.445Z","lat":4.6722667012,"lon":-74.0568036866,"ppm":151,"end":"2015-05-28T16:25:49.970Z","seg":5,"ste":255,"cal":"7.8","dis":8559.163983999999},{"ini":"2015-05-28T16:25:50.465Z","lat":4.6723462036,"lon":-74.0568315145,"ppm":154,"end":"2015-05-28T16:25:56.039Z","seg":5,"ste":267,"cal":"8.4","dis":9308.416028799998},{"ini":"2015-05-28T16:25:56.526Z","lat":4.6724760393,"lon":-74.056744678,"ppm":156,"end":"2015-05-28T16:26:02.167Z","seg":5,"ste":278,"cal":"9.1","dis":9937.995871999998},{"ini":"2015-05-28T16:26:02.716Z","lat":4.6725654742,"lon":-74.0566827358,"ppm":157,"end":"2015-05-28T16:26:08.288Z","seg":5,"ste":290,"cal":"9.7","dis":10687.247916799997},{"ini":"2015-05-28T16:26:08.781Z","lat":4.6727155522,"lon":-74.0566239786,"ppm":159,"end":"2015-05-28T16:26:14.809Z","seg":6,"ste":301,"cal":"10.5","dis":11316.827759999996},{"ini":"2015-05-28T16:26:15.307Z","lat":4.6729208669,"lon":-74.0565606114,"ppm":160,"end":"2015-05-28T16:26:19.845Z","seg":4,"ste":311,"cal":"11.1","dis":11837.141679999997},{"ini":"2015-05-28T16:26:20.338Z","lat":4.6730029257,"lon":-74.0565048718,"ppm":162,"end":"2015-05-28T16:26:25.883Z","seg":5,"ste":323,"cal":"11.6","dis":12586.393724799997},{"ini":"2015-05-28T16:26:26.377Z","lat":4.6731646964,"lon":-74.0564579331,"ppm":162,"end":"2015-05-28T16:26:31.936Z","seg":5,"ste":335,"cal":"12.3","dis":13335.645769599996},{"ini":"2015-05-28T16:26:32.433Z","lat":4.6733091585,"lon":-74.0563941468,"ppm":162,"end":"2015-05-28T16:26:38.025Z","seg":5,"ste":346,"cal":"13.1","dis":13965.225612799995},{"ini":"2015-05-28T16:26:38.520Z","lat":4.6733998088,"lon":-74.0563359764,"ppm":164,"end":"2015-05-28T16:26:44.645Z","seg":6,"ste":358,"cal":"13.7","dis":14714.477657599995},{"ini":"2015-05-28T16:26:45.172Z","lat":4.6734172013,"lon":-74.0561975074,"ppm":168,"end":"2015-05-28T16:26:49.736Z","seg":4,"ste":367,"cal":"14.4","dis":15135.931932799995},{"ini":"2015-05-28T16:26:50.231Z","lat":4.6733227372,"lon":-74.056053171,"ppm":169,"end":"2015-05-28T16:26:55.777Z","seg":5,"ste":379,"cal":"14.8","dis":15885.183977599994},{"ini":"2015-05-28T16:26:56.368Z","lat":4.6732471325,"lon":-74.0559663345,"ppm":170,"end":"2015-05-28T16:27:01.913Z","seg":5,"ste":390,"cal":"15.6","dis":16514.763820799995},{"ini":"2015-05-28T16:27:02.417Z","lat":4.6732029598,"lon":-74.0558793303,"ppm":171,"end":"2015-05-28T16:27:08.236Z","seg":5,"ste":401,"cal":"16.2","dis":17144.343663999996},{"ini":"2015-05-28T16:27:08.738Z","lat":4.673065329,"lon":-74.0559445415,"ppm":172,"end":"2015-05-28T16:27:14.367Z","seg":5,"ste":412,"cal":"16.8","dis":17773.923507199997},{"ini":"2015-05-28T16:27:14.907Z","lat":4.6729698172,"lon":-74.0559840203,"ppm":172,"end":"2015-05-28T16:27:20.513Z","seg":5,"ste":423,"cal":"17.4","dis":18403.5033504},{"ini":"2015-05-28T16:27:21.111Z","lat":4.6727981139,"lon":-74.0560508241,"ppm":173,"end":"2015-05-28T16:27:26.824Z","seg":5,"ste":434,"cal":"18.1","dis":19033.0831936},{"ini":"2015-05-28T16:27:27.340Z","lat":4.6726462757,"lon":-74.0560541768,"ppm":173,"end":"2015-05-28T16:27:34.126Z","seg":6,"ste":445,"cal":"18.7","dis":19662.6630368},{"ini":"2015-05-28T16:27:34.614Z","lat":4.6724914201,"lon":-74.0561546759,"ppm":174,"end":"2015-05-28T16:27:39.665Z","seg":5,"ste":455,"cal":"19.3","dis":20182.9769568},{"ini":"2015-05-28T16:27:40.254Z","lat":4.6723975427,"lon":-74.0561859403,"ppm":174,"end":"2015-05-28T16:27:50.412Z","seg":10,"ste":471,"cal":"20.1","dis":20848.978774400002},{"ini":"2015-05-28T16:27:50.924Z","lat":4.6722537093,"lon":-74.0559470561,"ppm":174,"end":"2015-05-28T16:28:00.464Z","seg":9,"ste":488,"cal":"20.8","dis":21603.433958400004},{"ini":"2015-05-28T16:28:01.060Z","lat":4.6721220296,"lon":-74.0557604749,"ppm":174,"end":"2015-05-28T16:28:06.602Z","seg":5,"ste":499,"cal":"21.2","dis":22233.013801600006},{"ini":"2015-05-28T16:28:07.107Z","lat":4.6722557629,"lon":-74.0556317289,"ppm":174,"end":"2015-05-28T16:28:12.665Z","seg":5,"ste":509,"cal":"21.8","dis":22753.327721600006},{"ini":"2015-05-28T16:28:13.242Z","lat":4.6723718103,"lon":-74.055532571,"ppm":175,"end":"2015-05-28T16:28:18.864Z","seg":5,"ste":520,"cal":"22.3","dis":23382.907564800007},{"ini":"2015-05-28T16:28:19.418Z","lat":4.6724459482,"lon":-74.0554639232,"ppm":176,"end":"2015-05-28T16:28:24.947Z","seg":5,"ste":531,"cal":"22.9","dis":24012.487408000008},{"ini":"2015-05-28T16:28:26.456Z","lat":4.6725663543,"lon":-74.0554567148,"ppm":176,"end":"2015-05-28T16:28:32.374Z","seg":5,"ste":542,"cal":"23.6","dis":24642.06725120001},{"ini":"2015-05-28T16:28:32.958Z","lat":4.6726587648,"lon":-74.0554153082,"ppm":176,"end":"2015-05-28T16:28:38.567Z","seg":5,"ste":553,"cal":"24.2","dis":25271.64709440001},{"ini":"2015-05-28T16:28:39.067Z","lat":4.6727949288,"lon":-74.0553112049,"ppm":176,"end":"2015-05-28T16:28:44.818Z","seg":5,"ste":564,"cal":"24.8","dis":25901.22693760001},{"ini":"2015-05-28T16:28:45.372Z","lat":4.6729130717,"lon":-74.055180112,"ppm":176,"end":"2015-05-28T16:28:51.441Z","seg":6,"ste":575,"cal":"25.4","dis":26530.806780800012},{"ini":"2015-05-28T16:28:52.057Z","lat":4.6728608105,"lon":-74.055022616,"ppm":176,"end":"2015-05-28T16:28:57.189Z","seg":5,"ste":585,"cal":"26.0","dis":27051.120700800013},{"ini":"2015-05-28T16:28:57.736Z","lat":4.6727841999,"lon":-74.0549237934,"ppm":177,"end":"2015-05-28T16:29:02.786Z","seg":5,"ste":595,"cal":"26.5","dis":27571.434620800013},{"ini":"2015-05-28T16:29:03.384Z","lat":4.672688772,"lon":-74.0547745955,"ppm":176,"end":"2015-05-28T16:29:07.978Z","seg":4,"ste":604,"cal":"27.0","dis":27992.888896000015},{"ini":"2015-05-28T16:29:08.495Z","lat":4.6726223454,"lon":-74.054685915,"ppm":176,"end":"2015-05-28T16:29:14.347Z","seg":5,"ste":611,"cal":"27.5","dis":27992.888896000015},{"ini":"2015-05-28T16:29:15.351Z","lat":4.6725803521,"lon":-74.0547148325,"ppm":173,"end":"2015-05-28T16:29:15.861Z","seg":0,"ste":613,"cal":"27.5","dis":28414.343171200017},{"ini":"2015-05-28T16:29:16.857Z","lat":4.6725803521,"lon":-74.0547148325,"ppm":173,"end":"2015-05-28T16:29:18.859Z","seg":2,"ste":614,"cal":"27.9","dis":28414.343171200017},{"ini":"2015-05-28T16:29:19.361Z","lat":4.6725376882,"lon":-74.0547320992,"ppm":173,"end":"2015-05-28T16:29:39.473Z","seg":20,"ste":639,"cal":"27.9","dis":28835.797446400018},{"ini":"2015-05-28T16:29:40.964Z","lat":4.6722568525,"lon":-74.0548492783,"ppm":163,"end":"2015-05-28T16:30:05.802Z","seg":24,"ste":675,"cal":"28.6","dis":29590.25263040002},{"ini":"2015-05-28T16:30:06.308Z","lat":4.6719691856,"lon":-74.0550401342,"ppm":154,"end":"2015-05-28T16:30:12.106Z","seg":5,"ste":686,"cal":"29.0","dis":30219.83247360002},{"ini":"2015-05-28T16:30:12.758Z","lat":4.6719226241,"lon":-74.0550344345,"ppm":153,"end":"2015-05-28T16:30:18.303Z","seg":5,"ste":698,"cal":"29.6","dis":30969.08451840002},{"ini":"2015-05-28T16:30:19.291Z","lat":4.6718545212,"lon":-74.0548898467,"ppm":157,"end":"2015-05-28T16:30:25.785Z","seg":6,"ste":710,"cal":"30.4","dis":31718.33656320002},{"ini":"2015-05-28T16:30:26.303Z","lat":4.6717802156,"lon":-74.0547514614,"ppm":162,"end":"2015-05-28T16:30:30.829Z","seg":4,"ste":719,"cal":"31.1","dis":32139.790838400022},{"ini":"2015-05-28T16:30:31.327Z","lat":4.6716542775,"lon":-74.054631684,"ppm":163,"end":"2015-05-28T16:30:36.889Z","seg":5,"ste":731,"cal":"31.5","dis":32889.042883200025},{"ini":"2015-05-28T16:30:37.385Z","lat":4.6715625795,"lon":-74.0547276568,"ppm":164,"end":"2015-05-28T16:30:42.980Z","seg":5,"ste":743,"cal":"32.3","dis":33638.294928000025},{"ini":"2015-05-28T16:30:43.492Z","lat":4.6715591848,"lon":-74.0548372083,"ppm":165,"end":"2015-05-28T16:30:49.755Z","seg":6,"ste":752,"cal":"33.0","dis":34059.74920320002},{"ini":"2015-05-28T16:30:50.269Z","lat":4.6716500446,"lon":-74.0550163296,"ppm":168,"end":"2015-05-28T16:30:55.303Z","seg":5,"ste":762,"cal":"33.4","dis":34580.06312320002},{"ini":"2015-05-28T16:30:55.847Z","lat":4.6716844104,"lon":-74.0551125538,"ppm":168,"end":"2015-05-28T16:31:00.927Z","seg":5,"ste":771,"cal":"33.9","dis":35001.51739840002},{"ini":"2015-05-28T16:31:01.478Z","lat":4.6716887271,"lon":-74.0552240331,"ppm":171,"end":"2015-05-28T16:31:05.996Z","seg":4,"ste":780,"cal":"34.3","dis":35422.97167360002},{"ini":"2015-05-28T16:31:06.505Z","lat":4.671584079,"lon":-74.0552796052,"ppm":171,"end":"2015-05-28T16:31:12.174Z","seg":5,"ste":791,"cal":"34.8","dis":36052.55151680002},{"ini":"2015-05-28T16:31:12.770Z","lat":4.6714865137,"lon":-74.0553305671,"ppm":172,"end":"2015-05-28T16:31:18.344Z","seg":5,"ste":802,"cal":"35.4","dis":36682.13136000002},{"ini":"2015-05-28T16:31:18.851Z","lat":4.6713652695,"lon":-74.0554402024,"ppm":173,"end":"2015-05-28T16:31:24.864Z","seg":6,"ste":813,"cal":"36.0","dis":37311.71120320002},{"ini":"2015-05-28T16:31:25.430Z","lat":4.6712190472,"lon":-74.0554892366,"ppm":174,"end":"2015-05-28T16:31:30.490Z","seg":5,"ste":822,"cal":"36.6","dis":37733.16547840002},{"ini":"2015-05-28T16:31:31.098Z","lat":4.6710792789,"lon":-74.0555541963,"ppm":175,"end":"2015-05-28T16:31:40.788Z","seg":9,"ste":839,"cal":"37.3","dis":38487.62066240002},{"ini":"2015-05-28T16:31:41.283Z","lat":4.6708759759,"lon":-74.055650672,"ppm":174,"end":"2015-05-28T16:31:46.881Z","seg":5,"ste":850,"cal":"37.8","dis":39117.20050560002},{"ini":"2015-05-28T16:31:47.391Z","lat":4.6707732976,"lon":-74.0556960181,"ppm":175,"end":"2015-05-28T16:31:56.982Z","seg":9,"ste":860,"cal":"38.9","dis":39637.51442560002}];
 	
-	console.log(data);
+	//console.logdata);
 	
 	var line = null;
 	var ante = 0;
@@ -1951,7 +1951,7 @@ function api_clima(){
 	if(LAT != 0){
 		$.get('https://query.yahooapis.com/v1/public/yql?q=select yweather:units, item from weather.forecast where woeid in (SELECT woeid FROM geo.placefinder WHERE text="'+LAT+','+LON+'" and gflags="R")&format=json&env=store://datatables.org/alltableswithkeys'
 		, function(d){
-			console.log(d);
+			//console.logd);
 			if(PERFIL == null){
 				PERFIL = JSON.parse(SES['perfil']);
 			}
@@ -2093,6 +2093,7 @@ function guardar(resp){
 	$('#PopAlert').removeClass('toCenter');
     show_inicio();
 }
+
 $(function(){
 	localStorage.removeItem("start_graph");
 	localStorage.removeItem("end_graph");
@@ -2181,6 +2182,7 @@ webdb.executeSql('SELECT data FROM actividad WHERE chain = ? GROUP BY date(data)
 		});
 	});
 };
+
 function estadisticas(tipo, pagina, periodo){
 	if(periodo && periodo==="dia"){
 		EstadisticasDia(tipo, pagina);
@@ -2200,6 +2202,7 @@ function estadisticas(tipo, pagina, periodo){
 		function ok(tx, r){
 			rows = r.rows,
 			tot = rows.length;
+			//console.logtot);
 			var row = [];			
 			var puls = 0;
 			var pass = 0;
@@ -2209,11 +2212,8 @@ function estadisticas(tipo, pagina, periodo){
 
 			var data = [];	
 
-			for(var i=0; i<=tot; i++){
-				if(i===tot){
-					data.push({fecha: ant, puls: (puls/pto), pasos: pass, distancia: diss, calorias: cass});				
-				}else{
-
+			for(var i=0; i<tot; i++)
+			{
 				row[i] = rows.item(i);
 				var obj = JSON.parse(row[i].json);							
 				var last = obj.length-1;
@@ -2256,180 +2256,193 @@ function estadisticas(tipo, pagina, periodo){
 					}
 				}
 
-			ant = fecha;			
+				ant = fecha;
+
+				if(i== tot-1){
+					data.push({fecha: ant, puls: (puls/pto), pasos: pass, distancia: diss, calorias: cass});
+				}		
+					
+			}
+
+			pas = 0; dis = 0; cal = 0; pul = 0; last = 0; pto = 0; rep = 1;
+			fecha = "", date = "", ant = "";
+
+
+			if (!SES.start_graph && !SES.end_graph) {
+				
+				if(data.length > 0){
+					SES.start_graph= data.length-1;
+				}else{
+					SES.start_graph= data.length;
 				}
-		
-}
+				
+				if(data.length > 7){
+					SES.end_graph= data.length-7;
+				}else{
+					SES.end_graph= data.length;
+				}
+			};
 
-$("#submenu_estadisticas").show();
+			if (pagina && pagina==="prev") {
+				$(".next-graph").css("opacity","1");
 
-pas = 0; dis = 0; cal = 0; pul = 0; last = 0; pto = 0; rep = 1;
-fecha = "", date = "", ant = "";
+				if (SES.start_graph<=8) {
+					SES.start_graph = 6;		
+				} else {
+					SES.start_graph = parseInt(SES.start_graph)-7;		
+				};
 
+				if (SES.end_graph<7) {
+					SES.end_graph = 0; 
+					$(".prev-graph").css("opacity","0");		
+				}  else {
+					SES.end_graph  = parseInt(SES.end_graph)-7;
+					$(".prev-graph").css("opacity","1");
+				};
+			};
 
-if (!SES.start_graph && !SES.end_graph) {
-	SES.start_graph=data.length-1;
-	SES.end_graph=data.length-7;
-};
-
-if (pagina && pagina==="prev") {
-	$(".next-graph").css("opacity","1");
-
-	if (SES.start_graph<=8) {
-		SES.start_graph = 6;		
-	} else {
-		SES.start_graph = parseInt(SES.start_graph)-7;		
-	};
-
-	if (SES.end_graph<7) {
-		SES.end_graph = 0; 
-		$(".prev-graph").css("opacity","0");		
-	}  else {
-		SES.end_graph  = parseInt(SES.end_graph)-7;
-		$(".prev-graph").css("opacity","1");
-	};
-};
-
-if (pagina && pagina==="next") {
-	$(".prev-graph").css("opacity","1");
-	SES.start_graph = parseInt(SES.start_graph)+7;
-	SES.end_graph   = parseInt(SES.end_graph)+7;
-	if (SES.start_graph>=data.length-1) {
-		$(".next-graph").css("opacity","0");
-		SES.start_graph=data.length-1;
-		SES.end_graph=data.length-7;		
-	};
-};
+			if (pagina && pagina==="next") {
+				$(".prev-graph").css("opacity","1");
+				SES.start_graph = parseInt(SES.start_graph)+7;
+				SES.end_graph   = parseInt(SES.end_graph)+7;
+				if (SES.start_graph>=data.length-1) {
+					$(".next-graph").css("opacity","0");
+					SES.start_graph=data.length-1;
+					SES.end_graph=data.length-7;		
+				};
+			};
 
 
-var calorias = 0;
-var distancia = 0;
-var pasos = 0;
-var pulso = 0;
-var val = 0;
+			var calorias = 0;
+			var distancia = 0;
+			var pasos = 0;
+			var pulso = 0;
+			var val = 0;
 
-var med = "";
-var dia = "";
-var type = "";
-var data1 = [];
-var con = 0;
+			var med = "";
+			var dia = "";
+			var type = "";
+			var data1 = [];
+			var con = 0;
 
 
-//Totales 
-for (var i = 0; i < data.length; i++) {
-	pasos = pasos + data[i].pasos;
-	if(isNumber(parseInt(data[i].distancia))){
-		distancia = distancia + data[i].distancia;
-	};
-	if(isNumber(parseInt(data[i].puls))){
-		pulso = pulso + parseInt(data[i].puls);
-		con++;
-	};
+			//Totales 
+			for (var i = 0; i < data.length; i++) {
+				pasos = pasos + data[i].pasos;
+				if(isNumber(parseInt(data[i].distancia))){
+					distancia = distancia + data[i].distancia;
+				};
+				if(isNumber(parseInt(data[i].puls))){
+					pulso = pulso + parseInt(data[i].puls);
+					con++;
+				};
 
-	if(isNumber(data[i].calorias)){
-		calorias = calorias + parseFloat(data[i].calorias);
-	};
+				if(isNumber(data[i].calorias)){
+					calorias = calorias + parseFloat(data[i].calorias);
+				};
 
-};
+			};
 
 
 
-//Unidad distancia
-if(PERFIL == null){
-    PERFIL = JSON.parse(SES['perfil']);
-};
-if(PERFIL.unit == 'M'){
-	var metro = 39.370;
-	var metros = distancia/metro;
-	distancia = metros.toFixed(0) + '<span class="deta-light">mt</span>';
-	if( metros > 1000 ){
-		distancia = metros/1000;
-		distancia = distancia.toFixed(2) + '<span class="deta-light">km</span>';
-	};
-}else{
-	distancia = (distancia / 63360).toFixed(1)+ '<span class="deta-light">mi</span>';
-};
+			//Unidad distancia
+			if(PERFIL == null){
+				PERFIL = JSON.parse(SES['perfil']);
+			};
+			if(PERFIL.unit == 'M'){
+				var metro = 39.370;
+				var metros = distancia/metro;
+				distancia = metros.toFixed(0) + '<span class="deta-light">mt</span>';
+				if( metros > 1000 ){
+					distancia = metros/1000;
+					distancia = distancia.toFixed(2) + '<span class="deta-light">km</span>';
+				};
+			}else{
+				distancia = (distancia / 63360).toFixed(1)+ '<span class="deta-light">mi</span>';
+			};
 
 
-//Resetear estilos submenu
-$("#submenu_estadisticas li").each(function(){
-	$(this).removeClass('active');
-});
+			//Resetear estilos submenu
+			$("#submenu_estadisticas li").each(function(){
+				$(this).removeClass('active');
+			});
 
 
-//Crear titulo del grafico
-for (var i = parseInt(SES.end_graph)-1; i < parseInt(SES.start_graph); i++) {
-	mes = data[i].fecha.slice(5, 7);
-	for (var j = 0; j < 12; j++) {
-		if(j===parseInt(mes)-1){
-			$(".title-graph").text(language.meses[j].slice(0, 3)+" "+data[i].fecha.slice(0, 4));
-		};
-	};
-};
+			//Crear titulo del grafico
+			for (var i = parseInt(SES.end_graph)-1; i < parseInt(SES.start_graph); i++) {
+				mes = data[i].fecha.slice(5, 7);
+				for (var j = 0; j < 12; j++) {
+					if(j===parseInt(mes)-1){
+						$(".title-graph").text(language.meses[j].slice(0, 3)+" "+data[i].fecha.slice(0, 4));
+					};
+				};
+			};
 
 
 
-switch(tipo) {
-case "pasos":
-    for (var i = parseInt(SES.start_graph); i >= parseInt(SES.end_graph); i--) {
-		dia = data[i].fecha.slice(8, 10);
-		data1.push({ x : parseInt(i), y : data[i].pasos, label : dia});		
-	};
-	$('#cant_pasos').text(pasos);
-	$(".img-step").addClass('active');
-	type = "column";
-break;
+			switch(tipo) {
+			case "pasos":
+				for (var i = parseInt(SES.start_graph); i >= parseInt(SES.end_graph); i--) {
+					dia = data[i].fecha.slice(8, 10);
+					data1.push({ x : parseInt(i), y : data[i].pasos, label : dia});		
+				};
+				$('#cant_pasos').text(pasos);
+				$(".img-step").addClass('active');
+				type = "column";
+			break;
 
 
-case "distancia":
-	for (var i = parseInt(SES.start_graph); i >= parseInt(SES.end_graph); i--) {		
-		dia = data[i].fecha.slice(8, 10);		
-		if (PERFIL.unit==="M") { val = 39370; } else { val = 63360; };
-		var c = data[i].distancia;
-		if (isNaN(data[i].distancia)) { c = 0; };
-		c = c/val;
-		data1.push({ x : parseInt(i), y : parseFloat(c.toFixed(2)), label : dia });
-	};
-	$('#cant_distancia').html(distancia);
-	$(".img-distance").addClass('active');
-	type = "spline";
-break;
+			case "distancia":
+				for (var i = parseInt(SES.start_graph); i >= parseInt(SES.end_graph); i--) {		
+					dia = data[i].fecha.slice(8, 10);		
+					if (PERFIL.unit==="M") { val = 39370; } else { val = 63360; };
+					var c = data[i].distancia;
+					if (isNaN(data[i].distancia)) { c = 0; };
+					c = c/val;
+					data1.push({ x : parseInt(i), y : parseFloat(c.toFixed(2)), label : dia });
+				};
+				$('#cant_distancia').html(distancia);
+				$(".img-distance").addClass('active');
+				type = "spline";
+			break;
 
-case "pulso":
-    for (var i = parseInt(SES.start_graph); i >= parseInt(SES.end_graph); i--) {  			
-		dia = data[i].fecha.slice(8, 10);
-		var c = data[i].puls;
-		if (isNaN(data[i].puls)) {
-			c = 0;
-		};
-		data1.push({ x : parseInt(i), y : parseFloat(c), label : dia });
-	};
-	$('#cant_pulso').text(pulso/con);
-	$(".img-hearth").addClass('active');
-	type = "line";
-break;
+			case "pulso":
+				for (var i = parseInt(SES.start_graph); i >= parseInt(SES.end_graph); i--) {  			
+					dia = data[i].fecha.slice(8, 10);
+					var c = data[i].puls;
+					if (isNaN(data[i].puls)) {
+						c = 0;
+					};
+					data1.push({ x : parseInt(i), y : parseFloat(c), label : dia });
+				};
+				$('#cant_pulso').text(pulso/con);
+				$(".img-hearth").addClass('active');
+				type = "line";
+			break;
 
-case "calorias":
-    for (var i = parseInt(SES.start_graph); i >= parseInt(SES.end_graph); i--) {		
-		dia = data[i].fecha.slice(8, 10);
-		var c = data[i].calorias;
-		if (isNaN(data[i].calorias)) {
-			c = 0;
-		};
-		data1.push({ x : parseInt(i), y : parseFloat(c), label : dia });
-	};
-	$('#cant_calorias').text(calorias.toFixed(1));
-	$(".img-calories").addClass('active');
-	type = "column";
-break;
-}//switch
+			case "calorias":
+				for (var i = parseInt(SES.start_graph); i >= parseInt(SES.end_graph); i--) {		
+					dia = data[i].fecha.slice(8, 10);
+					var c = data[i].calorias;
+					if (isNaN(data[i].calorias)) {
+						c = 0;
+					};
+					data1.push({ x : parseInt(i), y : parseFloat(c), label : dia });
+				};
+				$('#cant_calorias').text(calorias.toFixed(1));
+				$(".img-calories").addClass('active');
+				type = "column";
+			break;
+			}//switch
 
-GraficarEstadistica(tipo, data1, type);
- 
-},
-function fail(tx, e){
-	console.log('fail');
-});
+			GraficarEstadistica(tipo, data1, type);
+			 
+			},
+			function fail(tx, e){
+				//console.log'fail');
+			});
+
+		$("#submenu_estadisticas").show();
 
 }
 function GraficarEstadistica(tipo, data, type){
