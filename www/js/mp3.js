@@ -272,7 +272,7 @@ document.addEventListener("deviceready", onMusicReady, false);
 	
 
 // -----------------fUNCIONES DE BIT RATE ---------------------- 
-
+/*
 var spotifyApi = new SpotifyWebApi();
 function GetSongBR(song_name){
 	console.log("GetSongBR");
@@ -350,7 +350,7 @@ function GetSongBR(song_name){
 	      request.send();
       }
     });
-}
+}*/
 // Function to identify peaks
 function getPeaksAtThreshold(data, threshold) {
   var peaksArray = [];

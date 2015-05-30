@@ -2184,18 +2184,12 @@ webdb.executeSql('SELECT data FROM actividad WHERE chain = ? GROUP BY date(data)
 };
 
 function estadisticas(tipo, pagina, periodo){
-	if(periodo && periodo==="dia"){
-		EstadisticasDia(tipo, pagina);
-		return false;
-	}
-	if(periodo && periodo==="anio"){
-		EstadisticasAnio(tipo, pagina);
-		return false;
-	}
-
+	$("#submenu_estadisticas").show();
+	
 	$(".periodo li").each(function(){
 		$(this).removeClass('active');
 	});
+	
 	$(".periodo .pmes").addClass("active");
 
 	webdb.executeSql('SELECT json, data FROM actividad WHERE chain = ? ORDER BY data ASC',  [SES['chain']],
@@ -2434,6 +2428,15 @@ function estadisticas(tipo, pagina, periodo){
 				type = "column";
 			break;
 			}//switch
+			
+	if(periodo && periodo==="dia"){
+		EstadisticasDia(tipo, pagina);
+		return false;
+	}
+	if(periodo && periodo==="anio"){
+		EstadisticasAnio(tipo, pagina);
+		return false;
+	}
 
 			GraficarEstadistica(tipo, data1, type);
 			 
@@ -2442,7 +2445,7 @@ function estadisticas(tipo, pagina, periodo){
 				//console.log'fail');
 			});
 
-		$("#submenu_estadisticas").show();
+	
 
 }
 function GraficarEstadistica(tipo, data, type){
