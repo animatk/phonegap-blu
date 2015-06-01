@@ -467,6 +467,9 @@ function DeviceReady(){
 	});
 	
 	if(SES['actividad']){
+		if(SES['ACTTYPE']){
+			tipoActividad(SES['ACTTYPE']);
+		}
 		pause(function(){
 			stopgeo(function(){
 				geo();
@@ -935,7 +938,7 @@ function login(form){
 						,img : ''
 					};
 					
-					if(obj.img != null){
+					if(obj.img != ""){
 						udata.img = 'data:'+obj.imgtype+';base64,'+obj.img;
 					}
 
@@ -1509,6 +1512,10 @@ function tipoActividad(nu){
 			$('#actividad-2').removeClass('icon-indoor-sel');
 			$('#actividad-2').addClass('icon-indoor');
 		}
+		
+		$('.ContBotones').removeClass('row2').addClass('row3');
+		$('.botonMapa').removeClass('oculto');
+		SES.removeItem('ACTTYPE');
 	}
 	else{
 		$('#actividad-2').removeClass('icon-indoor');
@@ -1517,6 +1524,9 @@ function tipoActividad(nu){
 			$('#actividad-1').removeClass('icon-outdoor-sel');
 			$('#actividad-1').addClass('icon-outdoor');
 		}
+		$('.ContBotones').removeClass('row3').addClass('row2');
+		$('.botonMapa').addClass('oculto');
+		SES['ACTTYPE'] = ACTIVITYTYPE;
 	}
 }
 /*! end Congiguracion */
@@ -2155,36 +2165,94 @@ function guardar(resp){
 $(function(){
 	localStorage.removeItem("start_graph");
 	localStorage.removeItem("end_graph");
+	localStorage.removeItem("day_graph");
 });
+
+/*
+function formatDate(date){
+	var n = new Date(date);
+	return n.getFullYear()+'-'+checkTime(n.getMonth()+1)+'-'+n.getDate()+' '+checkTime(n.getHours())+':'+checkTime(n.getMinutes())+':'+checkTime(n.getSeconds());
+}
+
+function updatedate(){
+webdb.executeSql("SELECT data, sync FROM actividad",  [],function(tx, r){
+		rows = r.rows;
+		tot = rows.length;
+		var dias = [];
+		for(var i=0; i<tot; i++){
+			dias.push({dia: rows[i].data, key:rows[i].sync});		
+		}
+
+		for (var i = 0; i < dias.length; i++) {
+			webdb.executeSql("UPDATE actividad SET data = '"+formatDate(dias[i].dia)+"' WHERE sync ='"+dias[i].key+"'",  [],
+				function(tx, r){console.log(r);},function(tx, e){console.log(e);
+				});
+		};
+});
+}
+*/
 
 
 function EstadisticasDia(tipo, pagina){
+$(".prev-graph").attr("onclick","estadisticas('"+tipo+"', 'prev', 'dia');");
+$(".next-graph").attr("onclick","estadisticas('"+tipo+"', 'next', 'dia');");
 
-	localStorage.removeItem("start_graph");
-	localStorage.removeItem("end_graph");
 
 webdb.executeSql('SELECT data FROM actividad WHERE chain = ? GROUP BY date(data) ',  [SES['chain']],
 	function(tx, r){
-			rows = r.rows,
+			rows = r.rows;
 			tot = rows.length;
 			var dias = [];
 			var c;
+			var hora = "";
 			for(var i=0; i<tot; i++){
 				dias.push({dia: rows[i].data.slice(0,10)});	
 			}
 
-		var last_day = dias[dias.length-1];
+		var last_pos = dias.length-1;
+		var first_day = dias[0];
 
-		webdb.executeSql("SELECT data, json FROM actividad WHERE chain = ? AND data LIKE '%"+last_day.dia+"%'",  [SES['chain']],
+
+		if (!SES.day_graph) {
+			SES.day_graph = last_pos;
+		};
+
+		if (pagina && pagina === "prev" && parseInt(SES.day_graph) > 0) {
+			SES.day_graph = parseInt(SES.day_graph)-1;
+		};
+		if (pagina && pagina === "next" && parseInt(SES.day_graph) < last_pos) {
+			SES.day_graph = parseInt(SES.day_graph)+1;			
+		};
+
+		//Si es el ultimo dia
+		if (parseInt(SES.day_graph)===last_pos) {
+			$(".next-graph").css("opacity","0");			
+		} else{
+			$(".next-graph").css("opacity","1");
+		};
+		//Si es el primer dia
+		if (parseInt(SES.day_graph)===0) {
+			$(".prev-graph").css("opacity","0");			
+		}else{
+			$(".prev-graph").css("opacity","1");
+		};
+
+
+		var last_day = dias[SES.day_graph];
+
+	
+		$(".title-graph").text(last_day.dia);
+
+		webdb.executeSql("SELECT data, json FROM actividad WHERE chain = ? AND data LIKE '"+last_day.dia+"%'",  [SES['chain']],
 		function(tx, res){
 			rows2 = res.rows,
 			tot2 = rows2.length;
 			var dias2 = [];
-			for(var j= tot2-1; j>=0; j--){
+			for(var j= 0; j<tot2; j++){
 				var obj = JSON.parse(rows2[j].json);
 
 				dias2.push({
-					hora:obj[j].end.slice(11,19),
+					hora:obj[j].end,
 					pasos:obj[j].ste,
 					distancia:obj[j].dis,
 					calorias:obj[j].cal,
@@ -2192,69 +2260,91 @@ webdb.executeSql('SELECT data FROM actividad WHERE chain = ? GROUP BY date(data)
 				}); 
 			};
 
-		//Resetear estilos submenu
-		$("#submenu_estadisticas li").each(function(){
-			$(this).removeClass('active');
-		});
-		$(".periodo li").each(function(){
-			$(this).removeClass('active');
-		});
-		$(".periodo .pdia").addClass("active");
-		$(".next-graph").css("display","none");
-		$(".prev-graph").css("display","none");
+		var datos = [];	
+		
 
-		var datos = [];
-		var type = "column";
-		$(".title-graph").text(last_day.dia);
 			switch(tipo) {
+
 				case "pasos":				
-    			for (var i = 0; i < dias2.length; i++) {
-					datos.push({ x : parseInt(i), y : dias2[i].pasos, label : dias2[i].hora});		
-				};
-					$(".img-step").addClass('active');
+    				for (var i = 0; i < dias2.length; i++) {
+    					var h = new Date(dias2[i].hora).getHours();
+    					var m = new Date(dias2[i].hora).getMinutes();
+    					if (m<10) {m="0"+m;};
+    					hora = h+":"+m+" am";    				
+    					if (h>12) { h=h-12; hora = h+":"+m+" pm"; };  
+						datos.push({ x : parseInt(i), y : dias2[i].pasos, label : hora });		
+					};
 					type = "column";
 				break;
+
 				case "distancia":				
-    			for (var i = 0; i < dias2.length; i++) {
-					datos.push({ x : parseInt(i), y : dias2[i].distancia, label : dias2[i].hora});		
-				};
-					$(".img-distance").addClass('active');
-					type = "spline";
+    				for (var i = 0; i < dias2.length; i++) {
+    					var h = new Date(dias2[i].hora).getHours();
+    					var m = new Date(dias2[i].hora).getMinutes();
+    					if (m<10) {m="0"+m;};
+    					hora = h+":"+m+" am";    				
+    					if (h>12) { h=h-12; hora = h+":"+m+" pm"; };     				
+					datos.push({ x : parseInt(i), y : dias2[i].distancia, label : hora});		
+					};
+					type = "line";
 				break;
 				case "calorias":				
-    			for (var i = 0; i < dias2.length; i++) {
-					datos.push({ x : parseInt(i), y : parseFloat(dias2[i].calorias), label : dias2[i].hora});		
-				};
-					$(".img-calories").addClass('active');
+    				for (var i = 0; i < dias2.length; i++) {
+    					var h = new Date(dias2[i].hora).getHours();
+    					var m = new Date(dias2[i].hora).getMinutes();
+    					if (m<10) {m="0"+m;};
+    					hora = h+":"+m+" am";    				
+    					if (h>12) { h=h-12; hora = h+":"+m+" pm"; };     				
+					datos.push({ x : parseInt(i), y : parseFloat(dias2[i].calorias), label : hora});		
+					};
 					type = "column";
 				break;
 				case "pulso":				
-    			for (var i = 0; i < dias2.length; i++) {
-					datos.push({ x : parseInt(i), y : parseFloat(dias2[i].pulso), label : dias2[i].hora});		
-				};
-					$(".img-hearth").addClass('active');
+    				for (var i = 0; i < dias2.length; i++) {
+    					var h = new Date(dias2[i].hora).getHours();
+    					var m = new Date(dias2[i].hora).getMinutes();
+    					if (m<10) {m="0"+m;};
+    					hora = h+":"+m+" am";    				
+    					if (h>12) { h=h-12; hora = h+":"+m+" pm"; };     				
+					datos.push({ x : parseInt(i), y : parseFloat(dias2[i].pulso), label : hora});		
+					};
 					type = "line";
 				break;
 			}
-			GraficarEstadistica(tipo, datos, type)
+			GraficarEstadistica(tipo, datos, type);
+		}, function(tx, r){
+			console.log(r);
 		});
+	}, function(tx, r){
+		console.log(r);
 	});
+
+	ak_navigate('#estadisticas_'+tipo, {to: 'show_inicio();'});
+	$("#submenu_estadisticas").show();
 };
 
-function estadisticas(tipo, pagina, periodo){
-	$("#submenu_estadisticas").show();
-	
-	$(".periodo li").each(function(){
-		$(this).removeClass('active');
-	});
-	
-	$(".periodo .pmes").addClass("active");
 
-	webdb.executeSql('SELECT json, data FROM actividad WHERE chain = ? ORDER BY data ASC',  [SES['chain']],
+
+
+function estadisticas(tipo, pagina, periodo){
+
+$(".estadisticas .grafica").show();
+
+//Botones activos
+$(".periodo li").each(function(){ $(this).removeClass('active'); });
+$(".periodo .p"+periodo).addClass("active");
+$(".submenu li").each(function(){ $(this).removeClass('active'); });
+$(".img-"+tipo).addClass('active');
+
+
+
+
+
+webdb.executeSql('SELECT json, data FROM actividad WHERE chain = ? ORDER BY data ASC',  [SES['chain']],
 		function ok(tx, r){
 			rows = r.rows,
 			tot = rows.length;
-			//console.logtot);
+	if (tot>0) {
 			var row = [];			
 			var puls = 0;
 			var pass = 0;
@@ -2264,12 +2354,11 @@ function estadisticas(tipo, pagina, periodo){
 
 			var data = [];	
 
-			for(var i=0; i<tot; i++)
-			{
+			for(var i=0; i<tot; i++){
 				row[i] = rows.item(i);
 				var obj = JSON.parse(row[i].json);							
 				var last = obj.length-1;
-				var fecha = row[i].data.slice(0, 10);
+				var fecha = row[i].data;
 
 				if(i == 0){
 					ant = fecha;
@@ -2283,38 +2372,39 @@ function estadisticas(tipo, pagina, periodo){
 					diss = 0;
 				}
 
-
 				pass = pass + obj[last].ste;			
 				diss = diss + obj[last].dis;
 				cass = cass + parseFloat(obj[last].cal);
 				
-
 				var pulso = 0;
 				var pta = 0;	
+
 				for(k in obj){
 					var track = obj[k];
 					if(isNumber(parseFloat(track.ppm))){
 						if(parseFloat(track.ppm) != 0){
 							pulso = pulso + parseFloat(track.ppm);  
 							pta++;
-						}
-					}
-				}
+						};
+					};
+				};
 
 				if(isNumber(parseFloat(pulso/pta))){
 					if(parseFloat(pulso/pta) != 0){
 						puls = puls + parseFloat(pulso/pta);  
 						pto++;
-					}
-				}
+					};
+				};
 
 				ant = fecha;
 
 				if(i== tot-1){
 					data.push({fecha: ant, puls: (puls/pto), pasos: pass, distancia: diss, calorias: cass});
-				}		
-					
-			}
+				};	
+
+								
+	}; //For
+
 
 			pas = 0; dis = 0; cal = 0; pul = 0; last = 0; pto = 0; rep = 1;
 			fecha = "", date = "", ant = "";
@@ -2334,6 +2424,9 @@ function estadisticas(tipo, pagina, periodo){
 					SES.end_graph= data.length;
 				}
 			};
+
+
+			$(".prev-graph").css("opacity","1");
 
 			if (pagina && pagina==="prev") {
 				$(".next-graph").css("opacity","1");
@@ -2389,46 +2482,38 @@ function estadisticas(tipo, pagina, periodo){
 					con++;
 				};
 
-				if(isNumber(data[i].calorias)){
+				if(isNumber(parseFloat(data[i].calorias))){
 					calorias = calorias + parseFloat(data[i].calorias);
-				};
-
+				};				
 			};
-
-
 
 			//Unidad distancia
 			if(PERFIL == null){
 				PERFIL = JSON.parse(SES['perfil']);
 			};
+
 			if(PERFIL.unit == 'M'){
 				var metro = 39.370;
 				var metros = distancia/metro;
 				distancia = metros.toFixed(0) + '<span class="deta-light">mt</span>';
 				if( metros > 1000 ){
 					distancia = metros/1000;
-					distancia = distancia.toFixed(2) + '<span class="deta-light">km</span>';
+					distancia = distancia.toFixed(1) + '<span class="deta-light">km</span>';
 				};
 			}else{
 				distancia = (distancia / 63360).toFixed(1)+ '<span class="deta-light">mi</span>';
 			};
 
-
-			//Resetear estilos submenu
-			$("#submenu_estadisticas li").each(function(){
-				$(this).removeClass('active');
-			});
-
-
-			//Crear titulo del grafico
-			for (var i = parseInt(SES.end_graph)-1; i < parseInt(SES.start_graph); i++) {
-				mes = data[i].fecha.slice(5, 7);
-				for (var j = 0; j < 12; j++) {
-					if(j===parseInt(mes)-1){
-						$(".title-graph").text(language.meses[j].slice(0, 3)+" "+data[i].fecha.slice(0, 4));
-					};
-				};
+			if(calorias > 1000){
+				calorias = (calorias/1000).toFixed(1)+'<span class="deta-light">k</span>';
 			};
+
+			if(pasos > 1000){
+				pasos = (pasos/1000).toFixed(1)+'<span class="deta-light">k</span>';
+			};
+
+
+
 
 
 
@@ -2438,7 +2523,7 @@ function estadisticas(tipo, pagina, periodo){
 					dia = data[i].fecha.slice(8, 10);
 					data1.push({ x : parseInt(i), y : data[i].pasos, label : dia});		
 				};
-				$('#cant_pasos').text(pasos);
+				$('#cant_pasos').html(pasos);
 				$(".img-step").addClass('active');
 				type = "column";
 			break;
@@ -2455,7 +2540,7 @@ function estadisticas(tipo, pagina, periodo){
 				};
 				$('#cant_distancia').html(distancia);
 				$(".img-distance").addClass('active');
-				type = "spline";
+				type = "line";
 			break;
 
 			case "pulso":
@@ -2467,7 +2552,12 @@ function estadisticas(tipo, pagina, periodo){
 					};
 					data1.push({ x : parseInt(i), y : parseFloat(c), label : dia });
 				};
-				$('#cant_pulso').text(pulso/con);
+				if(isNumber(pulso/con)){
+					$('#cant_pulso').text(parseInt(pulso/con));
+				}else{
+					$('#cant_pulso').text('0');
+				};
+				
 				$(".img-hearth").addClass('active');
 				type = "line";
 			break;
@@ -2481,32 +2571,54 @@ function estadisticas(tipo, pagina, periodo){
 					};
 					data1.push({ x : parseInt(i), y : parseFloat(c), label : dia });
 				};
-				$('#cant_calorias').text(calorias.toFixed(1));
+				$('#cant_calorias').html(calorias);
 				$(".img-calories").addClass('active');
 				type = "column";
 			break;
 			}//switch
-			
-	if(periodo && periodo==="dia"){
+        
+    if(periodo && periodo==="dia"){
 		EstadisticasDia(tipo, pagina);
 		return false;
-	}
+	};
 	if(periodo && periodo==="anio"){
 		EstadisticasAnio(tipo, pagina);
 		return false;
-	}
+	};
 
-			GraficarEstadistica(tipo, data1, type);
-			 
-			},
-			function fail(tx, e){
-				//console.log'fail');
-			});
+				//Crear titulo del grafico
+			for (var i = parseInt(SES.end_graph)-1; i < parseInt(SES.start_graph); i++) {
+				mes = data[i].fecha.slice(5, 7);
+				for (var j = 0; j < 12; j++) {
+					if(j===parseInt(mes)-1){
+						$(".title-graph").text(language.meses[j].slice(0, 3)+" "+data[i].fecha.slice(0, 4));
+					};
+				};
+			};
+  
+   
+		GraficarEstadistica(tipo, data1, type);
+	} else {
+		$('#cant_'+tipo).text(0);
+		$('.msj-estadisticas').show();
+		$(".estadisticas .grafica").hide();
+	}; 
 
-	
 
+	},
+	function fail(tx, e){
+		$('#cant_'+tipo).text(0);		
+	});
+
+
+	ak_navigate('#estadisticas_'+tipo, {to: 'show_inicio();'});
+	$("#submenu_estadisticas").show();
 }
+
+
+
 function GraficarEstadistica(tipo, data, type){
+
 	CanvasJS.addColorSet("orange", ["#DB4A08" ]);
     var chart = new CanvasJS.Chart("grafica_"+tipo, { 
         axisX: { gridColor: '#37343e',
@@ -2535,9 +2647,8 @@ function GraficarEstadistica(tipo, data, type){
      });
     chart.render();
 
-    ak_navigate('#estadisticas_'+tipo, {to: 'show_inicio();'});
+   
 }
-
 /*! end principal */
 /*! configuracion */
 function show_configuracion(back){
@@ -2615,4 +2726,45 @@ function exeSQL(sql){
 }
 function showDebug(){
 	$('.debugbox').css('display', 'block');
+}
+
+function showShare(){
+	$('#div-clock').addClass('oculto');
+	$('#div-share').removeClass('oculto');
+}
+
+function closeShare(){
+	$('#div-share').addClass('oculto');
+	$('#div-clock').removeClass('oculto');
+}
+
+function openShare(type){	
+	var h = parseInt( SECOND / 3600 ) % 24,
+		m = parseInt( SECOND / 60 ) % 60,
+		s = checkTime(parseInt( SECOND % 60 ));        
+    if( h > 0 ){
+        h = checkTime(h);
+		m = checkTime(m);
+		t = h+':'+m+':'+s;
+    }else if( m > 0){
+		m = checkTime(m);
+        t = '00:'+m+':'+s;
+    }else{
+        t = '00:00:'+s;
+    } 	
+	var txtShare = 'He recorrido ' + DISTA  + ' en ' + t + ' tiempo con SFORZA';
+	if(type == 'fb'){
+		/*url = 'http://www.facebook.com/sharer.php?s=100&[title]=pruebasforza&p[summary]=prueba&p[url]=https://irisdev.co';*/
+		url = 'http://www.facebook.com/sharer.php?s=100&p[url]=https://irisdev.co/sforza-dev/share.html';
+		var win = window.open(url, '_blank');
+	}else if(type == 'tw'){
+		url = 'https://twitter.com/intent/tweet/?text=https://irisdev.co/sforza-dev/share.html';
+		var win = window.open(url, '_blank');	
+	}
+	else{
+		url = 'https://plus.google.com/share?url=https://irisdev.co/sforza-dev/share.html';
+		var win = window.open(url, '_blank');		
+	}
+
+	win.focus();
 }

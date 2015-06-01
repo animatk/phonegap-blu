@@ -381,20 +381,42 @@
 					</div>
 				</div>
 				<div>&nbsp;</div>
-				<div class="ppal-deta">
+				<div id="div-clock"  class="ppal-deta">
 					<p class="text-center" data-lang="tiempo"></p>
 					<div class="ppal-clock"> <span class="h">00</span> : <span class="m">00</span> : <span class="s act">00</span> </div>
 					<div class="border-bottom">&nbsp;</div>
 					<div class="ppal-container">
-						<div class="row row3">
+						<div class="ContBotones row row3">
 							<div class="col border-right">
 								<span class="ppal-icon ppal-icon-music" onclick="musica({to:'show_principal();'});" data-lang="musica"></span>
 							</div>
-							<div class="col border-right">
+							<div class="botonMapa col border-right">
 								<span class="ppal-icon ppal-icon-map" onclick="show_map({to:'show_principal();'});" data-lang="mapa"></span>
 							</div>
 							<div class="col">
-								<span class="ppal-icon ppal-icon-share" data-lang="compartir"></span>
+								<span class="ppal-icon ppal-icon-share" data-lang="compartir" onclick="showShare();"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="div-share" class="ppal-deta oculto">
+					<p class="text-center" data-lang="compartir"></p>
+					<div class="text-center">
+						<div class="col-share"><span class="ppal-share ppal-icon-fb" onclick="openShare('fb')"></span></div>
+						<div class="col-share"><span class="ppal-share ppal-icon-tw" onclick="openShare('tw')"></span></div>
+						<div class="col-share"><span class="ppal-share ppal-icon-gp" onclick="openShare('g')"></span></div>
+					</div>
+					<div class="border-bottom">&nbsp;</div>
+					<div class="ppal-container">
+						<div class="row row3">
+							<div class="col border-right">
+								<span class="ppal-icon ppal-icon-music ppal-icon-disabled" data-lang="musica"></span>
+							</div>
+							<div class="botonMapa col border-right">
+								<span class="ppal-icon ppal-icon-map ppal-icon-disabled" data-lang="mapa"></span>
+							</div>
+							<div class="col">
+								<span class="ppal-icon ppal-icon-close-share" data-lang="cerrar" onclick="closeShare();"></span>
 							</div>
 						</div>
 					</div>
@@ -541,14 +563,15 @@
                 <h2 class="text-right general-title" id="cant_pasos"></h2>
 				<ul class="row periodo">
                     <li data-lang="dia"  onclick="estadisticas('pasos','ini','dia');"  class="pdia"></li>
-                    <li data-lang="mes"  onclick="estadisticas('pasos','ini','mes');"  class="pmes active"></li>
+                    <li data-lang="mes"  onclick="estadisticas('pasos','ini','mes');"  class="pmes"></li>
                     <li data-lang="year" onclick="" class="panio"></li>
                 </ul>
                 <div class="header_graph">
                 	<img src="img/prev_graph.png" onclick="estadisticas('pasos','prev')" class="prev-graph">
                 	<span class="title-graph"></span>
                 	<img src="img/next_graph.png" onclick="estadisticas('pasos','next')" class="next-graph">
-                </div>
+                </div>                
+                <div class="msj-estadisticas text-center general-title" data-lang="msj_estadisticas"></div>
                 <div id="grafica_pasos" class="grafica"></div>
 			</div>
 		</section>
@@ -559,15 +582,16 @@
                 <h2 class="text-right general-title" id="cant_calorias"></h2>
 				<ul class="row periodo">
                     <li data-lang="dia"  onclick="estadisticas('calorias','ini','dia');"  class="pdia"></li>
-                    <li data-lang="mes"  onclick="estadisticas('calorias','ini','mes');"  class="pmes active"></li>
+                    <li data-lang="mes"  onclick="estadisticas('calorias','ini','mes');"  class="pmes"></li>
                     <li data-lang="year" onclick="" class="panio"></li>
                 </ul>
                 <div class="header_graph">
                 	<img src="img/prev_graph.png" onclick="estadisticas('calorias','prev')" class="prev-graph">
                 	<span class="title-graph"></span>
                 	<img src="img/next_graph.png" onclick="estadisticas('calorias','next')" class="next-graph">
-                </div>
-                <div id="grafica_calorias" class="grafica"></div>
+                </div>               
+                <div class="msj-estadisticas text-center general-title" data-lang="msj_estadisticas"></div>
+                 <div id="grafica_calorias" class="grafica"></div>
 			</div>
 		</section>
 		<section id="estadisticas_pulso" class="estadisticas Page">
@@ -577,15 +601,16 @@
                 <h2 class="text-right general-title" id="cant_pulso"></h2>
 				<ul class="row periodo">
                     <li data-lang="dia"  onclick="estadisticas('pulso','ini','dia');"  class="pdia"></li>
-                    <li data-lang="mes"  onclick="estadisticas('pulso','ini','mes');"  class="pmes active"></li>
+                    <li data-lang="mes"  onclick="estadisticas('pulso','ini','mes');"  class="pmes"></li>
                     <li data-lang="year" onclick="" class="panio"></li>
                 </ul>
                 <div class="header_graph">
                 	<img src="img/prev_graph.png" onclick="estadisticas('pulso','prev')" class="prev-graph">
                 	<span class="title-graph"></span>
                 	<img src="img/next_graph.png" onclick="estadisticas('pulso','next')" class="next-graph">
-                </div>
-                <div id="grafica_pulso" class="grafica"></div>
+                </div>               
+                <div class="msj-estadisticas text-center general-title" data-lang="msj_estadisticas"></div>
+                 <div id="grafica_pulso" class="grafica"></div>
 			</div>
 		</section>
 		<section id="estadisticas_distancia" class="estadisticas Page">
@@ -594,24 +619,24 @@
                 <img src="img/distance_icon.png">
                 <h2 class="text-right general-title" id="cant_distancia"></h2>
 				<ul class="row periodo">
-                    <li data-lang="dia"  onclick="estadisticas('distancia','ini','dia');"  class="pdia"></li>
-                    <li data-lang="mes"  onclick="estadisticas('distancia','ini','mes');"  class="pmes active"></li>
+                    <li data-lang="dia"  onclick="estadisticas('distancia','ini','dia');"  class="pdia  active"></li>
+                    <li data-lang="mes"  onclick="estadisticas('distancia','ini','mes');"  class="pmes"></li>
                     <li data-lang="year" onclick="" class="panio"></li>
                 </ul>
                 <div class="header_graph">
                 	<img src="img/prev_graph.png" onclick="estadisticas('distancia','prev')" class="prev-graph">
                 	<span class="title-graph"></span>
                 	<img src="img/next_graph.png" onclick="estadisticas('distancia','next')" class="next-graph">
-                </div>
-                <div id="grafica_distancia" class="grafica"></div>
-                
+                </div>               
+                <div class="msj-estadisticas text-center general-title" data-lang="msj_estadisticas"></div>  
+                 <div id="grafica_distancia" class="grafica"></div>              
 			</div>
 		</section>
 		<ul class="submenu" id="submenu_estadisticas">
-            <li onclick="estadisticas('distancia','ini','dia')" class="img-distance"><div></div></li>
-            <li onclick="estadisticas('calorias','ini','dia')" class="img-calories"><div></div></li>
-            <li onclick="estadisticas('pulso','ini','dia')" class="img-hearth"><div></div></li>
-            <li onclick="estadisticas('pasos','ini','dia')" class="img-step"><div></div></li>
+            <li onclick="estadisticas('distancia','ini','dia')" class="img-distancia"><div></div></li>
+            <li onclick="estadisticas('calorias','ini','dia')" class="img-calorias"><div></div></li>
+            <li onclick="estadisticas('pulso','ini','dia')" class="img-pulso"><div></div></li>
+            <li onclick="estadisticas('pasos','ini','dia')" class="img-pasos"><div></div></li>
         </ul>
 		<section id="terminos" class="Page">
 			<div class="container Main">

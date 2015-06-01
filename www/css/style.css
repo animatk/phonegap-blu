@@ -695,6 +695,7 @@ header .btn{
 }
 
 .prev-graph{
+	opacity:0;	
 	float:left;
 	width:18px !important;	
 	transition:.3s all ease-out;
@@ -704,6 +705,10 @@ header .btn{
 	width:18px !important;
 	opacity:0;
 	transition:.3s all ease-out;
+}
+
+.msj-estadisticas{
+	display:none;
 }
 
 .title_graph{
@@ -735,17 +740,17 @@ header .btn{
 }
 
 
-.img-distance{ background-image:url(../img/dist_icon.png);}
-.active.img-distance {background-image: url(../img/dist_icon2.png);}
+.img-distancia{ background-image:url(../img/dist_icon.png);}
+.active.img-distancia {background-image: url(../img/dist_icon2.png);}
 
-.img-calories{background-image:url(../img/calories_icon.png);}
-.active.img-calories {background-image: url(../img/calories_icon2.png);}
+.img-calorias{background-image:url(../img/calories_icon.png);}
+.active.img-calorias {background-image: url(../img/calories_icon2.png);}
 
-.img-hearth{background-image:url(../img/hearth_icon.png);}
-.active.img-hearth {background-image: url(../img/hearth_icon2.png);}
+.img-pulso{background-image:url(../img/hearth_icon.png);}
+.active.img-pulso {background-image: url(../img/hearth_icon2.png);}
 
-.img-step{background-image:url(../img/step_icon.png);}
-.active.img-step {background-image: url(../img/step_icon2.png);}
+.img-pasos{background-image:url(../img/step_icon.png);}
+.active.img-pasos {background-image: url(../img/step_icon2.png);}
 
 
 
@@ -789,6 +794,7 @@ header .btn{
 .submenu li:last-child{
 	border-right: 0;
 }
+
 
 
 /* end secciones */
@@ -983,6 +989,10 @@ header .btn{
 }
 .ppal-icon-share{
 	background-image: url(../img/share_icon.png);
+}
+
+.ContBotones.row2 .ppal-icon{
+	background-size: 25%;
 }
 
 .map-protection{
@@ -1693,6 +1703,41 @@ Pagination Styles
 #mensajes p:first-child{
 	color: #fff;
 }
+
+
+.ppal-icon-close-share{
+	background-image: url(../img/close_icon.png);
+}
+
+.ppal-icon-fb{
+	background-image: url(../img/facebook_icon.png);
+}
+
+.ppal-icon-tw{
+	background-image: url(../img/twitter_icon.png);  
+}
+
+.ppal-icon-gp{
+	background-image: url(../img/google_icon.png);
+}
+.ppal-icon-disabled{
+	opacity: 0.3;
+}
+
+.col-share{
+	display: inline-block;  
+	padding: 0px 5px;
+	margin-bottom: -15px;
+}
+.ppal-share{
+	display: block;
+	background-size: cover; 
+	height: 40px;
+	width: 40px;
+}
+
+
+
 
 @media all and (min-width: 376px){
 	.container,
