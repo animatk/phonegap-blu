@@ -994,10 +994,32 @@ function show_perfil(nav){
 		}
 		
 		$('.perfil-photo').css('background-image', 'url('+foto+')');
-	}
-	if(nav !== false){
-		ak_navigate('#perfil', {to:'show_inicio();'});
-	}
+        
+        if(nav !== false){
+
+            //SI LA VISTA CARGA ENTONCES CALCULA EL IMC
+            var weight = PERFIL.weight, height = PERFIL.height;
+
+            if(weight > 0 && height > 0){
+                var finalBmi = weight/(height/100*height/100);
+                $('.imc-data').html( finalBmi.toFixed(1) );
+                //
+                if(finalBmi < 18.5){
+                    $('.imc-info').html( "you are too thin." );
+                }
+                if(finalBmi > 18.5 && finalBmi < 25){
+                    $('.imc-info').html(  "you are healthy." );
+                }
+                if(finalBmi > 25){
+                    $('.imc-info').html(  "you have overweight." );
+                }
+            }else{
+                alert("Please Fill in everything correctly")
+            }        
+
+            ak_navigate('#perfil', {to:'show_inicio();'});
+        }
+    }
 }
 function inputImage(input) {
     if (input.files && input.files[0]) {

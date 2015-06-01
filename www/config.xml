@@ -38,7 +38,8 @@
 	<gap:plugin name="org.apache.cordova.file" />
 	<gap:plugin name="org.apache.cordova.file-transfer" />
 	<gap:plugin name="org.apache.cordova.media" />
-	
+	<gap:plugin name="co.uk.jonathanroper.itunesfilesharing" version="1.0.0" />
+
 	<!-- Define app icon for each platform. -->
 	<icon src="icon.png" />
 	<icon src="res/icon/icon.png" gap:platform="android" gap:density="ldpi" />
