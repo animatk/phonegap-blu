@@ -226,7 +226,7 @@ function subir_bajar(key_actual, key_cola, arr, func, url, chain){
 							var act = r.data,
 								tot = act.length,
 								fecha = act[0].ini;
-								var n = new Data(fecha);
+								var n = new Date(fecha);
 								fecha = n.getFullYear()+'-'+checkTime(n.getMonth()+1)+'-'+n.getDate()+' '+checkTime(n.getHours())+':'+checkTime(n.getMinutes())+':'+checkTime(n.getSeconds());
 
 							webdb.executeSql('INSERT INTO actividad (chain, json, sync, data) VALUES (?,?,?,?)'
