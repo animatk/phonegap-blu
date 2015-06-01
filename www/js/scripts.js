@@ -2127,7 +2127,10 @@ function guardar(resp){
 
 			var actividad = JSON.parse(SES['actividad']),
 			fecha = actividad[0].ini;
-
+			
+			var n = new Data(fecha);
+			fecha = n.getFullYear()+'-'+checkTime(n.getMonth()+1)+'-'+n.getDate()+' '+checkTime(n.getHours())+':'+checkTime(n.getMinutes())+':'+checkTime(n.getSeconds());
+			
 			webdb.executeSql('INSERT INTO actividad (chain, json, sync, data) VALUES (?,?,?,?)', 
 				[ SES['chain'], SES['actividad'], 'NO', fecha],
 				function(tx, r){},
