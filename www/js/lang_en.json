@@ -113,6 +113,13 @@
 	,"save_activity":"Want you save it?"
 	,"realy_discard":"Really want to remove this activity?"
     ,"suimc":"Su indice de masa corporal es"
+    ,"peso_bajo":"you are <span>too thin</span>" 
+    ,"peso_bajo":"you are <span>healthy</span>" 
+	,"peso_alto":"you have <span>overweight</span>"
+	,"peso_sobrepeso_dos":"you have <span>overweight II</span>"
+	,"peso_sobrepeso_tres":"you have <span>overweight III</span>"
+	,"peso_sobrepeso_cuatro":"you have <span>overweight IV</span>"
+	,"peso_sobrepeso_cinco":"you have <span>overweight V</span>"
 	,"edit_profile":"Editar Perfil"
 	,"cardio":"Heart Rate"
 }

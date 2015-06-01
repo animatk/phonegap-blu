@@ -846,13 +846,13 @@ header .btn{
     background-image: url(../img/indice_alert.png);
 }
 
-.imc-bg:before,
-.imc-bg:after{
+.imc-bg .before,
+.imc-bg .after{
 	-background-size: auto 100%;
     background-repeat: no-repeat;
     background-position: center bottom;
 }
-.imc-bg:before{
+.imc-bg .before{
 	content: " ";
 	position: absolute;
 	width: 36px;
@@ -862,7 +862,7 @@ header .btn{
 	bottom: -4px;
 	background-image: url(../img/woman_green_80.png);
 }
-.imc-bg:after{
+.imc-bg .after{
 	content: " ";
 	position: absolute;
 	width: 36px;
@@ -899,8 +899,9 @@ header .btn{
     color: #63e05a;
     font-weight: 700;
 }
+.imc.red .imc-data,
 .imc.red .imc-info span{
-    
+	color: #D84A1D;
 }
 /* end perfil */
 /* principal */

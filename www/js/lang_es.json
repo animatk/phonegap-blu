@@ -113,6 +113,13 @@
 	,"save_activity":"Guardar actividad"
 	,"realy_discard":"Realmente desea descartar esta actividad?"
 	,"suimc":"Su indice de masa corporal es"
+	,"peso_bajo":"Tiene un <span>Peso bajo</span>"
+	,"peso_normal":"Tiene un <span>Peso normal</span>"
+	,"peso_alto":"Tiene <span>Sobrepeso I</span>"
+	,"sobrepeso_dos":"Tiene <span>sobrepeso II</span>"
+	,"sobrepeso_tres":"Tiene <span>Obecidad I</span>"
+	,"sobrepeso_cuatro":"Tiene <span>Obecidad II</span>"
+	,"sobrepeso_cinco":"Tiene <span>Obecidad III</span>"
 	,"edit_profile":"Editar Perfil"
 	,"cardio":"Cardio"
 }

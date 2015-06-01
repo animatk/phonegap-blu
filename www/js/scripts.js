@@ -1000,22 +1000,50 @@ function show_perfil(nav){
             //SI LA VISTA CARGA ENTONCES CALCULA EL IMC
             var weight = PERFIL.weight, height = PERFIL.height;
 
-            if(weight > 0 && height > 0){
+			if(weight > 0 && height > 0){
                 var finalBmi = weight/(height/100*height/100);
+				var porc = (finalBmi - 25);
+					porc = (porc*100/15);
+				
+				$('.imc-bg .after').css('height', '0%');
+				if(porc > 0){
+					$('.imc-bg .after').css('height', porc.toFixed(0)+'%');
+				}
+				if(finalBmi < 18.5){
+					$('.row.imc').removeClass('red');
+					$('.row.imc').addClass('gray');
+				}else if(finalBmi > 18.5 && finalBmi < 24.9){
+					$('.row.imc').removeClass('gray');
+					$('.row.imc').removeClass('red');
+				}else{
+					$('.row.imc').removeClass('gray');
+					$('.row.imc').addClass('red');
+				}
+					
                 $('.imc-data').html( finalBmi.toFixed(1) );
-                //
                 if(finalBmi < 18.5){
-                    $('.imc-info').html( "you are too thin." );
+                    $('.imc-info').html( language.peso_bajo );
                 }
-                if(finalBmi > 18.5 && finalBmi < 25){
-                    $('.imc-info').html(  "you are healthy." );
+                if(finalBmi > 18.5 && finalBmi < 24.9){
+                    $('.imc-info').html(  language.peso_normal );
                 }
-                if(finalBmi > 25){
-                    $('.imc-info').html(  "you have overweight." );
+                if(finalBmi > 25 && finalBmi < 26.9){
+                    $('.imc-info').html(  language.peso_alto );
                 }
-            }else{
-                alert("Please Fill in everything correctly")
-            }        
+				if(finalBmi > 27 && finalBmi < 29.9){
+                    $('.imc-info').html(  language.sobrepeso_dos );
+                }
+				if(finalBmi > 30 && finalBmi < 34.9){
+					$('.imc-info').html(  language.sobrepeso_tres );
+                }
+				if(finalBmi > 35 && finalBmi < 39.9){
+					$('.imc-info').html(  language.sobrepeso_cuatro );
+                }
+				if(finalBmi > 40){
+					$('.imc-info').html(  language.sobrepeso_cinco);
+                }
+				
+            }	
 
             ak_navigate('#perfil', {to:'show_inicio();'});
         }
