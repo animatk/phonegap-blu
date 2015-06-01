@@ -51,6 +51,10 @@ var opt = {
 webdb.open(opt);
 /*! END SQL LITE */
 
+function checkTime(i) {
+    if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
+}
 //simple XHR request in pure JavaScript
 function ajax(obj) {
 	var xhr;
@@ -222,7 +226,9 @@ function subir_bajar(key_actual, key_cola, arr, func, url, chain){
 							var act = r.data,
 								tot = act.length,
 								fecha = act[0].ini;
-								
+								var n = new Data(fecha);
+								fecha = n.getFullYear()+'-'+checkTime(n.getMonth()+1)+'-'+n.getDate()+' '+checkTime(n.getHours())+':'+checkTime(n.getMinutes())+':'+checkTime(n.getSeconds());
+
 							webdb.executeSql('INSERT INTO actividad (chain, json, sync, data) VALUES (?,?,?,?)'
 							,[ chain, JSON.stringify(act), id, fecha]
 							,function(tx, r){
