@@ -1258,16 +1258,18 @@ function form_paso_dos(form){
 				sdata.peso = data.peso;
 				sdata.unit = data.unidad_medida;
 				//
-				var c = udata.img.indexOf(",");
-				var type = udata.img.slice(0, c+1);
-				var p = type.indexOf(";");
-				type = type.slice(0, p);
-				var t = type.indexOf(":");
-				type = type.slice(t+1);
-				
-				var img = udata.img.slice(c+1);
-				sdata.imgtype = type;
-				sdata.img = img;
+				if(udata.img != "" ){
+					var c = udata.img.indexOf(",");
+					var type = udata.img.slice(0, c+1);
+					var p = type.indexOf(";");
+					type = type.slice(0, p);
+					var t = type.indexOf(":");
+					type = type.slice(t+1);
+					//
+					var img = udata.img.slice(c+1);
+					sdata.imgtype = type;
+					sdata.img = img;
+				}
 				
 				$('body').prepend('<div id="cortina"></div>');
 				
@@ -1320,15 +1322,18 @@ function form_paso_tres(form){
 			sdata.terminos = 'SI';
 			sdata.unit = udata.unit;
 			//
-			var c = udata.img.indexOf(",");
-			var type = udata.img.slice(0, c+1);
-			var p = type.indexOf(";");
-			type = type.slice(0, p);
-			var t = type.indexOf(":");
-			type = type.slice(t+1);
-			
-			sdata.imgtype = type;
-			sdata.img = img;
+			if(udata.img != "" ){
+				var c = udata.img.indexOf(",");
+				var type = udata.img.slice(0, c+1);
+				var p = type.indexOf(";");
+				type = type.slice(0, p);
+				var t = type.indexOf(":");
+				type = type.slice(t+1);
+				
+				var img = udata.img.slice(c+1);
+				sdata.imgtype = type;
+				sdata.img = img;
+			}
 			//
 			if(isOnLine() != 'none'){
 				var chain = "";
