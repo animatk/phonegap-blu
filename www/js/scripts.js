@@ -1565,7 +1565,11 @@ function botonDispositivosFind(){
 	$('#dispMain').addClass('oculto');
 	$('#btn-accion-izq').addClass('oculto');
 	$('#dispFind').removeClass('oculto');
-	isInitialized();
+	if(DEVICE != 0){
+		startScan();
+	}else{
+		isInitialized();
+	}
 }
 function botonDispositivosCancel(){
 	stopScan();
@@ -1583,6 +1587,10 @@ function addDisp(name, address){
 			mensaje('desactivar');
 			disconnect();
 		}else{
+			if(DEVICE != 0 && DEVICE != address){
+				mensaje("Desconectando: "+DEVICE );
+				disconnect();
+			}
 			mensaje("Funcion addDisp llamada con: "+name+' y '+ address );
 			var dispositivos = new Array(),
 			insert = true;

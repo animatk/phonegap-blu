@@ -39,14 +39,14 @@ function initializeSuccess(obj)
   }
   else
   {
-	disSuccess();
+	closeBluSuccess();
 	//alert( alerts.error_inicio + ' code : initializeSuccess' );
   }
 }
 
 function initializeError(obj)
 {
-	disSuccess();
+	closeBluSuccess();
 	//alert( alerts.error_inicio + ' code : initializeError' );
 }
 
@@ -80,12 +80,12 @@ function isEnabledSuccess(obj)
 		if(confirm(alerts.activar)){
 			enable();
 		}else{
-			disSuccess();
+			closeBluSuccess();
 			//alert( alerts.error_inicio + ' code : isEnabledSuccess' );
 		}
 	}else{
 		//si es iOS entoces solo envia la alerta de encender el bluetooth
-		disSuccess();
+		closeBluSuccess();
 		//alert( alerts.encender_bluetooth );
 	}
   }
@@ -105,14 +105,14 @@ function enableSuccess(obj)
   }
   else
   {
-  	disSuccess();
+  	closeBluSuccess();
 	//alert( alerts.error_inicio + ' code : enableSuccess' );
   }
 }
 
 function enableError(obj)
 {
-	disSuccess();
+	closeBluSuccess();
 	//alert( alerts.error_inicio + ' code : enableError' );
 }
 
@@ -132,7 +132,6 @@ function startScanSuccess(obj)
 	
   if (obj.status == "scanResult")
   {
-
 	mensaje("Se encontro el dispositivo: "+obj.address );
     addDevice(obj.address, obj.name);
   }
@@ -141,20 +140,19 @@ function startScanSuccess(obj)
   }
   else
   {
-	disSuccess();
+	closeBluSuccess();
 	//alert( alerts.error_scan + ' code : startScanSuccess' );
   }
 }
 
 function startScanError(obj)
 {
-  disSuccess();
+  closeBluSuccess();
   //alert( alerts.error_scan + ' code : startScanError' );
 }
 
 function stopScan()
 {
-
   bluetoothle.stopScan(stopScanSuccess, stopScanError);
   return false;
 }
@@ -213,6 +211,7 @@ function closeBlu(){
 function closeBluSuccess(){
 	mensaje('close success');
 	SES.removeItem('hrm');
+	DEVICE = 0;
 	$('.bluetooth').removeClass('active');
 	$('.disp-item .switch').removeClass('inactive load active');
 }
@@ -225,7 +224,6 @@ function closeBluError(){
 function connect(address)
 {
   mensaje("se va a conectar al dispositivo: "+address);
-  
   var paramsObj = {address:address};
   bluetoothle.connect(connectSuccess, connectError, paramsObj);
   return false;
@@ -248,13 +246,13 @@ function connectSuccess(obj)
   }
   else
   {
-	disSuccess();
+	closeBluSuccess();
   }
 }
 
 function connectError(obj)
 {
-  disSuccess();
+  closeBluSuccess();
 }
 
 function isDiscovered(address)
@@ -295,7 +293,7 @@ function discoverSuccess(obj)
 	}
   else
   {
-  	disSuccess();
+  	closeBluSuccess();
 	//alert( alerts.error_conectar + ' code : discoverSuccess' );
 	
   }
@@ -303,7 +301,7 @@ function discoverSuccess(obj)
 
 function discoverError(obj)
 {
-	disSuccess();
+	closeBluSuccess();
    //alert( alerts.error_conectar + ' code : discoverError' );
 }
 
@@ -336,7 +334,7 @@ function subscribeSuccess(obj)
 	else
   {
 	removeClassHRM(); 
-	disSuccess();
+	closeBluSuccess();
   //	alert( alerts.error_conectar + ' code : subscribeSuccess' );
   }
 }
@@ -344,7 +342,7 @@ function subscribeSuccess(obj)
 function subscribeError(obj)
 {
 	removeClassHRM();  
-	disSuccess();
+	closeBluSuccess();
 	//alert( alerts.error_conectar + ' code : subscribeError' );
 }
 
@@ -364,7 +362,8 @@ function addClassHRM(){
 function removeClassHRM(){
 	var item = $('div[data-add="'+DEVICE+'"]').find('.switch');
 		item.removeClass('active');
-		$('.bluetooth').removeClass('active');
+		SES.removeItem('hrm');
+		DEVICE = 0;
 		$('.bluetooth').removeClass('active');
 		$('.disp-item .switch').removeClass('inactive');	
 }
