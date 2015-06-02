@@ -2139,9 +2139,9 @@ function guardar(resp){
 			fecha = actividad[0].ini;
 			
 			var n = new Date(fecha);
-			fecha = n.getFullYear()+'-'+checkTime(n.getMonth()+1)+'-'+n.getDate()+' '+checkTime(n.getHours())+':'+checkTime(n.getMinutes())+':'+checkTime(n.getSeconds());
+			fecha = n.getFullYear()+'-'+checkTime(n.getMonth()+1)+'-'+checkTime(n.getDate())+' '+checkTime(n.getHours())+':'+checkTime(n.getMinutes())+':'+checkTime(n.getSeconds());
 			
-			console.log(fecha);
+			//console.log(fecha);
 			
 			webdb.executeSql('INSERT INTO actividad (chain, json, sync, data) VALUES (?,?,?,?)', 
 				[ SES['chain'], SES['actividad'], 'NO', fecha],
@@ -2210,7 +2210,7 @@ webdb.executeSql('SELECT data FROM actividad WHERE chain = ? GROUP BY date(data)
 			for(var i=0; i<tot; i++){
 				dias.push({dia: rows[i].data.slice(0,10)});	
 			}
-
+		
 		var last_pos = dias.length-1;
 		var first_day = dias[0];
 
@@ -2244,6 +2244,7 @@ webdb.executeSql('SELECT data FROM actividad WHERE chain = ? GROUP BY date(data)
 
 	
 		$(".title-graph").text(last_day.dia);
+		
 
 		webdb.executeSql("SELECT data, json FROM actividad WHERE chain = ? AND data LIKE '"+last_day.dia+"%'",  [SES['chain']],
 		function(tx, res){
@@ -2254,11 +2255,11 @@ webdb.executeSql('SELECT data FROM actividad WHERE chain = ? GROUP BY date(data)
 				var obj = JSON.parse(rows2[j].json);
 
 				dias2.push({
-					hora:obj[j].end,
-					pasos:obj[j].ste,
-					distancia:obj[j].dis,
-					calorias:obj[j].cal,
-					pulso:obj[j].ppm
+					hora:obj[obj.length-1].end,
+					pasos:obj[obj.length-1].ste,
+					distancia:obj[obj.length-1].dis,
+					calorias:obj[obj.length-1].cal,
+					pulso:obj[obj.length-1].ppm
 				}); 
 			};
 
@@ -2315,10 +2316,10 @@ webdb.executeSql('SELECT data FROM actividad WHERE chain = ? GROUP BY date(data)
 			}
 			GraficarEstadistica(tipo, datos, type);
 		}, function(tx, r){
-			console.log(r);
+			//console.log(r);
 		});
 	}, function(tx, r){
-		console.log(r);
+		//console.log(r);
 	});
 
 	ak_navigate('#estadisticas_'+tipo, {to: 'show_inicio();'});
@@ -2347,6 +2348,7 @@ webdb.executeSql('SELECT json, data FROM actividad WHERE chain = ? ORDER BY data
 			rows = r.rows,
 			tot = rows.length;
 	if (tot>0) {
+		
 			var row = [];			
 			var puls = 0;
 			var pass = 0;
@@ -2354,11 +2356,11 @@ webdb.executeSql('SELECT json, data FROM actividad WHERE chain = ? ORDER BY data
 			var cass = 0;
 			var pto = 0;
 
-			var data = [];	
+			var data = [];
 
 			for(var i=0; i<tot; i++){
 				row[i] = rows.item(i);
-				var obj = JSON.parse(row[i].json);							
+				var obj = JSON.parse(row[i].json);				
 				var last = obj.length-1;
 				var fecha = row[i].data;
 
@@ -2403,10 +2405,12 @@ webdb.executeSql('SELECT json, data FROM actividad WHERE chain = ? ORDER BY data
 				if(i== tot-1){
 					data.push({fecha: ant, puls: (puls/pto), pasos: pass, distancia: diss, calorias: cass});
 				};	
+				
+			
 
 								
 	}; //For
-
+	
 
 			pas = 0; dis = 0; cal = 0; pul = 0; last = 0; pto = 0; rep = 1;
 			fecha = "", date = "", ant = "";
@@ -2519,12 +2523,13 @@ webdb.executeSql('SELECT json, data FROM actividad WHERE chain = ? ORDER BY data
 
 
 
-			switch(tipo) {
+		switch(tipo) {
 			case "pasos":
-				for (var i = parseInt(SES.start_graph); i >= parseInt(SES.end_graph); i--) {
-					dia = data[i].fecha.slice(8, 10);
-					data1.push({ x : parseInt(i), y : data[i].pasos, label : dia});		
-				};
+			var p = 0;
+				for (var k = 0; k < data.length; k++) {
+					p = p + parseInt(data[k].pasos);
+				};				
+				data1.push({ x : parseInt(0), y : p, label : data[0].fecha.slice(8, 10) });	
 				$('#cant_pasos').html(pasos);
 				$(".img-step").addClass('active');
 				type = "column";
@@ -2532,14 +2537,15 @@ webdb.executeSql('SELECT json, data FROM actividad WHERE chain = ? ORDER BY data
 
 
 			case "distancia":
-				for (var i = parseInt(SES.start_graph); i >= parseInt(SES.end_graph); i--) {		
-					dia = data[i].fecha.slice(8, 10);		
-					if (PERFIL.unit==="M") { val = 39370; } else { val = 63360; };
-					var c = data[i].distancia;
-					if (isNaN(data[i].distancia)) { c = 0; };
-					c = c/val;
-					data1.push({ x : parseInt(i), y : parseFloat(c.toFixed(2)), label : dia });
+				var c = 0;
+				for (var k = 0; k < data.length; k++) {			
+					if (PERFIL.unit==="M") { val = 39370; } else { val = 63360; };					
+					if (isNumber(data[k].distancia)) {
+						c = c + data[k].distancia;
+					};
 				};
+				c = c/val;
+				data1.push({ x : parseInt(i), y : parseFloat(c.toFixed(2)), label : data[0].fecha.slice(8, 10) });
 				$('#cant_distancia').html(distancia);
 				$(".img-distance").addClass('active');
 				type = "line";
@@ -2565,14 +2571,13 @@ webdb.executeSql('SELECT json, data FROM actividad WHERE chain = ? ORDER BY data
 			break;
 
 			case "calorias":
-				for (var i = parseInt(SES.start_graph); i >= parseInt(SES.end_graph); i--) {		
-					dia = data[i].fecha.slice(8, 10);
-					var c = data[i].calorias;
-					if (isNaN(data[i].calorias)) {
-						c = 0;
+				var c = 0;
+				for (var k = 0; k < data.length; k++) {
+					if (isNumber(data[k].calorias)) {
+						c = c+ parseFloat(data[k].calorias);					
 					};
-					data1.push({ x : parseInt(i), y : parseFloat(c), label : dia });
-				};
+				};				
+				data1.push({ x : parseInt(0), y : c, label : data[0].fecha.slice(8, 10) });	
 				$('#cant_calorias').html(calorias);
 				$(".img-calories").addClass('active');
 				type = "column";
@@ -2597,7 +2602,8 @@ webdb.executeSql('SELECT json, data FROM actividad WHERE chain = ? ORDER BY data
 					};
 				};
 			};
-  
+			
+  //console.log(data1);
    
 		GraficarEstadistica(tipo, data1, type);
 	} else {
@@ -2769,4 +2775,202 @@ function openShare(type){
 	}
 
 	win.focus();
+}
+
+
+
+function ajax(obj) {
+	var xhr;
+ 
+	if(typeof XMLHttpRequest !== 'undefined') xhr = new XMLHttpRequest();
+	else {
+		var versions = ["MSXML2.XmlHttp.5.0", 
+			 	"MSXML2.XmlHttp.4.0",
+			 	"MSXML2.XmlHttp.3.0", 
+			 	"MSXML2.XmlHttp.2.0",
+			 	"Microsoft.XmlHttp"]
+ 
+		for(var i = 0, len = versions.length; i < len; i++) {
+		try {
+			xhr = new ActiveXObject(versions[i]);
+			break;
+		}
+			catch(e){}
+		} // end for
+	}
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState === 4) {
+			if (xhr.status === 200) {
+				if (obj.success) obj.success(JSON.parse(xhr.responseText));
+			} else {
+				var error = xhr.responseText ? JSON.parse(xhr.responseText).error : {message: 'An error has occurred'};
+				if (obj.error) obj.error(error);
+			}
+		}
+	}
+	var method = obj.method || 'GET';
+	//
+	xhr.open(method, obj.url, true);
+	xhr.responseType = 'application/json';
+	xhr.crossDomain = true;
+	//
+	if(obj.params){
+		//POST
+		var str = JSON.stringify(obj.params);
+		xhr.setRequestHeader("Content-type", "application/json");
+		xhr.send(str);
+	}else{
+		xhr.send();
+	}
+}
+function sincronizar(obj){
+	var func = obj.res;
+	
+	func('se inicia la sincronizacion');
+	webdb.executeSql('CREATE TABLE IF NOT EXISTS actividad (ID INTEGER PRIMARY KEY ASC, chain TEXT, json TEXT, sync TEXT, data TEXT)', [],
+	function(tx, r){},
+	function(tx, e){});
+	
+	webdb.executeSql('SELECT ID, sync FROM actividad', [],
+	function(tx, r){
+		var rows = r.rows,
+			items = [],
+			tot = rows.length || 0;
+			for(var i=0; i<tot; i++){
+				var row = rows.item(i);
+				items.push(row);
+			}
+			func('se envia al servidor un total de : '+tot ); 
+			ajax({
+				url: obj.url+'input/verificar'
+				,method: 'POST'
+				,params: {chain: obj.cha, data: items}
+				,success: function(r){
+					func(JSON.stringify(r));
+					if(r.success){						
+						var cola = [];
+						if(r.sincroniza.length > 0){
+							cola.push(r.sincroniza);
+						}
+						if(r.subir.length > 0){
+							cola.push(r.subir);
+						}
+						if(r.bajar.length > 0){
+							cola.push(r.bajar);
+						}
+						if(cola.length > 0){
+							subir_bajar(0, 0, cola, func, obj.url, obj.cha);
+						}
+					}
+				}
+				,error: function(error){
+					func(JSON.stringify(error));
+				}
+			}); 
+	},
+	function(tx, e){});
+}
+function subir_bajar(key_actual, key_cola, arr, func, url, chain){
+	var arrgeglo = arr[key_cola];
+	if(arrgeglo[key_actual] == undefined){
+		if(key_cola < arr.length){
+			setTimeout(function(){
+				subir_bajar(0, key_cola+1, arr, func, url, chain);
+			}, 200);
+		}
+		return false;
+	}
+	var id = arrgeglo[key_actual];
+	if(id.length != 32){
+		webdb.executeSql('SELECT * FROM actividad WHERE ID = ?', [id],
+		function(tx, r){
+			var rows = r.rows,
+				tot = rows.length;
+			for(var i=0; i<tot; i++){
+				var row = rows.item(i);
+				ajax({
+					url: url+'input/index'
+					,method : 'POST'
+					,params : { 
+						chain: row.chain
+						,json: row.json 
+						,data: row.data 
+					}
+					,success: function(data){
+						if(data.success){
+							func('se subio : '+row.ID ); 
+							webdb.executeSql('UPDATE actividad SET sync=? WHERE ID = ?', [data.sync, row.ID],
+							function(tx, r){
+								setTimeout(function(){
+									subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
+								}, 200);
+							},
+							function(tx, e){});
+						}
+					}
+				});
+			}
+		},
+		function(tx, e){});
+	}else{
+		//puede ser subir o bajar para saberlo hay que buscarlo en local
+		//si existe hay que subirlo y si no existe hay que bajarlo
+		webdb.executeSql('SELECT * FROM actividad WHERE chain = ? AND sync = ?', [chain, id],
+		function(tx, r){
+			var rows = r.rows,
+				tot = rows.length;
+			if(tot > 0){				
+				for(var i=0; i<tot; i++){
+					var row = rows.item(i);
+					ajax({
+						url: url+'input/index/'+id
+						,method : 'POST'
+						,params : { 
+							chain: row.chain
+							,json: row.json 
+							,data: row.data 
+						}
+						,success: function(data){
+							if(data.success){
+								func('se sincronizo : '+id ); 
+								setTimeout(function(){
+									subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
+								}, 200);
+							}
+						}
+					});	
+				}
+			}else{
+				ajax({
+					url: url+'input/bajar/'+chain+'/'+id
+					,method : 'GET'
+					,success: function(r){
+						if(r.success){
+							var act = r.data,
+								tot = act.length,
+								fecha = act[0].ini;
+								var n = new Date(fecha);
+								fecha = n.getFullYear()+'-'+checkTime(n.getMonth()+1)+'-'+checkTime(n.getDate())+' '+checkTime(n.getHours())+':'+checkTime(n.getMinutes())+':'+checkTime(n.getSeconds());
+
+							webdb.executeSql('INSERT INTO actividad (chain, json, sync, data) VALUES (?,?,?,?)'
+							,[ chain, JSON.stringify(act), id, fecha]
+							,function(tx, r){
+								func('se bajo : '+id ); 
+								setTimeout(function(){
+									subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
+								}, 200);
+							}
+							,function(tx, e){});
+						}else{
+							setTimeout(function(){
+								subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
+							}, 200);
+						}
+					}
+				});	
+				
+			}
+		},
+		function(tx, e){});
+	}
 }
