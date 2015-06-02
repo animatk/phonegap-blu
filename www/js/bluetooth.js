@@ -198,16 +198,29 @@ function addDevice(address, name){
 }
 
 function disconnect(){
-	bluetoothle.disconnect(disSuccess, disError);
+	bluetoothle.disconnect(disSuccess, disError, {address:DEVICE});
 }
 function disSuccess(){
 	mensaje('dis success');
-	SES.removeItem('hrm');
-	$('.disp-item .switch').removeClass('inactive load active');
+	closeBlu();
 }
 function disError(){
 	mensaje('dis error');
 }
+function closeBlu(){
+	bluetoothle.close(closeBluSuccess, closeBluError, {address:DEVICE});
+}
+function closeBluSuccess(){
+	mensaje('close success');
+	SES.removeItem('hrm');
+	$('.disp-item .switch').removeClass('inactive load active');
+}
+function closeBluError(){
+	mensaje('close error');
+}
+
+
+
 function connect(address)
 {
   mensaje("se va a conectar al dispositivo: "+address);

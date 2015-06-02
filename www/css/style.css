@@ -177,7 +177,7 @@ img{vertical-align:middle;}
 }
 
 .container{
-	width: 90%;
+	width: 92%;
 	margin: 0 auto;
 	position: relative;
 	height: 100%;
@@ -297,7 +297,7 @@ header .btn{
 }
 
 .btn-block{
-	width: 100%;
+	width: 90%;
 	display: inline-block;
 }
 
@@ -331,8 +331,10 @@ header .btn{
 }
 .btn-danger{
 	color: #fff;
-	background: #D04545;
-	border-color: #BB4A4A;
+	background: #D84A1D;
+	border: 0;
+	font-weight: bold;
+	text-shadow: 1px 1px 0 #2c6427;
 }
 
 
@@ -507,6 +509,10 @@ header .btn{
 	bottom: 0;
 	z-index: 1;
 	position: absolute;
+}
+
+#config .Main{
+	padding-top:64px;
 }
 
 /* si es iOS */
@@ -1362,9 +1368,11 @@ input:-webkit-autofill:active{
 }
 .item-config{
 	color:#63e05a;
-	padding: 10px;
+	padding: 16px 10px;
 	border-bottom: 1px solid #63e05a;
 	clear: both;
+	width: 90%;
+	margin: 0 auto;
 }
 
 .item-config .switch{
@@ -1528,7 +1536,7 @@ Pagination Styles
 
 
 #inicio{
-	background: url("../img/inicial_bg.jpg") no-repeat center top;
+	-background: url("../img/inicial_bg.jpg") no-repeat center top;
 	background-size: cover; 
 }
 .wrapper_inicio{
@@ -1540,6 +1548,7 @@ Pagination Styles
 	margin-top: 48px;
 	padding: 20px;
 	padding-top: 0px;
+	background-color: #312e37;
 }
 
 
@@ -1813,7 +1822,7 @@ Pagination Styles
 	}
 	
 	.btn-cont-fixed{
-		bottom: 30px;
+		bottom: 50px;
 	}
 	
 	.estadisticas .grafica{
@@ -1902,6 +1911,13 @@ Pagination Styles
 		padding-top: 30px;
 	}
 	
+	.col-share{
+		margin-bottom: -6px;
+	}
+	
+	.item-config{
+		margin-top: 10px;
+	}
 }
 
 @media all and (min-height: 650px){

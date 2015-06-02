@@ -938,8 +938,10 @@ function login(form){
 						,img : ''
 					};
 					
-					if(obj.img != ""){
-						udata.img = 'data:'+obj.imgtype+';base64,'+obj.img;
+					if(obj.img != null){
+						if(obj.img != ""){
+							udata.img = 'data:'+obj.imgtype+';base64,'+obj.img;
+						}
 					}
 
 					udata.height = (obj.height != null)? obj.height : undefined;
@@ -1627,6 +1629,11 @@ function trackActivity(){
 		,curIndex= actividad.length-1
 		,iniTime = new Date(actividad[curIndex].ini);
 		//
+		//colocar el tipo de actividad en el primer trac
+		if(actividad[0].typ == undefined){
+			actividad[0].typ = ACTIVITYTYPE;
+		}
+		
 		actividad[curIndex].end = endDate;
 		actividad[curIndex].seg = parseInt((endDate-iniTime)/1000);
 		actividad[curIndex].ste = STEP;
@@ -2169,7 +2176,6 @@ $(function(){
 	localStorage.removeItem("end_graph");
 	localStorage.removeItem("day_graph");
 });
-
 /*
 function formatDate(date){
 	var n = new Date(date);
@@ -2193,8 +2199,6 @@ webdb.executeSql("SELECT data, sync FROM actividad",  [],function(tx, r){
 });
 }
 */
-
-
 function EstadisticasDia(tipo, pagina){
 $(".prev-graph").attr("onclick","estadisticas('"+tipo+"', 'prev', 'dia');");
 $(".next-graph").attr("onclick","estadisticas('"+tipo+"', 'next', 'dia');");
@@ -2325,10 +2329,6 @@ webdb.executeSql('SELECT data FROM actividad WHERE chain = ? GROUP BY date(data)
 	ak_navigate('#estadisticas_'+tipo, {to: 'show_inicio();'});
 	$("#submenu_estadisticas").show();
 };
-
-
-
-
 function estadisticas(tipo, pagina, periodo){
 
 $(".estadisticas .grafica").show();
@@ -2622,9 +2622,6 @@ webdb.executeSql('SELECT json, data FROM actividad WHERE chain = ? ORDER BY data
 	ak_navigate('#estadisticas_'+tipo, {to: 'show_inicio();'});
 	$("#submenu_estadisticas").show();
 }
-
-
-
 function GraficarEstadistica(tipo, data, type){
 
 	CanvasJS.addColorSet("orange", ["#DB4A08" ]);
@@ -2735,17 +2732,14 @@ function exeSQL(sql){
 function showDebug(){
 	$('.debugbox').css('display', 'block');
 }
-
 function showShare(){
 	$('#div-clock').addClass('oculto');
 	$('#div-share').removeClass('oculto');
 }
-
 function closeShare(){
 	$('#div-share').addClass('oculto');
 	$('#div-clock').removeClass('oculto');
 }
-
 function openShare(type){	
 	var h = parseInt( SECOND / 3600 ) % 24,
 		m = parseInt( SECOND / 60 ) % 60,
