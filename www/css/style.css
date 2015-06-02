@@ -309,6 +309,17 @@ header .btn{
 	border:1px solid;
 }
 
+.bluetooth{
+	width: 34px;
+	height: 30px;
+	display: inline-block;
+	background: url(../img/bluetooth_off.png) no-repeat center bottom;
+	background-size: 85%;
+}
+.bluetooth.active{
+	background-image: url(../img/bluetooth_on.png);
+}
+
 .btn-default{
 	color: #666;
 	background: #fff;

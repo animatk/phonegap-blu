@@ -213,6 +213,7 @@ function closeBlu(){
 function closeBluSuccess(){
 	mensaje('close success');
 	SES.removeItem('hrm');
+	$('.bluetooth').removeClass('active');
 	$('.disp-item .switch').removeClass('inactive load active');
 }
 function closeBluError(){
@@ -356,13 +357,14 @@ function addClassHRM(){
 		$('#botonDisp').attr('data-add', DEVICE);
 		var item = $('div[data-add="'+DEVICE+'"]').find('.switch');
 		item.removeClass('load').addClass('active');
+		$('.bluetooth').addClass('active');
 		$('.disp-item .switch').not(item).addClass('inactive');
 	}
 }
 function removeClassHRM(){
 	var item = $('div[data-add="'+DEVICE+'"]').find('.switch');
 		item.removeClass('active');
-		
+		$('.bluetooth').removeClass('active');
 	$('.disp-item .switch').removeClass('inactive');	
 }
 
