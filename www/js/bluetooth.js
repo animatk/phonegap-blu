@@ -365,7 +365,8 @@ function removeClassHRM(){
 	var item = $('div[data-add="'+DEVICE+'"]').find('.switch');
 		item.removeClass('active');
 		$('.bluetooth').removeClass('active');
-	$('.disp-item .switch').removeClass('inactive');	
+		$('.bluetooth').removeClass('active');
+		$('.disp-item .switch').removeClass('inactive');	
 }
 
 
