@@ -1,5 +1,6 @@
 var bluetoothle,
 DEVICE = 0,
+isScan = false;
 alerts = {
 	error_inicio : 'El servicio bluetooth no se ha podido iniciar, intentelo mas tarde.'
 	, activar : 'Iniciar dispositivo bluetooth?'
@@ -116,15 +117,25 @@ function enableError(obj)
 	//alert( alerts.error_inicio + ' code : enableError' );
 }
 
+function loopScan(){
+	setTimeout(function(){
+		$( alerts.disp_find ).html("");
+		if(isScan){
+			loopScan();
+		}
+	}, 6000);
+}
+
 function startScan()
 {
 	//TODO Disconnect / Close all addresses and empty
-	
+	isScan = true;
 	var paramsObj = {serviceUuids:[]};	
 	bluetoothle.startScan(startScanSuccess, startScanError, paramsObj);
   
   return false;
 }
+
 
 function startScanSuccess(obj)
 {
@@ -147,12 +158,14 @@ function startScanSuccess(obj)
 
 function startScanError(obj)
 {
+  
   closeBluSuccess();
   //alert( alerts.error_scan + ' code : startScanError' );
 }
 
 function stopScan()
 {
+  isScan = false;
   bluetoothle.stopScan(stopScanSuccess, stopScanError);
   return false;
 }
@@ -162,6 +175,7 @@ function stopScanSuccess(obj)
 
   if (obj.status == "scanStopped")
   {
+	  
   }
   else
   {
