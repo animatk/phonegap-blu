@@ -1512,7 +1512,6 @@ function stepsConfStop(action){
 }
 
 function btnSens(act){
-	console.log(act);
 	if(!isNumber(act)){
 		var val = parseInt($('#sensible').val());
 		var nval = (act == '+')? (val + 1): (val - 1);

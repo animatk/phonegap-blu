@@ -228,15 +228,16 @@ img{vertical-align:middle;}
 .col70, .col80,
 .col90{ float: left; min-height: 10px;}
 
-.col10{width: 10% !important;}
-.col20{width: 20% !important;}
-.col30{width: 30% !important;}
-.col40{width: 40% !important;}
-.col50{width: 50% !important;}
-.col60{width: 60% !important;}
-.col70{width: 70% !important;}
-.col80{width: 80% !important;}
-.col90{width: 90% !important;}
+.col10{ width: 10% !important;}
+.col20{ width: 20% !important;}
+.col30{ width: 30% !important;}
+.col40{ width: 40% !important;}
+.col50{ width: 50% !important;}
+.col60{ width: 60% !important;}
+.col70{ width: 70% !important;}
+.col80{ width: 80% !important;}
+.col90{ width: 90% !important;}
+.col100{width: 100% !important;}
 
 /* header */
 
