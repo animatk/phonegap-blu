@@ -226,7 +226,7 @@ img{vertical-align:middle;}
 .col30, .col40,
 .col50, .col60,
 .col70, .col80,
-.col90{ float: left; }
+.col90{ float: left; min-height: 10px;}
 
 .col10{width: 10% !important;}
 .col20{width: 20% !important;}
@@ -345,7 +345,7 @@ header .btn{
 	background: #D84A1D;
 	border: 0;
 	font-weight: bold;
-	text-shadow: 1px 1px 0 #2c6427;
+	text-shadow: 1px 1px 0 #511F1F;
 }
 
 
@@ -1178,6 +1178,10 @@ input[type=range]:focus::-webkit-slider-runnable-track {
   background: #ac51b5;
 }
 
+.range-icon{
+	margin: 9px 0 0 !important;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -1251,8 +1255,8 @@ input:-webkit-autofill:active{
 	width: 16px;
 	height: 16px;
 	margin-right: 8px;
-	background: #ccc;
 	vertical-align: bottom;
+	background-size: 100%;
 }
 
 /* end icons */
@@ -1319,6 +1323,13 @@ input:-webkit-autofill:active{
 }
 .config-item .form-control.swho-it{
 	height: 100%;
+}
+
+.icon-plus{
+	background-image: url(../img/icon_plus.png);
+}
+.icon-minus{
+	background-image: url(../img/icon_minus.png);
 }
 
 .icon-music{
@@ -1843,6 +1854,9 @@ Pagination Styles
 	.estadisticas .periodo{
 		margin: 30px 0 10px 0;
 	}
+	.sens-ini{
+		margin-top: 30px;
+	}
 }
 
 @media all and (min-height: 569px){
@@ -1928,6 +1942,9 @@ Pagination Styles
 	
 	.item-config{
 		margin-top: 10px;
+	}
+	.sens-ini{
+		margin-top: 50px;
 	}
 }
 

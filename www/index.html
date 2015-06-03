@@ -244,10 +244,24 @@
 				<p class="text-center general-title" data-lang="calibracion"></p>
 				<p class="text-center" data-lang="camine_pasos"></p>
 				<div class="sensibilidad-pasos">0</div>
-				<input type="range" id="sensible" min="0" max="30" class="sens-ini" />
+				
+				<div class="row sens-ini">
+					<div class="col10 text-center">
+						<span class="btnMinus icon icon-config icon-minus range-icon" onclick="btnSens('-');"></span>
+					</div>
+					<div class="col col80">
+						<input type="range" id="sensible" min="0" max="20" />
+					</div>
+					<div class="col10 text-center">
+						<span class="btnPlus icon icon-config icon-plus range-icon" onclick="btnSens('+');"></span>
+					</div>
+				</div>
 				<div class="text-center">
-					<span class="btn btn-action sens-ini" onclick="steps('stepsConf');" data-lang="iniciar"></span>
-					<span id="sensEnd" class="btn btn-danger oculto" onclick="stepsConfStop();" data-lang="detener"></span>
+					<span class="btn btn-action sens-ini btn-block" onclick="steps('stepsConf');" data-lang="iniciar"></span>
+					<div id="sensEnd" class="oculto">
+						<div>&nbsp;</div>
+						<span class="btn btn-danger btn-block" onclick="stepsConfStop();" data-lang="detener"></span>
+					</div>
 				</div>
 			</div>
 		</section>

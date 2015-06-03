@@ -759,7 +759,6 @@ function initialize() {
 	}
  }
  */
-
 function ak_navigate(to, back){
 	if(isDevice() != 'Android'){
 		$('body').addClass('ios-device');
@@ -1436,12 +1435,14 @@ function show_sensibilidad(back){
 	$('input[type="range"]').on('input', function () {
 		var percent = Math.ceil(((this.value - this.min) / (this.max - this.min)) * 100);
 		$(this).css('background', '-webkit-linear-gradient(left, #5de252 0%, #5de252 ' + percent + '%, #212024 ' + percent + '%)');
+		btnSens(this.value);
 	});
 	
 	if(SES['sens']){
 		var sens = 10 * parseFloat(SES['sens']),
-			percent = Math.ceil(((sens - 0) / (30-0)) * 100);
-		$('#sensible').val( sens ).css('background', '-webkit-linear-gradient(left, #5de252 0%, #5de252 ' + percent + '%, #212024 ' + percent + '%)');
+			percent = Math.ceil(((sens - 0) / (20-0)) * 100);
+		$('#sensible').val( 20 - sens ).css('background', '-webkit-linear-gradient(left, #5de252 0%, #5de252 ' + percent + '%, #212024 ' + percent + '%)');
+		btnSens(sens);
 	}
 	
 	var range = $('#sensible')
@@ -1449,21 +1450,21 @@ function show_sensibilidad(back){
 		,tocero = setInterval(function() {
 			var to = parseInt(range.val()) - 1;
 			range.val(to); 
-			var percent = Math.ceil(((to - 0) / (30-0)) * 100);
+			var percent = Math.ceil(((to - 0) / (20-0)) * 100);
 			$('#sensible').css('background', '-webkit-linear-gradient(left, #5de252 0%, #5de252 ' + percent + '%, #212024 ' + percent + '%)');
 			if(to<=0){
 				clearInterval(tocero);
 			var	tocien = setInterval(function() {
 					var to = parseInt(range.val()) + 1;
 					range.val(to); 
-					var percent = Math.ceil(((to - 0) / (30-0)) * 100);
+					var percent = Math.ceil(((to - 0) / (20-0)) * 100);
 					$('#sensible').css('background', '-webkit-linear-gradient(left, #5de252 0%, #5de252 ' + percent + '%, #212024 ' + percent + '%)');
-					if(to>=30){
+					if(to>=20){
 						clearInterval(tocien);
 					var	toini = setInterval(function() {
 							var to = parseInt(range.val()) - 1;
 							range.val(to); 
-							var percent = Math.ceil(((to - 0) / (30-0)) * 100);
+							var percent = Math.ceil(((to - 0) / (20-0)) * 100);
 							$('#sensible').css('background', '-webkit-linear-gradient(left, #5de252 0%, #5de252 ' + percent + '%, #212024 ' + percent + '%)');
 							if(to<=inival){
 								clearInterval(toini);
@@ -1480,7 +1481,7 @@ function stepsConf(a){
 	, y = a.y
 	, z = a.z
 	, m = parseFloat(((x +y +z)/3).toFixed(1))
-	, s = parseInt($('#sensible').val()) / 10;
+	, s = (20 - parseInt($('#sensible').val())) / 10;
 
 	if(ACCE > (m + s) || ACCE < (m - s)){
 		STEP = STEP+1;
@@ -1497,7 +1498,7 @@ function stepsConfStop(action){
 		$('#PopAlert').removeClass('toCenter');
 		
 		if(action == 'save'){
-			SES['sens'] = parseInt($('#sensible').val()) / 10;
+			SES['sens'] = (20 - parseInt($('#sensible').val())) / 10;
 			show_configuracion({to:'show_inicio();'});
 		}
 
@@ -1509,6 +1510,30 @@ function stepsConfStop(action){
 		$('#PopAlert').addClass('toCenter');
 	}
 }
+
+function btnSens(act){
+	console.log(act);
+	if(!isNumber(act)){
+		var val = parseInt($('#sensible').val());
+		var nval = (act == '+')? (val + 1): (val - 1);
+		var percent = Math.ceil(((nval - 0) / (20-0)) * 100);
+		$('#sensible').val(nval).css('background', '-webkit-linear-gradient(left, #5de252 0%, #5de252 ' + percent + '%, #212024 ' + percent + '%)');;
+	}else{
+		var nval = act;
+	}
+	if(nval > 0){
+		$('.btnMinus').removeClass('oculto');
+	}else{
+		$('.btnMinus').addClass('oculto');
+	}
+	
+	if(nval < 20){
+		$('.btnPlus').removeClass('oculto');
+	}else{
+		$('.btnPlus').addClass('oculto');
+	}
+}
+
 function tipoActividad(nu){
 	ACTIVITYTYPE = nu;
 	if(nu == 1){
@@ -1789,7 +1814,7 @@ function stepsSuccess(a){
 		return false;
 	}
 	if(!SES['sens']){
-		SES['sens'] = 0.6;
+		SES['sens'] = 0.5;
 	}
 	//
 	var x = a.x
@@ -2188,9 +2213,6 @@ $(function(){
 	localStorage.removeItem("end_graph");
 	localStorage.removeItem("day_graph");
 });
-
-
-
 function estadisticas(tipo, pagina, periodo){
 
 $(".prev-graph").attr("onclick","estadisticas('"+tipo+"', 'prev', 'mes');");
@@ -2478,11 +2500,6 @@ webdb.executeSql('SELECT json, data FROM actividad WHERE chain = ? ORDER BY data
 	ak_navigate('#estadisticas_'+tipo, {to: 'show_inicio();'});
 	$("#submenu_estadisticas").show();
 }
-
-
-
-
-
 function EstadisticasDia(tipo, pagina){
 $(".prev-graph").attr("onclick","estadisticas('"+tipo+"', 'prev', 'dia');");
 $(".next-graph").attr("onclick","estadisticas('"+tipo+"', 'next', 'dia');");
@@ -2608,9 +2625,6 @@ webdb.executeSql('SELECT data FROM actividad WHERE chain = ? GROUP BY date(data)
 	ak_navigate('#estadisticas_'+tipo, {to: 'show_inicio();'});
 	$("#submenu_estadisticas").show();
 };
-
-
-
 function GraficarEstadistica(tipo, data, type){
 	CanvasJS.addColorSet("orange", ["#DB4A08" ]);
     var chart = new CanvasJS.Chart("grafica_"+tipo, { 
@@ -2756,8 +2770,6 @@ function openShare(type){
 
 	win.focus();
 }
-
-
 
 function ajax(obj) {
 	var xhr;
