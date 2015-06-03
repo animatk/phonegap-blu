@@ -130,6 +130,7 @@ function startScan()
 {
 	//TODO Disconnect / Close all addresses and empty
 	isScan = true;
+	loopScan();
 	var paramsObj = {serviceUuids:[]};	
 	bluetoothle.startScan(startScanSuccess, startScanError, paramsObj);
   
