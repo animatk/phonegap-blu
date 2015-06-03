@@ -12,15 +12,11 @@ alerts = {
 	, characterisUid : '2a37'
 	, encender_bluetooth : 'Debe activar el bluetooth para poder conectarse con su dispositivo.'
 }
-
-function isInitialized()
-{
+function isInitialized(){
   bluetoothle.isInitialized(isInitializedSuccess);
   return false;
 }
-
-function isInitializedSuccess(obj)
-{
+function isInitializedSuccess(obj){
   if (obj.isInitialized)
   {
     isEnabled();
@@ -31,9 +27,7 @@ function isInitializedSuccess(obj)
 	bluetoothle.initialize(initializeSuccess, initializeError, paramsObj);
   }
 }
-
-function initializeSuccess(obj)
-{	
+function initializeSuccess(obj){	
   if (obj.status == "enabled")
   {
   	isEnabled();
@@ -44,31 +38,21 @@ function initializeSuccess(obj)
 	//alert( alerts.error_inicio + ' code : initializeSuccess' );
   }
 }
-
-function initializeError(obj)
-{
+function initializeError(obj){
 	closeBluSuccess();
 	//alert( alerts.error_inicio + ' code : initializeError' );
 }
-
-function isEnabled()
-{
+function isEnabled(){
   bluetoothle.isEnabled(isEnabledSuccess);
   return false;
 }
-
-function isEnabledSuccess(obj)
-{
-	
-  if (obj.isEnabled)
-  {
+function isEnabledSuccess(obj){	
+  if (obj.isEnabled){
     if(DEVICE != 0){
-		
 		//desactivar todos los switches que no sen el current
 		var item = $('div[data-add="'+DEVICE+'"]').find('.switch');
 		item.addClass('load');
 		$('.disp-item .switch').not(item).addClass('inactive');
-		
 		connect( DEVICE );
 	}else{
 		startScan();
@@ -91,15 +75,11 @@ function isEnabledSuccess(obj)
 	}
   }
 }
-
-function enable()
-{
+function enable(){
 	bluetoothle.enable(enableSuccess, enableError);
 	return false;
 }
-
-function enableSuccess(obj)
-{	
+function enableSuccess(obj){	
   if (obj.status == "enabled")
   {
   	startScan();
@@ -110,36 +90,19 @@ function enableSuccess(obj)
 	//alert( alerts.error_inicio + ' code : enableSuccess' );
   }
 }
-
-function enableError(obj)
-{
+function enableError(obj){
 	closeBluSuccess();
 	//alert( alerts.error_inicio + ' code : enableError' );
 }
-
-function loopScan(){
-	setTimeout(function(){
-		$( alerts.disp_find ).html("");
-		if(isScan){
-			loopScan();
-		}
-	}, 6000);
-}
-
-function startScan()
-{
+function startScan(){
 	//TODO Disconnect / Close all addresses and empty
-	isScan = true;
-	loopScan();
+	$( alerts.disp_find+' div' ).remove();
 	var paramsObj = {serviceUuids:[]};	
 	bluetoothle.startScan(startScanSuccess, startScanError, paramsObj);
   
   return false;
 }
-
-
-function startScanSuccess(obj)
-{
+function startScanSuccess(obj){
 	mensaje("Escaneando");
 	
   if (obj.status == "scanResult")
@@ -156,23 +119,16 @@ function startScanSuccess(obj)
 	//alert( alerts.error_scan + ' code : startScanSuccess' );
   }
 }
-
-function startScanError(obj)
-{
+function startScanError(obj){
   
   closeBluSuccess();
   //alert( alerts.error_scan + ' code : startScanError' );
 }
-
-function stopScan()
-{
-  isScan = false;
+function stopScan(){
   bluetoothle.stopScan(stopScanSuccess, stopScanError);
   return false;
 }
-
-function stopScanSuccess(obj)
-{
+function stopScanSuccess(obj){
 
   if (obj.status == "scanStopped")
   {
@@ -183,12 +139,9 @@ function stopScanSuccess(obj)
 //	alert( alerts.error_stop_scan + ' code : stopScanSuccess' );
   }
 }
-
-function stopScanError(obj)
-{
+function stopScanError(obj){
 //	alert( alerts.error_stop_scan + ' code : stopScanError' );
 }
-
 function addDevice(address, name){
 	var padre = $( alerts.disp_find ),
 	item = $( alerts.disp_find +' div[data-add="'+address+'"]' );
@@ -209,7 +162,6 @@ function addDevice(address, name){
 		}
 	}
 }
-
 function disconnect(){
 	bluetoothle.disconnect(disSuccess, disError, {address:DEVICE});
 }
@@ -233,19 +185,13 @@ function closeBluSuccess(){
 function closeBluError(){
 	mensaje('close error');
 }
-
-
-
-function connect(address)
-{
+function connect(address){
   mensaje("se va a conectar al dispositivo: "+address);
   var paramsObj = {address:address};
   bluetoothle.connect(connectSuccess, connectError, paramsObj);
   return false;
 }
-
-function connectSuccess(obj)
-{
+function connectSuccess(obj){
 
   if (obj.status == "connected")
   {
@@ -264,21 +210,15 @@ function connectSuccess(obj)
 	closeBluSuccess();
   }
 }
-
-function connectError(obj)
-{
+function connectError(obj){
   closeBluSuccess();
 }
-
-function isDiscovered(address)
-{
+function isDiscovered(address){
 	var paramsObj = {address:address};
 	bluetoothle.isDiscovered(isDiscoveredSuccess, paramsObj);
 	return false;
 }
-
-function isDiscoveredSuccess(obj)
-{	
+function isDiscoveredSuccess(obj){	
   if (obj.isDiscovered)
   {
     subscribe(obj.address, alerts.serviceUid, alerts.characterisUid );
@@ -288,19 +228,14 @@ function isDiscoveredSuccess(obj)
   	discover(obj.address);
   }
 }
-
-
-function discover(address)
-{
+function discover(address){
 	var paramsObj = {address:address};
 	
 	bluetoothle.discover(discoverSuccess, discoverError, paramsObj);
 	
 	return false;
 }
-
-function discoverSuccess(obj)
-{
+function discoverSuccess(obj){
 	
 	if (obj.status == "discovered")
 	{
@@ -313,24 +248,18 @@ function discoverSuccess(obj)
 	
   }
 }
-
-function discoverError(obj)
-{
+function discoverError(obj){
 	closeBluSuccess();
    //alert( alerts.error_conectar + ' code : discoverError' );
 }
-
-function subscribe(address, serviceUuid, characteristicUuid)
-{
+function subscribe(address, serviceUuid, characteristicUuid){
 	var paramsObj = {address:address, serviceUuid:serviceUuid, characteristicUuid:characteristicUuid};
 	
 	bluetoothle.subscribe(subscribeSuccess, subscribeError, paramsObj);
 	
 	return false;
 }
-
-function subscribeSuccess(obj)
-{	
+function subscribeSuccess(obj){	
 	if(obj.value != undefined){
 		obj.ak_valor = bluetoothle.encodedStringToBytes(obj.value);	
 		PPM = obj.ak_valor[1];
@@ -353,18 +282,14 @@ function subscribeSuccess(obj)
   //	alert( alerts.error_conectar + ' code : subscribeSuccess' );
   }
 }
-
-function subscribeError(obj)
-{
+function subscribeError(obj){
 	removeClassHRM();  
 	closeBluSuccess();
 	//alert( alerts.error_conectar + ' code : subscribeError' );
 }
-
 function mensaje(msj){
 	$('#mensajes').prepend('<p>'+msj+'</p>');
 }
-
 function addClassHRM(){
 	if(DEVICE != 0){
 		$('#botonDisp').attr('data-add', DEVICE);
@@ -382,11 +307,8 @@ function removeClassHRM(){
 		$('.bluetooth').removeClass('active');
 		$('.disp-item .switch').removeClass('inactive');	
 }
-
-
 /* iOS function */
-function services(address)
-{
+function services(address){
 	var paramsObj = {address:address, serviceUuids:[]};
 	mensaje("Services : " + JSON.stringify(paramsObj));
 	bluetoothle.services(servicesSuccess, function(obj){
@@ -394,9 +316,7 @@ function services(address)
 	}, paramsObj);
 	return false;
 }
-
-function servicesSuccess(obj)
-{
+function servicesSuccess(obj){
 	mensaje("Services Success : " + JSON.stringify(obj));
   if (obj.status == "services")
   {
@@ -409,9 +329,7 @@ function servicesSuccess(obj)
   	mensaje("Unexpected Services Status");
   }
 }
-
-function characteristics(address, serviceUuid)
-{
+function characteristics(address, serviceUuid){
 	var paramsObj = {address:address, serviceUuid:serviceUuid, characteristicUuids:[]};
 	mensaje("Characteristics : " + JSON.stringify(paramsObj));
 	bluetoothle.characteristics(characteristicsSuccess, function(obj){
@@ -419,9 +337,7 @@ function characteristics(address, serviceUuid)
 	}, paramsObj);
 	return false;
 }
-
-function characteristicsSuccess(obj)
-{
+function characteristicsSuccess(obj){
   mensaje("Characteristics Success : " + JSON.stringify(obj));
   if (obj.status == "characteristics")
   {
@@ -433,9 +349,7 @@ function characteristicsSuccess(obj)
   	mensaje("Unexpected Characteristics Status");
   }
 }
-
-function descriptors(address, serviceUuid, characteristicUuid)
-{
+function descriptors(address, serviceUuid, characteristicUuid){
 	var paramsObj = {address:address, serviceUuid:serviceUuid, characteristicUuid:characteristicUuid};
 	mensaje("Descriptors : " + JSON.stringify(paramsObj));
 	bluetoothle.descriptors(descriptorsSuccess, function(obj){
@@ -443,9 +357,7 @@ function descriptors(address, serviceUuid, characteristicUuid)
 	}, paramsObj);
 	return false;
 }
-
-function descriptorsSuccess(obj)
-{
+function descriptorsSuccess(obj){
 	mensaje("Descriptors Success : " + JSON.stringify(obj));
   if (obj.status == "descriptors")
   {
@@ -456,5 +368,4 @@ function descriptorsSuccess(obj)
   	mensaje("Unexpected Descriptors Status");
   }
 }
-
 /* end iOS function */
