@@ -1928,9 +1928,6 @@ function stepsSuccess(a){
 		initClock();
 		PauseSens = 0;
 	}else{
-		//if(!PAUSED && PauseSens >= 3){
-		//	pause();
-		//}
 		PauseSens = PauseSens+1;
 	}	
 	
@@ -2111,6 +2108,7 @@ function loadMapa(){
 	}
 }
 function pause(call){
+	trackActivity();
 	$('#BtnPausar').addClass('oculto');
 	$('#BtnDetener').removeClass('oculto');
 	PAUSED = true;
