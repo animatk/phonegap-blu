@@ -42,6 +42,7 @@ var SES = window.localStorage,
 	CLOCKTIMEOUT = 1000, //tiemout clock
 	ACTIVITYTYPE = 1, //tipo de actividad
 	ACTIVITYTIMEOUT = 1000*10, //tiemout tomar datos
+	StopAcc = true;
 	PauseSens = 0, //sensibilidad del estado de pausa para que sea mas tolerante el numero de veces indicado
 	sync = null, //plugir background mode.
 	PickDia = null, //picker dia 
@@ -1927,7 +1928,12 @@ function stepsSuccess(a){
 		$('.PASOS').html( STEP );
 		initClock();
 		PauseSens = 0;
+		StopAcc = false;
 	}else{
+		if(!StopAcc && PauseSens >= 3){
+			trackActivity();
+			StopAcc = true;
+		}
 		PauseSens = PauseSens+1;
 	}	
 	
@@ -2125,7 +2131,6 @@ function continuar(call){
 	}
 }
 function stop(){
-	trackActivity();
 	stopsteps();
 	stopgeo();
 	//remove poliline google maps
