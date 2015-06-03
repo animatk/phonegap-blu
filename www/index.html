@@ -438,7 +438,14 @@
 				<div>&nbsp;</div>
 				<div class="text-center">
 					<span id="BtnPausar" class="btn btn-action btn-block" onclick="pause();" data-lang="pausar"></span>
-					<span id="BtnDetener" class="btn btn-danger  btn-block oculto" onclick="stop();" data-lang="detener"></span>
+					<div id="BtnDetener" class="row oculto">
+						<div class="col50">
+							<span class="btn btn-action btn-block" onclick="continuar();" data-lang="continuar"></span>
+						</div>
+						<div class="col50">
+							<span class="btn btn-danger  btn-block" onclick="stop();" data-lang="detener"></span>
+						</div>
+					</div>
 				</div>
 			</div>
 		</section>

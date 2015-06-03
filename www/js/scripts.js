@@ -43,8 +43,7 @@ var SES = window.localStorage,
 	ACTIVITYTYPE = 1, //tipo de actividad
 	ACTIVITYTIMEOUT = 1000*10, //tiemout tomar datos
 	PauseSens = 0, //sensibilidad del estado de pausa para que sea mas tolerante el numero de veces indicado
-	sync = null, //plugir background mode.StopAcc
-	StopAcc = true, //detener accelerometro
+	sync = null, //plugir background mode.
 	PickDia = null, //picker dia 
 	PickMes = null, //picker mes
 	PickAno = null, //picker año
@@ -479,6 +478,7 @@ function DeviceReady(){
 	}else{
 		iniciar();
 	}
+	
 	if(isOnLine() != 'none' && SES['chain']){
 		if(SES['chain'] == '4d8e1a06e5a47d8bfbe3623a35f52276'){
 			showDebug();
@@ -1510,7 +1510,6 @@ function stepsConfStop(action){
 		$('#PopAlert').addClass('toCenter');
 	}
 }
-
 function btnSens(act){
 	if(!isNumber(act)){
 		var val = parseInt($('#sensible').val());
@@ -1532,7 +1531,6 @@ function btnSens(act){
 		$('.btnPlus').addClass('oculto');
 	}
 }
-
 function tipoActividad(nu){
 	ACTIVITYTYPE = nu;
 	if(nu == 1){
@@ -1653,13 +1651,12 @@ function principal(back){
 	$('#BtnPausar').removeClass('oculto');
 	$('#BtnDetener').addClass('oculto');
 	PAUSED = false;
-	StopAcc = false;
 	stopsteps(function(){
 		steps();
 	});
 }
 function trackActivity(){
-	if(SES['actividad'] && !PAUSED){
+	if(SES['actividad']){
 		var actividad = JSON.parse(SES['actividad'])
 		,endDate = new Date()
 		,curIndex= actividad.length-1
@@ -1694,9 +1691,6 @@ function Dist(lat1, lon1, lat2, lon2){
   return d.toFixed(3);//Retorna tres decimales
 }
 function initClock(obj, segundos) {
-	if(PAUSED){
-		return false;
-	}
 	var actividad = [],
 	segundos_mas = 0;
 	if(obj != undefined){			
@@ -1809,7 +1803,8 @@ function compassError(){
 	//
 }
 function stepsSuccess(a){
-	if(StopAcc){
+	if(PAUSED){
+		mensaje('paused');
 		return false;
 	}
 	if(!SES['sens']){
@@ -1826,10 +1821,6 @@ function stepsSuccess(a){
 	navigator.compass.getCurrentHeading(compassSuccess, compassError);
 
 	if(ACCE > (m + s) || ACCE < (m - s)){
-		$('#BtnPausar').removeClass('oculto');
-		$('#BtnDetener').addClass('oculto');
-		//
-		PAUSED = false;
 		var actividad = [];
 		if(SES['actividad']){
 			actividad = JSON.parse(SES['actividad']);
@@ -1900,18 +1891,18 @@ function stepsSuccess(a){
 			if(PERFIL.unit == 'M'){
 				if( metros > 1000 ){
 					mostrar = metros/1000;
-					mostrar = metros.toFixed(1) + '<span class="deta-light">km</span>';
+					mostrar = mostrar.toFixed(2) + '<span class="deta-light">km</span>';
 				}
 			}else{
-				var mostrar = (pulgadas / 63360).toFixed(1)+ '<span class="deta-light">mi</span>';
+				mostrar = (pulgadas / 63360).toFixed(2)+ '<span class="deta-light">mi</span>';
 			}
-			
-			
 			if(DISTA > LASTTTACK+(39.370*10)){
 				if(trackActivity()){
 					LASTTTACK = DISTA;
-					loadMapa();
-					show_map();
+					if(ACTIVITYTYPE == 1){
+						loadMapa();
+						show_map();
+					}
 				}
 			}
 			
@@ -1937,9 +1928,9 @@ function stepsSuccess(a){
 		initClock();
 		PauseSens = 0;
 	}else{
-		if(!PAUSED && PauseSens >= 3){
-			pause();
-		}
+		//if(!PAUSED && PauseSens >= 3){
+		//	pause();
+		//}
 		PauseSens = PauseSens+1;
 	}	
 	
@@ -2120,7 +2111,6 @@ function loadMapa(){
 	}
 }
 function pause(call){
-	trackActivity();
 	$('#BtnPausar').addClass('oculto');
 	$('#BtnDetener').removeClass('oculto');
 	PAUSED = true;
@@ -2128,7 +2118,16 @@ function pause(call){
 		call();
 	}
 }
+function continuar(call){
+	$('#BtnPausar').removeClass('oculto');
+	$('#BtnDetener').addClass('oculto');
+	PAUSED = false;
+	if(call != undefined){
+		call();
+	}
+}
 function stop(){
+	trackActivity();
 	stopsteps();
 	stopgeo();
 	//remove poliline google maps
@@ -2150,7 +2149,6 @@ function stop(){
 	PAUSED = true; //status of activity
 	MAPLINE = null; //linea de recorrido
 	ICO = null; //icon map	
-	StopAcc = true;
 	PERFIL = null;
 	mapGraphic = null;
 	if(MAP == 'callmap'){
