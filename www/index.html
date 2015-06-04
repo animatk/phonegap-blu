@@ -137,7 +137,7 @@
 					<form onsubmit="return form_paso_uno(this); return false;">
                         <div class="row text-center user_inicio">
                             <div class="perfil-photo-wrapper">
-                                <span class="fotoPerfil perfil-photo text-center" onclick="$('#imgupload').click();" style="background-image:url(img/upload_photo.jpg);"></span>
+                                <span class="perfil-photo text-center" onclick="$('#imgupload').click();" style="background-image:url(img/upload_photo.jpg);"></span>
                                 <input onchange="inputImage(this);" type="file" id="imgupload" class="oculto" accept="image/gif, image/jpeg, image/png" />
                                 <input type="text" name="img" class="oculto" />
                             </div>
@@ -256,18 +256,18 @@
 						<span class="btnPlus icon icon-config icon-plus range-icon" onclick="btnSens('+');"></span>
 					</div>
 				</div>
-				<div class="text-center">
-					<span class="btn btn-action sens-ini btn-block" onclick="steps('stepsConf');" data-lang="iniciar"></span>
-					<div id="sensEnd" class="oculto">
-						<div>&nbsp;</div>
-						<span class="btn btn-danger btn-block" onclick="stepsConfStop();" data-lang="detener"></span>
-					</div>
+			</div>
+			<div class="text-center btn-cont-fixed">
+				<span class="btn btn-action sens-ini btn-block" onclick="steps('stepsConf');" data-lang="iniciar"></span>
+				<div id="sensEnd" class="oculto">
+					<div>&nbsp;</div>
+					<span class="btn btn-danger btn-block" onclick="stepsConfStop();" data-lang="detener"></span>
 				</div>
 			</div>
 		</section>
 		<section id="config" class="Page">
 			<div class="container Main">
-				<div class="row row2 config-place" style="background-color:#211F25;">
+				<div class="row row2 config-place">
 					<p class="text-center text-center general-title" data-lang="lugar_actividad"></p>
 					<div class="col text-center">
 						<span id="actividad-1" class="icon-place icon-outdoor-sel" onclick="tipoActividad(1);" data-lang="en_calle"></span>
@@ -286,111 +286,105 @@
 					<span class="icon icon-config icon-flag"> </span> <span>Metas</span>
 				</div-->
 				<div>&nbsp;</div>
-				<div class="text-center btn-cont-fixed">
-					<span class="btn btn-action btn-block" onclick="principal();" data-lang="start_now"></span>
-				</div>
+			</div>
+			<div class="text-center btn-cont-fixed">
+				<span class="btn btn-action btn-block" onclick="principal();" data-lang="start_now"></span>
 			</div>
 		</section>
 		<section id="dispositivos" class="Page">
 			<div class="container Main">
 				<p class="text-center general-title" data-lang="disp_hrm"></p>
 				<div>&nbsp;</div>
-				<div id="dispMain">
-					<div class="hrm-item">
+				<div class="dispMain">
+					<div class="row hrm-item">
 						<span class="icon icon-config icon-mobile"> </span> <span>Dispositivos Confiables</span>
 					</div>
 					<div class="disp-list">
 						<!--listado dispositivos recordados-->
 					</div>
-					<div>&nbsp;</div>
-					<div class="text-center">
-						<span class="btn btn-action btn-block" onclick="botonDispositivosFind();" data-lang="disp_find"></span>
-					</div>
 				</div>
-				<div id="dispFind" class="oculto">					
-					<div class="hrm-item">
+				<div class="dispFind oculto">					
+					<div class="row hrm-item">
 						<span class="icon icon-config icon-mobile"> </span> <span>Dispositivos Disponibles</span>
 					</div>
 					<div class="disp-find">
 						<!--listado dispositivos encontrados-->
 					</div>
-					<div>&nbsp;</div>
-					<div class="text-center">
-						<span class="btn btn-danger btn-block" onclick="botonDispositivosCancel();" data-lang="cancel"></span>
-					</div>
 				</div>
+			</div>
+			<div class="text-center btn-cont-fixed">
+				<span class="dispMain btn btn-action btn-block" onclick="botonDispositivosFind();" data-lang="disp_find"></span>
+				<span class="dispFind oculto btn btn-danger btn-block" onclick="botonDispositivosCancel();" data-lang="cancel"></span>
 			</div>
 		</section>	
 		<section id="perfil" class="Page">
-				<div class="container Main">
-					<p class="text-center general-title" data-lang="perfil"></p>
-					<div class="row text-center user_inicio">
-						<div class="perfil-photo-wrapper">
-							<span class="perfil-photo text-center" style="background-image:url(img/perfil-man.jpg);"></span>
-							<div class="edit_porfile_button" onclick="show_perfil();"></div>
-						</div>
-						<h2 class="perfil-nombre"></h2>
+			<div class="container Main">
+				<p class="text-center general-title" data-lang="perfil"></p>
+				<div class="row text-center user_inicio">
+					<div class="perfil-photo-wrapper">
+						<span class="perfil-photo text-center" onclick="$('#imgupload').click();"></span>
 					</div>
-			
-					<div class="row row3 perfil-info">
-						<div class="col">
-							<img src="img/edad_icon.png" />
-							<span class="perfil-edad"></span>
-						</div>
-						<div class="col">
-							<img src="img/estatura_icon.png" />
-							<span class="perfil-estatura"></span>
-						</div>
-						<div class="col">
-							<img src="img/peso_icon.png" />
-							<span class="perfil-peso"></span>
-						</div>
+					<h2 class="perfil-nombre"></h2>
+				</div>
+				<div class="row row3 perfil-info">
+					<div class="col">
+						<img src="img/edad_icon.png" />
+						<span class="perfil-edad"></span>
 					</div>
-					<div class="row imc">
-						<div class="col col50">
-							<span class="imc-bg">
-								<span class="before"></span>
-								<span class="after"></span>
-							</span>
-						</div>
-						<div class="col col50 imc-dt">
-							<div class="imc-title text-center" data-lang="suimc"></div>
-							<div class="imc-data">00.0</div>
-							<div class="imc-info text-center"></div>
-						</div>
+					<div class="col">
+						<img src="img/estatura_icon.png" />
+						<span class="perfil-estatura"></span>
 					</div>
-					<!--div class="text-center" id="fbConnect">
-						<span class="btn btn-facebook btn-block btn-icon btn-icon-fb" onclick="fbLogin();" data-lang="RegOnFb"></span>
-						<div>&nbsp;</div>
-					</div-->
-					<div class="text-center btn-cont-fixed">
-						<span id="btnWizard" class="btn btn-action btn-block" onclick="show_paso_uno({to:'show_perfil({to:\'show_inicio();\'});'});" data-lang="edit_profile"></span>
+					<div class="col">
+						<img src="img/peso_icon.png" />
+						<span class="perfil-peso"></span>
 					</div>
 				</div>
+				<div class="row imc">
+					<div class="col col50">
+						<span class="imc-bg">
+							<span class="before"></span>
+							<span class="after"></span>
+						</span>
+					</div>
+					<div class="col col50 imc-dt">
+						<div class="imc-title text-center" data-lang="suimc"></div>
+						<div class="imc-data">00.0</div>
+						<div class="imc-info text-center"></div>
+					</div>
+				</div>
+				<!--div class="text-center" id="fbConnect">
+					<span class="btn btn-facebook btn-block btn-icon btn-icon-fb" onclick="fbLogin();" data-lang="RegOnFb"></span>
+					<div>&nbsp;</div>
+				</div-->
+			</div>
+			<div class="text-center btn-cont-fixed">
+				<span id="btnWizard" class="btn btn-action btn-block" onclick="show_paso_uno({to:'show_perfil({to:\'show_inicio();\'});'});" data-lang="edit_profile"></span>
+			</div>
 		</section>
 		<section id="principal" class="Page">
 			<div class="container Main">
 				<div class="ppal-container">
 					<div class="row row2 ppal-deta">
-						<div class="col col100  border-bottom">
-							<div class="ppal-deta-tit" data-lang="distancia"></div>
-							<div class="ppal-deta-img"> <img src="img/distance_icon.png" /> </div>
-							<div class="ppal-deta-num DISTA"> 0 </div>
-						</div>
-						<div class="col border-right">
+						<div class="col col100 text-center border-bottom">
 							<div class="ppal-deta-tit" data-lang="pulso"></div>
-							<div class="ppal-deta-img"> <img src="img/hearth_icon.png" /> </div>
-							<div class="ppal-deta-num PPM"> 0 </div>
+							<!--div class="ppal-deta-img"> <img src="img/hearth_icon.png" /> </div-->
+							<div class="est-icon est-icon-hearth PPM"> 0 </div>
+						</div>
+						<div class="col text-center border-right">
+							<div class="ppal-deta-tit" data-lang="distancia"></div>
+							<!--div class="ppal-deta-img"> <img src="img/distance_icon.png" /> </div-->
+							<div class="est-icon est-icon-distance DISTA"> 0 </div>
 						</div>
 						<!--div class="col border-bottom">
 							<div class="ppal-deta-tit" data-lang="pasos"></div>
 							<div class="ppal-deta-img"> <img src="img/step_icon.png" /> </div>
 							<div class="ppal-deta-num PASOS"> 0 </div>
 						</div-->
-						<div class="col">
+						<div class="col text-center">
 							<div class="ppal-deta-tit" data-lang="calorias"></div>
-							<div class="ppal-deta-img"> <img src="img/calories_icon.png" /> </div>
-							<div class="ppal-deta-num CALOR"> 0 </div>
+							<!--div class="ppal-deta-img"> <img src="img/calories_icon.png" /> </div-->
+							<div class="est-icon est-icon-calories CALOR"> 0 </div>
 						</div>
 					</div>
 				</div>
@@ -401,13 +395,13 @@
 					<div class="border-bottom">&nbsp;</div>
 					<div class="ppal-container">
 						<div class="ContBotones row row3">
-							<div class="col border-right">
+							<div class="col text-center border-right">
 								<span class="ppal-icon ppal-icon-music" onclick="musica({to:'show_principal();'});" data-lang="musica"></span>
 							</div>
-							<div class="botonMapa col border-right">
+							<div class="botonMapa col text-center border-right">
 								<span class="ppal-icon ppal-icon-map" onclick="show_map({to:'show_principal();'});" data-lang="mapa"></span>
 							</div>
-							<div class="col">
+							<div class="col text-center">
 								<span class="ppal-icon ppal-icon-share" data-lang="compartir" onclick="showShare();"></span>
 							</div>
 						</div>
@@ -423,28 +417,27 @@
 					<div class="border-bottom">&nbsp;</div>
 					<div class="ppal-container">
 						<div class="ContBotones row row3">
-							<div class="col border-right">
+							<div class="col text-center border-right">
 								<span class="ppal-icon ppal-icon-music ppal-icon-disabled" data-lang="musica"></span>
 							</div>
-							<div class="botonMapa col border-right">
+							<div class="botonMapa col text-center border-right">
 								<span class="ppal-icon ppal-icon-map ppal-icon-disabled" data-lang="mapa"></span>
 							</div>
-							<div class="col">
+							<div class="col text-center">
 								<span class="ppal-icon ppal-icon-close-share" data-lang="cerrar" onclick="closeShare();"></span>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div>&nbsp;</div>
-				<div class="text-center">
-					<span id="BtnPausar" class="btn btn-action btn-block" onclick="pause();" data-lang="pausar"></span>
-					<div id="BtnDetener" class="row oculto">
-						<div class="col50">
-							<span class="btn btn-action btn-block" onclick="continuar();" data-lang="continuar"></span>
-						</div>
-						<div class="col50">
-							<span class="btn btn-danger  btn-block" onclick="stop();" data-lang="detener"></span>
-						</div>
+			</div>
+			<div class="text-center btn-cont-fixed">
+				<span id="BtnPausar" class="btn btn-action btn-block" onclick="pause();" data-lang="pausar"></span>
+				<div id="BtnDetener" class="row oculto">
+					<div class="col50">
+						<span class="btn btn-action btn-block" onclick="continuar();" data-lang="continuar"></span>
+					</div>
+					<div class="col50">
+						<span id="btnCancel" class="btn btn-info btn-block" data-lang="detener"></span>
 					</div>
 				</div>
 			</div>
@@ -571,10 +564,9 @@
 					<span id="switchWifi" class="switch" onclick="switch_wifi(this);"></span>
 				</div>
 				<div>&nbsp;</div>
-				<div class="text-center">
-					<span class="btn btn-facebook btn-block btn-icon btn-icon-fb" onclick="fbLogin();" data-lang="RegOnFb"></span>
-				</div>
-				
+			</div>
+			<div class="text-center btn-cont-fixed">
+				<span class="btn btn-facebook btn-block btn-icon btn-icon-fb" onclick="fbLogin();" data-lang="RegOnFb"></span>
 			</div>
 		</section>
 		<section id="estadisticas_pasos" class="estadisticas Page">
@@ -712,17 +704,17 @@
 	<input type="text" value="" class="form-control" />
 	</form>
 	<div id="mensajes" class="debugbox"></div>
-	<section id="PopAlert" class="popup-cont Page toLeft">
+	<div id="PopAlert" class="popup-cont Page toLeft">
 		<div class="popup-int">
 			<div class="popup-content">
 				<p class="textPop text-center"></p>
 				<div>&nbsp;</div>
 				<div class="text-center">
-					<span class="btnSave btn btn-action"></span>
-					<span class="btnVolv btn btn-action"></span>
+					<span class="col50 btnSave btn btn-action"></span>
+					<span class="col50 btnVolv btn btn-danger"></span>
 				</div>
 			</div>
 		</div>
-	</section>
+	</div>
   </body>
 </html>

@@ -6,12 +6,12 @@
 		version     = "0.0.2" >
 	<!-- versionCode is optional and Android only -->
 	
-	<name>sforza</name>
+	<name>Sforza</name>
 	<description>
-		Connect with bluetooth device
+		Siluet
 	</description>
-	<author href="https://irisdev.co" email="alejandro.santos@grupoiris.co">
-			Alejandro  St.
+	<author href="https://irisdev.co" email="digital@grupoiris.co">
+			Grupo Iris
 	</author>
 	
 	<preference name="webviewbounce" value="false" />
@@ -21,6 +21,7 @@
 	
 	<access origin="*"/>
 
+	<gap:plugin name="org.apache.cordova.vibration" version="0.3.11" />
 	<gap:plugin name="com.randdusing.bluetoothle" version="2.0.0" />
 	<gap:plugin name="org.apache.cordova.device-motion" version="0.2.10" />
 	<gap:plugin name="org.apache.cordova.geolocation" version="0.3.10" />
