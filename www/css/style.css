@@ -370,13 +370,13 @@ header .btn{
 }
 @-webkit-keyframes inicioAnimation {
 	0% {
-		transform: rotate(0deg) scale(1);
+		-webkit-transform: rotate(0deg) scale(1);
 	}
 	30% {
-		transform: rotate(360deg) scale(1.5);
+		-webkit-transform: rotate(360deg) scale(1.5);
 	}
 	100% {
-		transform: rotate(1440deg) scale(0);
+		-webkit-transform: rotate(1440deg) scale(0);
 		
 	}
 }
