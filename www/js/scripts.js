@@ -2813,6 +2813,9 @@ webdb.executeSql('SELECT * FROM actividad WHERE chain = ?',  [SES['chain']],
 	function(tx, r){
 			rows = r.rows;
 			tot = rows.length;
+			
+			alert(tot);
+			
 			var dias = [];
 			var c;
 			var hora = "";
@@ -2854,7 +2857,9 @@ webdb.executeSql('SELECT * FROM actividad WHERE chain = ?',  [SES['chain']],
 		};
 
 		var last_day = dias[SES.day_graph];	
-		$(".title-graph").text(last_day.dia);		
+		$(".title-graph").text(last_day.dia);	
+
+		alert(last_day.dia);
 
 		webdb.executeSql("SELECT data, json FROM actividad WHERE chain = ? AND data LIKE '"+last_day.dia+"%'",  [SES['chain']],
 		function(tx, res){
