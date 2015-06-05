@@ -495,6 +495,7 @@ document.addEventListener("deviceready", DeviceReady, false);
 function DeviceReady(){
 	screen.lockOrientation('portrait');
 	isPhonegap = true;
+	$('.btn-iniciar').removeClass('active');
 	
 	if(SES['hrm']){
 		isInitialized(); 
@@ -620,7 +621,10 @@ function unitsValue( sel, tar ){
 		tex = (sel.val() == "")? '-': sel.find('option:selected').text();
 	tar.text(tex);
 }
-function show_inicio(from){	
+function show_inicio(from){
+	if(isPhonegap){
+		$('.btn-iniciar').removeClass('active');
+	}
 	show_perfil(false);
     ak_navigate('#inicio');
     //queris para determinar valores
@@ -708,9 +712,6 @@ function btnIniciar(bt){
 	$(bt).addClass('active'); 
 	setTimeout(function(){
 		show_config({to:'show_inicio();', tx: language.cancel});
-		setTimeout(function(){
-			$(bt).removeClass('active');
-		}, 1000);	
 	}, 500);
 	
 }
