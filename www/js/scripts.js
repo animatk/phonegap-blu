@@ -2021,8 +2021,8 @@ function stepsSuccess(a){
 			if(PPM != 0){ 
 				eficiencia = 0.5*(PPM/100);
 			}
-			CALO = (efficiencia * PES * ((metros/1000)/milla)).toFixed(1);
-			if(CALO = 99.9){
+			CALO = parseFloat((efficiencia * PES * ((metros/1000)/milla)).toFixed(1));
+			if(CALO > 99.9){
 				CALO = CALO.toFixed(0);
 			}
 			$('.CALOR').html( CALO );
