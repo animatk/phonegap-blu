@@ -1480,9 +1480,9 @@ function show_config(back){
 			api_clima();
 		}
 		if(DEVICE == 0){
-			$('#InfoHRM').addClass(language.nohrm );
+			$('#InfoHRM').html(language.nohrm );
 		}else{
-			$('#InfoHRM').addClass(language.conhrm+' '+$('div[data-add="'+DEVICE+'"]').text());
+			$('#InfoHRM').html(language.conhrm+' '+$('div[data-add="'+DEVICE+'"]').text());
 		}
 		ak_navigate('#config', back); 
 //	}else{
