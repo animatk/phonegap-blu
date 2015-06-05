@@ -741,10 +741,6 @@ header .btn{
 .form-terms a{
 	color: #63e05a;
 }
-
-
-
-
 .estadisticas{
 	text-align: center;
 }
@@ -784,7 +780,7 @@ header .btn{
 	width: 33.33%;
 	padding: 8px;
 	list-style: none;
-	background: #232126;
+	background: #1C1922;
 	text-align: center;
 	margin: 0;
 	border-right:1px solid #3A373F;
@@ -876,7 +872,7 @@ header .btn{
 	text-align: center;
 	padding: 10px 0;
 	list-style: none;
-	background-color: #232126;
+	background-color: #1C1922;
 	background-size:24px auto;
 	background-position: center center;
 	background-repeat: no-repeat;
@@ -905,8 +901,6 @@ header .btn{
 .submenu li:last-child{
 	border-right: 0;
 }
-
-
 
 /* end secciones */
 /* dispositivos */
