@@ -1479,6 +1479,11 @@ function show_config(back){
 		if(isOnLine()!= 'none'){
 			api_clima();
 		}
+		if(DEVICE == 0){
+			$('#InfoHRM').addClass(language.nohrm );
+		}else{
+			$('#InfoHRM').addClass(language.conhrm+' '+$('div[data-add="'+DEVICE+'"]').text());
+		}
 		ak_navigate('#config', back); 
 //	}else{
 //		show_sensibilidad(back);

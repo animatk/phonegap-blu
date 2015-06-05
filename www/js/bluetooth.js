@@ -296,7 +296,7 @@ function addClassHRM(){
 		var item = $('div[data-add="'+DEVICE+'"]').find('.switch');
 		item.removeClass('load').addClass('active');
 		
-		$('#InfoHRM').addClass(language.conhrm+' '+item.text() );
+		$('#InfoHRM').addClass(language.conhrm+' '+$('div[data-add="'+DEVICE+'"]').text() );
 		$('.bluetooth').addClass('active');
 		$('.disp-item .switch').not(item).addClass('inactive');
 	}
