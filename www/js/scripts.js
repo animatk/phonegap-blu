@@ -2319,6 +2319,7 @@ function guardar(resp){
 	$('.btnCancelBG1').removeClass('stoped');
     show_inicio();
 }
+
 $(function(){
 	localStorage.removeItem("month_graph");
 	localStorage.removeItem("end_graph");
@@ -2327,12 +2328,8 @@ $(function(){
 });
 
 
-
 function estadisticas(tipo, pagina, periodo){
-
-$(".prev-graph").attr("onclick","estadisticas('"+tipo+"', 'prev', 'mes');");
-$(".next-graph").attr("onclick","estadisticas('"+tipo+"', 'next', 'mes');");
-$(".estadisticas .grafica").show();
+	$(".estadisticas .grafica").show();
 
 //Botones activos
 $(".periodo li").each(function(){ $(this).removeClass('active'); });
@@ -2340,6 +2337,25 @@ $(".periodo .p"+periodo).addClass("active");
 $(".submenu li").each(function(){ $(this).removeClass('active'); });
 $(".img-"+tipo).addClass('active');
 
+
+	switch(periodo){
+		case "dia" :
+			EstadisticasDia(tipo, pagina);
+		break;
+		case "anio" :
+			EstadisticasAnio(tipo, pagina);
+		break;
+		default :
+			EstadisticasMes(tipo, pagina);
+		break;
+	}
+};
+
+
+function EstadisticasMes(tipo, pagina, periodo){
+
+$(".prev-graph").attr("onclick","estadisticas('"+tipo+"', 'prev', 'mes');");
+$(".next-graph").attr("onclick","estadisticas('"+tipo+"', 'next', 'mes');");
 
 
 webdb.executeSql('SELECT json, data FROM actividad WHERE chain = ? ORDER BY data ASC',  [SES['chain']],
@@ -2421,6 +2437,8 @@ webdb.executeSql('SELECT json, data FROM actividad WHERE chain = ? ORDER BY data
 	};			
 
 
+
+
 			if (!SES.month_graph) {	
 				SES.month_graph=meses.length-1;
 			};
@@ -2462,22 +2480,30 @@ webdb.executeSql('SELECT json, data FROM actividad WHERE chain = ? ORDER BY data
 
 			//Totales por tipo
 			for (var i = 0; i < data.length; i++) {
-
 				pasos = pasos + data[i].pasos;
-
 				if(isNumber(parseInt(data[i].distancia))){
 					distancia = distancia + data[i].distancia;
 				};
-
 				if(isNumber(parseInt(data[i].pulso)) && data[i].pulso > 0){
 					pulso = pulso + parseInt(data[i].pulso);
 					con++;
 				};
-
 				if(isNumber(parseFloat(data[i].calorias))){
 					calorias = parseFloat(data[i].calorias);
 				};				
 			};
+
+
+$('#cant_pasos').html(pasos);
+$('#cant_distancia').html(distancia);
+if(isNumber(pulso/con)){
+	$('#cant_pulso').text(parseInt(pulso/con));
+}else{
+	$('#cant_pulso').text('0');
+};
+$('#cant_calorias').html(calorias);
+
+
 
 
 			//Unidad distancia
@@ -2510,8 +2536,7 @@ webdb.executeSql('SELECT json, data FROM actividad WHERE chain = ? ORDER BY data
 			case "pasos":
 				for (var k = 0; k < data.length; k++) {
 					data1.push({ x : parseInt(k), y : parseInt(data[k].pasos), label : data[k].fecha.slice(8, 10) });	
-				};	
-				$('#cant_pasos').html(pasos);
+				};					
 				$(".img-step").addClass('active');
 				type = "column";
 			break;
@@ -2535,7 +2560,6 @@ webdb.executeSql('SELECT json, data FROM actividad WHERE chain = ? ORDER BY data
 						data1.push({ x : parseInt(k), y : parseFloat(dis), label : data[k].fecha.slice(8, 10) });
 					};
 				};
-				$('#cant_distancia').html(distancia);
 				$(".img-distance").addClass('active');
 				type = "line";
 			break;
@@ -2551,12 +2575,6 @@ webdb.executeSql('SELECT json, data FROM actividad WHERE chain = ? ORDER BY data
 
 					data1.push({ x : parseInt(k), y : c, label : data[k].fecha.slice(8, 10) });
 				};
-
-				if(isNumber(pulso/con)){
-					$('#cant_pulso').text(parseInt(pulso/con));
-				}else{
-					$('#cant_pulso').text('0');
-				};
 				
 				$(".img-hearth").addClass('active');
 				type = "line";
@@ -2569,23 +2587,14 @@ webdb.executeSql('SELECT json, data FROM actividad WHERE chain = ? ORDER BY data
 						c = c+ parseFloat(data[k].calorias);					
 					};
 				};				
-				data1.push({ x : parseInt(0), y : c, label : data[0].fecha.slice(8, 10) });	
-				$('#cant_calorias').html(calorias);
+				data1.push({ x : parseInt(0), y : c, label : data[0].fecha.slice(8, 10) });					
 				$(".img-calories").addClass('active');
 				type = "column";
 			break;
 			}//switch
         
-    if(periodo && periodo==="dia"){
-		EstadisticasDia(tipo, pagina);
-		return false;
-	};
-	if(periodo && periodo==="anio"){
-		EstadisticasAnio(tipo, pagina);
-		return false;
-	};
 
-				//Crear titulo del grafico
+			//Crear titulo del grafico - mes y año
 			for (var i = 0; i < data.length; i++) {
 				mes = data[i].fecha.slice(5, 7);
 				for (var j = 0; j < 12; j++) {
@@ -2597,6 +2606,7 @@ webdb.executeSql('SELECT json, data FROM actividad WHERE chain = ? ORDER BY data
 			
    
 	GraficarEstadistica(tipo, data1, type);
+
 	} else {
 		$('#cant_'+tipo).text(0);
 		$('.msj-estadisticas').show();
@@ -2752,8 +2762,7 @@ var data = [];
 				case "pasos":
 				for (var j = 1; j <= 12; j++) {
 					var p = 0;			
-					for (var i = 0; i < tot_mes.length; i++) {
-						
+					for (var i = 0; i < tot_mes.length; i++) {						
 						if (parseInt(tot_mes[i].mes)===j) {
 							p = p + tot_mes[i].pasos;
 						};
@@ -3017,6 +3026,7 @@ function GraficarEstadistica(tipo, data, type){
      });
     chart.render();   
 }
+
 /*! end principal */
 /*! configuracion */
 function show_configuracion(back){
