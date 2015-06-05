@@ -35,6 +35,20 @@
 		,"November"
 		,"December"
 	]
+	,"me": [
+		"Jan"
+		,"Feb"
+		,"Mar"
+		,"Apr"
+		,"May"
+		,"Jun"
+		,"Jul"
+		,"Aug"
+		,"Sep"
+		,"Oct"
+		,"Nov"
+		,"Dec"
+	]
 	,"dias": [
 		"Mon"
 		,"Tue"
@@ -125,4 +139,6 @@
 	,"cardio":"Heart Rate"
 	,"cerrar":"Close"
 	,"msj_estadisticas":"Not charts now"
+	,"nohrm":"No HRM connected"
+	,"conhrm":"Connected to "
 }

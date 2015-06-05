@@ -366,7 +366,7 @@ header .btn{
 	border: none;
 	width: 100px;
 	height: 100px;
-	transition: all .5s;
+	transition: all 1s ease-in-out;
 }
 @-webkit-keyframes inicioAnimation {
 	0% {
@@ -381,7 +381,8 @@ header .btn{
 }
 
 .btn-iniciar.active{
-	-webkit-transform: rotate(1440deg) scale(0);
+/*	-webkit-animation: inicioAnimation 1s ease-in-out;*/
+	-webkit-transform: rotate(1440deg) scale(1.5) scale(0);
 }
 
 

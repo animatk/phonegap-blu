@@ -35,6 +35,20 @@
 		,"Noviembre"
 		,"Diciembre"
 	]
+	,"me": [
+		"Ene"
+		,"Feb"
+		,"Mar"
+		,"Abr"
+		,"May"
+		,"Jun"
+		,"Jul"
+		,"Ago"
+		,"Sep"
+		,"Oct"
+		,"Nov"
+		,"Dic"
+	]
 	,"dias": [
 		"Lun"
 		,"Mar"
@@ -125,4 +139,6 @@
 	,"cardio":"Cardio"
 	,"cerrar":"Cerrar"
 	,"msj_estadisticas":"Aun no existen estadísticas"
+	,"nohrm":"No hay un HRM conectado"
+	,"conhrm":"Conectectado a "
 }
