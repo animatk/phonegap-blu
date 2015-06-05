@@ -1482,7 +1482,7 @@ function show_config(back){
 		if(DEVICE == 0){
 			$('#InfoHRM').html(language.nohrm );
 		}else{
-			$('#InfoHRM').html(language.conhrm+' '+$('div[data-add="'+DEVICE+'"]').text());
+			$('#InfoHRM').html(language.conhrm+' '+$('.disp-list div[data-add="'+DEVICE+'"]').text());
 		}
 		ak_navigate('#config', back); 
 //	}else{

@@ -295,8 +295,6 @@ function addClassHRM(){
 		$('#botonDisp').attr('data-add', DEVICE);
 		var item = $('div[data-add="'+DEVICE+'"]').find('.switch');
 		item.removeClass('load').addClass('active');
-		
-		$('#InfoHRM').html(language.conhrm+' '+$('div[data-add="'+DEVICE+'"]').text() );
 		$('.bluetooth').addClass('active');
 		$('.disp-item .switch').not(item).addClass('inactive');
 	}
@@ -306,7 +304,6 @@ function removeClassHRM(){
 		item.removeClass('active');
 		SES.removeItem('hrm');
 		DEVICE = 0;
-		$('#InfoHRM').html(language.nohrm );
 		$('.bluetooth').removeClass('active');
 		$('.disp-item .switch').removeClass('inactive');	
 }
