@@ -704,8 +704,16 @@ function show_inicio(from){
 		
     $('#submenu_estadisticas').hide();
 }
-
-
+function btnIniciar(bt){
+	$(bt).addClass('active'); 
+	setTimeout(function(){
+		show_config({to:'show_inicio();', tx: language.cancel});
+		setTimeout(function(){
+			$(bt).removeClass('active');
+		}, 1000);	
+	}, 500);
+	
+}
 function test_mapa(){	
 	loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyAihfNS3dpn6vB16RXRREYAy9jXEf63yUE&callback=initialize', function(){
 	//	
@@ -713,7 +721,6 @@ function test_mapa(){
 }
 var clor = null;
 var markers = [];
-
 function initialize() {
 	ak_navigate('#testMapa');
 	
@@ -798,7 +805,6 @@ function initialize() {
 	//	}
 	}
  }
-
 function ak_navigate(to, back){
 	if(isDevice() != 'Android'){
 		$('body').addClass('ios-device');
@@ -2095,7 +2101,6 @@ function show_map(back){
         mapGraphic.render();
     }
 }
-
 function api_clima(){
 	if(LAT != 0){
 		$.get('https://query.yahooapis.com/v1/public/yql?q=select yweather:units, item from weather.forecast where woeid in (SELECT woeid FROM geo.placefinder WHERE text="'+LAT+','+LON+'" and gflags="R")&format=json&env=store://datatables.org/alltableswithkeys'
@@ -2112,7 +2117,6 @@ function api_clima(){
 		});
 	}
 }
-
 function loadMapa(){
 	if(MAP != null){
 		if(MAP != 'callmap'){
@@ -2257,7 +2261,6 @@ function guardar(resp){
 	$('.btnCancelBG1').removeClass('stoped');
     show_inicio();
 }
-
 $(function(){
 	localStorage.removeItem("start_graph");
 	localStorage.removeItem("end_graph");
