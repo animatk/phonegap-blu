@@ -664,7 +664,6 @@ function show_inicio(from){
 					}
 
 				}
-
 				if(isNumber(parseFloat(pulso/pta))){
 					if(parseFloat(pulso/pta) != 0){
 						pul = pul + parseFloat(pulso/pta);  
@@ -673,8 +672,6 @@ function show_inicio(from){
 				}
 			}
 			
-			
-			
 			if(PERFIL.unit == 'M'){
 				var metro = 39.370;
 				var metros = dis/metro;
@@ -682,18 +679,31 @@ function show_inicio(from){
 				
 				if( metros > 1000 ){
 					dis = metros/1000;
-					dis = dis.toFixed(1) + '<span class="deta-light">km</span>';
+					dis = dis.toFixed(2);
+					if(dis > 9.99){
+						dis = dis.toFixed(1);
+					}
+					dis = dis+ '<span class="deta-light">km</span>';
 				}
 			}else{
-				var dis = (dis / 63360).toFixed(1)+ '<span class="deta-light">mi</span>';
+				dis = (dis / 63360).toFixed(2);
+				if(dis > 9.99){
+					dis = dis.toFixed(1);
+				}
+				dis = dis+ '<span class="deta-light">mi</span>';
 			}
 
 			var pasos = pas.toFixed(0);
 
 			cal = cal.toFixed(1);
-			if(cal > 1000){
-				cal = (cal/1000).toFixed(1)+'<span class="deta-light">k</span>';
+			if(cal > 99.9){
+				cal = cal.toFixed(0);
 			}
+			if(cal > 9999){
+				cal = (cal/1000).toFixed(1);
+				cal = cal+'<span class="deta-light">k</span>';
+			}
+			
 			
 			if(pasos > 1000){
 				pasos = (pasos/1000).toFixed(1)+'<span class="deta-light">k</span>';
@@ -1056,6 +1066,11 @@ function show_perfil(nav){
 
             //SI LA VISTA CARGA ENTONCES CALCULA EL IMC
             var weight = PERFIL.weight, height = PERFIL.height;
+			
+			if(PERFIL.unit == 'E'){
+				height = (height * 30.48).toFixed(0);
+				weight = (weight * 0.45359237).toFixed(0);
+			}
 
 			if(weight > 0 && height > 0){
                 var finalBmi = weight/(height/100*height/100);
@@ -1969,10 +1984,18 @@ function stepsSuccess(a){
 			if(PERFIL.unit == 'M'){
 				if( metros > 1000 ){
 					mostrar = metros/1000;
-					mostrar = mostrar.toFixed(2) + '<span class="deta-light">km</span>';
+					mostrar = mostrar.toFixed(2);
+					if(mostrar > 9.99){
+						mostrar = mostrar.toFixed(1);
+					}
+					mostrar = mostrar+ '<span class="deta-light">km</span>';
 				}
 			}else{
-				mostrar = (pulgadas / 63360).toFixed(2)+ '<span class="deta-light">mi</span>';
+				mostrar = (pulgadas / 63360).toFixed(2);
+				if(mostrar > 9.99){
+					mostrar = mostrar.toFixed(1);
+				}
+				mostrar = mostrar+ '<span class="deta-light">mi</span>';
 			}
 			if(DISTA > LASTTTACK+(39.370*10)){
 				if(trackActivity()){
@@ -1999,8 +2022,10 @@ function stepsSuccess(a){
 				eficiencia = 0.5*(PPM/100);
 			}
 			CALO = (efficiencia * PES * ((metros/1000)/milla)).toFixed(1);
+			if(CALO = 99.9){
+				CALO = CALO.toFixed(0);
+			}
 			$('.CALOR').html( CALO );
-			
 		}
 		$('.PASOS').html( STEP );
 		initClock();

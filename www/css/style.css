@@ -1747,6 +1747,7 @@ Pagination Styles
 .est-icon.DISTA,
 .est-icon.CALOR{
 	font-size: 25px;
+	padding-left: 40px !important;
 }
 
 .est-icon{
@@ -1956,7 +1957,7 @@ Pagination Styles
 	}
 	.est-icon.DISTA,
 	.est-icon.CALOR{
-		font-size: 30px;
+		font-size: 26px;
 	}
 	.estadisticas .grafica{
 		height: 200px;
@@ -2079,8 +2080,10 @@ Pagination Styles
 	}
 	.est-icon.DISTA,
 	.est-icon.CALOR{
-		font-size: 40px;
-	}
+		font-size: 33px;
+	
+		padding-left: 45px !important;
+}
 	.cuentaA.active{
 		opacity: 1;
 		top: 100px;
