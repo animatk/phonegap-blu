@@ -2617,11 +2617,13 @@ webdb.executeSql('SELECT data FROM actividad WHERE chain = ?',  [SES['chain']],
 	function(tx, r){
 			rows = r.rows;
 			tot = rows.length;
+			var row = [];
 			var anios = [];
 			var anio = "";
 			var ant = "";
 			for (var i = 0; i < tot; i++) {
-				anio = rows[i].data.slice(0,4);	
+				row[i] = rows.item(i);
+				anio = row[i].data.slice(0,4);	
 				if (ant !== anio) {					
 					anios.push({anio:anio});				
 				};	
@@ -2665,9 +2667,12 @@ webdb.executeSql('SELECT data FROM actividad WHERE chain = ?',  [SES['chain']],
 		function(tx, res){
 			rows2 = res.rows;
 			tot2 = rows2.length;
+			var row2 = [];
 			var datos = [];
 			for(var i=0; i<tot2; i++){
-				var obj = JSON.parse(rows2[i].json);
+				row2[i] = rows2.item(i);
+				var obj = JSON.parse(row2[i].json);
+				
 				var ppm = 0;
 				var c = 1;
 				for (var n = 0; n < obj.length; n++) {
@@ -2814,7 +2819,6 @@ webdb.executeSql('SELECT json, data AS dat FROM actividad WHERE chain = ?',  [SE
 			rows = r.rows,
 			tot = rows.length;
 			
-			alert(tot);
 			var row = [];
 			var dias = [];
 			var hora = "";
@@ -2825,14 +2829,12 @@ webdb.executeSql('SELECT json, data AS dat FROM actividad WHERE chain = ?',  [SE
 				if (ant !== dia) {
 					dias.push({dia: dia});
 				};
-				alert(dia);
 				ant = dia;
 			}
-	/*	
+			
 		var last_pos = dias.length-1;
 		var first_day = dias[0];
 		
-		alert(JSON.stringify(dias));
 
 		if (!SES.day_graph) {
 			SES.day_graph = last_pos;
@@ -2869,11 +2871,13 @@ webdb.executeSql('SELECT json, data AS dat FROM actividad WHERE chain = ?',  [SE
 			tot2 = rows2.length;
 			var datos = [];
 			var dias2 = [];
+			var row2 = [];
 			var j = 0;
 			alert(tot2);
 		if (tot2>1) {			
 			for(j = 0; j<tot2; j++){
-				var obj = JSON.parse(rows2[j].json);
+				row2[j] = rows2.item(j);
+				var obj = JSON.parse(row2[j].json);
 				dias2.push({
 					hora:obj[obj.length-1].end,
 					pasos:obj[obj.length-1].ste,
@@ -2964,7 +2968,7 @@ webdb.executeSql('SELECT json, data AS dat FROM actividad WHERE chain = ?',  [SE
 		  }, function(tx, r){
 			//console.log(r);
 		});
-		*/
+
 	}, function(tx, r){
 		//console.log(r);
 	});
