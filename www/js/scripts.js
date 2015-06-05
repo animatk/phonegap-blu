@@ -2809,18 +2809,19 @@ function EstadisticasDia(tipo, pagina){
 $(".prev-graph").attr("onclick","estadisticas('"+tipo+"', 'prev', 'dia');");
 $(".next-graph").attr("onclick","estadisticas('"+tipo+"', 'next', 'dia');");
 
-webdb.executeSql('SELECT * FROM actividad WHERE chain = ?',  [SES['chain']],
-	function(tx, r){
-			rows = r.rows;
+webdb.executeSql('SELECT json, data AS dat FROM actividad WHERE chain = ?',  [SES['chain']],
+		function ok(tx, r){
+			rows = r.rows,
 			tot = rows.length;
 			
 			alert(tot);
-			
+			var row = [];
 			var dias = [];
 			var hora = "";
 			var ant = "";
 			for(var i=0; i<tot; i++){
-				var dia = rows[i].data.slice(0,10);
+				row[i] = rows.item(i);
+				var dia = row[i].dat.slice(0,10);
 				if (ant !== dia) {
 					dias.push({dia: dia});
 				};
