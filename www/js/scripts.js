@@ -712,7 +712,7 @@ function btnIniciar(bt){
 	$(bt).addClass('active'); 
 	setTimeout(function(){
 		show_config({to:'show_inicio();', tx: language.cancel});
-	}, 500);
+	}, 600);
 	
 }
 function test_mapa(){	
