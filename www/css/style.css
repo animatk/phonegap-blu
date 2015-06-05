@@ -381,9 +381,7 @@ header .btn{
 }
 
 .btn-iniciar.active{
-	-webkit-animation: inicioAnimation .7s ease-in-out;
 	-webkit-transform: rotate(1440deg) scale(0);
-	/*transform: rotate(1440deg);*/
 }
 
 
