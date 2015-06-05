@@ -372,8 +372,8 @@ header .btn{
 	transition: all .5s;
 }
 
-.btn-iniciar:active{
-	transform: rotate(1080deg);
+.btn-iniciar.active{
+	transform: rotate(1440deg);
 }
 .boton-login{
 	padding: 0;
