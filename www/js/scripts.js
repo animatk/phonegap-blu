@@ -709,11 +709,11 @@ function show_inicio(from){
 				pasos = (pasos/1000).toFixed(1)+'<span class="deta-light">k</span>';
 			}
 
-            $('#esta-pas .num').html(pasos);
-            $('#esta-dis .num').html(dis);
-            $('#esta-cal .num').html(cal);
+            $('.esta-pas').html(pasos);
+            $('.esta-dis').html(dis);
+            $('.esta-cal').html(cal);
 			pul = (pul > 0)? (pul/pto).toFixed(0):0;
-            $('#esta-pul .num').html(pul);
+            $('.esta-pul').html(pul);
 		},
 		function(tx, e){});
 		
@@ -2476,61 +2476,30 @@ webdb.executeSql('SELECT json, data FROM actividad WHERE chain = ? ORDER BY data
 			var type = "";
 			var data1 = [];
 			var con = 0;
-
-
-			//Totales por tipo
-			for (var i = 0; i < data.length; i++) {
-				pasos = pasos + data[i].pasos;
-				if(isNumber(parseInt(data[i].distancia))){
-					distancia = distancia + data[i].distancia;
-				};
-				if(isNumber(parseInt(data[i].pulso)) && data[i].pulso > 0){
-					pulso = pulso + parseInt(data[i].pulso);
-					con++;
-				};
-				if(isNumber(parseFloat(data[i].calorias))){
-					calorias = parseFloat(data[i].calorias);
-				};				
+			
+		//Unidad distancia
+		if(PERFIL == null){
+			PERFIL = JSON.parse(SES['perfil']);
+		};
+		if(PERFIL.unit == 'M'){
+			var metro = 39.370;
+			var metros = distancia/metro;
+			distancia = metros.toFixed(0) + '<span class="deta-light">mt</span>';
+			if( metros > 1000 ){
+				distancia = metros/1000;
+				distancia = distancia.toFixed(1) + '<span class="deta-light">km</span>';
 			};
+		}else{
+			distancia = (distancia / 63360).toFixed(1)+ '<span class="deta-light">mi</span>';
+		};
 
+		if(calorias > 1000){
+			calorias = (calorias/1000).toFixed(1)+'<span class="deta-light">k</span>';
+		};
 
-$('#cant_pasos').html(pasos);
-$('#cant_distancia').html(distancia);
-if(isNumber(pulso/con)){
-	$('#cant_pulso').text(parseInt(pulso/con));
-}else{
-	$('#cant_pulso').text('0');
-};
-$('#cant_calorias').html(calorias);
-
-
-
-
-			//Unidad distancia
-			if(PERFIL == null){
-				PERFIL = JSON.parse(SES['perfil']);
-			};
-			if(PERFIL.unit == 'M'){
-				var metro = 39.370;
-				var metros = distancia/metro;
-				distancia = metros.toFixed(0) + '<span class="deta-light">mt</span>';
-				if( metros > 1000 ){
-					distancia = metros/1000;
-					distancia = distancia.toFixed(1) + '<span class="deta-light">km</span>';
-				};
-			}else{
-				distancia = (distancia / 63360).toFixed(1)+ '<span class="deta-light">mi</span>';
-			};
-
-			if(calorias > 1000){
-				calorias = (calorias/1000).toFixed(1)+'<span class="deta-light">k</span>';
-			};
-
-			if(pasos > 1000){
-				pasos = (pasos/1000).toFixed(1)+'<span class="deta-light">k</span>';
-			};
-
-
+		if(pasos > 1000){
+			pasos = (pasos/1000).toFixed(1)+'<span class="deta-light">k</span>';
+		};
 
 		switch(tipo) {
 			case "pasos":
@@ -2893,7 +2862,8 @@ webdb.executeSql('SELECT * FROM actividad WHERE chain = ?',  [SES['chain']],
 			tot2 = rows2.length;
 			var datos = [];
 			var dias2 = [];
-			var j = 0;		
+			var j = 0;
+			alert(tot2);
 		if (tot2>1) {			
 			for(j = 0; j<tot2; j++){
 				var obj = JSON.parse(rows2[j].json);

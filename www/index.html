@@ -61,30 +61,30 @@
 					</div>
 					<div class="row row2">
 						<div class="col text-center">
-							<span id="esta-pul" class="btn-estadisticas" onclick="estadisticas('pulso','ini','dia');">
+							<span  class="btn-estadisticas" onclick="estadisticas('pulso','ini','dia');">
 								<span data-lang="pulso" class="btn_title"></span>
-								<span class="est-icon est-icon-hearth num">0</span>
+								<span class="esta-pul est-icon est-icon-hearth num">0</span>
 							</span>
 						</div>
 						<div class="col text-center">
-							<span id="esta-pas" class="btn-estadisticas" onclick="estadisticas('pasos','ini','dia');">
+							<span class="btn-estadisticas" onclick="estadisticas('pasos','ini','dia');">
 								<span data-lang="pasos" class="btn_title"></span>
-								<span class="est-icon est-icon-step num">0</span>
+								<span class="esta-pas est-icon est-icon-step num">0</span>
 							</span>
 						</div>
 					</div>
 					<div>&nbsp;</div>
 					<div class="row row2">
 						<div class="col text-center">
-							<span id="esta-dis" class="btn-estadisticas" onclick="estadisticas('distancia','ini','dia');">
+							<span class="btn-estadisticas" onclick="estadisticas('distancia','ini','dia');">
 								<span data-lang="distancia" class="btn_title"></span>
-								<span class="est-icon est-icon-distance num">0<span class="deta-light">km</span></span>
+								<span class="esta-dis est-icon est-icon-distance num">0<span class="deta-light">km</span></span>
 							</span>
 						</div>
 						<div class="col text-center">
-							<span id="esta-cal" class="btn-estadisticas" onclick="estadisticas('calorias','ini','dia');">
+							<span class="btn-estadisticas" onclick="estadisticas('calorias','ini','dia');">
 								<span data-lang="calorias" class="btn_title"></span>
-								<span class="est-icon est-icon-calories num">0</span>
+								<span class="esta-cal est-icon est-icon-calories num">0</span>
 							</span>
 						</div>
 					</div>
@@ -582,7 +582,7 @@
 			<div class="container Main">
 				<p class="text-center general-title" data-lang="pasos"></p>
                 <img src="img/step_icon.png">
-                <h2 class="text-right general-title" id="cant_pasos"></h2>
+                <h2 class="text-right general-title esta-pas"></h2>
 				<ul class="row periodo">
                     <li data-lang="dia"  onclick="estadisticas('pasos','ini','dia');"  class="pdia"></li>
                     <li data-lang="mes"  onclick="estadisticas('pasos','ini','mes');"  class="pmes"></li>
@@ -601,7 +601,7 @@
 			<div class="container Main">
 				<p class="text-center general-title" data-lang="calorias"></p>
                 <img src="img/calories_icon.png">
-                <h2 class="text-right general-title" id="cant_calorias"></h2>
+                <h2 class="text-right general-title esta-cal"></h2>
 				<ul class="row periodo">
                     <li data-lang="dia"  onclick="estadisticas('calorias','ini','dia');"  class="pdia"></li>
                     <li data-lang="mes"  onclick="estadisticas('calorias','ini','mes');"  class="pmes"></li>
@@ -620,7 +620,7 @@
 			<div class="container Main">
 				<p class="text-center general-title" data-lang="pulso"></p>
                 <img src="img/hearth_icon.png">
-                <h2 class="text-right general-title" id="cant_pulso"></h2>
+                <h2 class="text-right general-title esta-pul"></h2>
 				<ul class="row periodo">
                     <li data-lang="dia"  onclick="estadisticas('pulso','ini','dia');"  class="pdia"></li>
                     <li data-lang="mes"  onclick="estadisticas('pulso','ini','mes');"  class="pmes"></li>
@@ -639,7 +639,7 @@
 			<div class="container Main">
 				<p class="text-center general-title" data-lang="distancia"></p>
                 <img src="img/distance_icon.png">
-                <h2 class="text-right general-title" id="cant_distancia"></h2>
+                <h2 class="text-right general-title esta-dis"></h2>
 				<ul class="row periodo">
                     <li data-lang="dia"  onclick="estadisticas('distancia','ini','dia');"  class="pdia  active"></li>
                     <li data-lang="mes"  onclick="estadisticas('distancia','ini','mes');"  class="pmes"></li>
