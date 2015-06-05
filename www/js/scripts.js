@@ -650,6 +650,7 @@ function show_inicio(from){
                 pas = pas + ult.ste;
 				if(isNumber(parseFloat(ult.cal))){
 					cal = cal + parseFloat(ult.cal);  
+					cal = cal.toFixed(1);  
 				}
 				
 				var pulso = 0;
@@ -688,7 +689,7 @@ function show_inicio(from){
 				var dis = (dis / 63360).toFixed(1)+ '<span class="deta-light">mi</span>';
 			}
 
-			var pasos = pas;
+			var pasos = pas.toFixed(0);
 
 			if(cal > 1000){
 				cal = (cal/1000).toFixed(1)+'<span class="deta-light">k</span>';
@@ -2065,17 +2066,24 @@ function show_map(back){
     if(mapGraphic != null){
 		var tot = data.length;
 		var obj = data[tot-1];
-		if(PERFIL.unit == 'M'){
-			var distancia = (obj.dis / 39370).toFixed(1)+'k';
-		}else{
-			var distancia = (obj.dis / 63360).toFixed(1)+'m';
+		if(isNumber(obj.dis)){
+			if(PERFIL.unit == 'M'){
+				var distancia = (obj.dis / 39370).toFixed(1)+'k';
+			}else{
+				var distancia = (obj.dis / 63360).toFixed(1)+'m';
+			}
+			
+			mapGraphic.options.data[0].dataPoints.push({ y: obj.ppm , label: distancia });
+			mapGraphic.render();
 		}
-		
-		mapGraphic.options.data[0].dataPoints.push({ y: obj.ppm , label: distancia });
-		mapGraphic.render();
 	}else{	
 		var grafico = [];
 		var obj = data[0];
+		
+		if(!isNumber(obj.dis)){
+			return false;
+		}
+		
 		if(PERFIL.unit == 'M'){
 			var distancia = (obj.dis / 39370).toFixed(1)+'k';
 		}else{
