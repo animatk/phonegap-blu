@@ -493,15 +493,35 @@ header .btn{
 
 
 
-#btnCancel{
-	-webkit-transition: all 2s; 
-	box-shadow: 200px 0 0 -200px #D84A1D inset;
+
+.btnCancelContent{
+	position: relative;
+}
+.btnCancelBG1,
+.btnCancelBG2{
+	position: absolute;
+	height: 100%;
+	width: 0;
+	top: 0;
+	left: 0;
+	z-index: 3;
+	background: #D84A1D;
+	-webkit-transition: all .5s ease-in-out;
+}
+.btnCancelBG2{
+	width: 100%;
+	z-index: 1;
+	background: #595959;
 }
 
-
-#btnCancel.stoped,
-#btnCancel.animCancel{
-	box-shadow: 400px 0 0 -200px #D84A1D inset;
+.btnCancel{
+	z-index: 5;
+	position: relative;
+	background-color: transparent;
+}
+.btnCancelBG1.stoped,
+.btnCancelBG1.animCancel{
+	width: 100%;
 }
 /* end header*/
 

@@ -54,11 +54,10 @@ var SES = window.localStorage,
 	isPhonegap = false, //es phonegap
 	mapGraphic = null, //grafico en mapa
 	D = 10, //grafico en mapa
+	btnCancel = false,
 	SITE = 'http://52.11.112.109/index.php/';
 //}
 getLang({exe: 'setText'});
-
-var t = 0, ini = false;
 
 $(function(){
 	setTimeout(function(){
@@ -66,14 +65,12 @@ $(function(){
 			iniciar();
 		}
 	}, 1800);
-	
 
-	var box = $('#btnCancel').get(0);
+	var box = $('.btnCancel').get(0);
 	box.addEventListener('touchstart', function(e){
 		var touchobj = e.changedTouches[0]; // reference first touch point (ie: first finger)
-			console.log('touch IN');
-			ini = true;
-			$('#btnCancel').addClass('animCancel');			
+			$('.btnCancelBG1').addClass('animCancel');	
+			btnCancel = true;
 			botonCancel();
 		if( e.target == box){
 			e.preventDefault();
@@ -82,10 +79,8 @@ $(function(){
 	//
 	box.addEventListener('touchend', function(e){
 		var touchobj = e.changedTouches[0];
-			console.log('touch OUT');
-			ini = false;
-			t = 0;
-			$('#btnCancel').removeClass('animCancel');		
+			btnCancel = false;
+			$('.btnCancelBG1').removeClass('animCancel');		
 		if( e.target == box){
 			e.preventDefault();
 		}
@@ -93,16 +88,17 @@ $(function(){
 });
 
 function botonCancel(){
-	if(ini){
+	if(btnCancel){
 		setTimeout(function(){
-			if(t >= 2){
-				$('#btnCancel').addClass('stoped');
+			var act = $('.btnCancelBG1').width();
+			var btnCancelWidth = $('.btnCancel').width();
+			if(act >= btnCancelWidth){
+				$('.btnCancelBG1').addClass('stoped');
 				stop();
 			}else{
-				botonCancel(ini);
+				botonCancel();
 			}
-			t++;
-		}, 800);
+		}, 50);
 	}
 }
 
@@ -2168,7 +2164,7 @@ function loadMapa(){
 }
 function pause(call){
 	trackActivity();
-	navigator.vibrate([800, 600]);
+	navigator.vibrate([800]);
 	$('#BtnPausar').addClass('oculto');
 	$('#BtnDetener').removeClass('oculto');
 	PAUSED = true;
@@ -2260,7 +2256,7 @@ function guardar(resp){
 	}
 	$('.toCenter, .toLeft, .toRight').not('#PopAlert').removeClass('toCenter toLeft toRight');
 	$('#PopAlert').removeClass('toCenter');
-	$('#btnCancel').removeClass('stoped');
+	$('.btnCancelBG1').removeClass('stoped');
     show_inicio();
 }
 
