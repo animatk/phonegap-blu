@@ -86,7 +86,6 @@ $(function(){
 		}
 	}, false);
 });
-
 function botonCancel(){
 	if(btnCancel){
 		setTimeout(function(){
@@ -101,7 +100,6 @@ function botonCancel(){
 		}, 50);
 	}
 }
-
 function swipeHorz(box, func, durante){
 	var startx = 0, dist = 0;
 	//

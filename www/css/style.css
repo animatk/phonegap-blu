@@ -372,7 +372,7 @@ header .btn{
 	transition: all .5s;
 }
 
-.btn-iniciar:hover{
+.btn-iniciar:active{
 	transform: rotate(1080deg);
 }
 .boton-login{
