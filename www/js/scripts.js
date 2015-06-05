@@ -2817,7 +2817,6 @@ webdb.executeSql('SELECT * FROM actividad WHERE chain = ?',  [SES['chain']],
 			alert(tot);
 			
 			var dias = [];
-			var c;
 			var hora = "";
 			var ant = "";
 			for(var i=0; i<tot; i++){
@@ -2825,6 +2824,7 @@ webdb.executeSql('SELECT * FROM actividad WHERE chain = ?',  [SES['chain']],
 				if (ant !== dia) {
 					dias.push({dia: dia});
 				};
+				alert(dia);
 				ant = dia;
 			}
 		
