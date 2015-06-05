@@ -2682,7 +2682,7 @@ webdb.executeSql('SELECT data FROM actividad WHERE chain = ?',  [SES['chain']],
 					};
 				};
 					datos.push({
-						mes:rows2[i].data.slice(5,7),
+						mes:row2[i].data.slice(5,7),
 						pasos:obj[obj.length-1].ste,
 						distancia:obj[obj.length-1].dis,
 						calorias:obj[obj.length-1].cal,
@@ -2863,8 +2863,6 @@ webdb.executeSql('SELECT json, data AS dat FROM actividad WHERE chain = ?',  [SE
 		var last_day = dias[SES.day_graph];	
 		$(".title-graph").text(last_day.dia);	
 
-		alert(last_day.dia);
-
 		webdb.executeSql("SELECT data, json FROM actividad WHERE chain = ? AND data LIKE '"+last_day.dia+"%'",  [SES['chain']],
 		function(tx, res){
 			rows2 = res.rows,
@@ -2873,7 +2871,6 @@ webdb.executeSql('SELECT json, data AS dat FROM actividad WHERE chain = ?',  [SE
 			var dias2 = [];
 			var row2 = [];
 			var j = 0;
-			alert(tot2);
 		if (tot2>1) {			
 			for(j = 0; j<tot2; j++){
 				row2[j] = rows2.item(j);
@@ -2887,7 +2884,7 @@ webdb.executeSql('SELECT json, data AS dat FROM actividad WHERE chain = ?',  [SE
 				}); 
 			};
 		}else{			
-			var obj = JSON.parse(rows2[j].json);
+			var obj = JSON.parse(row2[j].json);
 			for (j = 0; j < obj.length; j++) {
 				dias2.push({
 					hora:obj[j].end,
