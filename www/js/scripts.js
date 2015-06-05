@@ -2827,7 +2827,7 @@ webdb.executeSql('SELECT * FROM actividad WHERE chain = ?',  [SES['chain']],
 				alert(dia);
 				ant = dia;
 			}
-		
+	/*	
 		var last_pos = dias.length-1;
 		var first_day = dias[0];
 		
@@ -2963,6 +2963,7 @@ webdb.executeSql('SELECT * FROM actividad WHERE chain = ?',  [SES['chain']],
 		  }, function(tx, r){
 			//console.log(r);
 		});
+		*/
 	}, function(tx, r){
 		//console.log(r);
 	});
