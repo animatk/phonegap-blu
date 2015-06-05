@@ -368,6 +368,28 @@ header .btn{
 	height: 100px;
 	transition: all 1s ease-in-out;
 }
+
+
+.cuentaA{
+	position: absolute;
+	width: 100%;
+	font-size: 100px;
+	/* font-weight: bold; */
+	text-align: center;
+	opacity: 0;
+	top: 200px;
+	transition: all .5s ease-in-out;
+}
+.cuentaA.active{
+	opacity: 1;
+	top: 100px;
+	font-size: 200px;
+}
+.cuentaA.active.stop{
+	opacity: 0;
+}
+
+
 @-webkit-keyframes inicioAnimation {
 	0% {
 		-webkit-transform: rotate(0deg) scale(1);
@@ -384,8 +406,6 @@ header .btn{
 /*	-webkit-animation: inicioAnimation 1s ease-in-out;*/
 	-webkit-transform: rotate(1440deg) scale(1.5) scale(0);
 }
-
-
 .boton-login{
 	padding: 0;
 	font-size: inherit;
@@ -1948,6 +1968,11 @@ Pagination Styles
 	.sens-ini{
 		margin-top: 30px;
 	}
+	.cuentaA.active{
+		opacity: 1;
+		top: 100px;
+		font-size: 250px;
+	}
 }
 
 @media all and (min-height: 569px){
@@ -2055,6 +2080,11 @@ Pagination Styles
 	.est-icon.DISTA,
 	.est-icon.CALOR{
 		font-size: 40px;
+	}
+	.cuentaA.active{
+		opacity: 1;
+		top: 100px;
+		font-size: 300px;
 	}
 }
 

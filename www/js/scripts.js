@@ -1707,15 +1707,33 @@ function show_principal(back){
 	ak_navigate('#principal', back);
 }
 function principal(back){
-	ak_navigate('#principal', back);
-	$('#BtnPausar').removeClass('oculto');
-	$('#BtnDetener').addClass('oculto');
-	var d = new Date();
-	$('.CALENDAR').html( d.getDate()+ ' '+ language.me[d.getMonth()]);
-	PAUSED = false;
-	stopsteps(function(){
-		steps();
-	});
+	loopCuenta(3);
+	ak_navigate('#cuenta_atras');
+	setTimeout(function(){
+		ak_navigate('#principal', back);
+		$('.ac-3,.ac-2,.ac-1').removeClass('active stop');
+		$('#BtnPausar').removeClass('oculto');
+		$('#BtnDetener').addClass('oculto');
+		var d = new Date();
+		$('.CALENDAR').html( d.getDate()+ ' '+ language.me[d.getMonth()]);
+		PAUSED = false;
+		stopsteps(function(){
+			steps();
+		});
+	}, 3000);
+	
+}
+function loopCuenta(num){
+	if(num > 0){
+		$('.ac-'+num).addClass('active');
+		setTimeout(function(){
+			$('.ac-'+num).addClass('stop');
+			setTimeout(function(){
+				loopCuenta(num-1);
+			}, 500);
+		}, 500);
+	}
+	
 }
 function trackActivity(){
 	if(SES['actividad']){
