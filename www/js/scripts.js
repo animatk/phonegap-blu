@@ -2830,7 +2830,8 @@ webdb.executeSql('SELECT * FROM actividad WHERE chain = ?',  [SES['chain']],
 		
 		var last_pos = dias.length-1;
 		var first_day = dias[0];
-
+		
+		alert(JSON.stringify(dias));
 
 		if (!SES.day_graph) {
 			SES.day_graph = last_pos;
