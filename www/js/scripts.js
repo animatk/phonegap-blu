@@ -679,25 +679,25 @@ function show_inicio(from){
 				
 				if( metros > 1000 ){
 					dis = metros/1000;
-					dis = dis.toFixed(2);
+					dis = parseFloat(dis.toFixed(2));
 					if(dis > 9.99){
 						dis = dis.toFixed(1);
 					}
 					dis = dis+ '<span class="deta-light">km</span>';
 				}
 			}else{
-				dis = (dis / 63360).toFixed(2);
+				dis = parseFloat((dis / 63360).toFixed(2));
 				if(dis > 9.99){
 					dis = dis.toFixed(1);
 				}
 				dis = dis+ '<span class="deta-light">mi</span>';
 			}
 
-			var pasos = pas.toFixed(0);
+			var pasos = parseFloat(pas.toFixed(0));
 
-			cal = cal.toFixed(1);
+			cal = parseFloat(cal.toFixed(1));
 			if(cal > 99.9){
-				cal = cal.toFixed(0);
+				cal = parseFloat(cal.toFixed(0));
 			}
 			if(cal > 9999){
 				cal = (cal/1000).toFixed(1);
@@ -705,7 +705,7 @@ function show_inicio(from){
 			}
 			
 			
-			if(pasos > 1000){
+			if(pasos > 999){
 				pasos = (pasos/1000).toFixed(1)+'<span class="deta-light">k</span>';
 			}
 
@@ -1984,14 +1984,14 @@ function stepsSuccess(a){
 			if(PERFIL.unit == 'M'){
 				if( metros > 1000 ){
 					mostrar = metros/1000;
-					mostrar = mostrar.toFixed(2);
+					mostrar = parseFloat(mostrar.toFixed(2));
 					if(mostrar > 9.99){
 						mostrar = mostrar.toFixed(1);
 					}
 					mostrar = mostrar+ '<span class="deta-light">km</span>';
 				}
 			}else{
-				mostrar = (pulgadas / 63360).toFixed(2);
+				mostrar = parseFloat((pulgadas / 63360).toFixed(2));
 				if(mostrar > 9.99){
 					mostrar = mostrar.toFixed(1);
 				}
@@ -2014,7 +2014,7 @@ function stepsSuccess(a){
 				if(PERFIL.unit == 'E'){
 					PES = parseInt(PERFIL.weight);
 				}else{
-					PES = (parseInt(PERFIL.weight) * 2.20462262).toFixed(1);
+					PES = parseFloat((parseInt(PERFIL.weight) * 2.20462262).toFixed(1));
 				}
 			}
 			// si hrm activo
