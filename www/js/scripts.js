@@ -2884,7 +2884,7 @@ webdb.executeSql('SELECT json, data AS dat FROM actividad WHERE chain = ?',  [SE
 				}); 
 			};
 		}else{			
-			var obj = JSON.parse(row2[j].json);
+			var obj = JSON.parse(rows2.item(0).json);
 			for (j = 0; j < obj.length; j++) {
 				dias2.push({
 					hora:obj[j].end,
