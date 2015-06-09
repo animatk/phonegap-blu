@@ -2300,7 +2300,7 @@ function guardar(resp){
 				function(tx, r){},
 				function(tx, e){});
 				
-			webdb.executeSql('SELECT * tracks ORDER BY ID ASC', 
+			webdb.executeSql('SELECT * FROM tracks ORDER BY ID ASC', 
 				[],
 				function(tx, r){
 					var rows = r.rows,
@@ -2320,6 +2320,9 @@ function guardar(resp){
 							fecha = n.getFullYear()+'-'+checkTime(n.getMonth()+1)+'-'+checkTime(n.getDate())+' '+checkTime(n.getHours())+':'+checkTime(n.getMinutes())+':'+checkTime(n.getSeconds());
 						}
 					}
+					
+					console.log(fecha);
+					console.log(actividad);
 				
 					webdb.executeSql('INSERT INTO actividad (chain, json, sync, data) VALUES (?,?,?,?)', 
 						[ SES['chain'], JSON.stringify(actividad), 'NO', fecha],
@@ -2328,14 +2331,17 @@ function guardar(resp){
 							function(tx, r){},
 							function(tx, e){
 								//error
+								console.log('borrar los tracks');
 							});
 						},
 						function(tx, e){
 							//error
+							console.log('error al insertar la actividad');
 						});
 				},
 				function(tx, e){
 					//ERROR
+					console.log('error al consultar los tracks');
 				});	
 
 			
