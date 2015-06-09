@@ -515,6 +515,11 @@ function DeviceReady(){
 		if(SES['ACTTYPE']){
 			tipoActividad(SES['ACTTYPE']);
 		}
+		var act = JSON.parse(SES['actividad']);
+		
+		SECOND = act.tim;
+		DISTA = act.dis;
+	
 		pause(function(){
 			stopgeo(function(){
 				geo();
@@ -1733,6 +1738,9 @@ function show_principal(back){
 	ak_navigate('#principal', back);
 }
 function principal(back){
+	
+	
+	
 	loopCuenta(3);
 	ak_navigate('#cuenta_atras');
 	setTimeout(function(){
@@ -1748,6 +1756,7 @@ function principal(back){
 		});
 	}, 3000);
 	
+	
 }
 function loopCuenta(num){
 	if(num > 0){
@@ -1762,53 +1771,28 @@ function loopCuenta(num){
 	
 }
 function trackActivity(){
-	if(SES['actividad']){
+		var actividad = {
+			ini : new Date()
+			,lat: LAT
+			,lon: LON
+			,ppm: PPM
+			,ste: STEP
+			,cal: CALO
+			,dis: DISTA
+			,tim: SECOND
+		};
 		
-		var actividad = JSON.parse(SES['actividad'])
-		,endDate = new Date()
-		,curIndex= actividad.length-1
-		,iniTime = new Date(actividad[curIndex].ini);
-		actividad[curIndex].end = endDate;
-		actividad[curIndex].seg = parseInt((endDate-iniTime)/1000);
+		if( !SES['actividad'] ){
+			actividad.typ = ACTIVITYTYPE
+		}
+		
+		SES['actividad'] = JSON.stringify(actividad);
 		
 		webdb.executeSql('INSERT INTO tracks (chain, json) VALUES (?,?)', 
-						[ SES['chain'], JSON.stringify(actividad[curIndex])],
+						[ SES['chain'], JSON.stringify(actividad)],
 						function(tx, r){},
 						function(tx, e){});
-		
-		var new_actividad = [];
-		new_actividad.push({
-			ini : new Date()
-			,lat: LAT
-			,lon: LON
-			,ppm: PPM
-			,typ: ACTIVITYTYPE
-			,ste: STEP
-			,cal: CALO
-			,dis: DISTA
-			,tim: SECOND
-		});
-		SES['actividad'] = JSON.stringify(new_actividad);
-		
 		return true;
-	}else{
-		var actividad = [];
-		actividad.push({
-			ini : new Date()
-			,lat: LAT
-			,lon: LON
-			,ppm: PPM
-			,typ: ACTIVITYTYPE
-			,ste: STEP
-			,cal: CALO
-			,dis: DISTA
-			,tim: SECOND
-		});
-		SES['actividad'] = JSON.stringify(actividad);
-		return true;
-	}
-	
-	return false;
 }
 function Dist(lat1, lon1, lat2, lon2){
   rad = function(x) {return x*Math.PI/180;}
@@ -1826,11 +1810,11 @@ function initClock() {
 	var time_ini = new Date();
 	if(SES['actividad']){
 		var actividad = JSON.parse(SES['actividad']);
-		var sec_more = actividad[actividad.length-1].tim;
+		var sec_more = actividad.tim;
 		if(sec_more != undefined){
 			segundos_mas = sec_more;
 		}
-		var actual = actividad[actividad.length-1];
+		var actual = actividad;
 		if(actual.ini != undefined){
 			time_ini = actual.ini;
 		}
@@ -2043,8 +2027,8 @@ function stepsSuccess(a){
 		StopAcc = false;
 	}else{
 		if(!StopAcc && PauseSens >= 3){
+			// se puede poner un sonido de que se pausa la actividad
 			navigator.vibrate([800]);
-			trackActivity();
 			StopAcc = true;
 		}
 		PauseSens = PauseSens+1;
@@ -2101,8 +2085,7 @@ function show_map(back){
 	}
 
     if(mapGraphic != null){
-		var tot = data.length;
-		var obj = data[tot-1];
+		var obj = data;
 		if(isNumber(obj.dis)){
 			if(PERFIL.unit == 'M'){
 				var distancia = (obj.dis / 39370).toFixed(1)+'k';
@@ -2115,7 +2098,7 @@ function show_map(back){
 		}
 	}else{	
 		var grafico = [];
-		var obj = data[0];
+		var obj = data;
 		
 		if(!isNumber(obj.dis)){
 			return false;
@@ -2311,6 +2294,10 @@ function guardar(resp){
 					for(var i=0; i<tot; i++){
 						var row = rows.item(i);
 						var json = JSON.parse(row.json);
+						
+						if(i==(tot-1)){
+							json.end = new Date();
+						}
 						
 						actividad.push(json);
 						
