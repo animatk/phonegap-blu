@@ -1770,6 +1770,9 @@ function loopCuenta(num){
 function trackActivity(){
 	if(SES['actividad']){
 		var actividad = JSON.parse(SES['actividad']);
+		actividad.lat = LAT;
+		actividad.lon = LON;
+		actividad.ppm = PPM;
 		actividad.ste = STEP;
 		actividad.cal = CALO;
 		actividad.dis = DISTA;
@@ -1917,21 +1920,15 @@ function stepsSuccess(a){
 		if(SES['actividad']){
 			ac = JSON.parse(SES['actividad']);
 		}
-		if(ac.length < 1 || ac.tim != undefined){
+		if(ac.ini == undefined || ac.tim != undefined){
 			var actividad = {
 				ini : new Date()
-				,lat: LAT
-				,lon: LON
-				,ppm: PPM
-			//	,ste: STEP
-			//	,cal: CALO
-			//	,dis: DISTA
-			//	,tim: SECOND
 			};
 			
-			if( ac.length < 1 ){
+			if( ac.ini == undefined ){
 				actividad.typ = ACTIVITYTYPE;
 			}
+			
 			
 			SES['actividad'] = JSON.stringify(actividad);
 		}
@@ -2095,14 +2092,13 @@ function show_map(back){
 		PERFIL = JSON.parse(SES['perfil']);
 	}
 
-	var data = JSON.parse(SES['actividad']);
+	var obj = JSON.parse(SES['actividad']);
 	
-	if(data.length <= 0){
+	if(obj.dis == undefined){
 		return false;
 	}
 
     if(mapGraphic != null){
-		var obj = data;
 		if(isNumber(obj.dis)){
 			if(PERFIL.unit == 'M'){
 				var distancia = (obj.dis / 39370).toFixed(1)+'k';
@@ -2115,7 +2111,6 @@ function show_map(back){
 		}
 	}else{	
 		var grafico = [];
-		var obj = data;
 		
 		if(!isNumber(obj.dis)){
 			return false;
