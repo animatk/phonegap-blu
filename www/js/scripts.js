@@ -1770,20 +1770,13 @@ function loopCuenta(num){
 function trackActivity(){
 	if(SES['actividad']){
 		var actividad = JSON.parse(SES['actividad']);
-		actividad.lat = LAT;
-		actividad.lon = LON;
-		actividad.ppm = PPM;
-		actividad.ste = STEP;
-		actividad.cal = CALO;
-		actividad.dis = DISTA;
-		actividad.tim = SECOND;
-		
-		SES['actividad'] = JSON.stringify(actividad);
-
 		webdb.executeSql('INSERT INTO tracks (chain, json) VALUES (?,?)', 
 						[ SES['chain'], JSON.stringify(actividad)],
 						function(tx, r){},
 						function(tx, e){});
+		actividad.del 'SI';//reiniciar track
+		SES['actividad'] = JSON.stringify(actividad);
+
 		return true;
 	}
 	return false;
@@ -1922,9 +1915,16 @@ function stepsSuccess(a){
 		if(SES['actividad']){
 			ac = JSON.parse(SES['actividad']);
 		}
-		if((ac.ini == undefined) || (ac.tim != undefined)){
+		if((ac.ini == undefined) || (ac.del != undefined)){
 			var actividad = {
 				ini : new Date()
+				,lat = LAT
+				,lon = LON
+				,ppm = PPM
+				,ste = STEP
+				,cal = CALO
+				,dis = DISTA
+				,tim : SECOND
 			};
 			if( ac.ini == undefined ){
 				actividad.typ = ACTIVITYTYPE;
