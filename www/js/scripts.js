@@ -1777,6 +1777,8 @@ function trackActivity(){
 		actividad.cal = CALO;
 		actividad.dis = DISTA;
 		actividad.tim = SECOND;
+		
+		SES['actividad'] = JSON.stringify(actividad);
 
 		webdb.executeSql('INSERT INTO tracks (chain, json) VALUES (?,?)', 
 						[ SES['chain'], JSON.stringify(actividad)],
@@ -1920,15 +1922,13 @@ function stepsSuccess(a){
 		if(SES['actividad']){
 			ac = JSON.parse(SES['actividad']);
 		}
-		if(ac.ini == undefined || ac.tim != undefined){
+		if((ac.ini == undefined) || (ac.tim != undefined)){
 			var actividad = {
 				ini : new Date()
 			};
-			
 			if( ac.ini == undefined ){
 				actividad.typ = ACTIVITYTYPE;
 			}
-			
 			
 			SES['actividad'] = JSON.stringify(actividad);
 		}
