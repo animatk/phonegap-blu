@@ -1738,9 +1738,6 @@ function show_principal(back){
 	ak_navigate('#principal', back);
 }
 function principal(back){
-	
-	
-	
 	loopCuenta(3);
 	ak_navigate('#cuenta_atras');
 	setTimeout(function(){
@@ -1916,7 +1913,10 @@ function stepsSuccess(a){
 
 	if(ACCE > (m + s) || ACCE < (m - s)){
 		
-		var ac = JSON.parse(SES['actividad']) || {};
+		var ac = {};
+		if(SES['actividad']){
+			ac = JSON.parse(SES['actividad']);
+		}
 		if(ac.length < 1 || ac.tim != undefined){
 			var actividad = {
 				ini : new Date()
@@ -1930,7 +1930,7 @@ function stepsSuccess(a){
 			};
 			
 			if( ac.length < 1 ){
-				actividad.typ = ACTIVITYTYPE
+				actividad.typ = ACTIVITYTYPE;
 			}
 			
 			SES['actividad'] = JSON.stringify(actividad);
