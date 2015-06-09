@@ -60,6 +60,15 @@ var SES = window.localStorage,
 getLang({exe: 'setText'});
 
 $(function(){
+	localStorage.removeItem("month_graph");
+	localStorage.removeItem("end_graph");
+	localStorage.removeItem("day_graph");
+	localStorage.removeItem("year_graph");
+	
+	webdb.executeSql('CREATE TABLE IF NOT EXISTS tracks (ID INTEGER PRIMARY KEY ASC, chain TEXT, json TEXT)', [],
+	function(tx, r){},
+	function(tx, e){});
+	
 	setTimeout(function(){
 		if(!SES['actividad']){
 			iniciar();
@@ -1754,26 +1763,51 @@ function loopCuenta(num){
 }
 function trackActivity(){
 	if(SES['actividad']){
+		
 		var actividad = JSON.parse(SES['actividad'])
 		,endDate = new Date()
 		,curIndex= actividad.length-1
 		,iniTime = new Date(actividad[curIndex].ini);
-		//
-		//colocar el tipo de actividad en el primer trac
-		if(actividad[0].typ == undefined){
-			actividad[0].typ = ACTIVITYTYPE;
-		}
-		
 		actividad[curIndex].end = endDate;
 		actividad[curIndex].seg = parseInt((endDate-iniTime)/1000);
-		actividad[curIndex].ste = STEP;
-		actividad[curIndex].cal = CALO;
-		actividad[curIndex].dis = DISTA;
-		//
-		SES['actividad'] = JSON.stringify(actividad);
+		
+		webdb.executeSql('INSERT INTO tracks (chain, json) VALUES (?,?)', 
+						[ SES['chain'], JSON.stringify(actividad[curIndex])],
+						function(tx, r){},
+						function(tx, e){});
+		
+		var new_actividad = [];
+		new_actividad.push({
+			ini : new Date()
+			,lat: LAT
+			,lon: LON
+			,ppm: PPM
+			,typ: ACTIVITYTYPE
+			,ste: STEP
+			,cal: CALO
+			,dis: DISTA
+			,tim: SECOND
+		});
+		SES['actividad'] = JSON.stringify(new_actividad);
 		
 		return true;
+	}else{
+		var actividad = [];
+		actividad.push({
+			ini : new Date()
+			,lat: LAT
+			,lon: LON
+			,ppm: PPM
+			,typ: ACTIVITYTYPE
+			,ste: STEP
+			,cal: CALO
+			,dis: DISTA
+			,tim: SECOND
+		});
+		SES['actividad'] = JSON.stringify(actividad);
+		return true;
 	}
+	
 	return false;
 }
 function Dist(lat1, lon1, lat2, lon2){
@@ -1787,39 +1821,26 @@ function Dist(lat1, lon1, lat2, lon2){
   var d = R * c;
   return d.toFixed(3);//Retorna tres decimales
 }
-function initClock(obj, segundos) {
-	var actividad = [],
-	segundos_mas = 0;
-	if(obj != undefined){			
-		actividad = obj;
-	}else{
-		if(SES['actividad']){
-			actividad = JSON.parse(SES['actividad']);
-		}
-	}
-	if(segundos != undefined){
-		segundos_mas = segundos;
-	}else{
-		var tot = actividad.length;
-		//
-		if(tot > 1){			
-			for(var a=0; a<tot-1; a++){
-				var act = actividad[a];
-				if(act.seg != undefined){
-					segundos_mas = segundos_mas + act.seg;
-				}
-			}
-		}
-	}
-	var actual = actividad[actividad.length-1];
+function initClock() {
+	var segundos_mas = 0;
 	var time_ini = new Date();
-	if(actual.ini != undefined){
-		time_ini = actual.ini;
+	if(SES['actividad']){
+		var actividad = JSON.parse(SES['actividad']);
+		var sec_more = actividad[actividad.length-1].tim;
+		if(sec_more != undefined){
+			segundos_mas = sec_more;
+		}
+		var actual = actividad[actividad.length-1];
+		if(actual.ini != undefined){
+			time_ini = actual.ini;
+		}
 	}
+	
 	var t1 = new Date(time_ini),
-    t = '00 : 00',
+	t = '',
     t2 = new Date(),
     dif = t2-t1;
+
     SECOND = parseInt((dif/1000) + segundos_mas);
     var h = parseInt( SECOND / 3600 ) % 24,
 		m = parseInt( SECOND / 60 ) % 60,
@@ -1904,6 +1925,10 @@ function stepsSuccess(a){
 		SES['sens'] = 0.5;
 	}
 	//
+	if(!SES['actividad']){
+		trackActivity();
+	}
+	
 	var x = a.x
 	, y = a.y
 	, z = a.z
@@ -1914,21 +1939,6 @@ function stepsSuccess(a){
 	navigator.compass.getCurrentHeading(compassSuccess, compassError);
 
 	if(ACCE > (m + s) || ACCE < (m - s)){
-		var actividad = [];
-		if(SES['actividad']){
-			actividad = JSON.parse(SES['actividad']);
-		}
-		var tot = actividad.length;
-		if(tot < 1 || actividad[tot-1].seg != undefined){
-			actividad.push({
-				ini : new Date()
-				,lat: LAT
-				,lon: LON
-				,ppm: PPM
-			});
-			SES['actividad'] = JSON.stringify(actividad);
-		}
-		//
 		STEP = (SES['steps'])? parseInt(SES['steps'])+1: 1;
 		SES['steps'] = STEP;
 		// 1 mt. = a 39.370 pulgadas
@@ -2023,7 +2033,7 @@ function stepsSuccess(a){
 			}
 			CALO = parseFloat((efficiencia * PES * ((metros/1000)/milla)).toFixed(1));
 			if(CALO > 99.9){
-				CALO = CALO.toFixed(0);
+				CALO = parseInt(CALO.toFixed(0));
 			}
 			$('.CALOR').html( CALO );
 		}
@@ -2033,6 +2043,7 @@ function stepsSuccess(a){
 		StopAcc = false;
 	}else{
 		if(!StopAcc && PauseSens >= 3){
+			navigator.vibrate([800]);
 			trackActivity();
 			StopAcc = true;
 		}
@@ -2283,25 +2294,53 @@ function stop(){
 //	ak_navigate('#stop');
 }
 function guardar(resp){
-	if( SES['actividad'] ){
 		if(resp == 'SI'){
 
 			webdb.executeSql('CREATE TABLE IF NOT EXISTS actividad (ID INTEGER PRIMARY KEY ASC, chain TEXT, json TEXT, sync TEXT, data TEXT)', [],
 				function(tx, r){},
 				function(tx, e){});
+				
+			webdb.executeSql('SELECT * tracks ORDER BY ID ASC', 
+				[],
+				function(tx, r){
+					var rows = r.rows,
+					tot = rows.length,
+					fecha = '',
+					actividad = [];
+					
+					for(var i=0; i<tot; i++){
+						var row = rows.item(i);
+						var json = JSON.parse(row.json);
+						
+						actividad.push(json);
+						
+						if(i==0){
+							fecha = json.ini;
+							var n = new Date(fecha);
+							fecha = n.getFullYear()+'-'+checkTime(n.getMonth()+1)+'-'+checkTime(n.getDate())+' '+checkTime(n.getHours())+':'+checkTime(n.getMinutes())+':'+checkTime(n.getSeconds());
+						}
+					}
+				
+					webdb.executeSql('INSERT INTO actividad (chain, json, sync, data) VALUES (?,?,?,?)', 
+						[ SES['chain'], JSON.stringify(actividad), 'NO', fecha],
+						function(tx, r){
+							webdb.executeSql('DELETE FROM tracks', [],
+							function(tx, r){},
+							function(tx, e){
+								//error
+							});
+						},
+						function(tx, e){
+							//error
+						});
+				},
+				function(tx, e){
+					//ERROR
+				});	
 
-			var actividad = JSON.parse(SES['actividad']),
-			fecha = actividad[0].ini;
-			
-			var n = new Date(fecha);
-			fecha = n.getFullYear()+'-'+checkTime(n.getMonth()+1)+'-'+checkTime(n.getDate())+' '+checkTime(n.getHours())+':'+checkTime(n.getMinutes())+':'+checkTime(n.getSeconds());
 			
 			//console.log(fecha);
 			
-			webdb.executeSql('INSERT INTO actividad (chain, json, sync, data) VALUES (?,?,?,?)', 
-				[ SES['chain'], SES['actividad'], 'NO', fecha],
-				function(tx, r){},
-				function(tx, e){});
 		}
 		SES.removeItem('actividad');
 		
@@ -2313,21 +2352,12 @@ function guardar(resp){
 		}else{
 			worker({fun: 'sincronizar', url: SITE, chain: SES['chain'] }, function(data){ mensaje(data) });
 		}
-	}
+
 	$('.toCenter, .toLeft, .toRight').not('#PopAlert').removeClass('toCenter toLeft toRight');
 	$('#PopAlert').removeClass('toCenter');
 	$('.btnCancelBG1').removeClass('stoped');
     show_inicio();
 }
-
-$(function(){
-	localStorage.removeItem("month_graph");
-	localStorage.removeItem("end_graph");
-	localStorage.removeItem("day_graph");
-	localStorage.removeItem("year_graph");
-});
-
-
 function estadisticas(tipo, pagina, periodo){
 	$(".estadisticas .grafica").show();
 
@@ -2350,8 +2380,6 @@ $(".img-"+tipo).addClass('active');
 		break;
 	}
 };
-
-
 function EstadisticasMes(tipo, pagina, periodo){
 
 $(".prev-graph").attr("onclick","estadisticas('"+tipo+"', 'prev', 'mes');");
@@ -2591,7 +2619,6 @@ webdb.executeSql('SELECT json, data FROM actividad WHERE chain = ? ORDER BY data
 	ak_navigate('#estadisticas_'+tipo, {to: 'show_inicio();'});
 	$("#submenu_estadisticas").show();
 }
-
 /*
 function id(){
 	var chain = "1b4b20ac4aba5d8e7300f72824360068";
@@ -2606,7 +2633,6 @@ function bd(){
 	webdb.executeSql("DELETE FROM actividad WHERE ID > '169';",  [], function(){console.log(1);},function(){});
 }
 */
-
 function EstadisticasAnio(tipo, pagina){
 	$(".prev-graph").attr("onclick","estadisticas('"+tipo+"', 'prev', 'anio');");
 	$(".next-graph").attr("onclick","estadisticas('"+tipo+"', 'next', 'anio');");
@@ -2804,12 +2830,6 @@ var data = [];
 		}); // query 2: obtiene meses con actividad
 	}); // query 1 : obtiene años con actividad
 }
-
-
-
-
-
-
 function EstadisticasDia(tipo, pagina){
 $(".prev-graph").attr("onclick","estadisticas('"+tipo+"', 'prev', 'dia');");
 $(".next-graph").attr("onclick","estadisticas('"+tipo+"', 'next', 'dia');");
@@ -2973,9 +2993,6 @@ webdb.executeSql('SELECT json, data AS dat FROM actividad WHERE chain = ?',  [SE
 	ak_navigate('#estadisticas_'+tipo, {to: 'show_inicio();'});
 	$("#submenu_estadisticas").show();
 };
-
-
-
 function GraficarEstadistica(tipo, data, type){
 	CanvasJS.addColorSet("orange", ["#DB4A08" ]);
     var chart = new CanvasJS.Chart("grafica_"+tipo, { 
@@ -3005,7 +3022,6 @@ function GraficarEstadistica(tipo, data, type){
      });
     chart.render();   
 }
-
 /*! end principal */
 /*! configuracion */
 function show_configuracion(back){
@@ -3122,7 +3138,6 @@ function openShare(type){
 
 	win.focus();
 }
-
 function ajax(obj) {
 	var xhr;
  
