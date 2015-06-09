@@ -1774,7 +1774,7 @@ function trackActivity(){
 						[ SES['chain'], JSON.stringify(actividad)],
 						function(tx, r){},
 						function(tx, e){});
-		actividad.del 'SI';//reiniciar track
+		actividad.del = 'SI';//reiniciar track
 		SES['actividad'] = JSON.stringify(actividad);
 
 		return true;
@@ -1918,12 +1918,12 @@ function stepsSuccess(a){
 		if((ac.ini == undefined) || (ac.del != undefined)){
 			var actividad = {
 				ini : new Date()
-				,lat = LAT
-				,lon = LON
-				,ppm = PPM
-				,ste = STEP
-				,cal = CALO
-				,dis = DISTA
+				,lat : LAT
+				,lon : LON
+				,ppm : PPM
+				,ste : STEP
+				,cal : CALO
+				,dis : DISTA
 				,tim : SECOND
 			};
 			if( ac.ini == undefined ){
