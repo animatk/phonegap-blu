@@ -1771,28 +1771,20 @@ function loopCuenta(num){
 	
 }
 function trackActivity(){
-		var actividad = {
-			ini : new Date()
-			,lat: LAT
-			,lon: LON
-			,ppm: PPM
-			,ste: STEP
-			,cal: CALO
-			,dis: DISTA
-			,tim: SECOND
-		};
-		
-		if( !SES['actividad'] ){
-			actividad.typ = ACTIVITYTYPE
-		}
-		
-		SES['actividad'] = JSON.stringify(actividad);
-		
+	if(SES['actividad']){
+		var actividad = JSON.parse(SES['actividad']);
+		actividad.ste = STEP;
+		actividad.cal = CALO;
+		actividad.dis = DISTA;
+		actividad.tim = SECOND;
+
 		webdb.executeSql('INSERT INTO tracks (chain, json) VALUES (?,?)', 
 						[ SES['chain'], JSON.stringify(actividad)],
 						function(tx, r){},
 						function(tx, e){});
 		return true;
+	}
+	return false;
 }
 function Dist(lat1, lon1, lat2, lon2){
   rad = function(x) {return x*Math.PI/180;}
@@ -1909,9 +1901,9 @@ function stepsSuccess(a){
 		SES['sens'] = 0.5;
 	}
 	//
-	if(!SES['actividad']){
-		trackActivity();
-	}
+//	if(!SES['actividad']){
+//		trackActivity();
+//	}
 	
 	var x = a.x
 	, y = a.y
@@ -1923,6 +1915,28 @@ function stepsSuccess(a){
 	navigator.compass.getCurrentHeading(compassSuccess, compassError);
 
 	if(ACCE > (m + s) || ACCE < (m - s)){
+		
+		var ac = JSON.parse(SES['actividad']) || {};
+		if(ac.length < 1 || ac.tim != undefined){
+			var actividad = {
+				ini : new Date()
+				,lat: LAT
+				,lon: LON
+				,ppm: PPM
+			//	,ste: STEP
+			//	,cal: CALO
+			//	,dis: DISTA
+			//	,tim: SECOND
+			};
+			
+			if( ac.length < 1 ){
+				actividad.typ = ACTIVITYTYPE
+			}
+			
+			SES['actividad'] = JSON.stringify(actividad);
+		}
+		
+		
 		STEP = (SES['steps'])? parseInt(SES['steps'])+1: 1;
 		SES['steps'] = STEP;
 		// 1 mt. = a 39.370 pulgadas
@@ -2021,7 +2035,9 @@ function stepsSuccess(a){
 			}
 			$('.CALOR').html( CALO );
 		}
+		
 		$('.PASOS').html( STEP );
+		
 		initClock();
 		PauseSens = 0;
 		StopAcc = false;
@@ -2029,6 +2045,7 @@ function stepsSuccess(a){
 		if(!StopAcc && PauseSens >= 3){
 			// se puede poner un sonido de que se pausa la actividad
 			navigator.vibrate([800]);
+			trackActivity();
 			StopAcc = true;
 		}
 		PauseSens = PauseSens+1;
