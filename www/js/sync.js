@@ -19,14 +19,12 @@ self.addEventListener('message', function(e) {
 /*! web worker calls */
 
 /*! SQL LITE */
+
 webdb = {};
 webdb.db = null;
 // Función para crear la base de datos
 webdb.open = function(options) {
-	if (typeof openDatabase == "undefined"){
-		self.postMessage('Open database undefined');
-		return false;
-	}
+	if (typeof self.openDatabase == "undefined") return;
 	// Opciones por defecto
 	var options = options || {};
 	options.name = options.name || 'noname';
@@ -36,7 +34,7 @@ webdb.open = function(options) {
 	// Definimos el tamaño en MB
 	var dbSize = options.mb * 1024 * 1024;
 	// Cargamos la base de datos
-	webdb.db = openDatabase(options.name, options.version, options.description, dbSize);
+	webdb.db = self.openDatabase(options.name, options.version, options.description, dbSize);
 };
 // ExecuteSql
 webdb.executeSql = function(sql, data, onSuccess, onError){
@@ -53,6 +51,7 @@ opt = {
 
 // Abrimos la base de datos
 webdb.open(opt);
+
 /*! END SQL LITE */
 
 function checkTime(i) {
@@ -106,15 +105,10 @@ function ajax(obj) {
 }
 function sincronizar(obj){
 	var func = obj.res;
-	func('se inicia la sincronizacion con : '+JSON.stringify(obj));
 	
-	if(webdb.db == null){
-		webdb.open(opt);
-		setTimeout(function(){
-			sincronizar(obj);
-		}, 2000);
-		return false;
-	}
+	webdb.executeSql('CREATE TABLE IF NOT EXISTS actividad (ID INTEGER PRIMARY KEY ASC, chain TEXT, json TEXT, sync TEXT, data TEXT)', [],
+		function(tx, r){},
+		function(tx, e){});
 	
 	webdb.executeSql('SELECT ID, sync FROM actividad WHERE chain = ?', [obj.cha],
 	function(tx, r){
@@ -159,6 +153,10 @@ function sincronizar(obj){
 }
 function subir_bajar(key_actual, key_cola, arr, func, url, chain){
 	var arrgeglo = arr[key_cola];
+	if(arrgeglo == undefined){
+		
+		return false;
+	}
 	if(arrgeglo[key_actual] == undefined){
 		if(key_cola < arr.length){
 			setTimeout(function(){
