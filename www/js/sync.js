@@ -102,7 +102,15 @@ function ajax(obj) {
 }
 function sincronizar(obj){
 	var func = obj.res;
-	func('se inicia la sincronizacion');
+	func('se inicia la sincronizacion con : '+JSON.stringify(obj));
+	
+	if(webdb.db == null){
+		func('webdb no definido re intentando...');
+		setTimeout(function(){
+			sincronizar(obj);
+		}, 2000);
+		return false;
+	}
 	
 	webdb.executeSql('SELECT ID, sync FROM actividad WHERE chain = ?', [obj.cha],
 	function(tx, r){
