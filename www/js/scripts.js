@@ -153,12 +153,12 @@ webdb.open = function(options) {
    	var dbSize = options.mb * 1024 * 1024;
 	// Cargamos la base de datos
    	webdb.db = openDatabase(options.name, options.version, options.description, dbSize);
-}
+};
 // ExecuteSql
 webdb.executeSql = function(sql, data, onSuccess, onError){
 	if (!webdb.db) return;
 	webdb.db.transaction(function(tx){tx.executeSql(sql, data,onSuccess,onError);});
-}
+};
 // Base de datos
 var opt = {
 	name: "sforza",

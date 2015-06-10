@@ -19,34 +19,38 @@ self.addEventListener('message', function(e) {
 /*! web worker calls */
 
 /*! SQL LITE */
-var webdb = {};
+webdb = {};
 webdb.db = null;
 // Función para crear la base de datos
 webdb.open = function(options) {
-	if (typeof openDatabase == "undefined") return;
+	if (typeof openDatabase == "undefined"){
+		self.postMessage('Open database undefined');
+		return false;
+	}
 	// Opciones por defecto
-   	var options = options || {};
+	var options = options || {};
 	options.name = options.name || 'noname';
 	options.mb = options.mb || 5;
 	options.description = options.description || 'no description';
 	options.version = options.version || '1.0';
 	// Definimos el tamaño en MB
-   	var dbSize = options.mb * 1024 * 1024;
+	var dbSize = options.mb * 1024 * 1024;
 	// Cargamos la base de datos
-   	webdb.db = openDatabase(options.name, options.version, options.description, dbSize);
-}
+	webdb.db = openDatabase(options.name, options.version, options.description, dbSize);
+};
 // ExecuteSql
 webdb.executeSql = function(sql, data, onSuccess, onError){
 	if (!webdb.db) return;
 	webdb.db.transaction(function(tx){tx.executeSql(sql, data,onSuccess,onError);});
-}
+};
 // Base de datos
-var opt = {
+opt = {
 	name: "sforza",
 	mb: 2,
 	description: "Base de datos local de sforza",
 	version: "1.0"
 };
+
 // Abrimos la base de datos
 webdb.open(opt);
 /*! END SQL LITE */
@@ -105,7 +109,7 @@ function sincronizar(obj){
 	func('se inicia la sincronizacion con : '+JSON.stringify(obj));
 	
 	if(webdb.db == null){
-		func('webdb no definido re intentando...');
+		webdb.open(opt);
 		setTimeout(function(){
 			sincronizar(obj);
 		}, 2000);
