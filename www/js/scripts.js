@@ -532,19 +532,6 @@ function DeviceReady(){
 			$('body').removeClass('menu-open');
 		}
 	});
-	
-	if(isOnLine() != 'none' && SES['chain']){
-		if(SES['chain'] == '4d8e1a06e5a47d8bfbe3623a35f52276'){
-			showDebug();
-		}
-		if(SES['synwifi']){
-			if(isOnLine() == 'wifi'){
-				sincronizar({url: SITE, cha: SES.chain, res: function(d){console.log(d);}});
-			}
-		}else{
-			sincronizar({url: SITE, cha: SES.chain, res: function(d){console.log(d);}});
-		}
-	}	
 }
 document.addEventListener('backbutton', function(e){}, false);
 
@@ -624,8 +611,22 @@ function show_inicio(from){
 	if(isPhonegap){
 		$('.btn-iniciar').removeClass('active');
 	}
+	//
 	show_perfil(false);
-    ak_navigate('#inicio');
+	//
+	sync = true;
+	if(isOnLine() != 'none' && SES['chain']){
+		if(SES['chain'] == '4d8e1a06e5a47d8bfbe3623a35f52276'){
+			showDebug();
+		}
+		if(SES['synwifi']){
+			if(isOnLine() == 'wifi'){
+				sincronizar({url: SITE, cha: SES.chain, res: function(d){console.log(d);}});
+			}
+		}else{
+			sincronizar({url: SITE, cha: SES.chain, res: function(d){console.log(d);}});
+		}
+	}
     //queris para determinar valores
     webdb.executeSql('SELECT * FROM actividad WHERE chain = ?', [SES['chain']],
 		function(tx, r){
@@ -716,7 +717,9 @@ function show_inicio(from){
 		},
 		function(tx, e){});
 		
-    $('#submenu_estadisticas').hide();
+	ak_navigate('#inicio');	
+	//
+	$('#submenu_estadisticas').hide();
 }
 function btnIniciar(bt){
 	$(bt).addClass('active'); 
@@ -2325,16 +2328,6 @@ function guardar(resp){
 					webdb.executeSql('INSERT INTO actividad (chain, json, sync, data) VALUES (?,?,?,?)', 
 						[ SES['chain'], JSON.stringify(actividad), 'NO', fecha],
 						function(tx, r){
-							
-							sync = true;
-							if(SES['synwifi']){
-								if(isOnLine() == 'wifi'){
-									sincronizar({url: SITE, cha: SES.chain, res: function(d){console.log(d);}});
-								}
-							}else{
-								sincronizar({url: SITE, cha: SES.chain, res: function(d){console.log(d);}});
-							}
-							
 							webdb.executeSql('DELETE FROM tracks', [],
 							function(tx, r){},
 							function(tx, e){
