@@ -103,9 +103,6 @@ function ajax(obj) {
 function sincronizar(obj){
 	var func = obj.res;
 	func('se inicia la sincronizacion');
-	webdb.executeSql('CREATE TABLE IF NOT EXISTS actividad (ID INTEGER PRIMARY KEY ASC, chain TEXT, json TEXT, sync TEXT, data TEXT)', [],
-	function(tx, r){},
-	function(tx, e){});
 	
 	webdb.executeSql('SELECT ID, sync FROM actividad', [],
 	function(tx, r){

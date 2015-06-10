@@ -516,10 +516,8 @@ function DeviceReady(){
 			tipoActividad(SES['ACTTYPE']);
 		}
 		var act = JSON.parse(SES['actividad']);
-		
 		SECOND = act.tim;
 		DISTA = act.dis;
-	
 		pause(function(){
 			stopgeo(function(){
 				geo();
@@ -1704,6 +1702,7 @@ function addDisp(name, address){
 				mensaje("Desconectando: "+DEVICE );
 				disconnect();
 			}
+			item.addClass('load');
 			mensaje("Funcion addDisp llamada con: "+name+' y '+ address );
 			var dispositivos = new Array(),
 			insert = true;
@@ -1738,9 +1737,7 @@ function show_principal(back){
 	ak_navigate('#principal', back);
 }
 function principal(back){
-	loopCuenta(3);
-	ak_navigate('#cuenta_atras');
-	setTimeout(function(){
+	if(SES['actividad']){
 		ak_navigate('#principal', back);
 		$('.ac-3,.ac-2,.ac-1').removeClass('active stop');
 		$('#BtnPausar').removeClass('oculto');
@@ -1751,8 +1748,22 @@ function principal(back){
 		stopsteps(function(){
 			steps();
 		});
-	}, 3000);
-	
+	}else{
+		loopCuenta(3);
+		ak_navigate('#cuenta_atras');
+		setTimeout(function(){
+			ak_navigate('#principal', back);
+			$('.ac-3,.ac-2,.ac-1').removeClass('active stop');
+			$('#BtnPausar').removeClass('oculto');
+			$('#BtnDetener').addClass('oculto');
+			var d = new Date();
+			$('.CALENDAR').html( d.getDate()+ ' '+ language.me[d.getMonth()]);
+			PAUSED = false;
+			stopsteps(function(){
+				steps();
+			});
+		}, 3000);
+	}
 	
 }
 function loopCuenta(num){
@@ -2326,6 +2337,16 @@ function guardar(resp){
 					webdb.executeSql('INSERT INTO actividad (chain, json, sync, data) VALUES (?,?,?,?)', 
 						[ SES['chain'], JSON.stringify(actividad), 'NO', fecha],
 						function(tx, r){
+							
+							
+							if(SES['synwifi']){
+								if(isOnLine() == 'wifi'){
+									worker({fun: 'sincronizar', url: SITE, chain: SES['chain'] }, function(data){ mensaje(data) });
+								}
+							}else{
+								worker({fun: 'sincronizar', url: SITE, chain: SES['chain'] }, function(data){ mensaje(data) });
+							}
+							
 							webdb.executeSql('DELETE FROM tracks', [],
 							function(tx, r){},
 							function(tx, e){
@@ -2355,15 +2376,7 @@ function guardar(resp){
 			});
 		}
 		SES.removeItem('actividad');
-		
 
-		if(SES['synwifi']){
-			if(isOnLine() == 'wifi'){
-				worker({fun: 'sincronizar', url: SITE, chain: SES['chain'] }, function(data){ mensaje(data) });
-			}
-		}else{
-			worker({fun: 'sincronizar', url: SITE, chain: SES['chain'] }, function(data){ mensaje(data) });
-		}
 
 	$('.toCenter, .toLeft, .toRight').not('#PopAlert').removeClass('toCenter toLeft toRight');
 	$('#PopAlert').removeClass('toCenter');
@@ -3149,199 +3162,4 @@ function openShare(type){
 	}
 
 	win.focus();
-}
-function ajax(obj) {
-	var xhr;
- 
-	if(typeof XMLHttpRequest !== 'undefined') xhr = new XMLHttpRequest();
-	else {
-		var versions = ["MSXML2.XmlHttp.5.0", 
-			 	"MSXML2.XmlHttp.4.0",
-			 	"MSXML2.XmlHttp.3.0", 
-			 	"MSXML2.XmlHttp.2.0",
-			 	"Microsoft.XmlHttp"]
- 
-		for(var i = 0, len = versions.length; i < len; i++) {
-		try {
-			xhr = new ActiveXObject(versions[i]);
-			break;
-		}
-			catch(e){}
-		} // end for
-	}
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState === 4) {
-			if (xhr.status === 200) {
-				if (obj.success) obj.success(JSON.parse(xhr.responseText));
-			} else {
-				var error = xhr.responseText ? JSON.parse(xhr.responseText).error : {message: 'An error has occurred'};
-				if (obj.error) obj.error(error);
-			}
-		}
-	}
-	var method = obj.method || 'GET';
-	//
-	xhr.open(method, obj.url, true);
-	xhr.responseType = 'application/json';
-	xhr.crossDomain = true;
-	//
-	if(obj.params){
-		//POST
-		var str = JSON.stringify(obj.params);
-		xhr.setRequestHeader("Content-type", "application/json");
-		xhr.send(str);
-	}else{
-		xhr.send();
-	}
-}
-function sincronizar(obj){
-	var func = obj.res;
-	
-	func('se inicia la sincronizacion');
-	webdb.executeSql('CREATE TABLE IF NOT EXISTS actividad (ID INTEGER PRIMARY KEY ASC, chain TEXT, json TEXT, sync TEXT, data TEXT)', [],
-	function(tx, r){},
-	function(tx, e){});
-	
-	webdb.executeSql('SELECT ID, sync FROM actividad', [],
-	function(tx, r){
-		var rows = r.rows,
-			items = [],
-			tot = rows.length || 0;
-			for(var i=0; i<tot; i++){
-				var row = rows.item(i);
-				items.push(row);
-			}
-			func('se envia al servidor un total de : '+tot ); 
-			ajax({
-				url: obj.url+'input/verificar'
-				,method: 'POST'
-				,params: {chain: obj.cha, data: items}
-				,success: function(r){
-					func(JSON.stringify(r));
-					if(r.success){						
-						var cola = [];
-						if(r.sincroniza.length > 0){
-							cola.push(r.sincroniza);
-						}
-						if(r.subir.length > 0){
-							cola.push(r.subir);
-						}
-						if(r.bajar.length > 0){
-							cola.push(r.bajar);
-						}
-						if(cola.length > 0){
-							subir_bajar(0, 0, cola, func, obj.url, obj.cha);
-						}
-					}
-				}
-				,error: function(error){
-					func(JSON.stringify(error));
-				}
-			}); 
-	},
-	function(tx, e){});
-}
-function subir_bajar(key_actual, key_cola, arr, func, url, chain){
-	var arrgeglo = arr[key_cola];
-	if(arrgeglo[key_actual] == undefined){
-		if(key_cola < arr.length){
-			setTimeout(function(){
-				subir_bajar(0, key_cola+1, arr, func, url, chain);
-			}, 200);
-		}
-		return false;
-	}
-	var id = arrgeglo[key_actual];
-	if(id.length != 32){
-		webdb.executeSql('SELECT * FROM actividad WHERE ID = ?', [id],
-		function(tx, r){
-			var rows = r.rows,
-				tot = rows.length;
-			for(var i=0; i<tot; i++){
-				var row = rows.item(i);
-				ajax({
-					url: url+'input/index'
-					,method : 'POST'
-					,params : { 
-						chain: row.chain
-						,json: row.json 
-						,data: row.data 
-					}
-					,success: function(data){
-						if(data.success){
-							func('se subio : '+row.ID ); 
-							webdb.executeSql('UPDATE actividad SET sync=? WHERE ID = ?', [data.sync, row.ID],
-							function(tx, r){
-								setTimeout(function(){
-									subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
-								}, 200);
-							},
-							function(tx, e){});
-						}
-					}
-				});
-			}
-		},
-		function(tx, e){});
-	}else{
-		//puede ser subir o bajar para saberlo hay que buscarlo en local
-		//si existe hay que subirlo y si no existe hay que bajarlo
-		webdb.executeSql('SELECT * FROM actividad WHERE chain = ? AND sync = ?', [chain, id],
-		function(tx, r){
-			var rows = r.rows,
-				tot = rows.length;
-			if(tot > 0){				
-				for(var i=0; i<tot; i++){
-					var row = rows.item(i);
-					ajax({
-						url: url+'input/index/'+id
-						,method : 'POST'
-						,params : { 
-							chain: row.chain
-							,json: row.json 
-							,data: row.data 
-						}
-						,success: function(data){
-							if(data.success){
-								func('se sincronizo : '+id ); 
-								setTimeout(function(){
-									subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
-								}, 200);
-							}
-						}
-					});	
-				}
-			}else{
-				ajax({
-					url: url+'input/bajar/'+chain+'/'+id
-					,method : 'GET'
-					,success: function(r){
-						if(r.success){
-							var act = r.data,
-								tot = act.length,
-								fecha = act[0].ini;
-								var n = new Date(fecha);
-								fecha = n.getFullYear()+'-'+checkTime(n.getMonth()+1)+'-'+checkTime(n.getDate())+' '+checkTime(n.getHours())+':'+checkTime(n.getMinutes())+':'+checkTime(n.getSeconds());
-
-							webdb.executeSql('INSERT INTO actividad (chain, json, sync, data) VALUES (?,?,?,?)'
-							,[ chain, JSON.stringify(act), id, fecha]
-							,function(tx, r){
-								func('se bajo : '+id ); 
-								setTimeout(function(){
-									subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
-								}, 200);
-							}
-							,function(tx, e){});
-						}else{
-							setTimeout(function(){
-								subir_bajar(key_actual+1, key_cola, arr, func, url, chain);
-							}, 200);
-						}
-					}
-				});	
-				
-			}
-		},
-		function(tx, e){});
-	}
 }
