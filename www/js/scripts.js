@@ -2346,6 +2346,13 @@ function guardar(resp){
 			
 			//console.log(fecha);
 			
+		}else{
+			webdb.executeSql('DELETE FROM tracks', [],
+			function(tx, r){},
+			function(tx, e){
+				//error
+				console.log('borrar los tracks');
+			});
 		}
 		SES.removeItem('actividad');
 		
@@ -3087,7 +3094,7 @@ function getSQL(f){
 				tot = rows.length;
 			for(var i=0; i<tot; i++){
 				var row = rows.item(i);
-				mensaje(JSON.stringify(row));
+				console.log(JSON.stringify(row));
 			}
 		},
 		function(tx, e){});
