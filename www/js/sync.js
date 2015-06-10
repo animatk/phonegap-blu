@@ -104,11 +104,11 @@ function sincronizar(obj){
 	var func = obj.res;
 	func('se inicia la sincronizacion');
 	
-	webdb.executeSql('SELECT ID, sync FROM actividad', [],
+	webdb.executeSql('SELECT ID, sync FROM actividad WHERE chain = ?', [obj.cha],
 	function(tx, r){
 		var rows = r.rows,
 			items = [],
-			tot = rows.length || 0;
+			tot = rows.length;
 			for(var i=0; i<tot; i++){
 				var row = rows.item(i);
 				items.push(row);
@@ -141,7 +141,9 @@ function sincronizar(obj){
 				}
 			}); 
 	},
-	function(tx, e){});
+	function(tx, e){
+		console.log('error : '+ JSON.stringify(e));
+	});
 }
 function subir_bajar(key_actual, key_cola, arr, func, url, chain){
 	var arrgeglo = arr[key_cola];

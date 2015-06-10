@@ -3112,11 +3112,14 @@ function getSQL(f){
 		},
 		function(tx, e){});
 }
-function exeSQL(sql){
+function exeSQL(sql, func){
 	//
 	webdb.executeSql(sql, [],
 		function(tx, r){
 			mensaje('SQL : exito');
+			if(func != undefined){
+				func(r);
+			}
 		},
 		function(tx, e){
 			mensaje('SQL : error');
