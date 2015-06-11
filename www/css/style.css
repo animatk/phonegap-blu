@@ -320,11 +320,13 @@ header .btn{
 	width: 34px;
 	height: 30px;
 	display: inline-block;
-	background: url(../img/bluetooth_off.png) no-repeat center bottom;
 	background-size: 85%;
 }
 .bluetooth.active{
 	background-image: url(../img/bluetooth_on.png);
+}
+.bluetooth.sync {
+	background: url(../img/loader-mini.gif) no-repeat center;
 }
 
 .btn-default{
@@ -1668,6 +1670,7 @@ Pagination Styles
 	margin-top: -50px;
 	margin-bottom: 5px;
 }
+
 #perfil .user_inicio{
 	margin-top: 0;
 	background-color: #1C1922;

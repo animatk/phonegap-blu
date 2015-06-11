@@ -57,9 +57,10 @@ var SES = window.localStorage,
 	btnCancel = false,
 	SITE = 'http://52.11.112.109/index.php/';
 //}
-getLang({exe: 'setText'});
 
 $(function(){
+	getLang({exe: 'setText'});
+	
 	localStorage.removeItem("month_graph");
 	localStorage.removeItem("end_graph");
 	localStorage.removeItem("day_graph");
@@ -621,10 +622,12 @@ function show_inicio(from){
 		}
 		if(SES['synwifi']){
 			if(isOnLine() == 'wifi'){
-				sincronizar({url: SITE, cha: SES.chain, res: function(d){console.log(d);}});
+				$('.bluetooth').addClass('sync');
+				sincronizar({url: SITE, cha: SES.chain, res: function(d){}});
 			}
 		}else{
-			sincronizar({url: SITE, cha: SES.chain, res: function(d){console.log(d);}});
+			$('.bluetooth').addClass('sync');
+			sincronizar({url: SITE, cha: SES.chain, res: function(d){}});
 		}
 	}
     //queris para determinar valores
@@ -716,8 +719,10 @@ function show_inicio(from){
             $('.esta-pul').html(pul);
 		},
 		function(tx, e){});
-		
-	ak_navigate('#inicio');	
+	
+	if(from !== false){
+		ak_navigate('#inicio');	
+	}	
 	//
 	$('#submenu_estadisticas').hide();
 }
@@ -1489,6 +1494,8 @@ function restore(form){
 /*! Congiguracion */
 function show_config(back){
 //	if(SES['sens']){
+		sync = false;
+		$('.bluetooth').removeClass('sync');
 		stopgeo(function(){
 			geo();
 		});
@@ -1727,7 +1734,6 @@ function show_principal(back){
 	ak_navigate('#principal', back);
 }
 function principal(back){
-	sync = false;
 	if(SES['actividad']){
 		ak_navigate('#principal', back);
 		$('.ac-3,.ac-2,.ac-1').removeClass('active stop');
@@ -3227,16 +3233,20 @@ function sincronizar(obj){
 						}
 						if(cola.length > 0){
 							subir_bajar(0, 0, cola, func, obj.url, obj.cha);
+						}else{
+							$('.bluetooth').removeClass('sync');
 						}
 					}
 				}
 				,error: function(error){
+					$('.bluetooth').removeClass('sync');
 					func(JSON.stringify(error));
 				}
 			}); 
 	},
 	function(tx, e){
-		console.log('error : '+ JSON.stringify(e));
+		$('.bluetooth').removeClass('sync');
+	//	console.log('error : '+ JSON.stringify(e));
 	});
 }
 function subir_bajar(key_actual, key_cola, arr, func, url, chain){
@@ -3244,10 +3254,10 @@ function subir_bajar(key_actual, key_cola, arr, func, url, chain){
 	if(sync === false){
 		return false;
 	}
-	
 	var arrgeglo = arr[key_cola];
 	if(arrgeglo == undefined){
-		
+		show_inicio(false);
+		$('.bluetooth').removeClass('sync');
 		return false;
 	}
 	if(arrgeglo[key_actual] == undefined){
