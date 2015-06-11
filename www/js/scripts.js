@@ -615,22 +615,6 @@ function show_inicio(from){
 	//
 	$('html').css('background-image', 'none');
 	show_perfil(false);
-	//
-	sync = true;
-	if(isOnLine() != 'none' && SES['chain']){
-		if(SES['chain'] == '4d8e1a06e5a47d8bfbe3623a35f52276'){
-			showDebug();
-		}
-		if(SES['synwifi']){
-			if(isOnLine() == 'wifi'){
-				$('.bluetooth').addClass('sync');
-				sincronizar({url: SITE, cha: SES.chain, res: function(d){}});
-			}
-		}else{
-			$('.bluetooth').addClass('sync');
-			sincronizar({url: SITE, cha: SES.chain, res: function(d){}});
-		}
-	}
     //queris para determinar valores
     webdb.executeSql('SELECT * FROM actividad WHERE chain = ?', [SES['chain']],
 		function(tx, r){
@@ -722,6 +706,21 @@ function show_inicio(from){
 		function(tx, e){});
 	
 	if(from !== false){
+		sync = true;
+		if(isOnLine() != 'none' && SES['chain']){
+			if(SES['chain'] == '4d8e1a06e5a47d8bfbe3623a35f52276'){
+				showDebug();
+			}
+			if(SES['synwifi']){
+				if(isOnLine() == 'wifi'){
+					$('.bluetooth').addClass('sync');
+					sincronizar({url: SITE, cha: SES.chain, res: function(d){}});
+				}
+			}else{
+				$('.bluetooth').addClass('sync');
+				sincronizar({url: SITE, cha: SES.chain, res: function(d){}});
+			}
+		}
 		ak_navigate('#inicio');	
 	}	
 	//
@@ -3184,7 +3183,7 @@ function ajax(obj) {
 	var method = obj.method || 'GET';
 	//
 	xhr.open(method, obj.url, true);
-	xhr.responseType = 'application/json';
+//	xhr.responseType = 'application/json';
 	xhr.crossDomain = true;
 	//
 	if(obj.params){
