@@ -126,7 +126,7 @@
 				<form onsubmit="return restore(this); return false;">
 					<input name="correo" class="form-control required email" placeholder="Correo Electrónico" />
 					<div class="text-center">
-						<button id="BtnRestore" class="btn btn-action btn-block"> Restaurar Contraseña </button>
+						<button id="BtnRestore" class="btn btn-action btn-block" data-lang="restore_pass"></button>
 					</div>
 				</form>
 			</div>
@@ -226,7 +226,7 @@
 						<div>&nbsp;</div>
 						<div class="form-terms">
 							<input name="terminos" type="checkbox" value="" onchange="var i=this; if(i.value==''){i.value='SI';}else{i.value='';}" class="required" placeholder="Terminos" />
-							Acepto <a href="#!" onclick="ak_navigate('#terminos', {to: 'show_paso_tres();'});">terminos y condiciones</a>
+							<span data-lang="accept"></span> <a href="#!" onclick="ak_navigate('#terminos', {to: 'show_paso_tres();'});" data-lang="terminos"></a>
 						</div>
 						<div>&nbsp;</div>
 						<div>&nbsp;</div>
@@ -277,7 +277,7 @@
 					</div>
 				</div>
 				<div class="item-config" onclick="musica({to:'show_config({to:\'show_inicio();\', tx: language.cancel});'});">
-					<span class="icon icon-config icon-music"> </span> <span>No music list selected</span>
+					<span class="icon icon-config icon-music"> </span> <span id="SoundName"></span>
 				</div>
 				<div id="botonDisp" class="item-config" onclick="botonDispositivos({to:'show_config({to:\'show_inicio();\', tx: language.cancel});', tx: language.volver});">
 					<span class="icon icon-config icon-hearth"> </span> <span id="InfoHRM"></span>
@@ -297,7 +297,7 @@
 				<div>&nbsp;</div>
 				<div class="dispMain">
 					<div class="row hrm-item">
-						<span class="icon icon-config icon-mobile"> </span> <span>Dispositivos Confiables</span>
+						<span class="icon icon-config icon-mobile"> </span> <span data-lang="disp_conf"></span>
 					</div>
 					<div class="disp-list">
 						<!--listado dispositivos recordados-->
@@ -305,7 +305,7 @@
 				</div>
 				<div class="dispFind oculto">					
 					<div class="row hrm-item">
-						<span class="icon icon-config icon-mobile"> </span> <span>Dispositivos Disponibles</span>
+						<span class="icon icon-config icon-mobile"> </span> <span data-lang="disp_disp"></span>
 					</div>
 					<div class="disp-find">
 						<!--listado dispositivos encontrados-->
@@ -565,11 +565,11 @@
 				</div>
 				<div class="item-config" onclick="musica({to:'show_configuracion({to:\'show_inicio();\'});'});">
 					<span class="icon icon-config icon-music"> </span> 
-					<span> Musica </span> 
+					<span data-lang="conf_music"></span> 
 				</div>
 				<div class="item-config">
 					<span class="icon icon-config icon-hearth"> </span> 
-					<span>Sincronizar solo por wifi </span> 
+					<span data-lang="conf_wifi"> </span> 
 					<span id="switchWifi" class="switch" onclick="switch_wifi(this);"></span>
 				</div>
 				<div>&nbsp;</div>

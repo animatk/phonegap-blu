@@ -3,7 +3,7 @@
 		xmlns:gap   = "http://phonegap.com/ns/1.0"
 		id          = "com.siluet.sforza"
 		versionCode = "1" 
-		version     = "0.0.2" >
+		version     = "1.0.0" >
 	<!-- versionCode is optional and Android only -->
 	
 	<name>Sforza</name>
@@ -39,7 +39,6 @@
 	<gap:plugin name="org.apache.cordova.file" />
 	<gap:plugin name="org.apache.cordova.file-transfer" />
 	<gap:plugin name="org.apache.cordova.media" />
-	<gap:plugin name="co.uk.jonathanroper.itunesfilesharing" version="1.0.0" />
 
 	<!-- Define app icon for each platform. -->
 	<icon src="icon.png" />

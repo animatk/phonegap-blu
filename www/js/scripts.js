@@ -613,6 +613,7 @@ function show_inicio(from){
 		$('.btn-iniciar').removeClass('active');
 	}
 	//
+	$('html').css('background-image', 'none');
 	show_perfil(false);
 	//
 	sync = true;
@@ -1510,6 +1511,8 @@ function show_config(back){
 		}else{
 			$('#InfoHRM').html(language.conhrm+' '+$('.disp-list div[data-add="'+DEVICE+'"]').text());
 		}
+		
+		$('#SoundName').html(language.no_music);
 		ak_navigate('#config', back); 
 //	}else{
 //		show_sensibilidad(back);
@@ -2327,10 +2330,6 @@ function guardar(resp){
 							fecha = n.getFullYear()+'-'+checkTime(n.getMonth()+1)+'-'+checkTime(n.getDate())+' '+checkTime(n.getHours())+':'+checkTime(n.getMinutes())+':'+checkTime(n.getSeconds());
 						}
 					}
-					
-					console.log(fecha);
-					console.log(actividad);
-				
 					webdb.executeSql('INSERT INTO actividad (chain, json, sync, data) VALUES (?,?,?,?)', 
 						[ SES['chain'], JSON.stringify(actividad), 'NO', fecha],
 						function(tx, r){
@@ -2338,17 +2337,17 @@ function guardar(resp){
 							function(tx, r){},
 							function(tx, e){
 								//error
-								console.log('borrar los tracks');
+							//	console.log('borrar los tracks');
 							});
 						},
 						function(tx, e){
 							//error
-							console.log('error al insertar la actividad');
+						//	console.log('error al insertar la actividad');
 						});
 				},
 				function(tx, e){
 					//ERROR
-					console.log('error al consultar los tracks');
+				//	console.log('error al consultar los tracks');
 				});	
 
 			
@@ -2359,7 +2358,7 @@ function guardar(resp){
 			function(tx, r){},
 			function(tx, e){
 				//error
-				console.log('borrar los tracks');
+	//			console.log('borrar los tracks');
 			});
 		}
 		SES.removeItem('actividad');
@@ -3234,17 +3233,20 @@ function sincronizar(obj){
 						if(cola.length > 0){
 							subir_bajar(0, 0, cola, func, obj.url, obj.cha);
 						}else{
+							show_inicio(false);
 							$('.bluetooth').removeClass('sync');
 						}
 					}
 				}
 				,error: function(error){
+					show_inicio(false);
 					$('.bluetooth').removeClass('sync');
 					func(JSON.stringify(error));
 				}
 			}); 
 	},
 	function(tx, e){
+		show_inicio(false);
 		$('.bluetooth').removeClass('sync');
 	//	console.log('error : '+ JSON.stringify(e));
 	});
