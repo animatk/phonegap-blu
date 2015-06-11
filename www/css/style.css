@@ -34,9 +34,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 html{ 
     overflow-x:hidden;
-	background:#24212C url(../res/screen/screen.png) no-repeat center top;
+	background:#24212C;
 	background-size: cover;
+	/* url(../res/screen/screen.png) no-repeat center top */
 } 
+
 body{ 
     min-width: 320px;
 	background: transparent;
