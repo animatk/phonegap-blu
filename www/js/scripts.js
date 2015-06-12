@@ -34,7 +34,7 @@ var SES = window.localStorage,
 	LON = 0, //map longitude
 	ICO = null, //icon map
 	MAPLINE = null, //linea de recorrido
-	ACCELTIMEOUT = 1000, //tiemout accel
+	ACCELTIMEOUT = 500, //tiemout accel
 	ACTIVITYTYPE = 1, //tipo de actividad
 	StopAcc = true;
 	PauseSens = 0, //sensibilidad del estado de pausa para que sea mas tolerante el numero de veces indicado
@@ -1906,13 +1906,13 @@ function stepsSuccess(a){
 	navigator.compass.getCurrentHeading(compassSuccess, compassError);
 
 	if(ACCE > (m + s) || ACCE < (m - s)){
-		if(StopAcc && ResumeSens < 3){
+		if(StopAcc && ResumeSens < 6){
 			ResumeSens = ResumeSens+1;
-			if(ResumeSens > 2){
+			if(ResumeSens > 5){
 				StopAcc = false;
 			}else{
-				$('.DISTA').css('color', '#63e05a');
-				return false;
+			//	$('.DISTA').css('color', '#63e05a');
+			//	return false;
 			}
 		}
 		PauseSens = 0;
@@ -2041,10 +2041,9 @@ function stepsSuccess(a){
 			$('.CALOR').html( CALO );
 		}
 		
-		initClock();
 		$('.PASOS').html( STEP );
 	}else{
-		if(!StopAcc && PauseSens > 2){
+		if(!StopAcc && PauseSens > 4){
 			// se puede poner un sonido de que se pausa la actividad
 			navigator.vibrate([800]);
 			trackActivity();
@@ -2053,6 +2052,10 @@ function stepsSuccess(a){
 		ResumeSens = 0;
 		PauseSens = PauseSens+1;
 		$('.DISTA').css('color', '#ccc');
+	}
+	
+	if(PauseSens <= 4){
+		initClock();
 	}
 	
 	ACCE = m;
