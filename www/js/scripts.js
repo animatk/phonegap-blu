@@ -28,33 +28,22 @@ var SES = window.localStorage,
 	ACCE = 0, //ACCELERATION
 	PAUSED = true, //status of activity
 	PERFIL = null, //status of activity
-	SPEED_SEG = 0, //HRM sensor 
-	SPEED_STEP = 0, //HRM sensor 
-	SPEED_TRACK = 0, //HRM sensor 
 	PPM = 0, //HRM sensor 
 	MAP = null, //map google
 	LAT = 0, //map latitude
 	LON = 0, //map longitude
 	ICO = null, //icon map
-	MAPTIMEOUT = 3000, //tiemout map
 	MAPLINE = null, //linea de recorrido
 	ACCELTIMEOUT = 500, //tiemout accel
-	CLOCKTIMEOUT = 1000, //tiemout clock
 	ACTIVITYTYPE = 1, //tipo de actividad
-	ACTIVITYTIMEOUT = 1000*10, //tiemout tomar datos
 	StopAcc = true;
 	PauseSens = 0, //sensibilidad del estado de pausa para que sea mas tolerante el numero de veces indicado
+	ResumeSens = 0, //sensibilidad del estado de resumen para que sea mas tolerante el numero de veces indicado
 	sync = true, //plugir background mode.
-	PickDia = null, //picker dia 
-	PickMes = null, //picker mes
-	PickAno = null, //picker año
-	pkEstUno = null, //picker estatura uno
-	pkEstDos = null, //picker estatura dos
-	pkPeso = null, //picker peso
 	isPhonegap = false, //es phonegap
 	mapGraphic = null, //grafico en mapa
-	D = 10, //grafico en mapa
 	btnCancel = false,
+	DecimaLatLon = 10, //number of decimals in lat long
 	SITE = 'http://52.11.112.109/index.php/';
 //}
 
@@ -1905,10 +1894,6 @@ function stepsSuccess(a){
 	if(!SES['sens']){
 		SES['sens'] = 0.5;
 	}
-	//
-//	if(!SES['actividad']){
-//		trackActivity();
-//	}
 	
 	var x = a.x
 	, y = a.y
@@ -1920,6 +1905,12 @@ function stepsSuccess(a){
 	navigator.compass.getCurrentHeading(compassSuccess, compassError);
 
 	if(ACCE > (m + s) || ACCE < (m - s)){
+		
+		if(StopAcc && ResumeSens < 6){
+			navigator.vibrate([2000]);
+			ResumeSens = ResumeSens+1;
+			return false;
+		}
 		
 		var ac = {};
 		if(SES['actividad']){
@@ -1997,14 +1988,14 @@ function stepsSuccess(a){
 			}
 			
 			if(PERFIL.unit == 'M'){
-				if( metros > 1000 ){
+				//if( metros > 1000 ){
 					mostrar = metros/1000;
 					mostrar = parseFloat(mostrar.toFixed(2));
 					if(mostrar > 9.99){
 						mostrar = mostrar.toFixed(1);
 					}
 					mostrar = mostrar+ '<span class="deta-light">km</span>';
-				}
+				//}
 			}else{
 				mostrar = parseFloat((pulgadas / 63360).toFixed(2));
 				if(mostrar > 9.99){
@@ -2053,6 +2044,7 @@ function stepsSuccess(a){
 			// se puede poner un sonido de que se pausa la actividad
 			navigator.vibrate([800]);
 			trackActivity();
+			ResumeSens = 0;
 			StopAcc = true;
 		}
 		PauseSens = PauseSens+1;
@@ -2084,8 +2076,8 @@ function stopgeo(call){
 	}
 }
 function geoSuccess(position){
-	LAT = parseFloat(position.coords.latitude.toFixed(D));
-	LON = parseFloat(position.coords.longitude.toFixed(D));
+	LAT = parseFloat(position.coords.latitude.toFixed(DecimaLatLon));
+	LON = parseFloat(position.coords.longitude.toFixed(DecimaLatLon));
 	//
 	mensaje("GEO Lat: "+LAT+" Lon: "+LON);
 }
@@ -2271,9 +2263,7 @@ function stop(){
 	SECOND = 0;
 	CALO = 0; //calorias
 	STEP = 0; //pasos
-	SPEED_SEG = 0;
-	SPEED_STEP = 0;
-	SPEED_TRACK = 0;
+
 	DISTA = 0; //distancia recorrida
 	ACCE = 0; //ACCELERATION
 	PAUSED = true; //status of activity
