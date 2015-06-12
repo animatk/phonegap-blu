@@ -1725,6 +1725,7 @@ function show_principal(back){
 	ak_navigate('#principal', back);
 }
 function principal(back){
+	ResumeSens = 6;
 	if(SES['actividad']){
 		ak_navigate('#principal', back);
 		$('.ac-3,.ac-2,.ac-1').removeClass('active stop');
@@ -1910,8 +1911,8 @@ function stepsSuccess(a){
 			if(ResumeSens > 5){
 				StopAcc = false;
 			}else{
-				$('.DISTA').css('color', '#63e05a');
-				return false;
+		//		$('.DISTA').css('color', '#63e05a');
+		//		return false;
 			}
 		}
 		PauseSens = 0;
@@ -2039,8 +2040,8 @@ function stepsSuccess(a){
 			$('.CALOR').html( CALO );
 		}
 		
-		$('.PASOS').html( STEP );
 		initClock();
+		$('.PASOS').html( STEP );
 	}else{
 		if(!StopAcc && PauseSens > 4){
 			// se puede poner un sonido de que se pausa la actividad
