@@ -1906,9 +1906,14 @@ function stepsSuccess(a){
 
 	if(ACCE > (m + s) || ACCE < (m - s)){
 		
-		if(StopAcc && ResumeSens < 6){
-			navigator.vibrate([2000]);
+		if(StopAcc && ResumeSens < 10){
 			ResumeSens = ResumeSens+1;
+			if(ResumeSens >= 9){
+				$('.DISTA').attr('style', "");
+				PauseSens = 0;
+				StopAcc = false;
+			}
+			$('.DISTA').css('color', '#63e05a');
 			return false;
 		}
 		
@@ -2035,18 +2040,16 @@ function stepsSuccess(a){
 		}
 		
 		$('.PASOS').html( STEP );
-		
 		initClock();
-		PauseSens = 0;
-		StopAcc = false;
 	}else{
-		if(!StopAcc && PauseSens >= 3){
+		if(!StopAcc && PauseSens >= 4){
 			// se puede poner un sonido de que se pausa la actividad
 			navigator.vibrate([800]);
 			trackActivity();
-			ResumeSens = 0;
 			StopAcc = true;
 		}
+		ResumeSens = 0;
+		$('.DISTA').css('color', '#2c6427');
 		PauseSens = PauseSens+1;
 	}	
 	
