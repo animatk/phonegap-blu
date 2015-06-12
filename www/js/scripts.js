@@ -2042,7 +2042,7 @@ function stepsSuccess(a){
 			}
 			$('.CALOR').html( CALO );
 		}
-		
+		trackClock = true;
 		$('.PASOS').html( STEP );
 	}else{
 		if(!StopAcc && PauseSens > 4){
