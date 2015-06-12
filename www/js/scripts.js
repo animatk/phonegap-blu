@@ -1905,18 +1905,18 @@ function stepsSuccess(a){
 	navigator.compass.getCurrentHeading(compassSuccess, compassError);
 
 	if(ACCE > (m + s) || ACCE < (m - s)){
-		
-		if(StopAcc && ResumeSens < 9){
+		if(StopAcc && ResumeSens < 6){
 			ResumeSens = ResumeSens+1;
-			if(ResumeSens >= 8){
-				$('.DISTA').css('color', '#fff');
-				PauseSens = 0;
+			if(ResumeSens > 6){
 				StopAcc = false;
 			}else{
 				$('.DISTA').css('color', '#63e05a');
 				return false;
 			}
 		}
+		
+		PauseSens = 0;
+		$('.DISTA').css('color', '#fff');
 		
 		var ac = {};
 		if(SES['actividad']){
@@ -2043,9 +2043,8 @@ function stepsSuccess(a){
 		$('.PASOS').html( STEP );
 		initClock();
 	}else{
-		if(!StopAcc && PauseSens >= 4){
+		if(!StopAcc && PauseSens > 4){
 			// se puede poner un sonido de que se pausa la actividad
-			$('.DISTA').css('color', '#2c6427');
 			navigator.vibrate([800]);
 			trackActivity();
 			StopAcc = true;
