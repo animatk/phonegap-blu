@@ -44,6 +44,7 @@ var SES = window.localStorage,
 	mapGraphic = null, //grafico en mapa
 	btnCancel = false,
 	DecimaLatLon = 10, //number of decimals in lat long
+	trackClock = 0,
 	SITE = 'http://52.11.112.109/index.php/';
 //}
 
@@ -1974,7 +1975,7 @@ function stepsSuccess(a){
 			velocidad = JSON.parse(SES['velocidad']);
 		}
 		
-		if(SECOND > (velocidad.time_act + 5)){
+		if(SECOND > (velocidad.time_act + 4)){
 			velocidad.time_act = SECOND;
 			velocidad.paso_act = STEP;
 			var pasos = (STEP - velocidad.paso_act);
@@ -2054,9 +2055,11 @@ function stepsSuccess(a){
 		$('.DISTA').css('color', '#ccc');
 	}
 	
-	if(PauseSens <= 4){
+	if(PauseSens <= 4 && trackClock >= 1){
 		initClock();
 	}
+	
+	trackClock = (trackClock==1)? 0 : 1;
 	
 	ACCE = m;
 }
