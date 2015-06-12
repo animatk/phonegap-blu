@@ -2045,14 +2045,15 @@ function stepsSuccess(a){
 	}else{
 		if(!StopAcc && PauseSens >= 4){
 			// se puede poner un sonido de que se pausa la actividad
+			$('.DISTA').css('color', '#2c6427');
 			navigator.vibrate([800]);
 			trackActivity();
 			StopAcc = true;
 		}
 		ResumeSens = 0;
-		$('.DISTA').css('color', '#2c6427');
 		PauseSens = PauseSens+1;
-	}	
+		$('.DISTA').css('color', '#ccc');
+	}
 	
 	ACCE = m;
 }
