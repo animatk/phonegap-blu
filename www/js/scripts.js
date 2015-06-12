@@ -1726,6 +1726,7 @@ function show_principal(back){
 	ak_navigate('#principal', back);
 }
 function principal(back){
+	StopAcc = false;
 	ResumeSens = 6;
 	trackClock = true;
 	if(SES['actividad']){
