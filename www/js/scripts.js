@@ -2043,6 +2043,9 @@ function stepsSuccess(a){
 		}
 		
 		$('.PASOS').html( STEP );
+		if(trackClock >= 1){
+			initClock();
+		}
 	}else{
 		if(!StopAcc && PauseSens > 4){
 			// se puede poner un sonido de que se pausa la actividad
@@ -2055,12 +2058,7 @@ function stepsSuccess(a){
 		$('.DISTA').css('color', '#ccc');
 	}
 	
-	if(PauseSens <= 4 && trackClock >= 1){
-		initClock();
-	}
-	
 	trackClock = (trackClock==1)? 0 : 1;
-	
 	ACCE = m;
 }
 function geo(){
