@@ -1912,9 +1912,7 @@ function stepsSuccess(a){
 			ResumeSens = ResumeSens+1;
 			if(ResumeSens > 5){
 				StopAcc = false;
-			}else{
-			//	$('.DISTA').css('color', '#63e05a');
-			//	return false;
+				trackClock = true;
 			}
 		}
 		PauseSens = 0;
@@ -2042,7 +2040,6 @@ function stepsSuccess(a){
 			}
 			$('.CALOR').html( CALO );
 		}
-		trackClock = true;
 		$('.PASOS').html( STEP );
 	}else{
 		if(!StopAcc && PauseSens > 4){
@@ -2056,8 +2053,7 @@ function stepsSuccess(a){
 		PauseSens = PauseSens+1;
 		$('.DISTA').css('color', '#ccc');
 	}
-	
-	
+
 	if(trackClock){
 		initClock();
 	}
