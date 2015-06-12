@@ -15,22 +15,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 @font-face {
     font-family: 'ttw';
-    src: url(TitilliumWeb-Italic.ttf);
-	font-weight: normal;
-    font-style: italic;
-}
-@font-face {
-    font-family: 'ttw';
     src: url(TitilliumWeb-Bold.ttf);
 	font-weight: bold;
     font-style: nornal;
 }
-@font-face {
-    font-family: 'ttw';
-    src: url(TitilliumWeb-BoldItalic.ttf);
-	font-weight: bold;
-    font-style: italic;
-}
+
 
 html{ 
     overflow-x:hidden;
@@ -624,7 +613,6 @@ header .btn{
 /* secciones */
 
 .general-title{
-	font-style: italic;
 	font-size: 1.3em;
 } 
 
@@ -823,7 +811,6 @@ header .btn{
 
 .title_graph{
 	color:#888;
-	font-style: italic;
     font-size: 1em;
     text-align: center;
 }
@@ -1069,12 +1056,10 @@ header .btn{
 }
 .ppal-deta-tit{
 	color: #fff;
-	font-style: italic;
 }
 .ppal-deta-num{
 	color: #fff;
 	font-size: 40px;
-	font-style: italic;
 	font-weight: 700;
 	line-height: 30px;
 }
@@ -1090,7 +1075,6 @@ header .btn{
 	background-size: auto 60%;
 	background-repeat: no-repeat;
 	background-position: center top;
-	font-style: italic;
 	display: inline-block;
 }
 
@@ -1232,7 +1216,6 @@ textarea.form-control{
 	color: #fff;
 	text-align: center;
 	font-size: 30px;
-	font-style: italic;
 	font-weight: 700;
 	padding: 5px;
 	border: 1px solid #2b282f;
@@ -1376,7 +1359,6 @@ input:-webkit-autofill:active{
 .config-item-left,
 .config-item-right{
 	padding-top: 11px;
-	font-style: italic;
 }
 .pktxaling{
 	padding-top: 30px;
@@ -1388,7 +1370,6 @@ input:-webkit-autofill:active{
 	color: #fff;
 	text-align: center;
 	font-size: 30px;
-	font-style: italic;
 	font-weight: 700;
 }
 .config-item .form-control{
@@ -1717,7 +1698,6 @@ Pagination Styles
 }
 .btn_title{
 	width: 100%;
-	font-style: italic;
 	font-size: 20px;
 	line-height: 20px;
 }
@@ -1737,7 +1717,6 @@ Pagination Styles
 	padding: 0;
 	font-size: 24px;
 	margin-left: 0px;
-	font-style: italic;
 }
 .est-icon.PPM{
 	font-size: 30px;
