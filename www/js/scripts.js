@@ -1975,14 +1975,14 @@ function stepsSuccess(a){
 			velocidad = JSON.parse(SES['velocidad']);
 		}
 		
-		if(SECOND > (velocidad.time_act + 4)){
-			velocidad.time_act = SECOND;
-			velocidad.paso_act = STEP;
+		if(SECOND > (velocidad.time_act + 5)){
 			var pasos = (STEP - velocidad.paso_act);
 			var	PasosDivSegundos = (pasos / 5).toFixed(1);
 			var PpS = (PasosDivSegundos > 1.5)? PasosDivSegundos : 0;
-			SES['velocidad'] = JSON.stringify(velocidad);
 			var ndista = (pulgadas * (med * PpS)) * pasos;
+			velocidad.time_act = SECOND;
+			velocidad.paso_act = STEP;
+			SES['velocidad'] = JSON.stringify(velocidad);
 			console.log('Pasos: '+pasos+' PpS: '+PpS+' Ndista: '+ndista);
 			DISTA = DISTA + ndista;
 		//	DISTA = (pulgadas * med) * STEP;
