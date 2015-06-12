@@ -1907,14 +1907,13 @@ function stepsSuccess(a){
 	if(ACCE > (m + s) || ACCE < (m - s)){
 		if(StopAcc && ResumeSens < 6){
 			ResumeSens = ResumeSens+1;
-			if(ResumeSens > 6){
+			if(ResumeSens > 5){
 				StopAcc = false;
 			}else{
 				$('.DISTA').css('color', '#63e05a');
 				return false;
 			}
 		}
-		
 		PauseSens = 0;
 		$('.DISTA').css('color', '#fff');
 		
