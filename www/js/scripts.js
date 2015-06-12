@@ -44,7 +44,7 @@ var SES = window.localStorage,
 	mapGraphic = null, //grafico en mapa
 	btnCancel = false,
 	DecimaLatLon = 10, //number of decimals in lat long
-	trackClock = 0,
+	trackClock = true,
 	SITE = 'http://52.11.112.109/index.php/';
 //}
 
@@ -1727,6 +1727,7 @@ function show_principal(back){
 }
 function principal(back){
 	ResumeSens = 6;
+	trackClock = true;
 	if(SES['actividad']){
 		ak_navigate('#principal', back);
 		$('.ac-3,.ac-2,.ac-1').removeClass('active stop');
@@ -2043,22 +2044,23 @@ function stepsSuccess(a){
 		}
 		
 		$('.PASOS').html( STEP );
-		if(trackClock >= 1){
-			initClock();
-		}
 	}else{
 		if(!StopAcc && PauseSens > 4){
 			// se puede poner un sonido de que se pausa la actividad
 			navigator.vibrate([800]);
 			trackActivity();
 			StopAcc = true;
+			trackClock = false;
 		}
 		ResumeSens = 0;
 		PauseSens = PauseSens+1;
 		$('.DISTA').css('color', '#ccc');
 	}
 	
-	trackClock = (trackClock==1)? 0 : 1;
+	
+	if(trackClock){
+		initClock();
+	}
 	ACCE = m;
 }
 function geo(){
@@ -2272,7 +2274,6 @@ function stop(){
 	SECOND = 0;
 	CALO = 0; //calorias
 	STEP = 0; //pasos
-
 	DISTA = 0; //distancia recorrida
 	ACCE = 0; //ACCELERATION
 	PAUSED = true; //status of activity
