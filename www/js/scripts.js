@@ -38,6 +38,7 @@ var SES = window.localStorage,
 	ACTIVITYTYPE = 1, //tipo de actividad
 	StopAcc = true;
 	PauseSens = 0, //sensibilidad del estado de pausa para que sea mas tolerante el numero de veces indicado
+	ResumeSens = 0;
 	sync = true, //plugir background mode.
 	isPhonegap = false, //es phonegap
 	mapGraphic = null, //grafico en mapa
@@ -1724,6 +1725,7 @@ function show_principal(back){
 	ak_navigate('#principal', back);
 }
 function principal(back){
+	StopAcc = false;
 	if(SES['actividad']){
 		ak_navigate('#principal', back);
 		$('.ac-3,.ac-2,.ac-1').removeClass('active stop');
@@ -1904,8 +1906,16 @@ function stepsSuccess(a){
 	navigator.compass.getCurrentHeading(compassSuccess, compassError);
 
 	if(ACCE > (m + s) || ACCE < (m - s)){
+		if(StopAcc && ResumeSens < 7){
+			ResumeSens = ResumeSens+1;
+			if(ResumeSens > 6){
+				StopAcc = false;
+			}
+		}
 		
-		var ac = {};
+		var ac = {
+			
+		};
 		if(SES['actividad']){
 			ac = JSON.parse(SES['actividad']);
 		}
@@ -2028,20 +2038,18 @@ function stepsSuccess(a){
 		}
 		
 		$('.PASOS').html( STEP );
-		
 		initClock();
 		PauseSens = 0;
-		StopAcc = false;
 	}else{
-		if(!StopAcc && PauseSens >= 3){
+		if(StopAcc && PauseSens >= 3){
 			// se puede poner un sonido de que se pausa la actividad
 			navigator.vibrate([800]);
 			trackActivity();
 			StopAcc = true;
 		}
 		PauseSens = PauseSens+1;
+		ResumeSens = 0;
 	}	
-	
 	ACCE = m;
 }
 function geo(){
