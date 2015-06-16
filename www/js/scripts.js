@@ -1963,8 +1963,6 @@ function stepsSuccess(a){
 		var med = (PERFIL.gender == 'M')? 0.415 : 0.413;
 
 		var velocidad = {};
-			velocidad.lat_act = LAT;
-			velocidad.lon_act = LAT;
 			velocidad.time_act = 0;
 			velocidad.paso_act = 0;
 			
@@ -1982,14 +1980,17 @@ function stepsSuccess(a){
 				DISTA = DISTA + ndista;
 			//	DISTA = (pulgadas * med) * STEP;
 			}else{
-				DISTA = DISTA + (Dist(velocidad.lat_act, velocidad.lon_act, LAT, LON) * 39370);
+				if(velocidad.lat_act != undefined){
+					DISTA = DISTA + (Dist(velocidad.lat_act, velocidad.lon_act, LAT, LON) * 39370);
+				}
 			}
 			
 			var pulgadas = DISTA; //pulgadas
 			var metros = pulgadas/metro;
-			
-			velocidad.lat_act = LAT;
-			velocidad.lon_act = LAT;
+			if(LAT != 0){
+				velocidad.lat_act = LAT;
+				velocidad.lon_act = LON;
+			}
 			velocidad.time_act = SECOND;
 			velocidad.paso_act = STEP;
 			SES['velocidad'] = JSON.stringify(velocidad);
