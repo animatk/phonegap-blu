@@ -289,8 +289,9 @@ header .btn{
 
 #btn-accion-izq{
 	text-indent: -99999px;
-	background: url(../img/back_modal.png) no-repeat 2px center;
 	width: 100%;
+	background: url(../img/back_modal.png) no-repeat 2px center;
+	background-size: 25%;
 }
 
 .btn-block{
