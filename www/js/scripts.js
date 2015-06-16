@@ -1906,10 +1906,11 @@ function stepsSuccess(a){
 	navigator.compass.getCurrentHeading(compassSuccess, compassError);
 
 	if(ACCE > (m + s) || ACCE < (m - s)){
-		if(StopAcc && ResumeSens < 7){
+		if(ResumeSens < 7){
 			ResumeSens = ResumeSens+1;
 			if(ResumeSens > 6){
 				StopAcc = false;
+				$(".DISTA").css('color', '#fff');
 			}
 		}
 		
@@ -2041,11 +2042,12 @@ function stepsSuccess(a){
 		initClock();
 		PauseSens = 0;
 	}else{
-		if(StopAcc && PauseSens >= 3){
+		if(StopAcc === false && PauseSens >= 3){
 			// se puede poner un sonido de que se pausa la actividad
 			navigator.vibrate([800]);
 			trackActivity();
 			StopAcc = true;
+			$(".DISTA").css('color', '#ccc');
 		}
 		PauseSens = PauseSens+1;
 		ResumeSens = 0;
