@@ -1117,13 +1117,21 @@ function show_perfil(nav){
         }
     }
 }
+function show_foto(){
+	if(SES.chain){
+		ak_navigate('#foto', {to: 'show_paso_uno({to: \'show_perfil();\'});'});
+	}else{
+		ak_navigate('#foto', {to: 'show_paso_uno({to: \'show_login();\'});'});
+	}
+}
 function inputImage(input) {
-    if (input.files && input.files[0]) {
+	$('.photo-loader').removeClass('oculto');
+    
+	if (input.files && input.files[0]) {
         var reader = new FileReader();
         var img = new Image();
 
         img.onload = function (e) {
-            
             // create an off-screen canvas
             var canvas = document.createElement('canvas'),
                 ctx = canvas.getContext('2d');
@@ -1132,20 +1140,27 @@ function inputImage(input) {
             var ancho = this.width;
             var alto = this.height;
             
-            var percentage = 128 / ancho;
-            var alto = alto * percentage;
-            var height = alto;
+			//calcular nuevo alto
+        //    var percentage = 128 / ancho;
+        //    var alto = alto * percentage;
+        //    var height = alto;
+		
+			//calcular nuevo ancho
+			var porcent = 256 / alto;
+            var ancho =  ancho * porcent;
+            var width =  ancho;
+			
             //
-            canvas.width = 128;
-            canvas.height = height;
+            canvas.width = width;
+            canvas.height = 256;
             
 
             // draw source image into the off-screen canvas:
-            ctx.drawImage(this, 0, 0, 128, height);
+            ctx.drawImage(this, 0, 0, width, 256);
 
             // encode image to data-uri with base64 version of compressed image
             var img = canvas.toDataURL();
-            
+            $('.photo-loader').addClass('oculto');
             $('.perfil-photo').css( 'background-image', 'url('+img+')' );
             $('input[name=img]').val( img );
 			var perfil = {};
@@ -1189,11 +1204,17 @@ function show_paso_uno(back, edad){
 	
 	if(SES['perfil']){
 		var p = JSON.parse(SES['perfil']);
-		$('input[name=nombre]').val(p.name);
-		$('select[name=genero]').val(p.gender);
-		$('input[name=edad]').val(p.birthdate);
-		$('input[name=img]').val(p.img);
+		var n = (p.name != undefined && p.name != null )? p.name : "";
+		var g = (p.gender != undefined && p.gender != null )? p.gender : "";
+		var e = (p.birthdate != undefined && p.birthdate != null )? p.birthdate : "";
+		var i = (p.img != undefined && p.img != null )? p.img : "";
+		
+		$('input[name=nombre]').val(n);
+		$('select[name=genero]').val(g);
+		$('input[name=edad]').val(e);
+		$('input[name=img]').val(i);
 		var e = cal_edad(p.birthdate);
+		e = (isNumber(e))? e: 0;
 		$('#textEdad').text(e);
 	}
 }
