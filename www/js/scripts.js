@@ -38,13 +38,11 @@ var SES = window.localStorage,
 	ACTIVITYTYPE = 1, //tipo de actividad
 	StopAcc = true;
 	PauseSens = 0, //sensibilidad del estado de pausa para que sea mas tolerante el numero de veces indicado
-	ResumeSens = 0, //sensibilidad del estado de resumen para que sea mas tolerante el numero de veces indicado
 	sync = true, //plugir background mode.
 	isPhonegap = false, //es phonegap
 	mapGraphic = null, //grafico en mapa
 	btnCancel = false,
 	DecimaLatLon = 10, //number of decimals in lat long
-	trackClock = true,
 	SITE = 'http://52.11.112.109/index.php/';
 //}
 
@@ -1726,9 +1724,6 @@ function show_principal(back){
 	ak_navigate('#principal', back);
 }
 function principal(back){
-	StopAcc = false;
-	ResumeSens = 6;
-	trackClock = true;
 	if(SES['actividad']){
 		ak_navigate('#principal', back);
 		$('.ac-3,.ac-2,.ac-1').removeClass('active stop');
@@ -1909,15 +1904,6 @@ function stepsSuccess(a){
 	navigator.compass.getCurrentHeading(compassSuccess, compassError);
 
 	if(ACCE > (m + s) || ACCE < (m - s)){
-		if(StopAcc && ResumeSens < 6){
-			ResumeSens = ResumeSens+1;
-			if(ResumeSens > 5){
-				StopAcc = false;
-				trackClock = true;
-			}
-		}
-		PauseSens = 0;
-		$('.DISTA').css('color', '#fff');
 		
 		var ac = {};
 		if(SES['actividad']){
@@ -1975,15 +1961,14 @@ function stepsSuccess(a){
 			velocidad = JSON.parse(SES['velocidad']);
 		}
 		
-		if(SECOND > (velocidad.time_act + 5)){
+		if(SECOND > (velocidad.time_act + 4)){
+			velocidad.time_act = SECOND;
 			var pasos = (STEP - velocidad.paso_act);
+			velocidad.paso_act = STEP;
 			var	PasosDivSegundos = (pasos / 5).toFixed(1);
 			var PpS = (PasosDivSegundos > 1.5)? PasosDivSegundos : 0;
-			var ndista = (pulgadas * (med * PpS)) * pasos;
-			velocidad.time_act = SECOND;
-			velocidad.paso_act = STEP;
 			SES['velocidad'] = JSON.stringify(velocidad);
-			console.log('Pasos: '+pasos+' PpS: '+PpS+' Ndista: '+ndista);
+			var ndista = (pulgadas * (med * PpS)) * pasos;
 			DISTA = DISTA + ndista;
 		//	DISTA = (pulgadas * med) * STEP;
 			var pulgadas = DISTA; //pulgadas
@@ -2041,23 +2026,22 @@ function stepsSuccess(a){
 			}
 			$('.CALOR').html( CALO );
 		}
+		
 		$('.PASOS').html( STEP );
+		
+		initClock();
+		PauseSens = 0;
+		StopAcc = false;
 	}else{
-		if(!StopAcc && PauseSens > 4){
+		if(!StopAcc && PauseSens >= 3){
 			// se puede poner un sonido de que se pausa la actividad
 			navigator.vibrate([800]);
 			trackActivity();
 			StopAcc = true;
-			trackClock = false;
 		}
-		ResumeSens = 0;
 		PauseSens = PauseSens+1;
-		$('.DISTA').css('color', '#ccc');
-	}
-
-	if(trackClock){
-		initClock();
-	}
+	}	
+	
 	ACCE = m;
 }
 function geo(){
@@ -2271,6 +2255,7 @@ function stop(){
 	SECOND = 0;
 	CALO = 0; //calorias
 	STEP = 0; //pasos
+
 	DISTA = 0; //distancia recorrida
 	ACCE = 0; //ACCELERATION
 	PAUSED = true; //status of activity
