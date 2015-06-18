@@ -20,12 +20,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
     font-style: nornal;
 }
 
-
-html{ 
-    overflow-x:hidden;
-	background-size: cover;
-} 
-
 body{ 
     min-width: 320px;
 	background: transparent;
@@ -1110,7 +1104,7 @@ header .btn{
 #map-canvas{
 	width: 100%;
 	height: 200px;
-	background: #ccc;
+	background: #515764 url(../img/map-rect.png);
 }
 
 #myCanvas{
