@@ -2231,7 +2231,7 @@ function loadMapa(){
 		}
 	}else{
 		if(LAT != 0){
-			MAP = L.map('map-canvas').setView([LAT, LAT], 18);
+			MAP = L.map('map-canvas').setView([LAT, LON], 18);
 			var mbAttr = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
 			var target = cordova.file.dataDirectory+'../../Documents/';
 			var tilelayer = L.tileLayer(target+'localTiles/{z}/{x}/{y}.png', {
