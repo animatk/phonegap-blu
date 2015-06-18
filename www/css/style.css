@@ -1173,11 +1173,15 @@ header .btn{
 .compass{
 	background-image: url(../img/compass-bg.png);
 	margin-top: -35px;
-	z-index: 9999;
-	position: relative;
+	z-index: 9999999;
+	position: absolute;
+	width: 100%;
 }
 .compass-int{
 	background-image: url(../img/compass-top.png);
+}
+.compass-padding{
+	padding-top: 30px;
 }
 
 /* end principal */

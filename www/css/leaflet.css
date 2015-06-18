@@ -76,7 +76,7 @@
 .leaflet-top,
 .leaflet-bottom {
 	position: absolute;
-	z-index: 1000;
+	z-index: 9999999;
 	pointer-events: none;
 	}
 .leaflet-top {
@@ -467,5 +467,5 @@
 }
 	
 .leaflet-tile-container img{
-	-webkit-filter: grayscale(100%) brightness(70%) contrast(180%); 
+	/*-webkit-filter: grayscale(100%) brightness(70%) contrast(180%); */
 }
