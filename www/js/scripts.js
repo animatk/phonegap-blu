@@ -2208,13 +2208,25 @@ function loadMapa(){
 		if(LAT != 0){
 			var latlng = new L.LatLng( LAT, LON );
 			
-			if(ICOE != null){
-				ICOE.addLatLng(latlng);	
+			if(ICOI != null){
+			//	ICOI.setLatLng(latlng);	
 			}else{
-				ICOE = new L.circle([LAT, LON], 8, {
+				ICOI = new L.circleMarker(latlng, {
+					stroke:false
+					,fillColor: '#D84A1D'
+					,fillOpacity: 1
+					,radius: 6
+				}).addTo(MAP);
+			}
+			
+			if(ICOE != null){
+				ICOE.setLatLng(latlng);	
+			}else{
+				ICOE = new L.circleMarker(latlng, {
 					stroke:false
 					,fillColor: '#63e05a'
 					,fillOpacity: 1
+					,radius: 6
 				}).addTo(MAP);
 			}
 
@@ -2264,16 +2276,18 @@ function loadMapa(){
 			
 			MAPLINE.addTo(MAP);
 			
-			ICOI = new L.circle([LAT, LON], 8, {
+			ICOI = new L.circleMarker(latlng, {
 				stroke:false
 				,fillColor: '#D84A1D'
 				,fillOpacity: 1
+				,radius: 6
 			}).addTo(MAP);
 			
-			ICOE = new L.circle([LAT, LON], 8, {
+			ICOE = new L.circleMarker(latlng, {
 				stroke:false
 				,fillColor: '#63e05a'
 				,fillOpacity: 1
+				,radius: 6
 			}).addTo(MAP);
 		}
 	}
