@@ -2198,40 +2198,39 @@ function api_clima(){
 }
 function loadMapa(){
 	if(MAP != null){
-		if(MAP != 'callmap'){
-			if(LAT != 0){
-				var latlng = new L.LatLng( LAT, LON );
-				/*
-				if(ICO != null){
-					ICO.setPosition(latlng);
-				}else{
-					ICO = new google.maps.Marker({
-					  position: latlng,
-					  icon: {
-						path: google.maps.SymbolPath.CIRCLE,
-						scale: 6,
-						strokeColor: '#63e05a'
-					  },
-					  map: MAP
-					});
-				}
-				*/
-				
-				if(MAPLINE != null){
-					MAPLINE.addLatLng(latlng);	
-				}else{
-					MAPLINE = new L.polyline([latlng], {
-						color: '#D7EC3A',
-						weight: 8,
-						opacity: 1,
-						smoothFactor: 1
-					});
-					
-					MAPLINE.addTo(MAP);
-				}
-			//	MAP.setCenter(latlng);
+		if(LAT != 0){
+			var latlng = new L.LatLng( LAT, LON );
+			/*
+			if(ICO != null){
+				ICO.setPosition(latlng);
+			}else{
+				ICO = new google.maps.Marker({
+				  position: latlng,
+				  icon: {
+					path: google.maps.SymbolPath.CIRCLE,
+					scale: 6,
+					strokeColor: '#63e05a'
+				  },
+				  map: MAP
+				});
 			}
+			*/
+			
+			if(MAPLINE != null){
+				MAPLINE.addLatLng(latlng);	
+			}else{
+				MAPLINE = new L.polyline([latlng], {
+					color: '#D7EC3A',
+					weight: 8,
+					opacity: 1,
+					smoothFactor: 1
+				});
+				
+				MAPLINE.addTo(MAP);
+			}
+		//	MAP.setCenter(latlng);
 		}
+
 	}else{
 		if(LAT != 0){
 			MAP = L.map('map-canvas').setView([LAT, LON], 18);
@@ -2245,7 +2244,8 @@ function loadMapa(){
 				,maxZoom: 18
 				,errorTileUrl : 'http://a.tile.openstreetmap.org/'
 				,attribution: mbAttr
-				,detectRetina: true
+			//	,detectRetina: true
+				,tileSize: 180
 				,zIndex: 1
 			}).addTo(MAP);
 			
