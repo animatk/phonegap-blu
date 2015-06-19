@@ -41,7 +41,8 @@ var SES = window.localStorage,
 	MAP = null, //map google
 	LAT = 0, //map latitude
 	LON = 0, //map longitude
-	ICO = null, //icon map
+	ICOI = null, //icon map
+	ICOE = null, //icon map
 	MAPLINE = null, //linea de recorrido
 	ACCELTIMEOUT = 500, //tiemout accel
 	ACTIVITYTYPE = 1, //tipo de actividad
@@ -1724,6 +1725,9 @@ function show_principal(back){
 }
 function principal(back){
 //	StopAcc = false;
+	if(ACTIVITYTYPE == 1){
+		loadMapa();
+	}
 	if(SES['actividad']){
 		ak_navigate('#principal', back);
 		$('.ac-3,.ac-2,.ac-1').removeClass('active stop');
@@ -2054,11 +2058,11 @@ function stepsSuccess(a){
 		if(StopAcc === false && PauseSens >= 3){
 			// se puede poner un sonido de que se pausa la actividad
 			trackActivity();
+			//	ResumeSens = 0;
 			StopAcc = true;
 		//	$(".DISTA").css('color', '#ccc');
 		}
 		PauseSens = PauseSens+1;
-	//	ResumeSens = 0;
 	}	
 	ACCE = m;
 }
@@ -2088,8 +2092,11 @@ function stopgeo(call){
 function geoSuccess(position){
 	LAT = parseFloat(position.coords.latitude.toFixed(DecimaLatLon));
 	LON = parseFloat(position.coords.longitude.toFixed(DecimaLatLon));
-	//
-	mensaje("GEO Lat: "+LAT+" Lon: "+LON);
+	if( ACTIVITYTYPE == 1 
+		&& PAUSED === false 
+		&& StopAcc === false){
+		loadMapa();
+	}
 }
 function show_map(back){
 	if(typeof back == 'object'){
@@ -2200,22 +2207,17 @@ function loadMapa(){
 	if(MAP != null){
 		if(LAT != 0){
 			var latlng = new L.LatLng( LAT, LON );
-			/*
-			if(ICO != null){
-				ICO.setPosition(latlng);
-			}else{
-				ICO = new google.maps.Marker({
-				  position: latlng,
-				  icon: {
-					path: google.maps.SymbolPath.CIRCLE,
-					scale: 6,
-					strokeColor: '#63e05a'
-				  },
-				  map: MAP
-				});
-			}
-			*/
 			
+			if(ICOE != null){
+				ICOE.addLatLng(latlng);	
+			}else{
+				ICOE = new L.circle([LAT, LON], 8, {
+					stroke:false
+					,fillColor: '#63e05a'
+					,fillOpacity: 1
+				}).addTo(MAP);
+			}
+
 			if(MAPLINE != null){
 				MAPLINE.addLatLng(latlng);	
 			}else{
@@ -2228,12 +2230,14 @@ function loadMapa(){
 				
 				MAPLINE.addTo(MAP);
 			}
-		//	MAP.setCenter(latlng);
 		}
 
 	}else{
 		if(LAT != 0){
-			MAP = L.map('map-canvas').setView([LAT, LON], 18);
+			MAP = L.map('map-canvas', {
+				touchZoom: false
+				,bounceAtZoomLimits: false
+			}).setView([LAT, LON], 16);
 			var mbAttr = '<a href="http://openstreetmap.org">OpenStreetMap</a>';
 			var target = "";
 			if( isPhonegap ){
@@ -2245,10 +2249,32 @@ function loadMapa(){
 				,errorTileUrl : 'http://a.tile.openstreetmap.org/'
 				,attribution: mbAttr
 				,detectRetina: true
-				,zIndex: 1
 			}).addTo(MAP);
 			
 			tilelayer.on('tileload', saveMapTiles);
+			
+			var latlng = new L.LatLng( LAT, LON );
+			
+			MAPLINE = new L.polyline([latlng], {
+				color: '#D7EC3A',
+				weight: 7,
+				opacity: 1,
+				smoothFactor: 1
+			});
+			
+			MAPLINE.addTo(MAP);
+			
+			ICOI = new L.circle([LAT, LON], 8, {
+				stroke:false
+				,fillColor: '#D84A1D'
+				,fillOpacity: 1
+			}).addTo(MAP);
+			
+			ICOE = new L.circle([LAT, LON], 8, {
+				stroke:false
+				,fillColor: '#63e05a'
+				,fillOpacity: 1
+			}).addTo(MAP);
 		}
 	}
 }
@@ -2423,8 +2449,8 @@ function stop(){
 	//remove poliline google maps
 	if(MAPLINE != null){
 		MAP.removeLayer(MAPLINE); 
-	//	MAPLINE.setMap(null);
-	//	ICO.setPosition(null);
+		MAP.removeLayer(ICOE); 
+		MAP.removeLayer(ICOI);
 	}
 	PPM = 0;
 	STEP = 0;
@@ -2436,7 +2462,8 @@ function stop(){
 	ACCE = 0; //ACCELERATION
 	PAUSED = true; //status of activity
 	MAPLINE = null; //linea de recorrido
-	ICO = null; //icon map	
+	ICOI = null; //icon map	
+	ICOE = null; //icon map	
 	PERFIL = null;
 	mapGraphic = null;
 	if(MAP == 'callmap'){
