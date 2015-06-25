@@ -27,7 +27,7 @@
 	<gap:plugin name="org.apache.cordova.device-motion" version="0.2.10" />
 	<gap:plugin name="org.apache.cordova.geolocation" version="0.3.10" />
 	
-	<gap:plugin name="org.apache.cordova.splashscreen" version="0.2.7" />
+	<gap:plugin name="org.apache.cordova.splashscreen" version="0.3.4" />
 	
 	<!-- para Android usar este -->
 	<gap:plugin name="de.appplant.cordova.plugin.background-mode" version="0.6.4" />
