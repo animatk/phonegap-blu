@@ -73,13 +73,11 @@ $(function(){
 	webdb.executeSql('CREATE TABLE IF NOT EXISTS tracks (ID INTEGER PRIMARY KEY ASC, chain TEXT, json TEXT)', [],
 	function(tx, r){},
 	function(tx, e){});
-	
-	setTimeout(function(){
-		if(!SES['actividad']){
-			iniciar();
-		}
-	}, 1800);
 
+	if(!SES['actividad']){
+		iniciar();
+	}
+	
 	var box = $('.btnCancel').get(0);
 	box.addEventListener('touchstart', function(e){
 		var touchobj = e.changedTouches[0]; // reference first touch point (ie: first finger)
@@ -507,7 +505,9 @@ function isOnLine(){
 /*! Onload Phonegap Event*/
 document.addEventListener("deviceready", DeviceReady, false);
 function DeviceReady(){
-	navigator.splashscreen.hide();
+	setTimeout(function() {
+		navigator.splashscreen.hide();
+    }, 2000);
 	screen.lockOrientation('portrait');
 	isPhonegap = true;
 	$('.btn-iniciar').removeClass('active');
