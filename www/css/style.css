@@ -130,7 +130,6 @@ img{vertical-align:middle;}
    -webkit-transform: translate3d(100%, 0, 0);
 		   transform: translate3d(100%, 0, 0);
 	/*ios native bouncing*/
-	overflow-y: auto !important;
 	-webkit-overflow-scrolling: touch;   
 }
 .menu-open .Page{
@@ -154,8 +153,15 @@ img{vertical-align:middle;}
 		    transform: translate3d(100%, 0, 0);
 }
 
+
 .Main{
 	padding-top: 70px;
+	overflow-y: auto !important;
+	height: 100%;
+}
+.mapa-main{
+	padding-top: 70px;
+	height: 100%;
 }
 
 .container{
@@ -601,6 +607,7 @@ header .btn{
 /* si es iOS */
 .ios-device header{padding-top: 25px;}
 .ios-device .Main,
+.ios-device .mapa-main,
 .ios-device .menu-lateral{padding-top: 85px;}
 
 /* end menu lateral */
@@ -1105,6 +1112,8 @@ header .btn{
 	width: 100%;
 	height: 200px;
 	background: #515764 url(../img/map-rect.png);
+	position: relative;
+	overflow: hidden !important;
 }
 
 #myCanvas{
@@ -1166,6 +1175,7 @@ header .btn{
 	background-position: center;
 	background-size: auto 100%;
 	-webkit-transition: 1s ease-out;
+	-webkit-transform: translate3d(0px, 0px, 100px);
 }
 .compass-int{
 	width: 70px;
@@ -1858,8 +1868,124 @@ Pagination Styles
 	width: 40px;
 }
 
+.iMusic-player-content{
+    background-color: #1C1922;
+    position: fixed;
+    width: 100%;
+    padding: 15px 0;
+    margin-top: -13px;
+    top: 80px;
+	-webkit-transform: translate3d(0px, 0px, 100px);
+}
+.iMusic-songName{}
+.iMusic-name{
+    font-size: 18px;
+    line-height: 24px;
+}
+.iMusic-artist{
+    font-size: 13px;
+}
+.iMusic-controls{
+    padding: 10px 0 15px 0;
+}
+.iMusic-prev,
+.iMusic-next,
+.iMusic-play{
+	width: 30px;
+	height: 30px;
+	display: inline-block;
+	background: center no-repeat;
+	background-size: cover;
+}
+.iMusic-prev{
+	background-image: url(../img/last_song.png);
+}
+.iMusic-play{
+	background-image: url(../img/play_song.png);
+	background-size: auto 100%; 
+}
+.iMusic-play.pause{
+	background-image: url(../img/pause_song.png);
+}
+.iMusic-next{
+	background-image: url(../img/next_song.png);
+}
+.iMusic-volume input{
+	 margin-bottom: 17px;
+}
+.iMusic-list{
+	padding-bottom: 40px;
+	padding-top: 160px;
+	-webkit-transform: translate3d(0px, 0px, -100px);
+}
+.iMusic-item{
+	padding: 8px 0;
+	border-bottom: 2px groove rgba(87, 87, 87, 0.6);
+	-webkit-transform: translate3d(0, 0, 0);
+	-webkit-transition: .2s all;
+	background: url(../img/play_song.png) no-repeat -200px center;
+	background-size: auto 14px;
+}
+.iMusic-item.playing {
+	padding-left: 20px;
+	background-position: 10px center;
+}
+.iMusic-item.playing .iMusic-name{
+	color: #63e05a;
+}
 
+.iMusic-item .iDelbtn{
+	top: 0;
+	position: absolute;
+	right: -100px;
+	width: 0px;
+	height: 100%;
+	display: block;
+	background: #D84A1D;
+	text-align: center;
+	font-size: 0px;
+	-webkit-transition: .2s all;
+	padding-top: 0;
+}
 
+.iMusic-item.deleting{
+	-webkit-transform: translate3d(-100px, 0, 0);
+}
+
+.iMusic-item.deleting .iDelbtn{
+	width: 100px;
+	display: inline-block;
+	padding-top: 2.1%;
+	font-size: 17px;
+}
+.iMusic-item.deleting .iDelbtn.twolines{
+	padding-top: 4.5%;
+}
+
+.iMusic-item.borrando{
+	-webkit-transform: translate3d(-130%, 0, 0);
+	padding: 0;
+}
+.iMusic-item.borrando .iMusic-name,
+.iMusic-item.borrando .iMusic-artist{
+	-webkit-transition: .2s all;
+	font-size: 0;
+}
+
+.iMusic-addBtnCont{
+	background: #1C1922;
+	height: 40px;
+	-webkit-transform: translate3d(0px, 0px, 100px);
+}
+.iMusic-addBtn{
+	width: 60px;
+	height: 60px;
+	display: inline-block;
+	top: -30px;
+	position: relative;
+	background: url(../img/add_list.png) no-repeat center; 
+	background-size: cover;
+}
 
 @media all and (min-width: 376px){
 	.container,

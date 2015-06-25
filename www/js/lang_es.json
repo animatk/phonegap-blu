@@ -9,6 +9,7 @@
 	,"cancel": "Cancelar"
 	,"pausar": "Pausar"
 	,"detener": "Detener"
+	,"delete": "Delete"
 	,"continuar": "Continuar"
 	,"discard": "Descartar"
 	,"save": "Guardar"
@@ -147,6 +148,8 @@
 	,"disp_conf":"Dispositivos Confiables"
 	,"disp_disp":"Dispositivos Disponibles"
 	,"conf_wifi":"Sincronizar solo por wifi"
-	,"conf_music":"Musica"
+	,"conf_music":"Música"
+	,"no_songs":"No hay canciones en tu lista"
+	,"add_songs":"Agrega algunas de tus canciones con el boton más"
 	,"edit_photo":"Cambiar Imagen"
 }

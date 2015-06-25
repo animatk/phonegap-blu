@@ -9,6 +9,7 @@
 	,"cancel": "Cancel"
 	,"pausar": "Pause"
 	,"detener": "Detener"
+	,"delete": "Eliminar"
 	,"continuar": "Continue"
 	,"discard": "Discard"
 	,"save": "Save"
@@ -148,5 +149,7 @@
 	,"disp_disp":"Devices found"
 	,"conf_wifi":"Sync only with wifi"
 	,"conf_music":"Music"
+	,"no_songs":"No sounds in your list"
+	,"add_songs":"Add something with the plus button"
 	,"edit_photo":"Change Image"
 }
