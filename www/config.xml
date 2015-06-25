@@ -44,7 +44,7 @@
 	<gap:plugin name="org.apache.cordova.file-transfer" />
 	<gap:plugin name="org.apache.cordova.media" />
 	<!--ios audio picker-->
-	<gap:plugin name="co.grupoiris.plugins.iosaudiopicker" version="0.0.8" />
+	<gap:plugin name="co.grupoiris.plugins.iosaudiopicker" version="0.0.9" />
 	<gap:plugin name="nl.x-services.plugins.backgroundaudio" version="1.0.0" />
 	
 	<!-- Define app icon for each platform. -->
