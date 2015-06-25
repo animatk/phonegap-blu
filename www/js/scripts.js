@@ -74,10 +74,6 @@ $(function(){
 	function(tx, r){},
 	function(tx, e){});
 
-	if(!SES['actividad']){
-		iniciar();
-	}
-	
 	var box = $('.btnCancel').get(0);
 	box.addEventListener('touchstart', function(e){
 		var touchobj = e.changedTouches[0]; // reference first touch point (ie: first finger)
@@ -505,32 +501,35 @@ function isOnLine(){
 /*! Onload Phonegap Event*/
 document.addEventListener("deviceready", DeviceReady, false);
 function DeviceReady(){
-	setTimeout(function() {
-		navigator.splashscreen.hide();
-    }, 2000);
-	screen.lockOrientation('portrait');
 	isPhonegap = true;
+	screen.lockOrientation('portrait');
 	$('.btn-iniciar').removeClass('active');
-	
 	if(SES['hrm']){
 		isInitialized(); 
 		DEVICE=SES['hrm'];
 	}
 	
-	if(SES['actividad']){
-		if(SES['ACTTYPE']){
-			tipoActividad(SES['ACTTYPE']);
-		}
-		var act = JSON.parse(SES['actividad']);
-		SECOND = act.tim;
-		DISTA = act.dis;
-		pause(function(){
-			stopgeo(function(){
-				geo();
-				principal();
+	setTimeout(function() {
+		navigator.splashscreen.hide();
+
+		if(SES['actividad']){
+			if(SES['ACTTYPE']){
+				tipoActividad(SES['ACTTYPE']);
+			}
+			var act = JSON.parse(SES['actividad']);
+			SECOND = act.tim;
+			DISTA = act.dis;
+			pause(function(){
+				stopgeo(function(){
+					geo();
+					principal();
+				});
 			});
-		});
-	}
+		}else{
+			iniciar();
+		}
+		
+    }, 1000);
 	
 	var menu = $('#menu .menu-lateral').get(0);
 	swipeHorz( menu, function(dir, dis){
