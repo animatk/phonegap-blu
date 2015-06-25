@@ -1881,9 +1881,19 @@ Pagination Styles
 .iMusic-name{
     font-size: 18px;
     line-height: 24px;
+    white-space: nowrap;
+    display: block;
+    text-overflow: ellipsis;
+    width: 100%;
+    overflow: hidden;
 }
 .iMusic-artist{
     font-size: 13px;
+	white-space: nowrap;
+	display: block;
+	text-overflow: ellipsis;
+	width: 100%;
+	overflow: hidden;
 }
 .iMusic-controls{
     padding: 10px 0 15px 0;
